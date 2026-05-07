@@ -285,37 +285,9 @@ export default function FeaturedProducts({ initialProducts }: { initialProducts?
     }
   }
 
-  const categories = ['All', 'Men', 'Women', 'Fabric', 'Exclusive Collection', 'Series']
+  const categories = ['Men', 'Women']
 
-  if (loading) {
-    return (
-      <section className="pb-16 md:pb-24 pt-2 px-0 md:px-2 bg-section-bg overflow-hidden">
-        <div className="max-w-full mx-auto">
-          {categories.map((cat) => (
-            <div key={`skeleton-${cat}`}>
-               {/* Skeleton Row */}
-               <div className="mb-[1px] relative group pt-6 md:pt-10 px-4 md:px-0">
-                  <div className="h-6 w-32 bg-gray-200 rounded mb-6 animate-pulse"></div>
-                  <div className="flex gap-2 md:gap-3 overflow-hidden px-2 md:px-0">
-                    {[1, 2, 3, 4].map((j) => (
-                      <div key={j} className="min-w-[75vw] md:min-w-[30vw] lg:min-w-[22vw] h-[520px] md:h-[560px] bg-gray-100 rounded-xl animate-pulse"></div>
-                    ))}
-                  </div>
-               </div>
-               {cat === 'Women' && (
-                 <>
-                   <ReelsPanel />
-                   <TrendingPanel />
-                   <NewCollectionPanel />
-                   <AllProductsPanel />
-                 </>
-               )}
-            </div>
-          ))}
-        </div>
-      </section>
-    )
-  }
+  if (loading) return null
 
   return (
     <section 
@@ -328,18 +300,19 @@ export default function FeaturedProducts({ initialProducts }: { initialProducts?
           <div key={cat}>
             <CategoryRow 
               title={cat} 
-              products={cat === 'All' ? products : products.filter(p => (p as any).category === cat || (p as any).categorySlug === cat.toLowerCase() || (p as any).category_slug === cat.toLowerCase())} 
+              products={products.filter(p => (p as any).category === cat || p.categorySlug === cat.toLowerCase())} 
             />
             {cat === 'Women' && (
               <>
                 <ReelsPanel />
                 <TrendingPanel />
                 <NewCollectionPanel />
-                <AllProductsPanel />
               </>
             )}
           </div>
         ))}
+        {/* Entire Collection at the bottom */}
+        <AllProductsPanel />
       </div>
     </section>
   )

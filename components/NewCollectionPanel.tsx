@@ -7,10 +7,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const COLLECTION_IMAGES = [
-  { url: '/media-pro/men/Design%201/651882421_122120769999151981_8209666213684742551_n.webp', title: 'Premium Silk Panjabi' },
-  { url: '/media-pro/women/Design%201/673949386_122125962357151981_1889495426070156223_n.webp', title: 'Hand-embroidered Kamiz' },
-  { url: '/media-pro/men/Design%201/650656536_122120770035151981_5282848327082156297_n.webp', title: 'Classic Cotton Kurta' },
-  { url: '/media-pro/women/Design%201/674438935_122125962423151981_7895183005361462477_n.webp', title: 'Silk Festive Wear' },
+  { url: '/media-pro/cover/cover 1.jpg', title: 'Premium Silk Panjabi' },
+  { url: '/media-pro/cover/cover 2.jpg', title: 'Hand-embroidered Kamiz' },
+  { url: '/media-pro/cover/cover 3.jpg', title: 'Classic Cotton Kurta' },
+  { url: '/media-pro/cover/cover 4.jpg', title: 'Silk Festive Wear' },
   { url: '/media-pro/men/Design%202/649486384_122120775759151981_5241916048356926520_n.webp', title: 'Designer Menswear' },
   { url: '/media-pro/women/Design%202/672121181_122125885095151981_7790861692313383598_n.webp', title: 'Luxury Pret' },
   { url: '/media-pro/men/Design%202/649776456_122120775735151981_894663234632234790_n.webp', title: 'Festive Kurta' },
@@ -114,26 +114,30 @@ export default function NewCollectionPanel() {
           <button
             onClick={(e) => { e.stopPropagation(); prev(); }}
             className="
-              hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-[50]
-              w-12 h-12 items-center justify-center rounded-full
-              bg-white/80 backdrop-blur-md shadow-lg border border-black/5
-              hover:bg-black hover:text-white transition-all duration-300 opacity-0 group-hover/nav:opacity-100
+              absolute left-2 md:left-4 lg:left-8 top-1/2 -translate-y-1/2 z-[50]
+              w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full
+              bg-white/90 backdrop-blur-md shadow-xl border border-black/5
+              hover:bg-black hover:text-white transition-all duration-300
+              active:scale-95
             "
+            aria-label="Previous slide"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
           </button>
 
           {/* Next Arrow */}
           <button
             onClick={(e) => { e.stopPropagation(); next(); }}
             className="
-              hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-[50]
-              w-12 h-12 items-center justify-center rounded-full
-              bg-white/80 backdrop-blur-md shadow-lg border border-black/5
-              hover:bg-black hover:text-white transition-all duration-300 opacity-0 group-hover/nav:opacity-100
+              absolute right-2 md:right-4 lg:right-8 top-1/2 -translate-y-1/2 z-[50]
+              w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full
+              bg-white/90 backdrop-blur-md shadow-xl border border-black/5
+              hover:bg-black hover:text-white transition-all duration-300
+              active:scale-95
             "
+            aria-label="Next slide"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
           </button>
 
           {/* Infinite Container */}

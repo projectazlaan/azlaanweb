@@ -12,25 +12,13 @@ export default function AllProductsPanel() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchProducts()
-  }, [])
-
-  const fetchProducts = async () => {
-    try {
-      const res = await fetch('/api/products')
-      if (res.ok) {
-        const data = await res.json()
-        // We only want enough for 2 rows. 
-        // 2 rows on mobile (2 cols) = 4 products
-        // 4 rows on desktop (6 cols) = 24 products
-        setProducts(data.slice(0, 24))
-      }
-    } catch (error) {
-      console.error('Failed to fetch products:', error)
-    } finally {
+    // Directly use productsData for reliability
+    import('@/data/products.json').then((data) => {
+      // 2 rows: 2 cols mobile (4), 4-6 cols desktop (8-12)
+      setProducts(data.default.slice(0, 12) as any[])
       setLoading(false)
-    }
-  }
+    })
+  }, [])
 
   if (loading) return null
 

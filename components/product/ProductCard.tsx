@@ -220,29 +220,29 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
       </div>
 
       {/* Product Info Container */}
-      <div className="bg-white p-2.5 md:p-3.5 flex flex-col gap-0.5 relative">
-        {/* Product Name (Black - Proportionally Sized) */}
-        <h3 className="text-black text-[11px] md:text-[15px] font-bold tracking-tight leading-tight truncate">
+      <div className="bg-white p-2 md:p-3 flex flex-col gap-1 relative">
+        {/* Product Name (Black - Better Fit) */}
+        <h3 className="text-black text-[11px] md:text-[14px] font-bold tracking-tight leading-[1.2] line-clamp-1">
           {product.name}
         </h3>
         
-        {/* Category Name & Rating Display (Compact) */}
-        <div className="flex items-center gap-1.5 md:gap-2">
-          <p className="text-gray-400 text-[8px] md:text-[9px] font-semibold tracking-wide uppercase">
+        {/* Category Name & Rating Display (More Compact) */}
+        <div className="flex items-center gap-1.5">
+          <p className="text-gray-400 text-[8px] md:text-[9px] font-bold tracking-wide uppercase">
             {(!product.subcategory || product.subcategory === 'All') 
               ? (product.category || product.categorySlug) 
               : product.subcategory}
           </p>
           <div className="w-[1px] h-2 bg-gray-100" />
-          <div className="scale-[0.7] md:scale-[0.85] origin-left flex items-center">
+          <div className="scale-[0.65] md:scale-[0.8] origin-left flex items-center">
             {renderStars(rating)}
           </div>
         </div>
         
-        <div className="flex items-center justify-between mt-1 md:mt-2">
-          {/* Price Section (Compact) */}
-          <div className="flex items-baseline gap-1">
-            <span className="text-black font-black text-sm md:text-lg tracking-tight">
+        <div className="flex items-center justify-between mt-0.5 md:mt-1">
+          {/* Price Section */}
+          <div className="flex flex-col">
+            <span className="text-black font-black text-[13px] md:text-[16px] tracking-tight leading-none">
               ৳{product.price.toLocaleString()}
             </span>
             {hasDiscount && (
@@ -252,7 +252,7 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
             )}
           </div>
 
-          {/* Add to Cart Outline Button (Compact & Fit) */}
+          {/* Add to Cart Button (Slimmer Fit) */}
           <button 
             onClick={(e) => {
               e.preventDefault();
@@ -264,7 +264,7 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
                 item_name: product.name,
                 price: product.price
               });
-              toast.success(`Item added to bag`, {
+              toast.success(`Added to bag`, {
                 position: 'bottom-center',
                 duration: 1500,
                 style: {
@@ -273,17 +273,14 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
                   fontSize: '9px',
                   fontWeight: '900',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.2em',
                   borderRadius: '0px',
-                  padding: '12px 24px',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+                  padding: '10px 20px',
                 },
               });
             }}
-            className="shrink-0 bg-transparent border border-black text-black px-2.5 py-1 md:px-4 md:py-1.5 rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-[0.05em] whitespace-nowrap hover:bg-black hover:text-white transition-all active:scale-95"
+            className="shrink-0 bg-transparent border border-black/20 text-black hover:border-black px-2 md:px-3 py-1 rounded-full text-[8px] md:text-[10px] font-bold uppercase tracking-tight transition-all active:scale-95"
           >
-            Add to Cart
+            Add
           </button>
         </div>
       </div>
