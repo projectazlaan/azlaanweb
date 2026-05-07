@@ -32,7 +32,7 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
   const [rating, setRating] = useState(4.5);
   const [isRatingMode, setIsRatingMode] = useState(false);
 
-  const displayImage = product.images[activeImage] ?? product.image;
+  const displayImage = (product.images && product.images[activeImage]) || product.image || '';
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
 
   // Render static stars

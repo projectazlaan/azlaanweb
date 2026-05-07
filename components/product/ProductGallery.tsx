@@ -57,7 +57,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                 : 'opacity-50 hover:opacity-100'
             }`}
           >
-            <Image src={img} alt={`${name} ${idx}`} fill className="object-cover transition-transform duration-700 group-hover:scale-110" unoptimized />
+            <Image src={img || ''} alt={`${name} ${idx}`} fill className="object-cover transition-transform duration-700 group-hover:scale-110" unoptimized />
           </button>
         ))}
       </div>
@@ -92,7 +92,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
               transition={{ type: 'spring', stiffness: 150, damping: 25, mass: 0.5 }}
             >
               <Image
-                src={images[activeIndex]}
+                src={images[activeIndex] || ''}
                 alt={name}
                 fill
                 priority
@@ -145,7 +145,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                 : 'opacity-50'
             }`}
           >
-            <Image src={img} alt={`${name} ${idx}`} fill className="object-cover" unoptimized />
+            <Image src={img || ''} alt={`${name} ${idx}`} fill className="object-cover" unoptimized />
           </button>
         ))}
       </div>
@@ -214,7 +214,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                 >
                   <div className="relative w-full h-full">
                     <Image
-                      src={images[activeIndex]}
+                      src={images[activeIndex] || ''}
                       alt={name}
                       fill
                       className="object-contain select-none pointer-events-none"
@@ -256,7 +256,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                     }`}
                   >
                     <Image 
-                      src={img} 
+                      src={img || ''} 
                       alt={`${name} ${idx}`} 
                       fill 
                       className="object-cover object-top" 

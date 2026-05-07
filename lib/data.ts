@@ -6,24 +6,36 @@ import { supabase } from './supabase';
 function mapCategory(row: any): Category {
   return {
     ...row,
-    searchKeywords: row.search_keywords,
-    heroImage: row.hero_image,
-    subSubCategories: row.sub_sub_categories,
+    name: row.name || '',
+    slug: row.slug || '',
+    description: row.description || '',
+    nameBn: row.name_bn || row.name || '',
+    descriptionBn: row.description_bn || row.description || '',
+    subcategories: row.subcategories || [],
+    filters: row.filters || { priceRange: true, rating: true },
+    searchKeywords: row.search_keywords || [],
+    heroImage: row.hero_image || '',
+    subSubCategories: row.sub_sub_categories || {},
   };
 }
 
 function mapProduct(row: any): Product {
   return {
     ...row,
+    name: row.name || 'Untitled Product',
+    slug: row.slug || row.id || '',
+    price: row.price || 0,
+    images: row.images || [],
     originalPrice: row.original_price,
-    categorySlug: row.category_slug,
-    reviewCount: row.review_count,
-    isInStock: row.is_in_stock,
-    stockCount: row.stock_count,
-    viewersCount: row.viewers_count,
-    recentPurchases: row.recent_purchases,
-    recommendedWith: row.recommended_with,
-    completeTheLook: row.complete_the_look,
+    categorySlug: row.category_slug || '',
+    reviewCount: row.review_count || 0,
+    rating: row.rating || 0,
+    isInStock: row.is_in_stock ?? true,
+    stockCount: row.stock_count || 0,
+    viewersCount: row.viewers_count || 0,
+    recentPurchases: row.recent_purchases || [],
+    recommendedWith: row.recommended_with || [],
+    completeTheLook: row.complete_the_look || { title: 'Complete the Look', items: [] },
   };
 }
 

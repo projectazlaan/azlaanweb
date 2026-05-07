@@ -11,13 +11,7 @@ import TrendingPanel from './TrendingPanel'
 import NewCollectionPanel from './NewCollectionPanel'
 import AllProductsPanel from './AllProductsPanel'
 
-interface Product {
-  id: string
-  name: string
-  priceDisplay: string
-  image: string
-  category: string
-}
+import { Product } from '@/types';
 
 const CategoryRow = ({ title, products }: { title: string, products: Product[] }) => {
   const router = useRouter()
@@ -122,7 +116,7 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
 
         <div className="absolute inset-0 w-full h-full bg-gray-100">
           <Image
-            src={product?.image || ''}
+            src={product?.image || (product?.images && product?.images[0]) || ''}
             alt={subCategoryTitle}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -333,7 +327,7 @@ export default function FeaturedProducts({ initialProducts }: { initialProducts?
           <div key={cat}>
             <CategoryRow 
               title={cat} 
-              products={products.filter(p => p.category === cat)} 
+              products={products.filter(p => (p as any).category === cat || p.categorySlug === cat.toLowerCase())} 
             />
             {cat === 'Women' && (
               <>
