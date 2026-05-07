@@ -47,8 +47,8 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
         <div className="w-full md:w-1/2 bg-gray-50 p-6 flex flex-col gap-4">
           <div className="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-white shadow-sm">
             <Image
-              src={product.images[activeImage] || product.image}
-              alt={product.name}
+              src={(product.images && product.images[activeImage]) || product.image || ''}
+              alt={product.name || 'Product Image'}
               fill
               unoptimized
               className="object-cover"
