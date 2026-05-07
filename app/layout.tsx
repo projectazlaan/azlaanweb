@@ -23,8 +23,8 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL('https://azlaan.com.bd'),
   title: {
-    default: "Azlaan - Bangladeshi Premium Clothing",
-    template: "%s | Azlaan"
+    default: "AZLAAN - Bangladeshi Premium Clothing Brand",
+    template: "%s | AZLAAN"
   },
   description: "Crafted with Pride in Bangladesh. Premium clothing for Men, Women & Kids.",
   openGraph: {
@@ -32,14 +32,6 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://azlaan.com.bd',
     siteName: 'Azlaan',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Azlaan Premium Clothing',
-      },
-    ],
   },
 };
 
