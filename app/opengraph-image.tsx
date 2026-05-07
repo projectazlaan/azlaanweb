@@ -17,7 +17,7 @@ export default async function Image() {
     (
       <div
         style={{
-          background: 'linear-gradient(to bottom right, #000000, #1a1a1a)',
+          backgroundColor: '#000000',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -25,70 +25,59 @@ export default async function Image() {
           alignItems: 'center',
           justifyContent: 'center',
           position: 'relative',
-          padding: '40px',
         }}
       >
-        {/* Background hero image from site */}
-        <div
+        {/* Background Image */}
+        <img
+          src="https://azlaan.com.bd/media-pro/Cover/616795496_122112085989151981_2801687860027277426_n.webp"
           style={{
             position: 'absolute',
             top: 0,
             left: 0,
-            right: 0,
-            bottom: 0,
-            display: 'flex',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: 0.6,
           }}
-        >
-          <img
-            src="/media-pro/Cover/616795496_122112085989151981_2801687860027277426_n.webp"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: 0.8,
-            }}
-          />
-        </div>
+        />
 
-        {/* Brand Overlay */}
+        {/* Brand Overlay Container */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'rgba(0,0,0,0.6)',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
             padding: '60px 80px',
-            border: '2px solid rgba(255,255,255,0.1)',
-            backdropFilter: 'blur(10px)',
+            border: '2px solid rgba(255, 255, 255, 0.1)',
           }}
         >
-          <h1
+          <div
             style={{
               fontSize: '84px',
               fontWeight: '900',
               color: 'white',
               letterSpacing: '0.2em',
-              margin: 0,
               textTransform: 'uppercase',
+              marginBottom: '20px',
             }}
           >
             AZLAAN
-          </h1>
-          <p
+          </div>
+          <div
             style={{
               fontSize: '24px',
-              color: 'rgba(255,255,255,0.7)',
+              color: 'rgba(255, 255, 255, 0.7)',
               letterSpacing: '0.5em',
-              marginTop: '20px',
               textTransform: 'uppercase',
             }}
           >
-            Bangladeshi Premium Clothing Brand
-          </p>
+            Premium Clothing Brand
+          </div>
         </div>
 
-        {/* Status indicator */}
+        {/* Live Indicator */}
         <div
           style={{
             position: 'absolute',
@@ -96,7 +85,6 @@ export default async function Image() {
             left: '40px',
             display: 'flex',
             alignItems: 'center',
-            gap: '12px',
           }}
         >
           <div
@@ -104,10 +92,11 @@ export default async function Image() {
               width: '12px',
               height: '12px',
               borderRadius: '50%',
-              background: '#10b981',
+              backgroundColor: '#10b981',
+              marginRight: '12px',
             }}
           />
-          <span
+          <div
             style={{
               color: 'white',
               fontSize: '18px',
@@ -117,7 +106,7 @@ export default async function Image() {
             }}
           >
             Live Collection
-          </span>
+          </div>
         </div>
       </div>
     ),
