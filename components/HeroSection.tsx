@@ -66,9 +66,7 @@ const DEFAULT_SLIDES = [
 
 export default function HeroSection({ initialHero }: { initialHero?: HeroContent }) {
   // Initialize with DEFAULT_SLIDES so the UI renders instantly
-  const [slides, setSlides] = useState<HeroContent[]>(
-    initialHero ? [{ ...initialHero, id: 'slide-0' }, ...DEFAULT_SLIDES] : DEFAULT_SLIDES
-  )
+  const [slides, setSlides] = useState<HeroContent[]>(DEFAULT_SLIDES)
   // currentSlide is the index in the EXTENDED slides array [last, ...original, first]
   const [currentSlide, setCurrentSlide] = useState(1)
   const [isTransitioning, setIsTransitioning] = useState(false)
