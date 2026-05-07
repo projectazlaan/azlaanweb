@@ -285,7 +285,7 @@ export default function FeaturedProducts({ initialProducts }: { initialProducts?
     }
   }
 
-  const categories = ['Men', 'Women', 'Fabric']
+  const categories = ['All', 'Men', 'Women', 'Fabric']
 
   if (loading) {
     return (
@@ -328,7 +328,7 @@ export default function FeaturedProducts({ initialProducts }: { initialProducts?
           <div key={cat}>
             <CategoryRow 
               title={cat} 
-              products={products.filter(p => (p as any).category === cat || p.categorySlug === cat.toLowerCase())} 
+              products={cat === 'All' ? products : products.filter(p => (p as any).category === cat || (p as any).categorySlug === cat.toLowerCase() || (p as any).category_slug === cat.toLowerCase())} 
             />
             {cat === 'Women' && (
               <>
