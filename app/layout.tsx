@@ -32,6 +32,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://azlaan.com.bd',
     siteName: 'Azlaan',
+    images: [
+      {
+        url: '/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Azlaan - Bangladeshi Premium Clothing Brand',
+      },
+    ],
   },
 };
 
