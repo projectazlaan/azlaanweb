@@ -55,9 +55,10 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
   }
 
   const subCategoryNames: Record<string, string[]> = {
-    Men: ['Premium Panjabi', 'Classic Kurtas', 'Festive Wear', 'Wedding Edition', 'Casual Edit', 'Formal Wear', 'Exclusive'],
-    Women: ['Luxury Pret', 'Unstitched', 'Ready to Wear', 'Bridal Couture', 'Festive Collection', 'Signature Series', 'Exclusive'],
-    Kids: ['Boys Panjabi', 'Girls Wear', 'Festive Kids', 'Casuals', 'Party Wear', 'Winter', 'Exclusive']
+    Men: ['Panjabi', 'Classic Kurtas', 'Formal Shirts', 'Chino Pants', 'Casual Edit'],
+    Women: ['Luxury Pret', 'Unstitched', 'Saree', 'Bridal', 'Signature Series'],
+    Kids: ['Boys Panjabi', 'Girls Wear', 'Festive Kids', 'Casuals'],
+    Fabric: ['Premium Silk', 'Luxury Cotton', 'Imported Linen', 'Designer Wool', 'Traditional Weaves']
   };
 
   // Safely group products into bento blocks (Pattern: 1 item, 2 items, 3 items...)
@@ -284,7 +285,7 @@ export default function FeaturedProducts({ initialProducts }: { initialProducts?
     }
   }
 
-  const categories = ['Men', 'Women']
+  const categories = ['Men', 'Women', 'Fabric']
 
   if (loading) {
     return (

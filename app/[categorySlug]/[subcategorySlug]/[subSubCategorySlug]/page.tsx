@@ -3,6 +3,7 @@ import CategoryContent from '../../CategoryContent';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import categoriesData from '@/data/categories.json';
+import productsData from '@/data/products.json';
 
 interface SubSubCategoryPageProps {
   params: Promise<{
@@ -43,14 +44,23 @@ export async function generateStaticParams() {
 // ─── SEO Metadata ──────────────────────────────────────────────
 export async function generateMetadata({ params }: SubSubCategoryPageProps): Promise<Metadata> {
   const { categorySlug, subcategorySlug, subSubCategorySlug } = await params;
-  const category = await getCategoryBySlug(categorySlug);
+  
+  let category: any = null;
+  try {
+    category = await getCategoryBySlug(categorySlug);
+  } catch (e) {}
+
+  if (!category) {
+    category = (categoriesData as any[]).find(c => c.slug === categorySlug);
+  }
+
   if (!category) return { title: 'Not Found' };
 
-  const originalSubName = category.subcategories.find(
+  const originalSubName = (category.subcategories as string[]).find(
     (s) => toSlug(s) === subcategorySlug
   );
   const subSubList = originalSubName ? (category.subSubCategories?.[originalSubName] ?? []) : [];
-  const originalSubSubName = subSubList.find((ss) => toSlug(ss) === subSubCategorySlug);
+  const originalSubSubName = (subSubList as string[]).find((ss) => toSlug(ss) === subSubCategorySlug);
 
   return {
     title: originalSubSubName
@@ -63,24 +73,36 @@ export async function generateMetadata({ params }: SubSubCategoryPageProps): Pro
 // ─── Page Component ────────────────────────────────────────────
 export default async function SubSubCategoryPage({ params }: SubSubCategoryPageProps) {
   const { categorySlug, subcategorySlug, subSubCategorySlug } = await params;
-  const category = await getCategoryBySlug(categorySlug);
+  
+  let category: any = null;
+  let allCategoryProducts: any[] = [];
 
-  if (!category) notFound();
+  try {
+    category = await getCategoryBySlug(categorySlug);
+    if (category) {
+      allCategoryProducts = await getProductsByCategory(categorySlug);
+    }
+  } catch (e) {}
 
-  const originalSubName = category.subcategories.find(
+  // Fallback
+  if (!category) {
+    category = (categoriesData as any[]).find(c => c.slug === categorySlug);
+    if (!category) notFound();
+    allCategoryProducts = (productsData as any[]).filter(p => p.categorySlug === categorySlug);
+  }
+
+  const originalSubName = (category.subcategories as string[]).find(
     (s) => toSlug(s) === subcategorySlug.toLowerCase()
   );
 
   if (!originalSubName) notFound();
 
-  const subSubList = category.subSubCategories?.[originalSubName] ?? [];
+  const subSubList = (category.subSubCategories?.[originalSubName] as string[]) ?? [];
   const originalSubSubName = subSubList.find(
     (s) => toSlug(s) === subSubCategorySlug.toLowerCase()
   );
 
   if (!originalSubSubName) notFound();
-
-  const allCategoryProducts = await getProductsByCategory(categorySlug);
 
   return (
     <CategoryContent

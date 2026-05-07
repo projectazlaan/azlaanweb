@@ -3,6 +3,7 @@ import CategoryContent from '../CategoryContent';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import categoriesData from '@/data/categories.json';
+import productsData from '@/data/products.json';
 
 interface SubCategoryPageProps {
   params: Promise<{
@@ -31,10 +32,19 @@ export async function generateStaticParams() {
 // ─── SEO Metadata ──────────────────────────────────────────────
 export async function generateMetadata({ params }: SubCategoryPageProps): Promise<Metadata> {
   const { categorySlug, subcategorySlug } = await params;
-  const category = await getCategoryBySlug(categorySlug);
+  
+  let category: any = null;
+  try {
+    category = await getCategoryBySlug(categorySlug);
+  } catch (e) {}
+
+  if (!category) {
+    category = (categoriesData as any[]).find(c => c.slug === categorySlug);
+  }
+
   if (!category) return { title: 'Not Found' };
 
-  const originalSubName = category.subcategories.find(
+  const originalSubName = (category.subcategories as string[]).find(
     (s) => toSlug(s) === subcategorySlug
   );
 
@@ -49,17 +59,29 @@ export async function generateMetadata({ params }: SubCategoryPageProps): Promis
 // ─── Page Component ────────────────────────────────────────────
 export default async function SubCategoryPage({ params }: SubCategoryPageProps) {
   const { categorySlug, subcategorySlug } = await params;
-  const category = await getCategoryBySlug(categorySlug);
+  
+  let category: any = null;
+  let allCategoryProducts: any[] = [];
 
-  if (!category) notFound();
+  try {
+    category = await getCategoryBySlug(categorySlug);
+    if (category) {
+      allCategoryProducts = await getProductsByCategory(categorySlug);
+    }
+  } catch (e) {}
 
-  const originalSubName = category.subcategories.find(
+  // Fallback
+  if (!category) {
+    category = (categoriesData as any[]).find(c => c.slug === categorySlug);
+    if (!category) notFound();
+    allCategoryProducts = (productsData as any[]).filter(p => p.categorySlug === categorySlug);
+  }
+
+  const originalSubName = (category.subcategories as string[]).find(
     (s) => toSlug(s) === subcategorySlug.toLowerCase()
   );
 
   if (!originalSubName) notFound();
-
-  const allCategoryProducts = await getProductsByCategory(categorySlug);
 
   return (
     <CategoryContent
