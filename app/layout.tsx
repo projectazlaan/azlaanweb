@@ -21,8 +21,26 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Azlaan - Bangladeshi Premium Clothing",
+  metadataBase: new URL('https://azlaan.com.bd'),
+  title: {
+    default: "Azlaan - Bangladeshi Premium Clothing",
+    template: "%s | Azlaan"
+  },
   description: "Crafted with Pride in Bangladesh. Premium clothing for Men, Women & Kids.",
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://azlaan.com.bd',
+    siteName: 'Azlaan',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Azlaan Premium Clothing',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
