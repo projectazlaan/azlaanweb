@@ -1,5 +1,4 @@
 import { ImageResponse } from 'next/og';
-import { getAllProducts } from '@/lib/data';
 
 // Route segment config
 export const runtime = 'edge';
@@ -14,10 +13,6 @@ export const size = {
 export const contentType = 'image/png';
 
 export default async function Image() {
-  // Fetch latest products to show in the background
-  const products = await getAllProducts();
-  const latestProducts = products.slice(0, 3);
-
   return new ImageResponse(
     (
       <div
@@ -33,7 +28,7 @@ export default async function Image() {
           padding: '40px',
         }}
       >
-        {/* Background product images with low opacity */}
+        {/* Background hero image from site */}
         <div
           style={{
             position: 'absolute',
@@ -42,20 +37,17 @@ export default async function Image() {
             right: 0,
             bottom: 0,
             display: 'flex',
-            opacity: 0.3,
           }}
         >
-          {latestProducts.map((p, i) => (
-            <img
-              key={i}
-              src={p.images[0]}
-              style={{
-                width: '33.33%',
-                height: '100%',
-                objectFit: 'cover',
-              }}
-            />
-          ))}
+          <img
+            src="/media-pro/Cover/616795496_122112085989151981_2801687860027277426_n.webp"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: 0.8,
+            }}
+          />
         </div>
 
         {/* Brand Overlay */}
