@@ -7,11 +7,12 @@ export default function BrandStory({ isBangla = false }: { isBangla?: boolean })
         <div className="order-2 md:order-1">
           <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
             <Image
-              src="/media-pro/Cover/616795496_122112085989151981_2801687860027277426_n.webp"
-              alt="Azlaan Outlet Counter"
+              src="/media-pro/cover/cover 3.jpg"
+              alt="Azlaan Our Story"
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
+              unoptimized
             />
           </div>
         </div>

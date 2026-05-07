@@ -285,7 +285,7 @@ export default function FeaturedProducts({ initialProducts }: { initialProducts?
     }
   }
 
-  const categories = ['All', 'Men', 'Women', 'Fabric']
+  const categories = ['All', 'Men', 'Women', 'Fabric', 'Exclusive Collection', 'Series']
 
   if (loading) {
     return (

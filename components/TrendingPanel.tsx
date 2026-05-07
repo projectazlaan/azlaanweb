@@ -23,9 +23,9 @@ const TRENDING_SLIDES: TrendingContent[] = [
     title: 'The Panjabi Edit',
     subtitle: 'Trending Now',
     description: 'Explore our most-loved Panjabi collection, crafted with premium fabrics and intricate detailing.',
-    bgImage: '/media-pro/men/Design%201/649824908_122120770023151981_1372810042799937270_n.webp',
+    bgImage: '/media-pro/cover/cover 1.jpg',
     cta1Text: 'Shop Panjabi',
-    cta1Link: '/men/premium-panjabi',
+    cta1Link: '/men/panjabi',
     cta2Text: 'View All',
     cta2Link: '/men'
   },
@@ -34,7 +34,7 @@ const TRENDING_SLIDES: TrendingContent[] = [
     title: 'Luxury Pret Series',
     subtitle: 'Must Have',
     description: 'Elevate your festive look with our trending luxury pret collection for women.',
-    bgImage: '/media-pro/women/Design%201/673191812_122125962327151981_8385571386878315506_n.webp',
+    bgImage: '/media-pro/cover/cover 2.jpg',
     cta1Text: 'Shop Pret',
     cta1Link: '/women/luxury-pret',
     cta2Text: 'Explore More',
@@ -45,11 +45,11 @@ const TRENDING_SLIDES: TrendingContent[] = [
     title: 'Signature Series',
     subtitle: 'New Trends',
     description: 'Discover the signature series that everyone is talking about. Limited edition pieces.',
-    bgImage: '/media-pro/Cover/651731213_122121294069151981_7046002980511560260_n.webp',
+    bgImage: '/media-pro/cover/cover 3.jpg',
     cta1Text: 'Explore Now',
     cta1Link: '/shop',
     cta2Text: 'Our Trends',
-    cta2Link: '#'
+    cta2Link: '/about'
   }
 ]
 

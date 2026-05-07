@@ -25,7 +25,7 @@ export default async function AboutPage({ searchParams }: { searchParams: Promis
             <div>
               <div className="relative aspect-video w-full overflow-hidden rounded-2xl">
                 <Image
-                  src="/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp"
+                  src="/media-pro/cover/cover 3.jpg"
                   alt="Craftsmanship"
                   fill
                   className="object-cover"
