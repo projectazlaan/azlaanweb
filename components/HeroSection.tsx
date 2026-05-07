@@ -159,6 +159,8 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
                   alt={slide.title}
                   fill
                   priority={index === 1}
+                  unoptimized
+                  quality={100}
                   className={`object-cover transition-transform duration-[10000ms] ease-out ${isRealActive ? 'scale-105' : 'scale-100'} z-0`}
                   sizes="100vw"
                 />
