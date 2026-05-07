@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import { Menu, ShoppingBag, ChevronDown, ArrowRight, User } from 'lucide-react';
 import { useSidebar } from '@/context/SidebarContext';
 import { useCartStore } from '@/store/cartStore';
@@ -170,10 +171,12 @@ export default function Navbar() {
                 <div className="col-span-3 border-r border-black/[0.05] pr-10">
                   <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-[#6E6E73] mb-4">Featured</h3>
                   <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-4 group cursor-pointer">
-                    <img 
+                    <Image 
                       src={activeCategory.heroImage || '/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp'} 
                       alt={activeCategory.name}
-                      className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      unoptimized
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-5">
                       <p className="text-white text-xs font-bold tracking-widest uppercase">Explore {activeCategory.name}</p>

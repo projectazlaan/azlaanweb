@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { X, ShoppingBag, Heart } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useCartStore } from '@/store/cartStore';
 
 interface QuickViewModalProps {
   product: Product;
@@ -60,7 +61,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
             )}
           </div>
           
-          {product.images.length > 1 && (
+          {product.images && product.images.length > 1 && (
             <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
               {product.images.map((img, idx) => (
                 <button
@@ -70,7 +71,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
                     activeImage === idx ? 'border-black' : 'border-transparent opacity-60 hover:opacity-100'
                   }`}
                 >
-                  <Image src={img} alt="" fill unoptimized className="object-cover" />
+                  <Image src={img || ''} alt="" fill unoptimized className="object-cover" />
                 </button>
               ))}
             </div>

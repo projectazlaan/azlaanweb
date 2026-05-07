@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default async function AboutPage({ searchParams }: { searchParams: Promise<{ lang?: string }> }) {
   const resolvedSearchParams = await searchParams;
   const isBangla = resolvedSearchParams?.lang === 'bn';
@@ -21,11 +23,15 @@ export default async function AboutPage({ searchParams }: { searchParams: Promis
         <section className="mb-8 md:mb-12">
           <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-center">
             <div>
-              <img
-                src="/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp"
-                alt="Craftsmanship"
-                className="rounded-2xl w-full"
-              />
+              <div className="relative aspect-video w-full overflow-hidden rounded-2xl">
+                <Image
+                  src="/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp"
+                  alt="Craftsmanship"
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
             </div>
             <div>
               <h2 className="font-serif text-2xl md:text-3xl font-bold mb-4 text-primary">

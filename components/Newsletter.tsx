@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Send, CheckCircle2, Sparkles, Bell, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Newsletter({ isBangla = false }: { isBangla?: boolean }) {
   const [email, setEmail] = useState('');
@@ -30,10 +31,12 @@ export default function Newsletter({ isBangla = false }: { isBangla?: boolean })
       {/* ── Background Elements ── */}
       <div className="absolute inset-0 bg-[#1D1D1F]" />
       <div className="absolute inset-0 opacity-20">
-        <img 
+        <Image 
           src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e12?auto=format&fit=crop&q=80&w=2000" 
           alt="Background" 
-          className="w-full h-full object-cover grayscale"
+          fill
+          className="object-cover grayscale"
+          unoptimized
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1D1D1F] via-[#1D1D1F]/90 to-transparent" />
       </div>
@@ -143,7 +146,9 @@ export default function Newsletter({ isBangla = false }: { isBangla?: boolean })
                <div className="flex -space-x-2">
                   {[1,2,3].map(i => (
                     <div key={i} className="w-6 h-6 rounded-full bg-gray-200 border-2 border-white overflow-hidden">
-                       <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" />
+                       <div className="relative w-full h-full">
+                         <Image src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" fill className="object-cover" unoptimized />
+                       </div>
                     </div>
                   ))}
                </div>

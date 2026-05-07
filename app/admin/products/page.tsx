@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Plus, Search, Edit, Trash2, Filter } from 'lucide-react'
+import Image from 'next/image'
 
 interface Product {
   id: string
@@ -129,7 +130,9 @@ export default function AdminProducts() {
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg bg-section-bg overflow-hidden flex-shrink-0">
                           {product.image && (
-                            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                            <div className="relative w-full h-full">
+                              <Image src={product.image} alt={product.name} fill className="object-cover" unoptimized />
+                            </div>
                           )}
                         </div>
                         <div>

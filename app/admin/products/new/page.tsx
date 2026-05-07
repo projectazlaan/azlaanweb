@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Upload } from 'lucide-react'
+import Image from 'next/image'
 
 export default function NewProduct() {
   const router = useRouter()
@@ -131,7 +132,9 @@ export default function NewProduct() {
             required
           />
           {form.image && (
-            <img src={form.image} alt="Preview" className="mt-3 w-32 h-32 object-cover rounded-xl" />
+            <div className="relative mt-3 w-32 h-32 overflow-hidden rounded-xl">
+              <Image src={form.image} alt="Preview" fill className="object-cover" unoptimized />
+            </div>
           )}
         </div>
 

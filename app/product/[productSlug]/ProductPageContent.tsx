@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { 
@@ -106,8 +107,8 @@ export default function ProductPageContent({ product, recommended }: ProductPage
           >
             <div className="max-w-[1400px] mx-auto flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg overflow-hidden border border-black/5">
-                  <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
+                <div className="w-12 h-12 rounded-lg overflow-hidden border border-black/5 relative">
+                  <Image src={(product.images && product.images[0]) || ''} alt={product.name} fill className="object-cover" unoptimized />
                 </div>
                 <div>
                   <h3 className="text-xs font-black uppercase tracking-widest text-primary">{product.name}</h3>

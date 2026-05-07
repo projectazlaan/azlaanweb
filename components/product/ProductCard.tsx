@@ -7,6 +7,7 @@ import { Heart, Eye, Star } from 'lucide-react';
 import { Product, ViewMode } from '@/types';
 import { toast } from 'react-hot-toast';
 import { useCartStore } from '@/store/cartStore';
+import { trackEvent } from '@/lib/analytics';
 
 interface ProductCardProps {
   product: Product;

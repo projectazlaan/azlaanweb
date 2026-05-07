@@ -10,8 +10,8 @@ export async function GET() {
     // Transform data to match the legacy format expected by FeaturedProducts
     const legacyProducts = products.map(p => ({
       ...p,
-      image: p.images[0], // Use first image as main image
-      category: p.categorySlug.charAt(0).toUpperCase() + p.categorySlug.slice(1), // Capitalize
+      image: (p.images && p.images[0]) || '', // Use first image as main image
+      category: p.categorySlug ? (p.categorySlug.charAt(0).toUpperCase() + p.categorySlug.slice(1)) : '', // Capitalize
       priceDisplay: `৳${p.price.toLocaleString()}`
     }))
 
