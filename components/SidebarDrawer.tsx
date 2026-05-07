@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   X,
   Home,
@@ -45,6 +45,8 @@ const staticLinks = [
   { href: '/contact', label: 'Contact',  icon: Phone },
 ];
 
+
+
 /* ── Category Accordion Item ─────────────────────────────────── */
 function CategoryAccordion({
   cat,
@@ -55,6 +57,7 @@ function CategoryAccordion({
   pathname: string;
   onNavigate: () => void;
 }) {
+  const router = useRouter();
   const isCatActive = pathname.startsWith(`/${cat.slug}`);
   const [open, setOpen] = useState(isCatActive);
   const [openSub, setOpenSub] = useState<string | null>(
@@ -69,7 +72,14 @@ function CategoryAccordion({
     <div>
       {/* Category trigger */}
       <button
-        onClick={() => setOpen((p) => !p)}
+        onClick={() => {
+          if (!open) {
+            setOpen(true);
+          } else {
+            router.push(`/${cat.slug}`);
+            onNavigate();
+          }
+        }}
         className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200 group
           ${isCatActive
             ? 'bg-[#0071E3]/8 text-[#1D1D1F]'
@@ -129,7 +139,14 @@ function CategoryAccordion({
                   <div className="flex items-center gap-1">
                     <Link
                       href={subUrl}
-                      onClick={onNavigate}
+                      onClick={(e) => {
+                        if (hasChildren && openSub !== sub) {
+                          e.preventDefault();
+                          setOpenSub(sub);
+                        } else {
+                          onNavigate();
+                        }
+                      }}
                       className={`flex-1 flex items-center gap-2 px-3 py-2 rounded-lg text-[12px] font-medium transition-all
                         ${isSubActive
                           ? 'text-[#1D1D1F] font-semibold bg-black/[0.04]'
@@ -144,7 +161,10 @@ function CategoryAccordion({
 
                     {hasChildren && (
                       <button
-                        onClick={() => setOpenSub((p) => (p === sub ? null : sub))}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setOpenSub((p) => (p === sub ? null : sub));
+                        }}
                         className="p-1.5 rounded-lg hover:bg-black/[0.05] transition-colors"
                       >
                         <ChevronDown
