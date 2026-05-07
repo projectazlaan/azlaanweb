@@ -23,33 +23,44 @@ const DEFAULT_SLIDES = [
     title: 'Handcrafted Elegance',
     subtitle: 'Azlaan Premium Quality',
     description: 'Discover ethically made, artisan-crafted products that blend tradition with contemporary style.',
-    bgImage: '/media-pro/Cover/651731213_122121294069151981_7046002980511560260_n.webp',
+    bgImage: '/media-pro/cover/cover 1.jpg',
     cta1Text: 'Explore Now',
-    cta1Link: '#',
+    cta1Link: '/shop',
     cta2Text: 'Learn More',
-    cta2Link: '#'
+    cta2Link: '/about'
   },
   {
     id: 'slide-2',
     title: 'Winter Warmth',
     subtitle: 'Stay Cozy, Look Sharp',
     description: 'Premium woolens and modern silhouettes for the cold season.',
-    bgImage: '/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp',
+    bgImage: '/media-pro/cover/cover 2.jpg',
     cta1Text: 'Shop Winter',
-    cta1Link: '#',
+    cta1Link: '/men',
     cta2Text: 'View Lookbook',
-    cta2Link: '#'
+    cta2Link: '/about'
   },
   {
     id: 'slide-3',
     title: 'New Arrivals',
     subtitle: 'Fresh Designs Just For You',
     description: 'Explore our latest collection of handcrafted fashion and lifestyle products.',
-    bgImage: '/media-pro/Cover/651731213_122121294069151981_7046002980511560260_n.webp',
+    bgImage: '/media-pro/cover/cover 3.jpg',
     cta1Text: 'Discover',
-    cta1Link: '#',
+    cta1Link: '/women',
     cta2Text: 'Our Story',
-    cta2Link: '#'
+    cta2Link: '/about'
+  },
+  {
+    id: 'slide-4',
+    title: 'Timeless Style',
+    subtitle: 'Luxury Redefined',
+    description: 'Artisanal craftsmanship meeting modern silhouettes for the contemporary wardrobe.',
+    bgImage: '/media-pro/cover/cover 4.jpg',
+    cta1Text: 'Shop All',
+    cta1Link: '/shop',
+    cta2Text: 'Lookbook',
+    cta2Link: '/about'
   }
 ]
 
