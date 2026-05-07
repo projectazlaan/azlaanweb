@@ -3,18 +3,48 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "dev:turbo": "next dev --turbopack",
+    "dev:clean": "rm -rf .next && next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "serve": "rm -rf .next && next build --webpack && next start"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^9.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@grapesjs/react": "latest",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "bcryptjs": "^3.0.3",
+    "framer-motion": "^12.38.0",
+    "grapesjs": "^0.22.16",
+    "grapesjs-blocks-basic": "latest",
+    "grapesjs-custom-code": "latest",
+    "grapesjs-parser-postcss": "latest",
+    "grapesjs-plugin-forms": "latest",
+    "grapesjs-preset-webpage": "latest",
+    "grapesjs-touch": "latest",
+    "heroicons": "^2.2.0",
+    "immer": "^10.2.0",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^1.14.0",
+    "nanoid": "^5.1.11",
     "next": "16.2.4",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-easy-crop": "^5.5.7",
+    "react-hot-toast": "^2.6.0",
+    "sharp": "^0.33.5",
+    "zustand": "^5.0.12",
+    "zod": "^3.23.8",
+    "better-sqlite3": "^11.5.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -22,5 +52,6 @@
     "eslint-config-next": "16.2.4",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "type": "module"
 }

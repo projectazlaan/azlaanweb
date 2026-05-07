@@ -1,0 +1,666 @@
+{
+  "products": [
+    {
+      "id": "prod_O9HFdCnJ",
+      "name": "Azlaan Premium Men - Design 1",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 1",
+      "price": 7030,
+      "priceDisplay": "৳7,030",
+      "image": "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+      "images": [
+        "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+        "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+        "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 1 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 1 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:04.933Z",
+      "updatedAt": "2026-05-05T07:38:04.948Z"
+    },
+    {
+      "id": "prod_lNH_Bz9w",
+      "name": "Azlaan Premium Men - Design 10",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 10",
+      "price": 8213,
+      "priceDisplay": "৳8,213",
+      "image": "/media-pro/men/Design 10/650308351_122120930805151981_448751621387112284_n.webp",
+      "images": [
+        "/media-pro/men/Design 10/650308351_122120930805151981_448751621387112284_n.webp",
+        "/media-pro/men/Design 10/651221048_122120930817151981_2760798627970354703_n.webp",
+        "/media-pro/men/Design 10/651793935_122120930841151981_1729535581095051490_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 10 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 10 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:04.958Z",
+      "updatedAt": "2026-05-05T07:38:04.958Z"
+    },
+    {
+      "id": "prod_2EXdJUVc",
+      "name": "Azlaan Premium Men - Design 11",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 11",
+      "price": 6516,
+      "priceDisplay": "৳6,516",
+      "image": "/media-pro/men/Design 11/650770969_122120920443151981_7419337193691681295_n.webp",
+      "images": [
+        "/media-pro/men/Design 11/650770969_122120920443151981_7419337193691681295_n.webp",
+        "/media-pro/men/Design 11/651024634_122120920413151981_1694513422469720599_n.webp",
+        "/media-pro/men/Design 11/651772648_122120920425151981_2665527185026905480_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 11 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 11 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:04.965Z",
+      "updatedAt": "2026-05-05T07:38:04.965Z"
+    },
+    {
+      "id": "prod_fYqI3nZj",
+      "name": "Azlaan Premium Men - Design 12",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 12",
+      "price": 6493,
+      "priceDisplay": "৳6,493",
+      "image": "/media-pro/men/Design 12/651225702_122121211317151981_899219807548154935_n.webp",
+      "images": [
+        "/media-pro/men/Design 12/651225702_122121211317151981_899219807548154935_n.webp",
+        "/media-pro/men/Design 12/651312992_122121211275151981_7920093932666762859_n.webp",
+        "/media-pro/men/Design 12/652123711_122121211323151981_6359282645592831920_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 12 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 12 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:04.970Z",
+      "updatedAt": "2026-05-05T07:38:04.970Z"
+    },
+    {
+      "id": "prod_6RnUwTof",
+      "name": "Azlaan Premium Men - Design 13",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 13",
+      "price": 5175,
+      "priceDisplay": "৳5,175",
+      "image": "/media-pro/men/Design 13/650773462_122121105159151981_1562194778741078206_n.webp",
+      "images": [
+        "/media-pro/men/Design 13/650773462_122121105159151981_1562194778741078206_n.webp",
+        "/media-pro/men/Design 13/651323772_122121105201151981_5496001944664244569_n.webp",
+        "/media-pro/men/Design 13/653153134_122121105189151981_5786659213611094632_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 13 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 13 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:04.973Z",
+      "updatedAt": "2026-05-05T07:38:04.973Z"
+    },
+    {
+      "id": "prod_8pY9QyCf",
+      "name": "Azlaan Premium Men - Design 14",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 14",
+      "price": 10774,
+      "priceDisplay": "৳10,774",
+      "image": "/media-pro/men/Design 14/651337020_122121225477151981_322056965429338679_n.webp",
+      "images": [
+        "/media-pro/men/Design 14/651337020_122121225477151981_322056965429338679_n.webp",
+        "/media-pro/men/Design 14/651772660_122121225531151981_4961412557079610402_n.webp",
+        "/media-pro/men/Design 14/653429532_122121225525151981_3757749164999544287_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 14 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 14 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:04.978Z",
+      "updatedAt": "2026-05-05T07:38:04.979Z"
+    },
+    {
+      "id": "prod_6VSivq_m",
+      "name": "Azlaan Premium Men - Design 15",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 15",
+      "price": 6228,
+      "priceDisplay": "৳6,228",
+      "image": "/media-pro/men/Design 15/651346736_122121208713151981_6282730690940546471_n.webp",
+      "images": [
+        "/media-pro/men/Design 15/651346736_122121208713151981_6282730690940546471_n.webp",
+        "/media-pro/men/Design 15/652301983_122121208689151981_2520699650658747409_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 15 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 15 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:04.990Z",
+      "updatedAt": "2026-05-05T07:38:04.990Z"
+    },
+    {
+      "id": "prod_S6c_7RvV",
+      "name": "Azlaan Premium Men - Design 16",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 16",
+      "price": 5639,
+      "priceDisplay": "৳5,639",
+      "image": "/media-pro/men/Design 16/652620396_122121670845151981_7411954025103286825_n.webp",
+      "images": [
+        "/media-pro/men/Design 16/652620396_122121670845151981_7411954025103286825_n.webp",
+        "/media-pro/men/Design 16/653702922_122121670749151981_6563573008909649221_n.webp",
+        "/media-pro/men/Design 16/654422616_122121670785151981_4449555768013086352_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 16 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 16 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:04.993Z",
+      "updatedAt": "2026-05-05T07:38:04.993Z"
+    },
+    {
+      "id": "prod_JpmRy12d",
+      "name": "Azlaan Premium Men - Design 17",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 17",
+      "price": 8129,
+      "priceDisplay": "৳8,129",
+      "image": "/media-pro/men/Design 17/661656241_122124414615151981_1026788578037879823_n.webp",
+      "images": [
+        "/media-pro/men/Design 17/661656241_122124414615151981_1026788578037879823_n.webp",
+        "/media-pro/men/Design 17/663289329_122124414609151981_1926952325493251978_n.webp",
+        "/media-pro/men/Design 17/666754860_122124414537151981_2328200784835823687_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 17 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 17 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.000Z",
+      "updatedAt": "2026-05-05T07:38:05.000Z"
+    },
+    {
+      "id": "prod_Aaz4EtS0",
+      "name": "Azlaan Premium Men - Design 2",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 2",
+      "price": 4890,
+      "priceDisplay": "৳4,890",
+      "image": "/media-pro/men/Design 2/649486384_122120775759151981_5241916048356926520_n.webp",
+      "images": [
+        "/media-pro/men/Design 2/649486384_122120775759151981_5241916048356926520_n.webp",
+        "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp",
+        "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 2 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 2 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.022Z",
+      "updatedAt": "2026-05-05T07:38:05.022Z"
+    },
+    {
+      "id": "prod_VXB7i31H",
+      "name": "Azlaan Premium Men - Design 3",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 3",
+      "price": 4821,
+      "priceDisplay": "৳4,821",
+      "image": "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp",
+      "images": [
+        "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp",
+        "/media-pro/men/Design 3/651228355_122121217287151981_9162389294873374984_n.webp",
+        "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 3 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 3 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.025Z",
+      "updatedAt": "2026-05-05T07:38:05.025Z"
+    },
+    {
+      "id": "prod_ml-hkFcc",
+      "name": "Azlaan Premium Men - Design 4",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 4",
+      "price": 6459,
+      "priceDisplay": "৳6,459",
+      "image": "/media-pro/men/Design 4/649658069_122120816709151981_7050745970883469671_n.webp",
+      "images": [
+        "/media-pro/men/Design 4/649658069_122120816709151981_7050745970883469671_n.webp",
+        "/media-pro/men/Design 4/650135481_122120816691151981_3237423457649921454_n.webp",
+        "/media-pro/men/Design 4/651312996_122120817513151981_1252037451694083502_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 4 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 4 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.033Z",
+      "updatedAt": "2026-05-05T07:38:05.033Z"
+    },
+    {
+      "id": "prod_vLpcLZoh",
+      "name": "Azlaan Premium Men - Design 5",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 5",
+      "price": 7227,
+      "priceDisplay": "৳7,227",
+      "image": "/media-pro/men/Design 5/649838445_122120824005151981_5347138654711711758_n.webp",
+      "images": [
+        "/media-pro/men/Design 5/649838445_122120824005151981_5347138654711711758_n.webp",
+        "/media-pro/men/Design 5/650488805_122120824017151981_3969776055903278431_n.webp",
+        "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 5 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 5 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.052Z",
+      "updatedAt": "2026-05-05T07:38:05.052Z"
+    },
+    {
+      "id": "prod_G0FkswoU",
+      "name": "Azlaan Premium Men - Design 6",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 6",
+      "price": 8059,
+      "priceDisplay": "৳8,059",
+      "image": "/media-pro/men/Design 6/650061703_122120930277151981_1200600818769491462_n.webp",
+      "images": [
+        "/media-pro/men/Design 6/650061703_122120930277151981_1200600818769491462_n.webp",
+        "/media-pro/men/Design 6/650709212_122120930289151981_4243578912510908876_n.webp",
+        "/media-pro/men/Design 6/651028160_122120930301151981_5806966969716353178_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 6 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 6 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.073Z",
+      "updatedAt": "2026-05-05T07:38:05.073Z"
+    },
+    {
+      "id": "prod_JNWhPJFl",
+      "name": "Azlaan Premium Men - Design 7",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 7",
+      "price": 10013,
+      "priceDisplay": "৳10,013",
+      "image": "/media-pro/men/Design 7/650170040_122120896137151981_1058831838965919698_n.webp",
+      "images": [
+        "/media-pro/men/Design 7/650170040_122120896137151981_1058831838965919698_n.webp",
+        "/media-pro/men/Design 7/650500598_122120896149151981_1860012895730217293_n.webp",
+        "/media-pro/men/Design 7/651061861_122120896125151981_8116066022313233253_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 7 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 7 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.075Z",
+      "updatedAt": "2026-05-05T07:38:05.075Z"
+    },
+    {
+      "id": "prod_N7HhQZ-B",
+      "name": "Azlaan Premium Men - Design 8",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 8",
+      "price": 11959,
+      "priceDisplay": "৳11,959",
+      "image": "/media-pro/men/Design 8/650459543_122120776773151981_2767906346169121870_n.webp",
+      "images": [
+        "/media-pro/men/Design 8/650459543_122120776773151981_2767906346169121870_n.webp",
+        "/media-pro/men/Design 8/651167175_122120776779151981_1397311801433277748_n.webp",
+        "/media-pro/men/Design 8/651181224_122120776725151981_3272788632648828233_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 8 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 8 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.139Z",
+      "updatedAt": "2026-05-05T07:38:05.139Z"
+    },
+    {
+      "id": "prod_IYVNYRUJ",
+      "name": "Azlaan Premium Men - Design 9",
+      "nameBn": "আজলান প্রিমিয়াম পুরুষ - Design 9",
+      "price": 8892,
+      "priceDisplay": "৳8,892",
+      "image": "/media-pro/men/Design 9/650776931_122120901375151981_1013153120169115386_n.webp",
+      "images": [
+        "/media-pro/men/Design 9/650776931_122120901375151981_1013153120169115386_n.webp",
+        "/media-pro/men/Design 9/651194874_122120901357151981_7665277939822620755_n.webp",
+        "/media-pro/men/Design 9/651354776_122120901345151981_8931853207503750911_n.webp"
+      ],
+      "category": "Men",
+      "categoryBn": "পুরুষ",
+      "description": "Exquisite men fashion piece from the Design 9 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 9 কালেকশনের চমৎকার পুরুষদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.146Z",
+      "updatedAt": "2026-05-05T07:38:05.146Z"
+    },
+    {
+      "id": "prod_eZcSlWDK",
+      "name": "Azlaan Premium Women - Design 2",
+      "nameBn": "আজলান প্রিমিয়াম নারী - Design 2",
+      "price": 9560,
+      "priceDisplay": "৳9,560",
+      "image": "/media-pro/women/Design 2/671639040_122125885023151981_7657790961365514375_n.webp",
+      "images": [
+        "/media-pro/women/Design 2/671639040_122125885023151981_7657790961365514375_n.webp",
+        "/media-pro/women/Design 2/671858259_122125885173151981_8012706557340946160_n.webp",
+        "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp",
+        "/media-pro/women/Design 2/672681309_122125885053151981_339987484088257108_n.webp"
+      ],
+      "category": "Women",
+      "categoryBn": "নারী",
+      "description": "Exquisite women fashion piece from the Design 2 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 2 কালেকশনের চমৎকার নারীদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.169Z",
+      "updatedAt": "2026-05-05T07:38:05.169Z"
+    },
+    {
+      "id": "prod_ekStI0zR",
+      "name": "Azlaan Premium Women - Design 3",
+      "nameBn": "আজলান প্রিমিয়াম নারী - Design 3",
+      "price": 10008,
+      "priceDisplay": "৳10,008",
+      "image": "/media-pro/women/Design 3/670896434_122125960101151981_3029998908890020858_n.webp",
+      "images": [
+        "/media-pro/women/Design 3/670896434_122125960101151981_3029998908890020858_n.webp",
+        "/media-pro/women/Design 3/671853622_122125960077151981_4116438312044612288_n.webp",
+        "/media-pro/women/Design 3/672074713_122125960041151981_8798584649494311348_n.webp",
+        "/media-pro/women/Design 3/672683402_122126047389151981_6851093604426523410_n.webp",
+        "/media-pro/women/Design 3/674595493_122125960011151981_3711946961628466970_n.webp"
+      ],
+      "category": "Women",
+      "categoryBn": "নারী",
+      "description": "Exquisite women fashion piece from the Design 3 collection. Crafted with premium materials for ultimate comfort and style.",
+      "descriptionBn": "Design 3 কালেকশনের চমৎকার নারীদের পোশাক। সর্বোচ্চ আরাম এবং স্টাইলের জন্য প্রিমিয়াম উপকরণ দিয়ে তৈরি।",
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.170Z",
+      "updatedAt": "2026-05-05T07:38:05.170Z"
+    },
+    {
+      "id": "fab_001",
+      "name": "Royal Banarasi Silk",
+      "slug": "royal-banarasi-silk",
+      "price": 4500,
+      "priceDisplay": "৳4,500 / meter",
+      "images": [
+        "https://images.unsplash.com/photo-1610116306796-6fea9f4fae38?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&q=80&w=800"
+      ],
+      "category": "Fabric",
+      "categorySlug": "fabric",
+      "subcategory": "Premium Silk",
+      "description": "Exquisite hand-loomed Banarasi silk with pure zari work. Perfect for luxury sarees and festive Panjabis.",
+      "material": "Pure Silk",
+      "gsm": 120,
+      "width": "44 Inch",
+      "isSoldByLength": true,
+      "rating": 5.0,
+      "reviewCount": 12,
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.171Z",
+      "updatedAt": "2026-05-05T07:38:05.171Z"
+    },
+    {
+      "id": "fab_002",
+      "name": "Luxury Giza Cotton",
+      "slug": "luxury-giza-cotton",
+      "price": 1200,
+      "priceDisplay": "৳1,200 / meter",
+      "images": [
+        "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&q=80&w=800"
+      ],
+      "category": "Fabric",
+      "categorySlug": "fabric",
+      "subcategory": "Luxury Cotton",
+      "description": "Extra-long staple Egyptian Giza cotton. Incredibly soft, breathable, and durable for premium shirts and kurtas.",
+      "material": "Egyptian Cotton",
+      "gsm": 95,
+      "width": "58 Inch",
+      "isSoldByLength": true,
+      "rating": 4.9,
+      "reviewCount": 45,
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.171Z",
+      "updatedAt": "2026-05-05T07:38:05.171Z"
+    },
+    {
+      "id": "fab_003",
+      "name": "Pure Italian Linen",
+      "slug": "pure-italian-linen",
+      "price": 2800,
+      "priceDisplay": "৳2,800 / meter",
+      "images": [
+        "https://images.unsplash.com/photo-1590736704728-f4730bb30770?auto=format&fit=crop&q=80&w=800"
+      ],
+      "category": "Fabric",
+      "categorySlug": "fabric",
+      "subcategory": "Imported Linen",
+      "description": "Authentic Italian linen with a refined slub texture. Ideal for summer suits and sophisticated casual wear.",
+      "material": "Italian Linen",
+      "gsm": 150,
+      "width": "60 Inch",
+      "isSoldByLength": true,
+      "rating": 4.8,
+      "reviewCount": 32,
+      "inStock": 1,
+      "createdAt": "2026-05-05T07:38:05.171Z",
+      "updatedAt": "2026-05-05T07:38:05.171Z"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "test_1",
+      "name": "Rahim Khan",
+      "nameBn": "রহিম খান",
+      "location": "Dhaka",
+      "locationBn": "ঢাকা",
+      "review": "The quality of Azlaan suits is unmatched in Bangladesh. Truly premium feel and perfect fit!",
+      "reviewBn": "আজলানের স্যুটের মান বাংলাদেশে অপ্রতিদ্বন্দ্বী। সত্যিই প্রিমিয়াম অনুভূতি এবং নিখুঁত ফিট!",
+      "initial": "R",
+      "rating": 5,
+      "createdAt": "2026-05-03T10:00:00.000Z"
+    },
+    {
+      "id": "test_2",
+      "name": "Sarah Ahmed",
+      "nameBn": "সারাহ আহমেদ",
+      "location": "Chittagong",
+      "locationBn": "চট্টগ্রাম",
+      "review": "Elegant designs and comfortable fabric. Azlaan has become my go-to brand for formal wear.",
+      "reviewBn": "বিশুদ্ধ ডিজাইন এবং আরামদায়ক কাপড়। ফরমাল পোশাকের জন্য আজলান আমার প্রথম পছন্দ।",
+      "initial": "S",
+      "rating": 5,
+      "createdAt": "2026-05-03T10:00:00.000Z"
+    },
+    {
+      "id": "test_3",
+      "name": "Karim Uddin",
+      "nameBn": "করিম উদ্দিন",
+      "location": "Sylhet",
+      "locationBn": "সিলেট",
+      "review": "Bought a junior suit for my son. The quality and design exceeded my expectations!",
+      "reviewBn": "আমার ছেলের জন্য একটি জুনিয়র স্যুট কিনেছি। মান এবং ডিজাইন আমার প্রত্যাশার চেয়েও ভালো!",
+      "initial": "K",
+      "rating": 5,
+      "createdAt": "2026-05-03T10:00:00.000Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord_1",
+      "customerName": "Anisur Rahman",
+      "total": 12500,
+      "status": "delivered",
+      "items": [
+        {
+          "productId": "prod_1",
+          "quantity": 1,
+          "price": 12500
+        }
+      ],
+      "createdAt": "2026-05-01T10:30:00.000Z"
+    },
+    {
+      "id": "ord_2",
+      "customerName": "Farzana Yasmin",
+      "total": 9800,
+      "status": "processing",
+      "items": [
+        {
+          "productId": "prod_2",
+          "quantity": 1,
+          "price": 9800
+        }
+      ],
+      "createdAt": "2026-05-02T14:20:00.000Z"
+    },
+    {
+      "id": "ord_3",
+      "customerName": "Kamrul Islam",
+      "total": 6400,
+      "status": "pending",
+      "items": [
+        {
+          "productId": "prod_4",
+          "quantity": 2,
+          "price": 3200
+        }
+      ],
+      "createdAt": "2026-05-03T09:15:00.000Z"
+    },
+    {
+      "id": "ord_4",
+      "customerName": "Nadia Sultana",
+      "total": 19600,
+      "status": "delivered",
+      "items": [
+        {
+          "productId": "prod_2",
+          "quantity": 2,
+          "price": 9800
+        }
+      ],
+      "createdAt": "2026-04-30T11:45:00.000Z"
+    },
+    {
+      "id": "ord_5",
+      "customerName": "Sabbir Ahmed",
+      "total": 12500,
+      "status": "processing",
+      "items": [
+        {
+          "productId": "prod_1",
+          "quantity": 1,
+          "price": 12500
+        }
+      ],
+      "createdAt": "2026-05-03T11:00:00.000Z"
+    }
+  ],
+  "customers": [
+    {
+      "id": "cust_1",
+      "name": "Anisur Rahman",
+      "email": "anis@example.com",
+      "orders": 1,
+      "totalSpent": 12500
+    },
+    {
+      "id": "cust_2",
+      "name": "Farzana Yasmin",
+      "email": "farzana@example.com",
+      "orders": 1,
+      "totalSpent": 9800
+    },
+    {
+      "id": "cust_3",
+      "name": "Kamrul Islam",
+      "email": "kamrul@example.com",
+      "orders": 1,
+      "totalSpent": 6400
+    },
+    {
+      "id": "cust_4",
+      "name": "Nadia Sultana",
+      "email": "nadia@example.com",
+      "orders": 1,
+      "totalSpent": 19600
+    }
+  ],
+  "activity_log": [
+    {
+      "id": "act_1",
+      "user": "Admin",
+      "action": "Added new product: Premium Cotton Shirt",
+      "timestamp": "2026-05-03T10:00:00.000Z"
+    },
+    {
+      "id": "act_2",
+      "user": "System",
+      "action": "Order #ord_3 placed by Kamrul Islam",
+      "timestamp": "2026-05-03T09:15:00.000Z"
+    },
+    {
+      "id": "act_3",
+      "user": "Admin",
+      "action": "Updated price for Classic Premium Suit",
+      "timestamp": "2026-05-02T16:45:00.000Z"
+    }
+  ],
+  "settings": {
+    "primaryColor": "#1D1D1F",
+    "secondaryColor": "#0071E3",
+    "accentColor": "#0071E3",
+    "heroHeadline": "Experience Elegance",
+    "heroSubheadline": "Discover our premium collection of luxury apparel",
+    "heroButtonText": "Shop Now",
+    "heroLink": "/shop",
+    "heroImage": "/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp",
+    "showTestimonials": true,
+    "showBestSellers": true,
+    "siteName": "Azlaan",
+    "footerText": "© 2026 Azlaan. All rights reserved.",
+    "sectionOrder": [
+      "hero",
+      "categories",
+      "best-sellers",
+      "testimonials",
+      "newsletter"
+    ],
+    "cardBorderRadius": "24px",
+    "cardShadow": "0 20px 40px -15px rgba(0,0,0,0.1)",
+    "categoryTitleSize": "24px",
+    "categoryCardStyle": "modern",
+    "testimonialBg": "#F5F5F7",
+    "newsletterTitle": "Join the Elite",
+    "newsletterSub": "Subscribe to receive updates, access to exclusive deals, and more.",
+    "newsletterBtnText": "Subscribe",
+    "productColumns": "4",
+    "globalAnimation": "fade-up"
+  },
+  "hero": {
+    "id": "default",
+    "title": "Azlaan",
+    "subtitle": "Bangladeshi Premium Clothing",
+    "description": "Crafted with Pride in Bangladesh",
+    "bgImage": "/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp",
+    "cta1Text": "Shop Now",
+    "cta1Link": "/shop",
+    "cta2Text": "Explore Collection",
+    "cta2Link": "/collections"
+  },
+  "admin_users": [
+    {
+      "id": "admin-1",
+      "username": "admin",
+      "passwordHash": "admin123",
+      "createdAt": "2026-05-03T10:00:00.000Z"
+    }
+  ]
+}

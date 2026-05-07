@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Men",
+    "slug": "men",
+    "description": "Experience the epitome of luxury with our curated men's collection. From traditional heritage to modern tailoring.",
+    "subcategories": ["All", "Panjabi", "Classic Kurtas", "Formal Shirts", "Chino Pants", "Casual Edit"],
+    "filters": {
+      "size": ["S", "M", "L", "XL", "XXL"],
+      "color": ["Black", "White", "Navy", "Maroon", "Olive", "Gold"],
+      "fabric": ["Premium Cotton", "Silk", "Linen", "Wash & Wear"],
+      "fit": ["Slim Fit", "Regular Fit", "Tailored Fit"],
+      "occasion": ["Eid", "Wedding", "Office", "Casual"],
+      "priceRange": true,
+      "rating": true
+    },
+    "searchKeywords": ["panjabi", "kurta", "wedding wear", "eid collection", "formal shirt", "chino", "premium cotton"],
+    "heroImage": "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+    "subSubCategories": {
+      "Panjabi": ["All", "Premium", "Royal Heritage", "Signature"],
+      "Classic Kurtas": ["All", "Basic", "Embroidered"],
+      "Formal Shirts": ["All", "Oxford", "Tuxedo", "Linen"]
+    }
+  },
+  {
+    "name": "Women",
+    "slug": "women",
+    "description": "Elegance redefined. Discover artisanal craftsmanship and sophisticated silhouettes for the modern woman.",
+    "subcategories": ["All", "Luxury Pret", "Unstitched", "Saree", "Bridal", "Signature Series"],
+    "filters": {
+      "size": ["XS", "S", "M", "L", "XL"],
+      "color": ["Red", "Emerald", "Pastel Pink", "Gold", "Silver", "Royal Blue"],
+      "fabric": ["Organza", "Chiffon", "Silk", "Cotton"],
+      "silhouette": ["A-Line", "Straight", "Floor Length", "Empire Waist"],
+      "occasion": ["Party", "Bridal", "Festive", "Daily Wear"],
+      "priceRange": true,
+      "rating": true
+    },
+    "searchKeywords": ["saree", "pret", "bridal wear", "luxury collection", "festive", "chiffon", "silk saree"],
+    "heroImage": "/media-pro/Cover/651731213_122121294069151981_7046002980511560260_n.webp",
+    "subSubCategories": {
+      "Saree": ["All", "Silk", "Jamdani", "Chiffon"],
+      "Luxury Pret": ["All", "Evening Wear", "Formal"],
+      "Bridal": ["All", "Lehenga", "Sharara"]
+    }
+  },
+  {
+    "name": "Fabric",
+    "slug": "fabric",
+    "description": "The foundation of luxury. Explore our curated selection of premium textiles, from rare silks to the finest hand-woven cottons.",
+    "subcategories": ["All", "Premium Silk", "Luxury Cotton", "Imported Linen", "Designer Wool", "Traditional Weaves"],
+    "filters": {
+      "material": ["Pure Silk", "Egyptian Cotton", "Italian Linen", "Cashmere Blend"],
+      "weight": ["Lightweight", "Medium Weight", "Heavyweight"],
+      "texture": ["Smooth", "Textured", "Crinkled", "Soft"],
+      "width": ["44 Inch", "58 Inch", "60 Inch"],
+      "color": ["Midnight Black", "Royal Ivory", "Crimson", "Emerald", "Sapphire"],
+      "priceRange": true,
+      "rating": true
+    },
+    "searchKeywords": ["fabric", "silk", "cotton fabric", "unstitched material", "luxury textile", "linen", "textile"],
+    "heroImage": "/media-pro/Cover/616795496_122112085989151981_2801687860027277426_n.webp",
+    "subSubCategories": {
+      "Premium Silk": ["All", "Raw Silk", "Satin", "Crepe"],
+      "Luxury Cotton": ["All", "Supima", "Pima", "Giza"]
+    }
+  }
+]
