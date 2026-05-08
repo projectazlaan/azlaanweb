@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -22,7 +21,6 @@ import {
   ChevronRight,
   ChevronLeft
 } from 'lucide-react';
-
 interface Product {
   id: string;
   name: string;
@@ -34,14 +32,12 @@ interface Product {
   status: 'active' | 'draft' | 'out_of_stock';
   created_at: string;
 }
-
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
   useEffect(() => {
     fetch('/api/products')
       .then(res => res.json())
@@ -51,12 +47,10 @@ export default function ProductsPage() {
       })
       .catch(console.error);
   }, []);
-
   const filteredProducts = products.filter(p => 
     p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     p.category?.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
   return (
     <div className="space-y-8 pb-10">
       {/* Header & Stats */}
@@ -75,7 +69,6 @@ export default function ProductsPage() {
           </motion.button>
         </div>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
           { label: 'Total Products', value: products.length, icon: Package, color: 'bg-blue-500' },
@@ -99,7 +92,6 @@ export default function ProductsPage() {
           </motion.div>
         ))}
       </div>
-
       {/* Toolbar */}
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white p-4 rounded-[2rem] border border-gray-100 shadow-sm">
         <div className="relative flex-1 w-full md:max-w-md">
@@ -132,7 +124,6 @@ export default function ProductsPage() {
           </button>
         </div>
       </div>
-
       {/* Products Grid */}
       {viewMode === 'grid' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
@@ -259,7 +250,6 @@ export default function ProductsPage() {
           </table>
         </div>
       )}
-
       {/* Pagination */}
       <div className="flex items-center justify-between px-2">
         <p className="text-sm text-gray-400 font-bold">Showing <span className="text-gray-900">10</span> of <span className="text-gray-900">{products.length}</span> products</p>

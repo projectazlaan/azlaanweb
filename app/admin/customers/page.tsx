@@ -1,8 +1,6 @@
 'use client'
-
 import { useEffect, useState } from 'react'
 import { Users, Search } from 'lucide-react'
-
 interface Customer {
   id: string
   name: string
@@ -12,14 +10,11 @@ interface Customer {
   totalSpent: number
   createdAt: string
 }
-
 export default function AdminCustomers() {
   const [customers, setCustomers] = useState<Customer[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
-
   useEffect(() => { fetchCustomers() }, [])
-
   const fetchCustomers = async () => {
     try {
       const res = await fetch('/api/admin/customers')
@@ -33,13 +28,11 @@ export default function AdminCustomers() {
       setLoading(false)
     }
   }
-
   const filtered = customers.filter(c =>
     c.name.toLowerCase().includes(search.toLowerCase()) ||
     c.phone.includes(search) ||
     c.email?.toLowerCase().includes(search.toLowerCase())
   )
-
   return (
     <div>
       <div className="mb-6">
@@ -48,7 +41,6 @@ export default function AdminCustomers() {
         </h1>
         <p className="text-text-muted text-sm mt-1">{customers.length} total customers</p>
       </div>
-
       <div className="bg-white p-4 rounded-2xl shadow-sm mb-6">
         <div className="relative">
           <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
@@ -61,7 +53,6 @@ export default function AdminCustomers() {
           />
         </div>
       </div>
-
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         {loading ? (
           <div className="p-8 text-center text-text-muted">Loading...</div>

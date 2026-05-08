@@ -1,19 +1,15 @@
 'use client';
-
 import { useState } from 'react';
 import Link from 'next/link';
 import { CreditCard, Truck, CheckCircle } from 'lucide-react';
 import Image from 'next/image';
-
 export default function CheckoutPage() {
   const [step, setStep] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState('bkash');
-
   return (
     <main className="min-h-screen pt-24 pb-12">
       <div className="max-w-4xl mx-auto px-4">
         <h1 className="font-serif text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-primary">Checkout</h1>
-
         <div className="flex items-center justify-center gap-2 md:gap-4 mb-8 md:mb-12">
           {[1, 2, 3].map((s) => (
             <div key={s} className="flex items-center gap-1 md:gap-2">
@@ -28,7 +24,6 @@ export default function CheckoutPage() {
             </div>
           ))}
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           <div className="lg:col-span-2">
             {step === 1 && (
@@ -76,7 +71,6 @@ export default function CheckoutPage() {
                 </form>
               </div>
             )}
-
             {step === 2 && (
               <div className="bg-white p-5 md:p-8 rounded-2xl">
                 <h2 className="font-serif text-xl font-bold mb-4 text-primary">Payment Method</h2>
@@ -118,7 +112,6 @@ export default function CheckoutPage() {
                 </div>
               </div>
             )}
-
             {step === 3 && (
               <div className="bg-white p-6 md:p-10 rounded-2xl text-center">
                 <CheckCircle className="w-16 h-16 md:w-20 md:h-20 text-green-500 mx-auto mb-4" />
@@ -133,7 +126,6 @@ export default function CheckoutPage() {
               </div>
             )}
           </div>
-
           {step < 3 && (
             <div className="bg-white p-5 md:p-6 rounded-2xl h-fit">
               <h3 className="font-bold mb-4 text-primary">Order Summary</h3>

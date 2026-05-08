@@ -1,25 +1,20 @@
 'use client'
-
 import { useState, useRef, useEffect } from 'react'
 import { Send, X, Bot, User, Sparkles, RefreshCw, Download, Code, Eye } from 'lucide-react'
-
 interface Message {
   id: string
   role: 'user' | 'assistant'
   content: string
   timestamp: Date
 }
-
 interface SectionPreview {
   html: string
   css: string
 }
-
 interface PromptToSectionProps {
   onSave: (section: SectionPreview) => void
   onCancel: () => void
 }
-
 export function PromptToSection({ onSave, onCancel }: PromptToSectionProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -35,14 +30,11 @@ export function PromptToSection({ onSave, onCancel }: PromptToSectionProps) {
   const [viewMode, setViewMode] = useState<'preview' | 'code'>('preview')
   const [apiKey, setApiKey] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
-
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
-
   const sendMessage = async () => {
     if (!input.trim() || isProcessing) return
-
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: 'user',
@@ -52,20 +44,16 @@ export function PromptToSection({ onSave, onCancel }: PromptToSectionProps) {
     setMessages(prev => [...prev, userMessage])
     setInput('')
     setIsProcessing(true)
-
     try {
       const response = await fetch('/api/ai/prompt-to-section', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: input, apiKey })
       })
-
       if (!response.ok) {
         throw new Error('Failed to generate section')
       }
-
       const data = await response.json()
-      
       const assistantMessage: Message = {
         id: crypto.randomUUID(),
         role: 'assistant',
@@ -86,7 +74,6 @@ export function PromptToSection({ onSave, onCancel }: PromptToSectionProps) {
       setIsProcessing(false)
     }
   }
-
   return (
     <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
       <div className="bg-gray-900 rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden border border-gray-700 shadow-2xl flex flex-col">
@@ -102,7 +89,6 @@ export function PromptToSection({ onSave, onCancel }: PromptToSectionProps) {
             <X size={20} className="text-gray-400" />
           </button>
         </div>
-
         <div className="flex-1 flex overflow-hidden">
           <div className="w-1/2 border-r border-gray-800 flex flex-col">
             <div className="p-4 border-b border-gray-800">
@@ -114,7 +100,6 @@ export function PromptToSection({ onSave, onCancel }: PromptToSectionProps) {
                 className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500"
               />
             </div>
-
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.map(msg => (
                 <div key={msg.id} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
@@ -148,7 +133,6 @@ export function PromptToSection({ onSave, onCancel }: PromptToSectionProps) {
               )}
               <div ref={messagesEndRef} />
             </div>
-
             <div className="p-4 border-t border-gray-800">
               <div className="flex gap-2">
                 <input
@@ -168,7 +152,6 @@ export function PromptToSection({ onSave, onCancel }: PromptToSectionProps) {
               </div>
             </div>
           </div>
-
           <div className="w-1/2 flex flex-col">
             <div className="p-3 border-b border-gray-800 flex items-center justify-between">
               <div className="flex gap-2">
@@ -201,7 +184,6 @@ export function PromptToSection({ onSave, onCancel }: PromptToSectionProps) {
                 </button>
               )}
             </div>
-
             <div className="flex-1 overflow-auto bg-white">
               {preview ? (
                 viewMode === 'preview' ? (
@@ -234,7 +216,6 @@ export function PromptToSection({ onSave, onCancel }: PromptToSectionProps) {
                 </div>
               )}
             </div>
-
             {preview && (
               <div className="p-4 border-t border-gray-800 flex justify-end">
                 <button
@@ -252,5 +233,4 @@ export function PromptToSection({ onSave, onCancel }: PromptToSectionProps) {
     </div>
   )
 }
-
 export type { SectionPreview }

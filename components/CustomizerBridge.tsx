@@ -1,25 +1,19 @@
 'use client'
-
 import { useEffect } from 'react'
-
 // ─────────────────────────────────────────────────────────────
 // Studio Pro V12 — Live Bridge
 // Activates when ?customizer=true OR ?studio=true is in the URL.
 // Handles two-way postMessage communication with the studio iframe.
 // ─────────────────────────────────────────────────────────────
-
 export default function CustomizerBridge() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
     const isStudioMode =
       urlParams.get('customizer') === 'true' ||
       urlParams.get('studio') === 'true'
-
     if (!isStudioMode) return
-
     // ── 1. Inject Selection CSS ──────────────────────────────
     document.body.classList.add('studio-bridge-active')
-
     const styleEl = document.createElement('style')
     styleEl.id = 'studio-bridge-styles'
     styleEl.innerHTML = `
@@ -67,7 +61,6 @@ export default function CustomizerBridge() {
       }
     `
     document.head.appendChild(styleEl)
-
     // ── Helper: clear all selections ─────────────────────────
     const clearSelection = () => {
       document.querySelectorAll('.studio-selected').forEach(el => {
@@ -76,7 +69,6 @@ export default function CustomizerBridge() {
       })
       document.querySelectorAll('.studio-element-label').forEach(el => el.remove())
     }
-
     // ── Helper: get element type ─────────────────────────────
     const getElementType = (el: HTMLElement): string => {
       const tag = el.tagName.toLowerCase()
@@ -90,12 +82,10 @@ export default function CustomizerBridge() {
       if (tag === 'div') return 'div'
       return 'unknown'
     }
-
     // ── Helper: Trigger Selection ────────────────────────────
     const triggerSelection = (customizable: HTMLElement) => {
       clearSelection()
       customizable.classList.add('studio-selected')
-
       // Add label
       const label = document.createElement('div')
       label.className = 'studio-element-label'
@@ -103,7 +93,6 @@ export default function CustomizerBridge() {
       label.textContent = key.replace(/([A-Z])/g, ' $1').trim() || customizable.tagName
       customizable.style.position = 'relative'
       customizable.appendChild(label)
-
       // Enable inline editing for text elements
       const elType = getElementType(customizable)
       if (['text', 'heading'].includes(elType) && customizable.tagName !== 'IMG') {
@@ -117,11 +106,9 @@ export default function CustomizerBridge() {
           }, '*')
         }
       }
-
       // Gather metadata for the studio properties panel
       const rect = customizable.getBoundingClientRect()
       const computed = window.getComputedStyle(customizable)
-
       // Collect all data-* attributes
       const dataAttributes: Record<string, string> = {}
       Array.from(customizable.attributes).forEach(attr => {
@@ -129,7 +116,6 @@ export default function CustomizerBridge() {
           dataAttributes[attr.name] = attr.value
         }
       })
-
       window.parent.postMessage({
         type: 'SELECT_COMPONENT',
         elementKey: key,
@@ -161,47 +147,37 @@ export default function CustomizerBridge() {
         },
       }, '*')
     }
-
     // ── 2. Click handler — select elements ───────────────────
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement
       const customizable = target.closest('[data-customizable]') as HTMLElement | null
-
       if (!customizable) {
         clearSelection()
         window.parent.postMessage({ type: 'SELECT_COMPONENT', data: null }, '*')
         return
       }
-
       // Prevent link navigation in studio mode
       if (customizable.tagName === 'A' || customizable.closest('a')) {
         e.preventDefault()
       }
       e.stopPropagation()
-
       triggerSelection(customizable)
     }
-
     document.addEventListener('click', handleClick, true)
-
     // ── 3. Message handler — receive from studio ─────────────
     const handleMessage = (event: MessageEvent) => {
       if (!event.data?.type) return
       const { type, elementKey, data } = event.data
-
       // Helper: find element by key
       const findEl = (key: string): HTMLElement | null =>
         document.querySelector(`[data-custom-key="${key}"]`) as HTMLElement | null
-
       switch (type) {
-
         // Apply CSS styles to an element
         case 'UPDATE_STYLE': {
           const el = findEl(elementKey)
           if (el && data?.styles) Object.assign(el.style, data.styles)
           break
         }
-
         // Update text content
         case 'UPDATE_CONTENT': {
           const el = findEl(elementKey)
@@ -215,7 +191,6 @@ export default function CustomizerBridge() {
           }
           break
         }
-
         // Update element attributes (src, alt, href, target…)
         case 'UPDATE_ATTRIBUTE': {
           const el = findEl(elementKey)
@@ -232,7 +207,6 @@ export default function CustomizerBridge() {
           }
           break
         }
-
         // Toggle element visibility
         case 'TOGGLE_VISIBILITY': {
           const el = findEl(elementKey)
@@ -243,7 +217,6 @@ export default function CustomizerBridge() {
           }
           break
         }
-
         // Highlight element (hover from layers panel)
         case 'HIGHLIGHT_ELEMENT': {
           document.querySelectorAll('.studio-highlighted').forEach(el => el.classList.remove('studio-highlighted'))
@@ -251,17 +224,14 @@ export default function CustomizerBridge() {
           if (el) el.classList.add('studio-highlighted')
           break
         }
-
         // Clear highlight
         case 'CLEAR_SELECTION': {
           document.querySelectorAll('.studio-highlighted').forEach(el => el.classList.remove('studio-highlighted'))
           break
         }
-
         // Apply global theme (CSS variables + Google Fonts)
         case 'UPDATE_THEME': {
           const root = document.documentElement
-
           // ── Colors ───────────────────────────────────────────
           if (data?.colors) {
             if (data.colors.primary)    root.style.setProperty('--color-primary',    data.colors.primary)
@@ -269,11 +239,9 @@ export default function CustomizerBridge() {
             if (data.colors.background) root.style.setProperty('--color-background', data.colors.background)
             if (data.colors.text)       root.style.setProperty('--color-text',        data.colors.text)
           }
-
           // ── Typography / Google Font injection ────────────────
           if (data?.typography) {
             const { fontFamily, headingFont, baseFontSize, fontSlug } = data.typography
-
             // Inject Google Font link if not already present
             const injectFont = (slug: string) => {
               if (!slug) return
@@ -285,12 +253,10 @@ export default function CustomizerBridge() {
               link.href = `https://fonts.googleapis.com/css2?family=${slug}:wght@400;600;700&display=swap`
               document.head.appendChild(link)
             }
-
             // Inject from explicit slug or derive from family names
             if (fontSlug) injectFont(fontSlug)
             if (fontFamily) injectFont(fontFamily.split(',')[0].trim().replace(/ /g, '+'))
             if (headingFont) injectFont(headingFont.split(',')[0].trim().replace(/ /g, '+'))
-
             // Apply to DOM
             if (fontFamily) {
               document.body.style.fontFamily = fontFamily
@@ -307,7 +273,6 @@ export default function CustomizerBridge() {
               document.documentElement.style.fontSize = baseFontSize
             }
           }
-
           // ── Custom Styles ─────────────────────────────────────────
           if (data?.customStyles) {
             Object.entries(data.customStyles).forEach(([key, styles]) => {
@@ -319,10 +284,8 @@ export default function CustomizerBridge() {
               }
             })
           }
-
           break
         }
-
         // Scan customizable elements — return recursive tree
         case 'SCAN_ELEMENTS': {
           const getElementType = (el: HTMLElement): string => {
@@ -337,18 +300,15 @@ export default function CustomizerBridge() {
             if (tag === 'div') return 'div'
             return 'unknown'
           }
-
           // Build recursive tree — only top-level customizable elements as roots
           const buildTree = (container: HTMLElement | Document, depth = 0): any[] => {
             if (depth > 5) return [] // safety limit
             const directCustomizable = Array.from(
               container.querySelectorAll(':scope > [data-customizable], :scope > * > [data-customizable]')
             ) as HTMLElement[]
-
             return directCustomizable.map(el => {
               const key = el.getAttribute('data-custom-key') || `el-${Math.random().toString(36).slice(2, 6)}`
               const childEls = Array.from(el.querySelectorAll('[data-customizable]')) as HTMLElement[]
-
               return {
                 key,
                 label: el.getAttribute('data-custom-key')?.replace(/-/g, ' ') || el.tagName,
@@ -366,26 +326,22 @@ export default function CustomizerBridge() {
               }
             })
           }
-
           const elements = buildTree(document)
           window.parent.postMessage({ type: 'ELEMENTS_SCANNED', data: { elements } }, '*')
           break
         }
-
         // Delete element from DOM
         case 'DELETE_ELEMENT': {
           const el = findEl(elementKey)
           if (el) el.remove()
           break
         }
-
         // Duplicate element (insert clone after)
         case 'DUPLICATE_ELEMENT': {
           const el = findEl(elementKey)
           if (el) {
             const clone = el.cloneNode(true) as HTMLElement
             const uniqueSuffix = `-copy-${Math.random().toString(36).slice(2, 8)}`
-            
             // Rewrite all data-custom-key attributes within the cloned block
             const allCustomizables = [clone, ...Array.from(clone.querySelectorAll('[data-customizable]'))]
             allCustomizables.forEach((node, index) => {
@@ -396,12 +352,10 @@ export default function CustomizerBridge() {
                 node.setAttribute('data-custom-key', `el-${Date.now()}-${index}`)
               }
             })
-            
             el.insertAdjacentElement('afterend', clone)
           }
           break
         }
-
         // Scroll element into view and select it
         case 'SCROLL_TO_ELEMENT': {
           const el = findEl(elementKey)
@@ -411,7 +365,6 @@ export default function CustomizerBridge() {
           }
           break
         }
-
         // Inject a new HTML block into the page
         case 'INJECT_BLOCK': {
           if (data?.html) {
@@ -420,7 +373,6 @@ export default function CustomizerBridge() {
             const block = wrapper.firstElementChild as HTMLElement | null
             if (block) {
               const uniqueSuffix = `-${Math.random().toString(36).slice(2, 8)}`
-              
               // Rewrite all data-custom-key attributes within the block to be globally unique
               const allCustomizables = [block, ...Array.from(block.querySelectorAll('[data-customizable]'))]
               allCustomizables.forEach((node, index) => {
@@ -431,7 +383,6 @@ export default function CustomizerBridge() {
                   node.setAttribute('data-custom-key', `el-${Date.now()}-${index}`)
                 }
               })
-
               document.body.appendChild(block)
               // Scroll to the new block
               block.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -442,20 +393,16 @@ export default function CustomizerBridge() {
           }
           break
         }
-
         // Ping from studio — respond to confirm bridge is alive
         case 'PING': {
           window.parent.postMessage({ type: 'PONG', data: { ready: true } }, '*')
           break
         }
-
         default:
           break
       }
     }
-
     window.addEventListener('message', handleMessage)
-
     // ── Cleanup ───────────────────────────────────────────────
     return () => {
       document.removeEventListener('click', handleClick, true)
@@ -464,6 +411,5 @@ export default function CustomizerBridge() {
       document.body.classList.remove('studio-bridge-active')
     }
   }, [])
-
   return null
 }

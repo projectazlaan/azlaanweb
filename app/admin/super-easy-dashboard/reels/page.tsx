@@ -1,31 +1,25 @@
 'use client';
-
 import { motion } from 'framer-motion';
 import { Link2, Flame, Trash2, GripVertical, Plus } from 'lucide-react';
 import { useState } from 'react';
-
 const INITIAL_REELS = [
   { id: 1, title: 'Eid Collection 2025', link: 'https://youtube.com/watch?v=demo1', platform: 'YouTube', views: '24K', trending: true },
   { id: 2, title: 'Behind The Scenes', link: 'https://facebook.com/videos/demo2', platform: 'Facebook', views: '12K', trending: false },
   { id: 3, title: 'Summer Linen Drop', link: 'https://youtube.com/watch?v=demo3', platform: 'YouTube', views: '8K', trending: false },
 ];
-
 export default function ReelsHub() {
   const [reels, setReels] = useState(INITIAL_REELS);
   const [newLink, setNewLink] = useState('');
   const [newTitle, setNewTitle] = useState('');
   const [adding, setAdding] = useState(false);
-
   const addReel = () => {
     if (!newLink || !newTitle) return;
     const isYT = newLink.includes('youtube');
     setReels([{ id: Date.now(), title: newTitle, link: newLink, platform: isYT ? 'YouTube' : 'Facebook', views: '0', trending: false }, ...reels]);
     setNewLink(''); setNewTitle(''); setAdding(false);
   };
-
   const toggleTrending = (id: number) => setReels(reels.map(r => r.id === id ? { ...r, trending: !r.trending } : r));
   const deleteReel = (id: number) => setReels(reels.filter(r => r.id !== id));
-
   return (
     <div className="space-y-8 pb-20">
       {/* Header */}
@@ -41,7 +35,6 @@ export default function ReelsHub() {
           <Plus className="w-5 h-5" /> Add New Reel
         </button>
       </div>
-
       {/* Add Reel Form */}
       {adding && (
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="bg-white p-8 rounded-[2rem] shadow-sm border border-blue-100">
@@ -75,7 +68,6 @@ export default function ReelsHub() {
           </div>
         </motion.div>
       )}
-
       {/* Reels List */}
       <div className="space-y-4">
         {reels.map((reel, index) => (
@@ -86,12 +78,10 @@ export default function ReelsHub() {
           >
             {/* Drag Handle */}
             <GripVertical className="w-5 h-5 text-gray-300 cursor-grab flex-shrink-0 group-hover:text-gray-500 transition-colors" />
-
             {/* Thumbnail Placeholder */}
             <div className={`w-20 h-14 rounded-xl flex-shrink-0 flex items-center justify-center text-white text-2xl font-bold ${reel.platform === 'YouTube' ? 'bg-red-600' : 'bg-blue-700'}`}>
               {reel.platform === 'YouTube' ? '▶' : 'f'}
             </div>
-
             {/* Info */}
             <div className="flex-1 min-w-0">
               <h3 className="font-bold text-gray-900 truncate">{reel.title}</h3>
@@ -101,7 +91,6 @@ export default function ReelsHub() {
                 <span className="text-xs font-bold text-gray-400">👁 {reel.views} views</span>
               </div>
             </div>
-
             {/* Actions */}
             <div className="flex items-center gap-3 flex-shrink-0">
               <button

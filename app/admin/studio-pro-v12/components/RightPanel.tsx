@@ -1,5 +1,4 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import {
   MousePointer, Type, Image as ImageIcon, Square, Trash2, Copy,
@@ -9,13 +8,10 @@ import {
 import { useStudioStore } from '../store'
 import { usePostMessage } from '../hooks/usePostMessage'
 import AIGenerator from './AIGenerator'
-
 interface RightPanelProps {
   iframeRef: React.RefObject<HTMLIFrameElement | null>
 }
-
 // ─── Reusable UI atoms ──────────────────────────────────────────
-
 function Section({ title, children, defaultOpen = true }: {
   title: string; children: React.ReactNode; defaultOpen?: boolean
 }) {
@@ -31,7 +27,6 @@ function Section({ title, children, defaultOpen = true }: {
     </div>
   )
 }
-
 function ColorInput({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
   const [local, setLocal] = useState(value)
   useEffect(() => setLocal(value), [value])
@@ -49,7 +44,6 @@ function ColorInput({ label, value, onChange }: { label: string; value: string; 
     </div>
   )
 }
-
 function SliderInput({ label, value, min, max, unit, onChange }: {
   label: string; value: number; min: number; max: number; unit?: string; onChange: (v: number) => void
 }) {
@@ -67,30 +61,24 @@ function SliderInput({ label, value, min, max, unit, onChange }: {
     </div>
   )
 }
-
 function parsePixels(val: string): number {
   return Math.round(parseFloat(val) || 0)
 }
-
 function rgbToHex(rgb: string): string {
   const m = rgb.match(/\d+/g)
   if (!m || m.length < 3) return '#000000'
   return '#' + m.slice(0, 3).map(n => parseInt(n).toString(16).padStart(2, '0')).join('')
 }
-
 function cssColorToHex(val: string): string {
   if (val.startsWith('#')) return val
   if (val.startsWith('rgb')) return rgbToHex(val)
   return '#000000'
 }
-
 // ─── Global Theme Panel (no element selected) ──────────────────
-
 function GlobalThemePanel({ iframeRef }: { iframeRef: React.RefObject<HTMLIFrameElement | null> }) {
   const settings = useStudioStore(s => s.settings)
   const updateSettings = useStudioStore(s => s.updateSettings)
   const { sendMessage } = usePostMessage(iframeRef)
-
   // Load a Google Font into the page
   const loadGoogleFont = (fontName: string) => {
     const slug = fontName.trim().replace(/ /g, '+')
@@ -102,14 +90,11 @@ function GlobalThemePanel({ iframeRef }: { iframeRef: React.RefObject<HTMLIFrame
     link.href = `https://fonts.googleapis.com/css2?family=${slug}:wght@400;600;700&display=swap`
     document.head.appendChild(link)
   }
-
   const applyColor = (key: keyof typeof settings.colors, val: string) => {
     updateSettings({ colors: { ...settings.colors, [key]: val } })
     sendMessage({ type: 'UPDATE_THEME', data: { colors: { ...settings.colors, [key]: val } } })
   }
-
   const FONTS = ['Inter', 'Playfair Display', 'Roboto', 'Poppins', 'Montserrat', 'Lato', 'Raleway', 'Nunito', 'DM Sans', 'Space Grotesk']
-
   const applyFont = (key: 'fontFamily' | 'headingFont', rawName: string) => {
     const val = key === 'fontFamily' ? `${rawName}, sans-serif` : `${rawName}, serif`
     loadGoogleFont(rawName)
@@ -126,7 +111,6 @@ function GlobalThemePanel({ iframeRef }: { iframeRef: React.RefObject<HTMLIFrame
       },
     })
   }
-
   return (
     <>
       <Section title="Site Colors">
@@ -139,7 +123,6 @@ function GlobalThemePanel({ iframeRef }: { iframeRef: React.RefObject<HTMLIFrame
         <ColorInput label="Text" value={settings.colors.text}
           onChange={v => applyColor('text', v)} />
       </Section>
-
       <Section title="Typography">
         <div>
           <label className="text-xs text-gray-500 block mb-1.5">Body Font</label>
@@ -170,9 +153,7 @@ function GlobalThemePanel({ iframeRef }: { iframeRef: React.RefObject<HTMLIFrame
     </>
   )
 }
-
 // ─── Text / Heading Panel ───────────────────────────────────────
-
 function TextPanel({ elementKey, computed, iframeRef }: {
   elementKey: string
   computed: Record<string, string>
@@ -180,18 +161,15 @@ function TextPanel({ elementKey, computed, iframeRef }: {
 }) {
   const { updateStyle } = usePostMessage(iframeRef)
   const [align, setAlign] = useState(computed.textAlign || 'left')
-
   return (
     <>
       <Section title="Typography">
         <SliderInput label="Font Size"
           value={parsePixels(computed.fontSize || '16px')} min={10} max={96} unit="px"
           onChange={v => updateStyle(elementKey, { fontSize: `${v}px` }, 'Font size')} />
-
         <ColorInput label="Color"
           value={cssColorToHex(computed.color || '#000000')}
           onChange={v => updateStyle(elementKey, { color: v }, 'Text color')} />
-
         <div>
           <span className="text-xs text-gray-500 block mb-1.5">Alignment</span>
           <div className="flex gap-1">
@@ -206,7 +184,6 @@ function TextPanel({ elementKey, computed, iframeRef }: {
               ))}
           </div>
         </div>
-
         <div>
           <span className="text-xs text-gray-500 block mb-1.5">Style</span>
           <div className="flex gap-1">
@@ -224,22 +201,18 @@ function TextPanel({ elementKey, computed, iframeRef }: {
             </button>
           </div>
         </div>
-
         <SliderInput label="Line Height"
           value={parsePixels(computed.lineHeight || '24px')} min={10} max={80} unit="px"
           onChange={v => updateStyle(elementKey, { lineHeight: `${v}px` }, 'Line height')} />
-
         <SliderInput label="Letter Spacing"
           value={parsePixels(computed.letterSpacing || '0px')} min={-5} max={20} unit="px"
           onChange={v => updateStyle(elementKey, { letterSpacing: `${v}px` }, 'Letter spacing')} />
       </Section>
-
       <Section title="Background" defaultOpen={false}>
         <ColorInput label="Background"
           value={cssColorToHex(computed.backgroundColor || '#ffffff')}
           onChange={v => updateStyle(elementKey, { backgroundColor: v }, 'Background')} />
       </Section>
-
       <Section title="Spacing" defaultOpen={false}>
         <SliderInput label="Padding"
           value={parsePixels(computed.padding || '0px')} min={0} max={120} unit="px"
@@ -248,9 +221,7 @@ function TextPanel({ elementKey, computed, iframeRef }: {
     </>
   )
 }
-
 // ─── Image Panel ────────────────────────────────────────────────
-
 function ImagePanel({ elementKey, computed, iframeRef, src, alt }: {
   elementKey: string
   computed: Record<string, string>
@@ -261,7 +232,6 @@ function ImagePanel({ elementKey, computed, iframeRef, src, alt }: {
   const { updateStyle, updateAttribute } = usePostMessage(iframeRef)
   const openGallery = useStudioStore(s => s.openGallery)
   const [objFit, setObjFit] = useState(computed.objectFit || 'cover')
-
   return (
     <>
       <Section title="Image Source">
@@ -281,7 +251,6 @@ function ImagePanel({ elementKey, computed, iframeRef, src, alt }: {
             className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white placeholder-gray-600 focus:outline-none focus:border-indigo-500" />
         </div>
       </Section>
-
       <Section title="Display">
         <div>
           <span className="text-xs text-gray-500 block mb-1.5">Object Fit</span>
@@ -301,9 +270,7 @@ function ImagePanel({ elementKey, computed, iframeRef, src, alt }: {
     </>
   )
 }
-
 // ─── Button Panel ───────────────────────────────────────────────
-
 function ButtonPanel({ elementKey, computed, iframeRef, href }: {
   elementKey: string
   computed: Record<string, string>
@@ -347,9 +314,7 @@ function ButtonPanel({ elementKey, computed, iframeRef, href }: {
     </>
   )
 }
-
 // ─── Layout Panel (section/div) ─────────────────────────────────
-
 function LayoutPanel({ elementKey, computed, iframeRef }: {
   elementKey: string
   computed: Record<string, string>
@@ -375,20 +340,16 @@ function LayoutPanel({ elementKey, computed, iframeRef }: {
     </>
   )
 }
-
 // ─── Flex Panel ─────────────────────────────────────────────────
-
 function FlexPanel({ elementKey, computed, iframeRef }: {
   elementKey: string
   computed: Record<string, string>
   iframeRef: React.RefObject<HTMLIFrameElement | null>
 }) {
   const { updateStyle } = usePostMessage(iframeRef)
-  
   // Only show if it's actually flex or grid, or allow user to force it to flex
   const isFlex = computed.display === 'flex' || computed.display === 'inline-flex'
   const [display, setDisplay] = useState(computed.display || 'block')
-  
   return (
     <Section title="Layout & Flexbox" defaultOpen={false}>
       <div>
@@ -402,7 +363,6 @@ function FlexPanel({ elementKey, computed, iframeRef }: {
           ))}
         </div>
       </div>
-
       {isFlex && (
         <>
           <div>
@@ -416,7 +376,6 @@ function FlexPanel({ elementKey, computed, iframeRef }: {
               ))}
             </div>
           </div>
-          
           <div>
             <span className="text-xs text-gray-500 block mb-1.5">Justify Content</span>
             <div className="grid grid-cols-3 gap-1 mb-3">
@@ -428,7 +387,6 @@ function FlexPanel({ elementKey, computed, iframeRef }: {
               ))}
             </div>
           </div>
-          
           <div>
             <span className="text-xs text-gray-500 block mb-1.5">Align Items</span>
             <div className="grid grid-cols-3 gap-1 mb-3">
@@ -440,7 +398,6 @@ function FlexPanel({ elementKey, computed, iframeRef }: {
               ))}
             </div>
           </div>
-          
           <SliderInput label="Gap" value={parsePixels(computed.gap || '0px')} min={0} max={100} unit="px"
             onChange={v => updateStyle(elementKey, { gap: `${v}px` }, 'Gap')} />
         </>
@@ -448,10 +405,7 @@ function FlexPanel({ elementKey, computed, iframeRef }: {
     </Section>
   )
 }
-
-
 // ─── Advanced (Border + Shadow + Opacity) — all elements ───────
-
 const SHADOW_PRESETS = [
   { label: 'None',   value: 'none' },
   { label: 'Soft',   value: '0 4px 24px rgba(0,0,0,0.08)' },
@@ -459,7 +413,6 @@ const SHADOW_PRESETS = [
   { label: 'Strong', value: '0 16px 64px rgba(0,0,0,0.22)' },
   { label: 'Inner',  value: 'inset 0 2px 8px rgba(0,0,0,0.12)' },
 ]
-
 function AdvancedSection({ elementKey, computed, iframeRef }: {
   elementKey: string
   computed: Record<string, string>
@@ -467,7 +420,6 @@ function AdvancedSection({ elementKey, computed, iframeRef }: {
 }) {
   const { updateStyle } = usePostMessage(iframeRef)
   const [borderStyle, setBorderStyle] = useState(computed.borderStyle || 'none')
-
   return (
     <Section title="Border & Shadow" defaultOpen={false}>
       {/* Border */}
@@ -495,7 +447,6 @@ function AdvancedSection({ elementKey, computed, iframeRef }: {
       <SliderInput label="Border Radius"
         value={parsePixels(computed.borderRadius || '0px')} min={0} max={60} unit="px"
         onChange={v => updateStyle(elementKey, { borderRadius: `${v}px` }, 'Border radius')} />
-
       {/* Shadow Presets */}
       <div>
         <span className="text-xs text-gray-500 block mb-1.5">Box Shadow</span>
@@ -511,7 +462,6 @@ function AdvancedSection({ elementKey, computed, iframeRef }: {
           ))}
         </div>
       </div>
-
       {/* Opacity */}
       <SliderInput label="Opacity"
         value={Math.round(parseFloat(computed.opacity || '1') * 100)} min={0} max={100} unit="%"
@@ -519,19 +469,15 @@ function AdvancedSection({ elementKey, computed, iframeRef }: {
     </Section>
   )
 }
-
 // ─── Main RightPanel ────────────────────────────────────────────
-
 export default function RightPanel({ iframeRef }: RightPanelProps) {
   const selectedElement = useStudioStore(s => s.selectedElement)
   const setSelectedElement = useStudioStore(s => s.setSelectedElement)
   const aiOpen = useStudioStore(s => s.aiOpen)
   const setAiOpen = useStudioStore(s => s.setAiOpen)
   const { deleteElement, duplicateElement } = usePostMessage(iframeRef)
-
   const computed = selectedElement?.computedStyles ?? {}
   const type = selectedElement?.type
-
   // If AI is open, render the AI Generator inline
   if (aiOpen) {
     return (
@@ -540,7 +486,6 @@ export default function RightPanel({ iframeRef }: RightPanelProps) {
       </aside>
     )
   }
-
   return (
     <aside className="w-72 bg-[#111] border-l border-white/5 flex flex-col overflow-hidden flex-shrink-0 relative">
       {/* Header */}
@@ -548,7 +493,6 @@ export default function RightPanel({ iframeRef }: RightPanelProps) {
         <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-widest">
           {selectedElement ? 'Properties' : 'Site Settings'}
         </h3>
-        
         <div className="flex items-center gap-1">
           {selectedElement && (
             <>
@@ -565,7 +509,6 @@ export default function RightPanel({ iframeRef }: RightPanelProps) {
               <div className="w-px h-3 bg-white/10 mx-1" />
             </>
           )}
-          
           <button 
             onClick={() => setAiOpen(true)}
             title="Open Studio AI"
@@ -576,7 +519,6 @@ export default function RightPanel({ iframeRef }: RightPanelProps) {
           </button>
         </div>
       </div>
-
       {/* Content */}
       <div className="flex-1 overflow-y-auto custom-scrollbar">
         {!selectedElement ? (
@@ -608,7 +550,6 @@ export default function RightPanel({ iframeRef }: RightPanelProps) {
                 </p>
               </div>
             </div>
-
             {/* Dynamic panels by type */}
             {(type === 'text' || type === 'heading') && (
               <>

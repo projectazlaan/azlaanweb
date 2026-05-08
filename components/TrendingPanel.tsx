@@ -1,10 +1,8 @@
 'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect, useCallback } from 'react'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
-
 interface TrendingContent {
   id: string
   title: string
@@ -16,7 +14,6 @@ interface TrendingContent {
   cta2Text: string
   cta2Link: string
 }
-
 const TRENDING_SLIDES: TrendingContent[] = [
   {
     id: 'trend-1',
@@ -52,34 +49,28 @@ const TRENDING_SLIDES: TrendingContent[] = [
     cta2Link: '/about'
   }
 ]
-
 export default function TrendingPanel() {
   const [currentSlide, setCurrentSlide] = useState(1)
   const [isTransitioning, setIsTransitioning] = useState(false)
-
   // Extended slides for infinite loop: [last, ...original, first]
   const extendedSlides = [
     TRENDING_SLIDES[TRENDING_SLIDES.length - 1],
     ...TRENDING_SLIDES,
     TRENDING_SLIDES[0]
   ]
-
   const nextSlide = useCallback(() => {
     if (isTransitioning) return
     setIsTransitioning(true)
     setCurrentSlide((prev) => prev + 1)
   }, [isTransitioning])
-
   const prevSlide = useCallback(() => {
     if (isTransitioning) return
     setIsTransitioning(true)
     setCurrentSlide((prev) => prev - 1)
   }, [isTransitioning])
-
   // Handle teleportation and transition state reset
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
-
     if (currentSlide === extendedSlides.length - 1) {
       timer = setTimeout(() => {
         setIsTransitioning(false)
@@ -95,15 +86,12 @@ export default function TrendingPanel() {
         setIsTransitioning(false)
       }, 1200)
     }
-
     return () => clearTimeout(timer)
   }, [currentSlide, extendedSlides.length])
-
   useEffect(() => {
     const timer = setInterval(nextSlide, 6000)
     return () => clearInterval(timer)
   }, [nextSlide])
-
   return (
     <section 
       data-customizable 
@@ -119,7 +107,6 @@ export default function TrendingPanel() {
           const isRealActive = (currentSlide === index) || 
                               (currentSlide === extendedSlides.length - 1 && index === 1) ||
                               (currentSlide === 0 && index === extendedSlides.length - 2);
-
           return (
             <div
               key={`${slide.id}-${index}`}
@@ -130,13 +117,11 @@ export default function TrendingPanel() {
                   src={slide.bgImage}
                   alt={slide.title}
                   fill
-
                   className={`object-cover transition-transform duration-[10000ms] ease-out ${isRealActive ? 'scale-105' : 'scale-100'} z-0`}
                   sizes="100vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 pointer-events-none" />
               </div>
-
               <div className="absolute inset-0 flex flex-col justify-end pb-12 md:pb-20 pointer-events-none">
                 <div className="relative z-20 px-6 md:px-12 w-full max-w-[90rem] mx-auto text-left pointer-events-auto">
                   <div className="max-w-2xl">
@@ -155,7 +140,6 @@ export default function TrendingPanel() {
                     >
                       {slide.description}
                     </p>
-
                     <div className={`flex flex-wrap items-center justify-start gap-3 md:gap-4 transition-all duration-700 delay-1000 transform ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                       <Link
                         href={slide.cta1Link}
@@ -180,7 +164,6 @@ export default function TrendingPanel() {
           )
         })}
       </div>
-
       {/* Navigation Arrows */}
       <button 
         onClick={(e) => { e.stopPropagation(); prevSlide(); }}
@@ -196,7 +179,6 @@ export default function TrendingPanel() {
       >
         <ChevronRight className="w-5 h-5 md:w-7 md:h-7 opacity-70 group-hover:opacity-100 transition-opacity group-hover:translate-x-0.5" strokeWidth={2} />
       </button>
-
       {/* Navigation Dots */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3">
         {TRENDING_SLIDES.map((_, index) => {

@@ -1,23 +1,18 @@
 'use client'
-
 import { useState } from 'react'
 import { Zap, Accessibility, Search, Image, CheckCircle, AlertTriangle, XCircle, Download } from 'lucide-react'
 import { runFullAudit, generateWebPHtml, AuditResult } from '@/lib/audit/performance'
-
 interface PerformanceAuditorProps {
   htmlContent?: string
   components?: any[]
 }
-
 export default function PerformanceAuditor({ htmlContent = '', components = [] }: PerformanceAuditorProps) {
   const [auditResult, setAuditResult] = useState<AuditResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [htmlInput, setHtmlInput] = useState(htmlContent)
   const [webpPreview, setWebpPreview] = useState('')
-
   const runAudit = () => {
     setLoading(true)
-    
     setTimeout(() => {
       try {
         const html = htmlInput || generateMockHTML()
@@ -29,7 +24,6 @@ export default function PerformanceAuditor({ htmlContent = '', components = [] }
       setLoading(false)
     }, 500)
   }
-
   const generateMockHTML = (): string => {
     return `<!DOCTYPE html>
 <html lang="en">
@@ -47,29 +41,24 @@ export default function PerformanceAuditor({ htmlContent = '', components = [] }
 </body>
 </html>`
   }
-
   const getScoreColor = (score: number): string => {
     if (score >= 90) return 'text-green-400'
     if (score >= 70) return 'text-yellow-400'
     return 'text-red-400'
   }
-
   const getRatingIcon = (rating: string) => {
     if (rating === 'good') return <CheckCircle size={16} className="text-green-400" />
     if (rating === 'needs-improvement') return <AlertTriangle size={16} className="text-yellow-400" />
     return <XCircle size={16} className="text-red-400" />
   }
-
   const handleWebPConversion = () => {
     if (!auditResult) return
     const html = htmlInput || generateMockHTML()
     const webp = generateWebPHtml(html)
     setWebpPreview(webp)
   }
-
   const handleDownloadReport = () => {
     if (!auditResult) return
-    
     const report = {
       timestamp: new Date().toISOString(),
       score: auditResult.score,
@@ -79,7 +68,6 @@ export default function PerformanceAuditor({ htmlContent = '', components = [] }
       webpConversion: auditResult.webpConversion,
       recommendations: auditResult.recommendations
     }
-    
     const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
@@ -88,7 +76,6 @@ export default function PerformanceAuditor({ htmlContent = '', components = [] }
     a.click()
     URL.revokeObjectURL(url)
   }
-
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -116,7 +103,6 @@ export default function PerformanceAuditor({ htmlContent = '', components = [] }
           </button>
         </div>
       </div>
-
       <div>
         <label className="block text-sm text-gray-400 mb-2">HTML Content to Audit</label>
         <textarea
@@ -126,7 +112,6 @@ export default function PerformanceAuditor({ htmlContent = '', components = [] }
           className="w-full h-32 bg-gray-800 border border-gray-700 rounded-lg p-3 text-gray-200 text-xs font-mono resize-none focus:border-indigo-500 focus:outline-none"
         />
       </div>
-
       {auditResult && (
         <div className="space-y-4">
           <div className="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
@@ -146,7 +131,6 @@ export default function PerformanceAuditor({ htmlContent = '', components = [] }
               />
             </div>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-700">
               <div className="flex items-center gap-2 mb-2">
@@ -159,7 +143,6 @@ export default function PerformanceAuditor({ htmlContent = '', components = [] }
                 Rating: {auditResult.lcp.rating}
               </p>
             </div>
-
             <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-700">
               <div className="flex items-center gap-2 mb-2">
                 <Accessibility size={16} className="text-blue-400" />
@@ -172,7 +155,6 @@ export default function PerformanceAuditor({ htmlContent = '', components = [] }
                 {auditResult.accessibility.violations.length} violations
               </p>
             </div>
-
             <div className="p-3 bg-gray-808/50 rounded-lg border border-gray-700">
               <div className="flex items-center gap-2 mb-2">
                 <Search size={16} className="text-green-400" />
@@ -186,7 +168,6 @@ export default function PerformanceAuditor({ htmlContent = '', components = [] }
               </p>
             </div>
           </div>
-
           <div className="p-4 bg-gray-808/50 rounded-lg border border-gray-700">
             <div className="flex items-center justify-between mb-3">
               <h4 className="text-sm font-medium text-white flex items-center gap-2">
@@ -219,7 +200,6 @@ export default function PerformanceAuditor({ htmlContent = '', components = [] }
               </div>
             )}
           </div>
-
           {auditResult.recommendations.length > 0 && (
             <div className="p-4 bg-yellow-900/20 border border-yellow-700 rounded-lg">
               <h4 className="text-sm font-medium text-yellow-200 mb-2">Recommendations</h4>
@@ -233,7 +213,6 @@ export default function PerformanceAuditor({ htmlContent = '', components = [] }
               </ul>
             </div>
           )}
-
           {auditResult.accessibility.violations.length > 0 && (
             <div className="p-4 bg-red-900/20 border border-red-700 rounded-lg">
               <h4 className="text-sm font-medium text-red-200 mb-2">Accessibility Violations</h4>

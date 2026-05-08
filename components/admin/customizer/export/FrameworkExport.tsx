@@ -1,22 +1,17 @@
 'use client'
-
 import { useState } from 'react'
 import { Download, FileCode, Globe, Layers, Check } from 'lucide-react'
 import { exportComponents, exportToNextJS, exportToStaticHTML, exportToVue, downloadFile } from '@/lib/export/frameworks'
-
 interface FrameworkExportProps {
   components?: any[]
 }
-
 type Framework = 'nextjs' | 'static-html' | 'vue'
-
 export default function FrameworkExport({ components = [] }: FrameworkExportProps) {
   const [selectedFramework, setSelectedFramework] = useState<Framework>('nextjs')
   const [ssr, setSsr] = useState(true)
   const [pageName, setPageName] = useState('ExportedPage')
   const [exported, setExported] = useState(false)
   const [jsonInput, setJsonInput] = useState('')
-
   const frameworks = [
     {
       id: 'nextjs' as const,
@@ -40,11 +35,9 @@ export default function FrameworkExport({ components = [] }: FrameworkExportProp
       color: 'purple'
     }
   ]
-
   const handleExport = () => {
     try {
       let parsed: any[] = []
-      
       if (jsonInput.trim()) {
         parsed = JSON.parse(jsonInput)
       } else if (components.length > 0) {
@@ -53,15 +46,12 @@ export default function FrameworkExport({ components = [] }: FrameworkExportProp
         alert('No components to export. Provide JSON input or use current components.')
         return
       }
-      
       if (!Array.isArray(parsed)) {
         parsed = [parsed]
       }
-
       let code: string
       let filename: string
       let mimeType: string
-
       switch (selectedFramework) {
         case 'nextjs':
           code = exportToNextJS(parsed, pageName, ssr)
@@ -79,7 +69,6 @@ export default function FrameworkExport({ components = [] }: FrameworkExportProp
           mimeType = 'text/vue'
           break
       }
-
       const blob = new Blob([code], { type: mimeType })
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
@@ -89,14 +78,12 @@ export default function FrameworkExport({ components = [] }: FrameworkExportProp
       a.click()
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
-
       setExported(true)
       setTimeout(() => setExported(false), 3000)
     } catch (err) {
       alert(`Export error: ${err instanceof Error ? err.message : 'Unknown error'}`)
     }
   }
-
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -105,7 +92,6 @@ export default function FrameworkExport({ components = [] }: FrameworkExportProp
           Multi-Framework Export
         </h3>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {frameworks.map(fw => (
           <button
@@ -128,7 +114,6 @@ export default function FrameworkExport({ components = [] }: FrameworkExportProp
           </button>
         ))}
       </div>
-
       <div className="space-y-3 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
         <div className="grid grid-cols-2 gap-3">
           <div>
@@ -140,7 +125,6 @@ export default function FrameworkExport({ components = [] }: FrameworkExportProp
               className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm focus:border-indigo-500 focus:outline-none"
             />
           </div>
-          
           {selectedFramework === 'nextjs' && (
             <div className="flex items-end">
               <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
@@ -155,7 +139,6 @@ export default function FrameworkExport({ components = [] }: FrameworkExportProp
             </div>
           )}
         </div>
-
         <div>
           <label className="block text-sm text-gray-400 mb-1">JSON Input (optional)</label>
           <textarea
@@ -166,7 +149,6 @@ export default function FrameworkExport({ components = [] }: FrameworkExportProp
           />
         </div>
       </div>
-
       <button
         onClick={handleExport}
         className={`w-full py-3 rounded-lg text-white font-medium transition-colors flex items-center justify-center gap-2 ${

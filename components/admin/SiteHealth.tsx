@@ -1,7 +1,5 @@
 'use client'
-
 import React from 'react'
-
 export default function SiteHealth() {
   return (
     <div className="bg-primary p-5 rounded-2xl shadow-xl text-white overflow-hidden relative group mt-4 mx-4 mb-6">

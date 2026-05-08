@@ -1,5 +1,4 @@
 'use client'
-
 import { Heart, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -10,15 +9,12 @@ import ReelsPanel from './ReelsPanel'
 import TrendingPanel from './TrendingPanel'
 import NewCollectionPanel from './NewCollectionPanel'
 import AllProductsPanel from './AllProductsPanel'
-
 import { Product } from '@/types';
-
 const CategoryRow = ({ title, products }: { title: string, products: Product[] }) => {
   const router = useRouter()
   const scrollRef = useRef<HTMLDivElement>(null)
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(true)
-
   const checkScroll = () => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
@@ -26,7 +22,6 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
       setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10)
     }
   }
-
   useEffect(() => {
     const ref = scrollRef.current
     if (ref) {
@@ -35,7 +30,6 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
     }
     return () => ref?.removeEventListener('scroll', checkScroll)
   }, [])
-
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
       const { clientWidth } = scrollRef.current
@@ -43,9 +37,7 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
       scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
     }
   }
-
   if (products.length === 0) return null
-
   const getTagline = (cat: string) => {
     switch(cat) {
       case 'Men': return "The Gentlemen's Choice";
@@ -53,23 +45,19 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
       default: return "Exclusive Collection";
     }
   }
-
   const subCategoryNames: Record<string, string[]> = {
     Men: ['Panjabi', 'Classic Kurtas', 'Formal Shirts', 'Chino Pants', 'Casual Edit'],
     Women: ['Luxury Pret', 'Unstitched', 'Saree', 'Bridal', 'Signature Series'],
     Kids: ['Boys Panjabi', 'Girls Wear', 'Festive Kids', 'Casuals'],
     Fabric: ['Premium Silk', 'Luxury Cotton', 'Imported Linen', 'Designer Wool', 'Traditional Weaves']
   };
-
   // Safely group products into bento blocks (Pattern: 1 item, 2 items, 3 items...)
   const blocks = [];
   const pattern = [1, 2, 3];
   let pIdx = 0;
   let i = 0;
-  
   while (i < products.length) {
     const take = pattern[pIdx % pattern.length];
-    
     if (take === 1 || i + 1 > products.length) {
       blocks.push({ type: 'single', items: [products[i]], startIndex: i });
       i += 1;
@@ -95,13 +83,10 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
     }
     pIdx++;
   }
-
   const renderCard = (product: Product, index: number, isSmall: boolean = false) => {
     if (!product) return null; // Safety check
-    
     const subCategoryTitle = subCategoryNames[title]?.[index % (subCategoryNames[title]?.length || 1)] || `Category ${index + 1}`;
     const subCategoryContext = "Explore the finest collection curated for luxury and elegance.";
-
     return (
       <div
         key={product.id || index}
@@ -114,7 +99,6 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
           className="absolute inset-0 z-10"
           prefetch={true}
         />
-
         <div className="absolute inset-0 w-full h-full bg-gray-100">
           <Image
             src={product?.image || (product?.images && product?.images[0]) || ''}
@@ -124,9 +108,7 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
             sizes="(max-width: 768px) 75vw, (max-width: 1024px) 32vw, 24vw"
             priority={index < 2}
           />
-          
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
-          
           <div className={`absolute inset-0 ${isSmall ? 'p-3 md:p-4' : 'p-4 md:p-6'} flex flex-col justify-end pointer-events-none`}>
             <div className="relative z-20 w-full">
               <h3 
@@ -134,7 +116,6 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
               >
                 {subCategoryTitle}
               </h3>
-              
               <div className="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0">
                 {!isSmall && (
                   <p className="text-[10px] md:text-xs text-white/90 font-medium max-w-[95%] mb-2 drop-shadow-md leading-tight">
@@ -151,10 +132,8 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
       </div>
     );
   };
-
   return (
     <div className="mb-0 last:mb-0 relative group pt-3 md:pt-4">
-      
       {/* Super Premium Category Heading - Ultra Compact */}
       <div className="flex flex-col items-start mb-3 md:mb-4 px-2 md:px-0 gap-0">
         <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.25em] text-gray-500 block">
@@ -169,7 +148,6 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
               Series
             </span>
           </h2>
-          
           <Link 
             href={title === 'Men' ? '/men' : title === 'Women' ? '/women' : '#'}
             className="group flex items-center gap-1 bg-transparent text-primary pb-0.5 border-b border-black/20 hover:border-black transition-all duration-300 text-[8px] md:text-[10px] font-bold uppercase tracking-widest shrink-0 mb-0.5"
@@ -179,7 +157,6 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
           </Link>
         </div>
       </div>
-
       <div className="relative">
         {/* Navigation Arrows - Desktop Only */}
         <AnimatePresence>
@@ -199,7 +176,6 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
             </button>
           )}
         </AnimatePresence>
-
         <AnimatePresence>
           {showRightArrow && (
             <button
@@ -217,7 +193,6 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
             </button>
           )}
         </AnimatePresence>
-
         {/* Scrollable Container - Bento Grid Layout */}
         <div 
           ref={scrollRef}
@@ -260,17 +235,14 @@ const CategoryRow = ({ title, products }: { title: string, products: Product[] }
     </div>
   )
 }
-
 export default function FeaturedProducts({ initialProducts }: { initialProducts?: Product[] }) {
   const [products, setProducts] = useState<Product[]>(initialProducts || [])
   const [loading, setLoading] = useState(!initialProducts)
-
   useEffect(() => {
     if (!initialProducts) {
       fetchProducts()
     }
   }, [initialProducts])
-
   const fetchProducts = async () => {
     try {
       const res = await fetch('/api/products')
@@ -284,11 +256,8 @@ export default function FeaturedProducts({ initialProducts }: { initialProducts?
       setLoading(false)
     }
   }
-
   const categories = ['Men', 'Women']
-
   if (loading) return null
-
   return (
     <section 
       data-customizable 

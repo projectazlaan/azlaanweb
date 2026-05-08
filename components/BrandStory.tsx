@@ -1,5 +1,4 @@
 import Image from 'next/image';
-
 export default function BrandStory({ isBangla = false }: { isBangla?: boolean }) {
   return (
     <section className="py-[12px] px-4">
@@ -12,11 +11,9 @@ export default function BrandStory({ isBangla = false }: { isBangla?: boolean })
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
-
             />
           </div>
         </div>
-
         <div className="order-1 md:order-2">
           <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4 md:mb-8 text-primary">
             {isBangla ? 'আমাদের গল্প' : 'Our Story'}
@@ -33,7 +30,6 @@ export default function BrandStory({ isBangla = false }: { isBangla?: boolean })
               : 'Our garments are crafted with the finest materials, combining traditional Bangladeshi textile heritage with contemporary designs that speak to the modern sophisticated individual.'
             }
           </p>
-
           <div className="grid grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-10">
             <div>
               <p className="font-serif text-2xl md:text-4xl font-bold text-gray-700">500+</p>
@@ -54,7 +50,6 @@ export default function BrandStory({ isBangla = false }: { isBangla?: boolean })
               </p>
             </div>
           </div>
-
           <p className="font-serif text-lg md:text-xl text-gray-500 font-semibold">
             {isBangla ? 'বাংলাদেশে গর্বের সাথে তৈরি' : 'Crafted with Pride in Bangladesh'}
           </p>

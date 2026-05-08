@@ -1,10 +1,8 @@
 'use client'
-
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Upload } from 'lucide-react'
 import Image from 'next/image'
-
 export default function NewProduct() {
   const router = useRouter()
   const [form, setForm] = useState({
@@ -19,18 +17,15 @@ export default function NewProduct() {
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
-
     if (!form.name || !form.price || !form.image) {
       setError('Name, price and image are required')
       setLoading(false)
       return
     }
-
     try {
       const res = await fetch('/api/admin/products', {
         method: 'POST',
@@ -41,7 +36,6 @@ export default function NewProduct() {
           categoryBn: form.categoryBn || form.category,
         }),
       })
-
       if (res.ok) {
         router.push('/admin/products')
       } else {
@@ -53,13 +47,11 @@ export default function NewProduct() {
       setLoading(false)
     }
   }
-
   const categoryMap: Record<string, string> = {
     Men: 'পুরুষ',
     Women: 'নারী',
     Kids: 'শিশু',
   }
-
   return (
     <div>
       <div className="mb-6">
@@ -71,12 +63,10 @@ export default function NewProduct() {
         </button>
         <h1 className="font-serif text-2xl md:text-3xl font-bold text-primary">Add New Product</h1>
       </div>
-
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-2xl shadow-sm max-w-2xl">
         {error && (
           <div className="bg-red-50 text-red-600 p-3 rounded-xl text-sm mb-6">{error}</div>
         )}
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
           <div>
             <label className="block text-sm font-medium text-primary mb-1.5">Name (EN) *</label>
@@ -120,7 +110,6 @@ export default function NewProduct() {
             </select>
           </div>
         </div>
-
         <div className="mb-5">
           <label className="block text-sm font-medium text-primary mb-1.5">Image URL *</label>
           <input
@@ -137,7 +126,6 @@ export default function NewProduct() {
             </div>
           )}
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
           <div>
             <label className="block text-sm font-medium text-primary mb-1.5">Description (EN)</label>
@@ -156,7 +144,6 @@ export default function NewProduct() {
             />
           </div>
         </div>
-
         <button
           type="submit"
           disabled={loading}

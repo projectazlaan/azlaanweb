@@ -1,11 +1,8 @@
 'use client';
-
 import { motion } from 'framer-motion';
 import { Save, Eye, ToggleLeft, ToggleRight, Pencil } from 'lucide-react';
 import { useState } from 'react';
-
 type Section = { id: string; label: string; value: string; type: 'text' | 'textarea' };
-
 const INITIAL_SECTIONS: Section[] = [
   { id: 'hero_title', label: 'Homepage Hero Title', value: 'Define Your Style', type: 'text' },
   { id: 'hero_subtitle', label: 'Homepage Hero Subtitle', value: 'Premium Bangladeshi Ethnics. Crafted For the Modern World.', type: 'textarea' },
@@ -13,7 +10,6 @@ const INITIAL_SECTIONS: Section[] = [
   { id: 'newsletter_sub', label: 'Newsletter Subtitle', value: 'Join the Azlaan Inner Circle today and enjoy complimentary shipping on your first order.', type: 'textarea' },
   { id: 'collection_badge', label: 'New Collection Badge Text', value: 'New Collection', type: 'text' },
 ];
-
 const TOGGLES = [
   { id: 'banner', label: 'Show "Free Delivery" Top Banner', default: true },
   { id: 'flash_badge', label: 'Show "Flash Sale" Badge on Products', default: false },
@@ -21,7 +17,6 @@ const TOGGLES = [
   { id: 'vip_panel', label: 'Show Inner Circle Login Panel', default: true },
   { id: 'premier_early', label: 'Enable Premier Early Access', default: false },
 ];
-
 export default function VisualBuilder() {
   const [sections, setSections] = useState(INITIAL_SECTIONS);
   const [editing, setEditing] = useState<string | null>(null);
@@ -29,20 +24,16 @@ export default function VisualBuilder() {
     Object.fromEntries(TOGGLES.map(t => [t.id, t.default]))
   );
   const [saved, setSaved] = useState(false);
-
   const update = (id: string, value: string) => {
     setSections(sections.map(s => s.id === id ? { ...s, value } : s));
   };
-
   const save = () => {
     setSaved(true);
     setEditing(null);
     setTimeout(() => setSaved(false), 2500);
   };
-
   return (
     <div className="space-y-8 pb-20">
-
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100">
         <div>
@@ -58,7 +49,6 @@ export default function VisualBuilder() {
           </button>
         </div>
       </div>
-
       {/* Text Sections */}
       <div>
         <h3 className="font-black text-gray-700 text-sm uppercase tracking-widest mb-4 px-2">✏️ Text Content</h3>
@@ -108,7 +98,6 @@ export default function VisualBuilder() {
           ))}
         </div>
       </div>
-
       {/* Section Toggles */}
       <div>
         <h3 className="font-black text-gray-700 text-sm uppercase tracking-widest mb-4 px-2">⚡ Section Controls</h3>

@@ -1,5 +1,4 @@
 'use client';
-
 import { useRef, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,7 +22,6 @@ import {
   Send,
   MoreVertical
 } from 'lucide-react';
-
 const REEL_LINKS = [
   'https://www.facebook.com/reel/1134307095487597',
   'https://www.facebook.com/reel/1259544982273036',
@@ -34,18 +32,15 @@ const REEL_LINKS = [
   'https://www.facebook.com/reel/1611200360066814',
   'https://www.facebook.com/reel/1134307095487597',
 ];
-
 export default function ReelsPanel() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [fullScreenIndex, setFullScreenIndex] = useState(0);
   const [isCommentOpen, setIsCommentOpen] = useState(false);
-  
   // Social States
   const [likedReels, setLikedReels] = useState<Record<number, boolean>>({});
   const [savedReels, setSavedReels] = useState<Record<number, boolean>>({});
-
   // Mock Comments
   const MOCK_COMMENTS = [
     { user: 'Samiul Islam', text: 'This looks incredibly premium! 🔥', time: '2m' },
@@ -53,16 +48,13 @@ export default function ReelsPanel() {
     { user: 'Rakib Hasan', text: 'Where can I get this collection?', time: '1h' },
     { user: 'Azlaan Official', text: 'Coming soon to our flagship stores! 🚀', time: '30m', isBrand: true },
   ];
-
   const [commentsList, setCommentsList] = useState(MOCK_COMMENTS);
   const [newComment, setNewComment] = useState('');
-
   // Lazy Load Architecture: Only load the first two reels initially for super fast rendering
   const [loadedIframes, setLoadedIframes] = useState<Record<number, boolean>>({
     0: true,
     1: true,
   });
-
   const [isMuted, setIsMuted] = useState(true);
   const playerRefs = useRef<Record<number, any>>({});
   const modalPlayerRefs = useRef<Record<number, any>>({});
@@ -70,7 +62,6 @@ export default function ReelsPanel() {
   const activeIndexRef = useRef<number>(activeIndex);
   const fullScreenIndexRef = useRef<number>(fullScreenIndex);
   const modalScrollRef = useRef<HTMLDivElement>(null);
-
   // Sync Modal Scroll Position to prevent wrong video showing
   useEffect(() => {
     if (isFullScreen && modalScrollRef.current) {
@@ -81,22 +72,18 @@ export default function ReelsPanel() {
       }, 10);
     }
   }, [isFullScreen]);
-
   useEffect(() => {
     activeIndexRef.current = activeIndex;
   }, [activeIndex]);
-
   useEffect(() => {
     fullScreenIndexRef.current = fullScreenIndex;
   }, [fullScreenIndex]);
-
   const [isPlaying, setIsPlaying] = useState<Record<string, boolean>>({});
   const [showControls, setShowControls] = useState(true);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastCapturedPosition = useRef<number>(0);
   const isTransitioningToFull = useRef<boolean>(false);
   const pendingSeek = useRef<number | null>(null);
-
   const triggerControls = useCallback(() => {
     setShowControls(true);
     if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
@@ -104,18 +91,15 @@ export default function ReelsPanel() {
       setShowControls(false);
     }, 2000);
   }, []);
-
   useEffect(() => {
     triggerControls();
     return () => {
       if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
     };
   }, [isFullScreen, activeIndex, fullScreenIndex, triggerControls]);
-
   const handlePlayPause = (idx: number, isModal = false) => {
     const key = isModal ? `modal-${idx}` : `carousel-${idx}`;
     const player = isModal ? modalPlayerRefs.current[idx] : playerRefs.current[idx];
-    
     if (player) {
       try {
         const state = player.getState ? player.getState() : (isPlaying[key] ? 'playing' : 'paused');
@@ -139,7 +123,6 @@ export default function ReelsPanel() {
     }
     triggerControls();
   };
-
   const handleSeek = (idx: number, seconds: number, isModal = false) => {
     const player = isModal ? modalPlayerRefs.current[idx] : playerRefs.current[idx];
     if (player) {
@@ -154,11 +137,9 @@ export default function ReelsPanel() {
   const toggleLike = (idx: number) => {
     setLikedReels(prev => ({ ...prev, [idx]: !prev[idx] }));
   };
-
   const toggleSave = (idx: number) => {
     setSavedReels(prev => ({ ...prev, [idx]: !prev[idx] }));
   };
-
   const handleShare = async (link: string) => {
     if (navigator.share) {
       try {
@@ -169,12 +150,10 @@ export default function ReelsPanel() {
       alert('Link copied to clipboard!');
     }
   };
-
   // Intersection observer to track centred slide
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -193,15 +172,12 @@ export default function ReelsPanel() {
       },
       { root: container, rootMargin: '0px -40% 0px -40%', threshold: 0 }
     );
-
     container.querySelectorAll('.reel-slide').forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
-
   const scrollTo = useCallback((index: number) => {
     const container = containerRef.current;
     if (!container) return;
-
     const clamped = Math.max(0, Math.min(index, REEL_LINKS.length - 1));
     const slide = container.querySelector<HTMLElement>(`.reel-slide[data-index="${clamped}"]`);
     if (slide) {
@@ -209,34 +185,26 @@ export default function ReelsPanel() {
     }
     setActiveIndex(clamped);
   }, []);
-
   const prev = () => scrollTo(activeIndex - 1);
   const next = () => scrollTo(activeIndex + 1);
-
   const getReelId = (url: string) => url.split('/').pop() || '';
-  
   // Load FB SDK and subscribe to events
   const fbSubscribed = useRef(false);
   useEffect(() => {
     const initFB = () => {
       if (!(window as any).FB) return;
-      
       (window as any).FB.XFBML.parse();
-      
       if (fbSubscribed.current) return;
       fbSubscribed.current = true;
-
       // Subscribe once to ready event to capture player instances
       (window as any).FB.Event.subscribe('xfbml.ready', (msg: any) => {
           if (msg.type === 'video' && msg.id) {
             const isModal = msg.id.includes('modal');
             const idx = parseInt(msg.id.split('-').pop() || '0');
-            
             if (!isNaN(idx)) {
               if (isModal) {
                 modalPlayerRefs.current[idx] = msg.instance;
                 if (isMuted) msg.instance.mute(); else msg.instance.unmute();
-                
                 msg.instance.subscribe('startedPlaying', () => {
                   setIsPlaying(prev => ({ ...prev, [`modal-${idx}`]: true }));
                   // Handle seamless seek when playback actually starts
@@ -256,14 +224,12 @@ export default function ReelsPanel() {
                     setFullScreenIndex(idx + 1);
                   }
                 });
-
                 if (idx === fullScreenIndexRef.current) {
                   setTimeout(() => { try { msg.instance.play(); } catch(e) {} }, 500);
                 }
               } else {
                 playerRefs.current[idx] = msg.instance;
                 msg.instance.mute(); // Compliance
-
                 msg.instance.subscribe('startedPlaying', () => {
                   setIsPlaying(prev => ({ ...prev, [`carousel-${idx}`]: true }));
                 });
@@ -276,7 +242,6 @@ export default function ReelsPanel() {
                     scrollTo(idx + 1);
                   }
                 });
-
                 if (idx === activeIndexRef.current && !isFullScreen) {
                   setTimeout(() => { try { msg.instance.play(); } catch(e) {} }, 500);
                 }
@@ -285,7 +250,6 @@ export default function ReelsPanel() {
           }
         });
     };
-
     if (!(window as any).FB) {
       const script = document.createElement('script');
       script.id = 'facebook-jssdk';
@@ -295,7 +259,6 @@ export default function ReelsPanel() {
       script.crossOrigin = "anonymous";
       script.onload = initFB;
       document.body.appendChild(script);
-      
       (window as any).fbAsyncInit = function() {
         (window as any).FB.init({ xfbml: true, version: 'v18.0' });
         initFB();
@@ -304,7 +267,6 @@ export default function ReelsPanel() {
       initFB();
     }
   }, [isFullScreen, scrollTo]);
-
   // Dynamic parsing for newly lazy-loaded iframes
   useEffect(() => {
     if ((window as any).FB) {
@@ -313,17 +275,14 @@ export default function ReelsPanel() {
       }, 100);
     }
   }, [loadedIframes]);
-
   // Main Carousel Playback Control
   useEffect(() => {
     if (isFullScreen) {
       Object.values(playerRefs.current).forEach(p => p.pause());
       return;
     }
-
     const isIndexChanged = lastActiveIndex.current !== activeIndex;
     lastActiveIndex.current = activeIndex;
-
     Object.keys(playerRefs.current).forEach((key) => {
       const idx = parseInt(key);
       const player = playerRefs.current[idx];
@@ -337,24 +296,19 @@ export default function ReelsPanel() {
       } catch (e) {}
     });
   }, [activeIndex, isFullScreen]);
-
   // Modal Playback Control (Seamless Seek)
   useEffect(() => {
     if (!isFullScreen) return;
-
     const player = modalPlayerRefs.current[fullScreenIndex];
     if (player) {
       try {
         if (isMuted) player.mute(); else player.unmute();
-        
         // If we just opened full screen, mark for pending seek
         if (isTransitioningToFull.current && lastCapturedPosition.current > 0) {
           pendingSeek.current = lastCapturedPosition.current;
           isTransitioningToFull.current = false; // Reset
         }
-        
         player.play();
-        
         // Polling guardian for the first 2 seconds to ensure it stays playing
         let count = 0;
         const interval = setInterval(() => {
@@ -363,7 +317,6 @@ export default function ReelsPanel() {
             player.play();
           }
         }, 100);
-        
         // Pause others
         Object.keys(modalPlayerRefs.current).forEach((key) => {
           const idx = parseInt(key);
@@ -374,12 +327,10 @@ export default function ReelsPanel() {
       } catch (e) {}
     }
   }, [fullScreenIndex, isFullScreen, isMuted]);
-
   // Section visibility observer
   useEffect(() => {
     const section = containerRef.current?.closest('section');
     if (!section) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) {
@@ -391,7 +342,6 @@ export default function ReelsPanel() {
           const targetPlayer = isFullScreen 
             ? modalPlayerRefs.current[fullScreenIndex] 
             : playerRefs.current[activeIndex];
-          
           if (targetPlayer) {
             try { targetPlayer.play(); } catch(e) {}
           }
@@ -399,23 +349,18 @@ export default function ReelsPanel() {
       },
       { threshold: 0.1 }
     );
-
     observer.observe(section);
     return () => observer.disconnect();
   }, [isFullScreen, activeIndex, fullScreenIndex]);
-
   const handleMuteToggle = (e: React.MouseEvent, idx: number, isModal = false) => {
     e.stopPropagation();
     const newMuted = !isMuted;
     setIsMuted(newMuted);
-
     const key = isModal ? `modal-${idx}` : `carousel-${idx}`;
     const player = isModal ? modalPlayerRefs.current[idx] : playerRefs.current[idx];
-
     // Apply global mute state to ALL active players
     Object.values(playerRefs.current).forEach(p => { try { if (newMuted) p.mute(); else p.unmute(); } catch(e) {} });
     Object.values(modalPlayerRefs.current).forEach(p => { try { if (newMuted) p.mute(); else p.unmute(); } catch(e) {} });
-
     if (player) {
       if (!newMuted) {
         // SYNCHRONOUS UNMUTE: Must be in the direct call stack of the click event
@@ -425,7 +370,6 @@ export default function ReelsPanel() {
           player.play();
           setIsPlaying(prev => ({ ...prev, [key]: true }));
         } catch(e) {}
-        
         // Safety post-triggers (ensure playback stays active)
         [100, 250, 500, 800].forEach(ms => {
           setTimeout(() => {
@@ -440,7 +384,6 @@ export default function ReelsPanel() {
       }
     }
   };
-
   const openFullScreen = (index: number, showComments = false) => {
     // Capture position for seamless handover
     const currentPlayer = playerRefs.current[activeIndex];
@@ -451,18 +394,15 @@ export default function ReelsPanel() {
         lastCapturedPosition.current = 0;
       }
     }
-
     setFullScreenIndex(index);
     setIsFullScreen(true);
     setIsCommentOpen(showComments);
-    
     // Pause main carousel instantly and repeatedly to ensure it stops
     [0, 100, 300].forEach(ms => {
       setTimeout(() => {
         Object.values(playerRefs.current).forEach(p => { try { p.pause(); } catch(e) {} });
       }, ms);
     });
-
     // Instantly seek and play modal (preserves interaction context for audio)
     setTimeout(() => {
       const modalPlayer = modalPlayerRefs.current[index];
@@ -475,12 +415,10 @@ export default function ReelsPanel() {
       }
     }, 50);
   };
-
   return (
     <section className="pt-4 md:pt-6 pb-0 bg-white overflow-hidden relative">
       <div id="fb-root"></div>
       <div className="max-w-full mx-auto relative">
-
         {/* ── Header ── */}
         <div className="text-center mb-3 md:mb-4 px-4 relative flex flex-col items-center">
           <motion.h2
@@ -496,7 +434,6 @@ export default function ReelsPanel() {
               Editorials
             </span>
           </motion.h2>
-
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -511,10 +448,8 @@ export default function ReelsPanel() {
             <div className="h-[1px] w-4 md:w-8 bg-gray-400" />
           </motion.div>
         </div>
-
         {/* ── Carousel wrapper ── */}
         <div className="relative">
-
           {/* Prev Arrow — desktop only */}
           <button
             onClick={(e) => { e.stopPropagation(); prev(); }}
@@ -523,7 +458,6 @@ export default function ReelsPanel() {
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
-
           {/* Next Arrow — desktop only */}
           <button
             onClick={(e) => { e.stopPropagation(); next(); }}
@@ -532,7 +466,6 @@ export default function ReelsPanel() {
           >
             <ChevronRight className="w-5 h-5" />
           </button>
-
           {/* Carousel */}
           <div
             ref={containerRef}
@@ -543,7 +476,6 @@ export default function ReelsPanel() {
               const isActive = activeIndex === idx;
               const reelId = getReelId(link);
               const thumbnailUrL = `https://www.facebook.com/plugins/video/thumbnail/?href=${encodeURIComponent(link)}`;
-
               return (
                 <motion.div
                   key={`${link}-${idx}`}
@@ -566,7 +498,6 @@ export default function ReelsPanel() {
                       backgroundPosition: 'center'
                     }}
                   >
-                    
                     {/* Maximize Button */}
                     {isActive && (
                       <button
@@ -576,7 +507,6 @@ export default function ReelsPanel() {
                         <Maximize2 className="w-5 h-5" />
                       </button>
                     )}
-
                     {/* Facebook Video Plugin (XFBML) */}
                     {loadedIframes[idx] && (
                       <div 
@@ -595,10 +525,8 @@ export default function ReelsPanel() {
                         }}
                       />
                     )}
-
                     {/* Minimal Carousel Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-
                     <div className="absolute bottom-16 right-2 flex flex-col items-center gap-3 z-[60]">
                       {/* Like */}
                       <div className="flex flex-col items-center gap-0.5 scale-75">
@@ -611,7 +539,6 @@ export default function ReelsPanel() {
                         </motion.button>
                         <span className="text-white text-[9px] font-bold shadow-sm">{likedReels[idx] ? '1.3k' : '1.2k'}</span>
                       </div>
-
                       {/* Comment */}
                       <div className="flex flex-col items-center gap-0.5 scale-75">
                         <button 
@@ -622,7 +549,6 @@ export default function ReelsPanel() {
                         </button>
                         <span className="text-white text-[9px] font-bold shadow-sm">248</span>
                       </div>
-
                       {/* Favorite */}
                       <div className="flex flex-col items-center gap-0.5 scale-75">
                         <motion.button
@@ -634,7 +560,6 @@ export default function ReelsPanel() {
                         </motion.button>
                         <span className="text-white text-[9px] font-bold shadow-sm">1.1k</span>
                       </div>
-
                       {/* Share */}
                       <div className="flex flex-col items-center gap-0.5 scale-75">
                         <button 
@@ -646,7 +571,6 @@ export default function ReelsPanel() {
                         <span className="text-white text-[9px] font-bold shadow-sm">Share</span>
                       </div>
                     </div>
-
                     {/* Compact User Info (Bottom Left) */}
                     <div className="absolute bottom-4 left-3 right-12 z-[60] pointer-events-none">
                       <div className="flex items-center gap-2 mb-1">
@@ -661,7 +585,6 @@ export default function ReelsPanel() {
                         Modern elegance with our latest collection. #Azlaan
                       </p>
                     </div>
-
                     {/* Sound Toggle (Only for Active Reel) */}
                     {isActive && (
                       <button 
@@ -677,7 +600,6 @@ export default function ReelsPanel() {
             })}
           </div>
         </div>
-
         {/* ── Dot Indicators ── */}
         <div className="hidden md:flex justify-center items-center gap-2 mt-4 mb-2">
           {REEL_LINKS.map((_, idx) => (
@@ -688,7 +610,6 @@ export default function ReelsPanel() {
             />
           ))}
         </div>
-
         {/* ── Cinematic Audio/Video Wave Portal ── */}
         <div className="flex justify-center mt-6 md:mt-2 pb-6">
           <Link 
@@ -700,7 +621,6 @@ export default function ReelsPanel() {
             <div className="w-0 opacity-0 group-hover:w-4 group-hover:opacity-100 transition-all duration-500 flex justify-center overflow-hidden z-10">
               <Play className="w-3 h-3 fill-white text-white ml-[1px]" />
             </div>
-
             {/* Animated Audio Wave / Media Indicator */}
             <div className="flex items-center gap-[3px] h-3 z-10">
               <motion.div 
@@ -724,13 +644,11 @@ export default function ReelsPanel() {
                 className="w-1 bg-white rounded-full"
               />
             </div>
-
             {/* Subtle Cinematic Glow Orb */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40px] h-[40px] bg-[#0071E3]/30 blur-[15px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
           </Link>
         </div>
       </div>
-
       {/* ── Full Screen Reels Modal (Persistent for Audio Context) ── */}
       <div
         className={`fixed inset-0 bg-black transition-all duration-500 ease-in-out ${
@@ -741,7 +659,6 @@ export default function ReelsPanel() {
             <button
               onClick={() => {
                 setIsFullScreen(false);
-
                 // Aggressive Kill Switch: Force MUTE and PAUSE immediately & repeatedly
                 const killModalPlayers = () => {
                   Object.values(modalPlayerRefs.current).forEach(p => { 
@@ -751,12 +668,10 @@ export default function ReelsPanel() {
                     } catch(e) {} 
                   });
                 };
-
                 killModalPlayers();
                 setTimeout(killModalPlayers, 50);
                 setTimeout(killModalPlayers, 200);
                 setTimeout(killModalPlayers, 500);
-
                 // Capture position for seamless return
                 const currentModalPlayer = modalPlayerRefs.current[fullScreenIndex];
                 if (currentModalPlayer) {
@@ -774,7 +689,6 @@ export default function ReelsPanel() {
                     }
                   } catch (e) {}
                 }
-
                 scrollTo(fullScreenIndex);
                 setIsFullScreen(false);
               }}
@@ -782,7 +696,6 @@ export default function ReelsPanel() {
             >
               <X className="w-6 h-6" />
             </button>
-
             {/* Vertical Scroll Container */}
             <div 
               ref={modalScrollRef}
@@ -801,7 +714,6 @@ export default function ReelsPanel() {
             >
               {REEL_LINKS.map((link, idx) => {
                 const thumbnailUrL = `https://www.facebook.com/plugins/video/thumbnail/?href=${encodeURIComponent(link)}`;
-                
                 return (
                   <div 
                     key={`modal-${idx}`}
@@ -827,7 +739,6 @@ export default function ReelsPanel() {
                           style={{ background: 'transparent' }}
                         />
                       )}
-
                       {/* Modal Modern Minimal Controls */}
                       <AnimatePresence>
                         {idx === fullScreenIndex && showControls && (
@@ -844,14 +755,12 @@ export default function ReelsPanel() {
                               <RotateCcw className="w-6 h-6" />
                               <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-bold">5s</span>
                             </button>
-
                             <button 
                               onClick={(e) => { e.stopPropagation(); handlePlayPause(idx, true); }}
                               className="p-6 rounded-full bg-white/20 backdrop-blur-lg border border-white/20 text-white hover:bg-white/30 active:scale-90 transition-all pointer-events-auto"
                             >
                               {isPlaying[`modal-${idx}`] ? <Pause className="w-8 h-8 fill-white" /> : <Play className="w-8 h-8 fill-white" />}
                             </button>
-
                             <button 
                               onClick={(e) => { e.stopPropagation(); handleSeek(idx, 5, true); }}
                               className="p-4 rounded-full bg-black/20 backdrop-blur-md border border-white/10 text-white hover:bg-black/40 active:scale-90 transition-all pointer-events-auto"
@@ -862,7 +771,6 @@ export default function ReelsPanel() {
                           </motion.div>
                         )}
                       </AnimatePresence>
-
                     {/* Modal Social Sidebar */}
                     <div className="absolute bottom-24 right-4 flex flex-col items-center gap-5 z-[1050]">
                       {/* Like */}
@@ -876,7 +784,6 @@ export default function ReelsPanel() {
                         </motion.button>
                         <span className="text-white text-[10px] font-bold shadow-sm">{likedReels[idx] ? '1.3k' : '1.2k'}</span>
                       </div>
-
                       {/* Comment */}
                       <div className="flex flex-col items-center gap-1">
                         <button 
@@ -887,7 +794,6 @@ export default function ReelsPanel() {
                         </button>
                         <span className="text-white text-[10px] font-bold shadow-sm">248</span>
                       </div>
-
                       {/* Favorite */}
                       <div className="flex flex-col items-center gap-1">
                         <motion.button
@@ -899,7 +805,6 @@ export default function ReelsPanel() {
                         </motion.button>
                         <span className="text-white text-[10px] font-bold shadow-sm">1.1k</span>
                       </div>
-
                       {/* Share */}
                       <div className="flex flex-col items-center gap-1">
                         <button 
@@ -911,7 +816,6 @@ export default function ReelsPanel() {
                         <span className="text-white text-[10px] font-bold shadow-sm">Share</span>
                       </div>
                     </div>
-
                     {/* Modal Comment Panel (Slide Up) */}
                     <AnimatePresence>
                       {isCommentOpen && (
@@ -932,7 +836,6 @@ export default function ReelsPanel() {
                               <X className="w-5 h-5" />
                             </button>
                           </div>
-
                           {/* Comments List */}
                           <div className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-hide">
                             {commentsList.map((c, i) => (
@@ -952,7 +855,6 @@ export default function ReelsPanel() {
                               </div>
                             ))}
                           </div>
-
                           {/* Comment Input Box */}
                           <div className="p-4 border-t border-white/10 bg-black/40">
                             <form 
@@ -983,7 +885,6 @@ export default function ReelsPanel() {
                         </motion.div>
                       )}
                     </AnimatePresence>
-
                     {/* Modal Controls Overlay (Bottom Right) */}
                     <div className="absolute bottom-6 right-4 z-[1050]">
                       <button
@@ -993,7 +894,6 @@ export default function ReelsPanel() {
                         {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
                       </button>
                     </div>
-
                     {/* User Info Overlay (Bottom Left) */}
                     <div className="absolute bottom-6 left-6 right-20 z-[1050] flex flex-col gap-3">
                       <div className="flex items-center gap-3">
@@ -1017,11 +917,9 @@ export default function ReelsPanel() {
                           Follow
                         </button>
                       </div>
-                      
                       <p className="text-white text-xs drop-shadow-md line-clamp-2 leading-relaxed">
                         Discover the essence of modern elegance with our latest collection. #Azlaan #Premium #Style
                       </p>
-
                       <div className="flex items-center gap-2 text-white/90">
                         <div className="animate-spin-slow">
                           <Play className="w-3 h-3 fill-white" />
@@ -1031,7 +929,6 @@ export default function ReelsPanel() {
                         </div>
                       </div>
                     </div>
-
                     {/* Navigation Hints */}
                     {idx > 0 && (
                       <div className="absolute top-6 left-1/2 -translate-x-1/2 text-white/40 animate-bounce z-[1050]">

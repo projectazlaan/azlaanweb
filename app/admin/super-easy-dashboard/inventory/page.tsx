@@ -1,14 +1,11 @@
 'use client';
-
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Package, ScanLine, Sparkles, Save, Plus, X, Check, Settings2, RefreshCw } from 'lucide-react';
-
 // ---------- Types ----------
 type Warehouse = 'main' | 'store';
 type Variant = { id: string; size: string; color: string; sku: string; stock: { [key in Warehouse]: number }; };
 type Product = { id: string; name: string; metaTitle: string; metaDescription: string; variants: Variant[]; };
-
 // ---------- Mock Data ----------
 const initialProduct: Product = {
   id: 'prod_1', name: 'Urban Cargo Loose Fit', metaTitle: '', metaDescription: '',
@@ -17,7 +14,6 @@ const initialProduct: Product = {
     { id: 'v2', size: 'L', color: 'Olive', sku: 'UC-L-OL', stock: { main: 8, store: 2 } },
   ],
 };
-
 // ---------- AI SEO Mock ----------
 const mockSeoGeneration = async (productName: string) => {
   return new Promise<{title: string, description: string}>(resolve => {
@@ -27,19 +23,16 @@ const mockSeoGeneration = async (productName: string) => {
     }), 1200);
   });
 };
-
 // ---------- Barcode Scanner Modal ----------
 const BarcodeScanner = ({ onScan, onClose }: { onScan: (sku: string) => void; onClose: () => void; }) => {
   const [cameraActive, setCameraActive] = useState(false);
   const [scanned, setScanned] = useState(false);
-
   const simulateScan = () => {
     if (!cameraActive) {
       setCameraActive(true);
       setTimeout(() => { setScanned(true); onScan('UC-M-OL'); setTimeout(() => onClose(), 500); }, 1500);
     }
   };
-
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={onClose}>
       <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }} className="bg-white rounded-[2rem] p-8 max-w-sm w-full shadow-2xl" onClick={e => e.stopPropagation()}>
@@ -60,12 +53,10 @@ const BarcodeScanner = ({ onScan, onClose }: { onScan: (sku: string) => void; on
     </motion.div>
   );
 };
-
 // ---------- Variant Matrix Builder ----------
 const VariantMatrix = ({ variants, onUpdate }: { variants: Variant[]; onUpdate: (v: Variant[]) => void; }) => {
   const sizes = ['S', 'M', 'L', 'XL'];
   const colors = [ { name: 'Olive', hex: '#6B705C' }, { name: 'Dusty Pink', hex: '#E2A9BE' }, { name: 'Sand', hex: '#C2A77A' } ];
-
   const toggleVariant = (size: string, color: string) => {
     const existing = variants.find(v => v.size === size && v.color === color);
     let newVariants = [...variants];
@@ -74,7 +65,6 @@ const VariantMatrix = ({ variants, onUpdate }: { variants: Variant[]; onUpdate: 
     onUpdate(newVariants);
   };
   const isActive = (size: string, color: string) => variants.some(v => v.size === size && v.color === color);
-
   return (
     <div className="space-y-6 pt-6 border-t border-gray-100">
       <h3 className="font-black text-gray-900 flex items-center gap-2"><Settings2 className="w-5 h-5 text-gray-500" /> Auto Variant Builder</h3>
@@ -114,29 +104,24 @@ const VariantMatrix = ({ variants, onUpdate }: { variants: Variant[]; onUpdate: 
     </div>
   );
 };
-
 const WarehouseToggle = ({ label, value, onChange }: { warehouse: Warehouse; label: string; value: number; onChange: (val: number) => void; }) => (
   <div className="flex items-center gap-2 bg-white rounded-xl px-3 py-2 border border-gray-200">
     <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">{label}</span>
     <input type="number" min="0" value={value} onChange={e => onChange(parseInt(e.target.value) || 0)} className="w-12 text-center text-sm font-black bg-transparent outline-none" />
   </div>
 );
-
 // ---------- Main Page ----------
 export default function InventoryPage() {
   const [product, setProduct] = useState<Product>(initialProduct);
   const [seoLoading, setSeoLoading] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
-
   const saveProduct = () => alert('✅ Variants and Product saved to Database');
-
   const handleGenerateSeo = async () => {
     setSeoLoading(true);
     const generated = await mockSeoGeneration(product.name);
     setProduct(p => ({ ...p, metaTitle: generated.title, metaDescription: generated.description }));
     setSeoLoading(false);
   };
-
   const handleBarcodeScan = (sku: string) => {
     const variant = product.variants.find(v => v.sku === sku);
     if (variant) {
@@ -145,7 +130,6 @@ export default function InventoryPage() {
       alert(`📷 Scanned ${sku} – stock updated`);
     }
   };
-
   return (
     <div className="space-y-8 pb-20">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100">
@@ -164,15 +148,12 @@ export default function InventoryPage() {
           </button>
         </div>
       </div>
-
       <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 space-y-8">
         <div>
           <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Base Product Name</label>
           <input value={product.name} onChange={e => setProduct({ ...product, name: e.target.value })} className="w-full text-3xl font-black outline-none border-b-2 border-dashed border-gray-200 focus:border-black pb-2 transition-colors text-gray-900" placeholder="e.g. Urban Cargo Loose Fit" />
         </div>
-
         <VariantMatrix variants={product.variants} onUpdate={nv => setProduct({ ...product, variants: nv })} />
-
         <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-3xl p-6 border border-purple-100">
           <div className="flex items-center justify-between mb-4">
             <h4 className="font-black text-indigo-900 flex items-center gap-2"><Sparkles className="w-5 h-5 text-purple-600" /> AI SEO Engine</h4>
@@ -192,7 +173,6 @@ export default function InventoryPage() {
           </div>
         </div>
       </div>
-
       <AnimatePresence>
         {showScanner && <BarcodeScanner onScan={handleBarcodeScan} onClose={() => setShowScanner(false)} />}
       </AnimatePresence>

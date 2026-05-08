@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
@@ -7,36 +6,30 @@ import {
   Info, Check, Plus, Minus 
 } from 'lucide-react';
 import { Product } from '@/types';
-
 interface FabricSelectionUIProps {
   product: Product;
   onLengthChange: (length: number) => void;
 }
-
 export default function FabricSelectionUI({ product, onLengthChange }: FabricSelectionUIProps) {
   const [length, setLength] = useState(1);
   const [unit, setUnit] = useState<'meter' | 'yard'>('meter');
-
   const handleLengthChange = (val: number) => {
     const newLen = Math.max(0.5, Math.min(50, val));
     setLength(newLen);
     onLengthChange(newLen);
   };
-
   const specifications = [
     { label: 'Material', value: product.material || 'Premium Silk', icon: Waves },
     { label: 'Weight', value: `${product.gsm || 120} GSM`, icon: Scale },
     { label: 'Width', value: product.width || '44 Inch', icon: Ruler },
     { label: 'Texture', value: 'Smooth & Luxurious', icon: Info },
   ];
-
   const recommendations = [
     { label: 'Panjabi', length: 3 },
     { label: 'Formal Shirt', length: 2.5 },
     { label: 'Saree', length: 5.5 },
     { label: 'Suiting', length: 3.5 },
   ];
-
   return (
     <div className="space-y-10">
       {/* ── Fabric Specifications Grid ── */}
@@ -53,7 +46,6 @@ export default function FabricSelectionUI({ product, onLengthChange }: FabricSel
           </div>
         ))}
       </div>
-
       {/* ── Length Selection ── */}
       <div className="space-y-6">
         <div className="flex items-end justify-between">
@@ -79,7 +71,6 @@ export default function FabricSelectionUI({ product, onLengthChange }: FabricSel
               </div>
             </div>
           </div>
-          
           <div className="flex items-center gap-2 bg-gray-50 border border-black/5 rounded-2xl p-2">
             <button 
               onClick={() => handleLengthChange(length - 0.5)}
@@ -96,7 +87,6 @@ export default function FabricSelectionUI({ product, onLengthChange }: FabricSel
             </button>
           </div>
         </div>
-
         {/* ── Slider UI ── */}
         <div className="relative h-2 bg-gray-100 rounded-full cursor-pointer group">
           <motion.div 
@@ -113,7 +103,6 @@ export default function FabricSelectionUI({ product, onLengthChange }: FabricSel
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           />
         </div>
-
         {/* ── Recommendations ── */}
         <div className="flex flex-wrap gap-2">
           {recommendations.map((rec) => (
@@ -127,7 +116,6 @@ export default function FabricSelectionUI({ product, onLengthChange }: FabricSel
           ))}
         </div>
       </div>
-
       {/* ── Total Cost Highlight ── */}
       <div className="bg-blue-600 rounded-[2rem] p-8 text-white relative overflow-hidden group">
         <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />

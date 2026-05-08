@@ -1,5 +1,4 @@
 'use client'
-
 import { useState } from 'react'
 import { 
   Upload, Image as ImageIcon, Scissors, Wand2, Sparkles, MessageSquare,
@@ -8,16 +7,13 @@ import {
 import { 
   MediaHubOverlay, ImageEditor, BackgroundRemoval, AltTextGenerator, PromptToSection, UploadFile 
 } from './'
-
 type TabType = 'upload' | 'editor' | 'background' | 'alttext' | 'prompt'
-
 interface Tab {
   id: TabType
   label: string
   icon: React.ReactNode
   description: string
 }
-
 const tabs: Tab[] = [
   { 
     id: 'upload', 
@@ -50,7 +46,6 @@ const tabs: Tab[] = [
     description: 'Chat with AI to generate UI sections from natural language'
   },
 ]
-
 export function MediaHub() {
   const [activeTab, setActiveTab] = useState<TabType>('upload')
   const [isHubOpen, setIsHubOpen] = useState(false)
@@ -60,34 +55,28 @@ export function MediaHub() {
   const [backgroundOpen, setBackgroundOpen] = useState(false)
   const [altTextOpen, setAltTextOpen] = useState(false)
   const [promptOpen, setPromptOpen] = useState(false)
-
   const handleUploadComplete = (files: UploadFile[]) => {
     setUploadedFiles(files)
     if (files.length > 0) {
       setCurrentImage(files[0].preview || files[0].url || null)
     }
   }
-
   const handleImageEdit = (editedImage: string) => {
     setCurrentImage(editedImage)
     setEditorOpen(false)
   }
-
   const handleBackgroundRemoved = (resultImage: string) => {
     setCurrentImage(resultImage)
     setBackgroundOpen(false)
   }
-
   const handleAltTextGenerated = (data: { altText: string; tags: string[] }) => {
     console.log('Alt text:', data.altText, 'Tags:', data.tags)
     setAltTextOpen(false)
   }
-
   const handleSectionGenerated = (section: { html: string; css: string }) => {
     console.log('Generated section:', section)
     setPromptOpen(false)
   }
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -103,7 +92,6 @@ export function MediaHub() {
           Open Media Hub
         </button>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {tabs.map(tab => (
           <button
@@ -125,7 +113,6 @@ export function MediaHub() {
           </button>
         ))}
       </div>
-
       <div className="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
         <h3 className="text-sm font-medium text-white mb-4">Current Image</h3>
         {currentImage ? (
@@ -168,7 +155,6 @@ export function MediaHub() {
           <p className="text-gray-500 text-sm">No image selected. Use Media Hub to upload images.</p>
         )}
       </div>
-
       <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
         <button
           onClick={() => setPromptOpen(true)}
@@ -178,13 +164,11 @@ export function MediaHub() {
           <span className="text-gray-400">Open AI Prompt-to-Section Generator</span>
         </button>
       </div>
-
       <MediaHubOverlay
         isOpen={isHubOpen}
         onClose={() => setIsHubOpen(false)}
         onUploadComplete={handleUploadComplete}
       />
-
       {editorOpen && currentImage && (
         <ImageEditor
           imageSrc={currentImage}
@@ -192,7 +176,6 @@ export function MediaHub() {
           onCancel={() => setEditorOpen(false)}
         />
       )}
-
       {backgroundOpen && currentImage && (
         <BackgroundRemoval
           imageSrc={currentImage}
@@ -200,7 +183,6 @@ export function MediaHub() {
           onCancel={() => setBackgroundOpen(false)}
         />
       )}
-
       {altTextOpen && currentImage && (
         <AltTextGenerator
           imageSrc={currentImage}
@@ -208,7 +190,6 @@ export function MediaHub() {
           onCancel={() => setAltTextOpen(false)}
         />
       )}
-
       {promptOpen && (
         <PromptToSection
           onSave={handleSectionGenerated}

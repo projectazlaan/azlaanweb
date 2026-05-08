@@ -2,19 +2,16 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import RootLayoutContent from "@/components/RootLayoutContent";
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });
-
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
   display: "swap",
 });
-
 export const metadata: Metadata = {
   metadataBase: new URL('https://azlaan.com.bd'),
   title: {
@@ -37,7 +34,6 @@ export const metadata: Metadata = {
     ],
   },
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{

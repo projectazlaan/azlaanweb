@@ -1,21 +1,16 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Users, Timer, AlertCircle } from 'lucide-react';
-
 interface ScarcityUrgencyProps {
   stockCount: number;
   viewersCount: number;
   offerEndsAt?: string;
 }
-
 export default function ScarcityUrgency({ stockCount, viewersCount, offerEndsAt }: ScarcityUrgencyProps) {
   const [timeLeft, setTimeLeft] = useState<{ h: string; m: string; s: string } | null>(null);
-
   useEffect(() => {
     if (!offerEndsAt) return;
-
     const timer = setInterval(() => {
       const distance = new Date(offerEndsAt).getTime() - new Date().getTime();
       if (distance < 0) {
@@ -28,10 +23,8 @@ export default function ScarcityUrgency({ stockCount, viewersCount, offerEndsAt 
         setTimeLeft({ h, m, s });
       }
     }, 1000);
-
     return () => clearInterval(timer);
   }, [offerEndsAt]);
-
   return (
     <div className="space-y-3 my-6">
       {/* Viewers Count (Social Proof) */}
@@ -39,7 +32,6 @@ export default function ScarcityUrgency({ stockCount, viewersCount, offerEndsAt 
         <Users className="w-3.5 h-3.5" />
         <span>{viewersCount} people are viewing this now</span>
       </div>
-
       {/* Low Stock Warning (Scarcity) */}
       {stockCount < 15 && (
         <div className="flex items-center gap-2 text-[11px] font-bold text-red-600 bg-red-50 px-3 py-1.5 rounded-full w-fit">
@@ -47,7 +39,6 @@ export default function ScarcityUrgency({ stockCount, viewersCount, offerEndsAt 
           <span>Only {stockCount} left in stock!</span>
         </div>
       )}
-
       {/* Countdown Timer (Urgency) */}
       {timeLeft && (
         <div className="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl w-full">

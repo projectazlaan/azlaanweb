@@ -1,7 +1,5 @@
 'use client';
-
 import dynamic from 'next/dynamic';
-
 // Import the editor component with SSR disabled
 const StudioEditorFull = dynamic(() => import('@/components/admin/StudioEditorFull'), {
   ssr: false,
@@ -14,7 +12,6 @@ const StudioEditorFull = dynamic(() => import('@/components/admin/StudioEditorFu
     </div>
   )
 });
-
 export default function StudioPage() {
   return <StudioEditorFull />;
 }

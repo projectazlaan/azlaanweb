@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
@@ -16,7 +15,6 @@ import {
   Eye
 } from 'lucide-react';
 import Link from 'next/link';
-
 interface DashboardStats {
   totalSales: number;
   totalOrders: number;
@@ -28,26 +26,22 @@ interface DashboardStats {
   productsChange: number;
   pendingOrders: number;
 }
-
 const statCards = [
   { key: 'totalSales', label: 'Total Sales', icon: DollarSign, color: 'bg-emerald-500', prefix: '৳' },
   { key: 'totalOrders', label: 'Total Orders', icon: ShoppingCart, color: 'bg-blue-500', prefix: '' },
   { key: 'totalCustomers', label: 'Customers', icon: Users, color: 'bg-purple-500', prefix: '' },
   { key: 'totalProducts', label: 'Products', icon: Package, color: 'bg-orange-500', prefix: '' },
 ];
-
 const quickActions = [
   { label: 'Add New Product', desc: 'Create a new product listing', icon: Package, href: '/admin/super-easy-dashboard/products', color: 'bg-emerald-50 text-emerald-600' },
   { label: 'Flash Sale', desc: 'Toggle or configure flash sale', icon: Zap, href: '/admin/super-easy-dashboard/flash-sale', color: 'bg-red-50 text-red-600' },
   { label: 'Live Editor', desc: 'Edit site visually', icon: Eye, href: '/admin/super-easy-dashboard/editor', color: 'bg-purple-50 text-purple-600' },
   { label: 'View Orders', desc: 'Check recent orders', icon: ShoppingCart, href: '/admin/super-easy-dashboard/orders', color: 'bg-blue-50 text-blue-600' },
 ];
-
 export default function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [recentOrders, setRecentOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     // Fetch stats
     fetch('/api/admin/dashboard-stats')
@@ -57,7 +51,6 @@ export default function DashboardPage() {
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-
     // Fetch recent orders
     fetch('/api/admin/orders')
       .then(res => res.json())
@@ -67,7 +60,6 @@ export default function DashboardPage() {
       })
       .catch(console.error);
   }, []);
-
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -75,18 +67,15 @@ export default function DashboardPage() {
       transition: { staggerChildren: 0.1 }
     }
   };
-
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 }
   };
-
   const getChangeValue = (key: string) => {
     if (!stats) return 0;
     const changeKey = key.replace('total', '').toLowerCase() + 'Change';
     return (stats as any)[changeKey] || 0;
   };
-
   return (
     <div className="space-y-8 pb-10">
       {/* Welcome Banner */}
@@ -104,7 +93,6 @@ export default function DashboardPage() {
         <div className="absolute right-0 top-0 w-96 h-full bg-gradient-to-l from-white/5 to-transparent" />
         <Bell className="absolute right-10 top-10 text-white/10 w-32 h-32 rotate-12" />
       </motion.div>
-
       {/* Stats Grid */}
       <motion.div
         variants={containerVariants}
@@ -140,7 +128,6 @@ export default function DashboardPage() {
           );
         })}
       </motion.div>
-
       {/* Quick Actions */}
       <div>
         <div className="flex items-center justify-between mb-6 px-2">
@@ -173,7 +160,6 @@ export default function DashboardPage() {
           ))}
         </motion.div>
       </div>
-
       {/* Recent Orders + Live Preview */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Recent Orders */}
@@ -198,7 +184,6 @@ export default function DashboardPage() {
               </motion.button>
             </Link>
           </div>
-          
           <div className="space-y-4">
             {recentOrders.length === 0 && !loading ? (
               <div className="text-center py-16">
@@ -247,7 +232,6 @@ export default function DashboardPage() {
             ))}
           </div>
         </motion.div>
-
         {/* Live Site Mini Preview */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}

@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -18,7 +17,6 @@ import {
   Clock,
   ArrowRight
 } from 'lucide-react';
-
 interface Notification {
   id: string;
   type: string;
@@ -27,7 +25,6 @@ interface Notification {
   status: string;
   time: string;
 }
-
 interface ActivityLog {
   id: string;
   action: string;
@@ -35,13 +32,11 @@ interface ActivityLog {
   new_value: any;
   created_at: string;
 }
-
 export default function NotificationsPage() {
   const [activeTab, setActiveTab] = useState<'notifications' | 'logs'>('notifications');
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [logs, setLogs] = useState<ActivityLog[]>([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     fetch('/api/admin/notifications')
       .then(res => res.json())
@@ -52,7 +47,6 @@ export default function NotificationsPage() {
       })
       .catch(console.error);
   }, []);
-
   const getIcon = (type: string) => {
     switch (type) {
       case 'ORDER': return <ShoppingCart size={20} />;
@@ -61,7 +55,6 @@ export default function NotificationsPage() {
       default: return <Bell size={20} />;
     }
   };
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'delivered': return 'bg-emerald-50 text-emerald-500';
@@ -70,7 +63,6 @@ export default function NotificationsPage() {
       default: return 'bg-blue-50 text-blue-500';
     }
   };
-
   return (
     <div className="space-y-8 pb-10 max-w-5xl mx-auto">
       {/* Header */}
@@ -98,7 +90,6 @@ export default function NotificationsPage() {
           </button>
         </div>
       </div>
-
       {/* Main Content Area */}
       <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
         {/* Toolbar */}
@@ -120,7 +111,6 @@ export default function NotificationsPage() {
               </button>
            </div>
         </div>
-
         <div className="divide-y divide-gray-50">
           <AnimatePresence mode="wait">
             {activeTab === 'notifications' ? (
@@ -220,7 +210,6 @@ export default function NotificationsPage() {
             )}
           </AnimatePresence>
         </div>
-
         {/* Footer / Load More */}
         <div className="p-8 bg-gray-50/50 text-center border-t border-gray-50">
            <button className="text-xs font-black text-gray-400 uppercase tracking-widest hover:text-gray-900 transition-all flex items-center gap-2 mx-auto">
@@ -228,7 +217,6 @@ export default function NotificationsPage() {
            </button>
         </div>
       </div>
-
       {/* Quick Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[

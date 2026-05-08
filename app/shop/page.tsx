@@ -1,10 +1,8 @@
 'use client';
-
 import { useState, use } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Filter, SlidersHorizontal } from 'lucide-react';
-
 const allProducts = [
   { id: 1, name: 'Premium Cotton Panjabi', nameBn: 'প্রিমিয়াম কটন পাঞ্জাবি', price: '৳8,500', image: '/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp', category: 'Men', isNew: true },
   { id: 2, name: 'Classic Formal Suit', nameBn: 'ক্লাসিক ফরমাল স্যুট', price: '৳15,000', image: '/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp', category: 'Men', isNew: false },
@@ -14,13 +12,10 @@ const allProducts = [
   { id: 13, name: 'Junior Premium Suit', nameBn: 'জুনিয়র প্রিমিয়াম স্যুট', price: '৳6,500', image: '/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp', category: 'Kids', isNew: true },
   { id: 14, name: 'Kids Party Wear', nameBn: 'কিডস পার্টি ওয়্যার', price: '৳4,200', image: '/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp', category: 'Kids', isNew: false },
 ];
-
 export default function ShopPage({ searchParams }: { searchParams: Promise<{ lang?: string }> }) {
   const resolvedSearchParams = use(searchParams);
   const isBangla = resolvedSearchParams?.lang === 'bn'; 
-  
   const [showFilters, setShowFilters] = useState(false);
-
   return (
     <main className="min-h-screen pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-4">
@@ -36,11 +31,9 @@ export default function ShopPage({ searchParams }: { searchParams: Promise<{ lan
             {isBangla ? 'ফিল্টার' : 'Filters'}
           </button>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
           <div className={`${showFilters ? 'block' : 'hidden'} md:block col-span-1 bg-white p-5 md:p-6 rounded-2xl h-fit`}>
             <h3 className="font-bold mb-4 text-primary">{isBangla ? 'ফিল্টার' : 'Filters'}</h3>
-            
             <div className="mb-6">
               <h4 className="font-semibold text-sm mb-2 text-primary">{isBangla ? 'ক্যাটেগরি' : 'Category'}</h4>
               {['Men', 'Women', 'Kids'].map((cat) => (
@@ -50,7 +43,6 @@ export default function ShopPage({ searchParams }: { searchParams: Promise<{ lan
                 </label>
               ))}
             </div>
-
             <div className="mb-6">
               <h4 className="font-semibold text-sm mb-2 text-primary">{isBangla ? 'দাম' : 'Price'}</h4>
               {['Under ৳5,000', '৳5,000 - ৳10,000', 'Above ৳10,000'].map((price) => (
@@ -60,7 +52,6 @@ export default function ShopPage({ searchParams }: { searchParams: Promise<{ lan
                 </label>
               ))}
             </div>
-
             <div className="mb-6">
               <h4 className="font-semibold text-sm mb-2 text-primary">Size</h4>
               {['S', 'M', 'L', 'XL', 'XXL'].map((size) => (
@@ -70,7 +61,6 @@ export default function ShopPage({ searchParams }: { searchParams: Promise<{ lan
                 </label>
               ))}
             </div>
-
             <button
               onClick={() => setShowFilters(false)}
               className="md:hidden w-full bg-secondary text-white py-2 rounded-full text-sm cursor-pointer"
@@ -78,7 +68,6 @@ export default function ShopPage({ searchParams }: { searchParams: Promise<{ lan
               {isBangla ? 'ফিল্টার প্রয়োগ করুন' : 'Apply Filters'}
             </button>
           </div>
-
           <div className="md:col-span-3">
             <div className="flex items-center justify-between mb-4 md:mb-6">
               <p className="text-sm text-text-muted">{allProducts.length} {isBangla ? 'টি পণ্য' : 'products'}</p>
@@ -88,7 +77,6 @@ export default function ShopPage({ searchParams }: { searchParams: Promise<{ lan
                 <option>{isBangla ? 'দাম: বেশি থেকে কম' : 'Price: High to Low'}</option>
               </select>
             </div>
-
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
               {allProducts.map((product) => (
                 <Link

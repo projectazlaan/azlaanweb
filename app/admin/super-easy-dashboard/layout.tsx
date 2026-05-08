@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -22,7 +21,6 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
 const menuItems = [
   { icon: LayoutDashboard, label: 'Dashboard', href: '/admin/super-easy-dashboard', color: 'bg-blue-500' },
   { icon: Eye, label: 'Live Editor', href: '/admin/super-easy-dashboard/editor', color: 'bg-purple-500' },
@@ -37,11 +35,9 @@ const menuItems = [
   { icon: Bell, label: 'Notifications', href: '/admin/super-easy-dashboard/notifications', color: 'bg-red-600' },
   { icon: Settings, label: 'Settings', href: '/admin/super-easy-dashboard/settings', color: 'bg-gray-500' },
 ];
-
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const pathname = usePathname();
-
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
@@ -66,7 +62,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </div>
               </div>
             </div>
-
             {/* Menu */}
             <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
               {menuItems.map((item) => {
@@ -90,7 +85,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 );
               })}
             </nav>
-
             {/* Bottom */}
             <div className="p-4 border-t border-gray-100">
               <motion.button
@@ -105,7 +99,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </motion.aside>
         )}
       </AnimatePresence>
-
       {/* Main Content */}
       <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'ml-[280px]' : 'ml-0'}`}>
         {/* Top Bar */}
@@ -126,7 +119,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <p className="text-xs text-gray-400">Manage your store easily</p>
             </div>
           </div>
-
           <div className="flex items-center gap-4">
             <Link href="/" target="_blank">
               <motion.button
@@ -143,7 +135,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </div>
           </div>
         </header>
-
         {/* Page Content */}
         <main className="p-8">
           <motion.div

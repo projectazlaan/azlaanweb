@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
@@ -16,15 +15,12 @@ import {
   MousePointer2,
   Package
 } from 'lucide-react';
-
 const salesData = [3200, 4500, 3800, 5200, 4800, 6100, 5800, 7200, 6800, 8500, 7900, 9200];
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
 export default function AnalyticsPage() {
   const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
   const maxVal = Math.max(...salesData);
   const minVal = Math.min(...salesData);
-
   return (
     <div className="space-y-8 pb-10">
       {/* Header */}
@@ -50,7 +46,6 @@ export default function AnalyticsPage() {
           </motion.button>
         </div>
       </div>
-
       {/* Main Chart */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -73,7 +68,6 @@ export default function AnalyticsPage() {
             </div>
           </div>
         </div>
-
         {/* Custom SVG Line Chart */}
         <div className="h-[400px] w-full relative pt-10">
           <svg className="w-full h-full overflow-visible">
@@ -89,7 +83,6 @@ export default function AnalyticsPage() {
                 strokeWidth="1"
               />
             ))}
-
             {/* Area */}
             <motion.path
               initial={{ opacity: 0, pathLength: 0 }}
@@ -106,7 +99,6 @@ export default function AnalyticsPage() {
               fill="url(#gradient)"
               opacity="0.1"
             />
-
             {/* Line */}
             <motion.path
               initial={{ pathLength: 0 }}
@@ -124,7 +116,6 @@ export default function AnalyticsPage() {
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-
             {/* Points */}
             {salesData.map((val, i) => (
               <g key={i}>
@@ -142,7 +133,6 @@ export default function AnalyticsPage() {
                 />
               </g>
             ))}
-
             <defs>
               <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stopColor="#111827" />
@@ -150,14 +140,12 @@ export default function AnalyticsPage() {
               </linearGradient>
             </defs>
           </svg>
-
           {/* Labels */}
           <div className="flex justify-between mt-6 px-2">
             {months.map((m, i) => (
               <span key={m} className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{m}</span>
             ))}
           </div>
-
           {/* Tooltip */}
           {hoveredPoint !== null && (
             <motion.div
@@ -177,7 +165,6 @@ export default function AnalyticsPage() {
           )}
         </div>
       </motion.div>
-
       {/* Grid Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
@@ -209,7 +196,6 @@ export default function AnalyticsPage() {
           </motion.div>
         ))}
       </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Top Products */}
         <div className="lg:col-span-2 bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
@@ -242,7 +228,6 @@ export default function AnalyticsPage() {
             ))}
           </div>
         </div>
-
         {/* Sales by Category */}
         <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm">
           <h3 className="text-xl font-black text-gray-900 mb-8">Category Sales</h3>

@@ -1,9 +1,7 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import { Database, Link2, Unlink, Check, X, Search, LayoutGrid, Eye } from 'lucide-react'
 import { getCollections, getCollectionItems, bindData, unbindData, getBindings, type BindingOptions } from '@/lib/cms'
-
 export function DataBinding() {
   const [collections, setCollections] = useState(getCollections())
   const [selectedCollection, setSelectedCollection] = useState<string>('')
@@ -12,20 +10,16 @@ export function DataBinding() {
   const [targetElementId, setTargetElementId] = useState<string>('')
   const [bindings, setBindings] = useState<BindingOptions[]>([])
   const [previewMode, setPreviewMode] = useState(false)
-
   useEffect(() => {
     setBindings(getBindings())
   }, [])
-
   useEffect(() => {
     if (selectedCollection) {
       setItems(getCollectionItems(selectedCollection))
     }
   }, [selectedCollection])
-
   const handleBind = () => {
     if (!selectedCollection || !selectedField || !targetElementId) return
-
     const result = bindData(targetElementId, selectedField, selectedCollection)
     if (result.success) {
       setBindings(getBindings())
@@ -34,12 +28,10 @@ export function DataBinding() {
       alert(`Error: ${result.error}`)
     }
   }
-
   const handleUnbind = (elementId: string) => {
     unbindData(elementId)
     setBindings(getBindings())
   }
-
   const handlePreview = () => {
     if (!selectedCollection || items.length === 0) return
     const firstItem = items[0]
@@ -47,7 +39,6 @@ export function DataBinding() {
       const element = document.getElementById(binding.elementId)
       if (!element) return
       const value = binding.field.split('.').reduce<unknown>((obj, key) => (obj as Record<string, unknown>)?.[key], firstItem as unknown)
-      
       if (element.tagName === 'IMG' && binding.field.includes('image')) {
         (element as HTMLImageElement).src = value as string
       } else {
@@ -56,14 +47,12 @@ export function DataBinding() {
     })
     setPreviewMode(true)
   }
-
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold text-white">No-Code Data Binding</h2>
         <p className="text-sm text-gray-400 mt-1">Drag database fields to elements or bind via UI</p>
       </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-4">
           <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
@@ -82,7 +71,6 @@ export function DataBinding() {
               ))}
             </select>
           </div>
-
           {selectedCollection && (
             <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
               <h3 className="text-sm font-medium text-white mb-3">Fields</h3>
@@ -106,7 +94,6 @@ export function DataBinding() {
               </div>
             </div>
           )}
-
           {items.length > 0 && (
             <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
               <h3 className="text-sm font-medium text-white mb-3">Sample Data</h3>
@@ -125,7 +112,6 @@ export function DataBinding() {
             </div>
           )}
         </div>
-
         <div className="lg:col-span-2 space-y-4">
           <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
             <h3 className="text-sm font-medium text-white mb-3">Bind to Element</h3>
@@ -173,7 +159,6 @@ export function DataBinding() {
               </div>
             </div>
           </div>
-
           <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
             <h3 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
               <LayoutGrid size={16} />
@@ -200,7 +185,6 @@ export function DataBinding() {
               )}
             </div>
           </div>
-
           <div
             className="p-6 bg-gray-800/50 rounded-xl border-2 border-dashed border-gray-700 min-h-32"
             onDragOver={e => {
@@ -232,7 +216,6 @@ export function DataBinding() {
           </div>
         </div>
       </div>
-
       {previewMode && (
         <div className="p-4 bg-green-900/30 border border-green-700 rounded-lg">
           <div className="flex items-center gap-2 text-green-400">

@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -13,7 +12,6 @@ import {
   Search,
   MessageCircle
 } from 'lucide-react';
-
 // Premium Mock Video Data
 const VIDEOS = [
   {
@@ -87,19 +85,15 @@ const VIDEOS = [
     thumbnail: 'https://images.unsplash.com/photo-1550614000-4b95d4ebf076?q=80&w=800&auto=format&fit=crop',
   }
 ];
-
 const CATEGORIES = ['Latest', 'Popular', 'Oldest'];
 const TABS = ['Home', 'Videos', 'Shorts', 'Playlists', 'Posts'];
-
 export default function AzlaanCinemaPage() {
   const [activeCategory, setActiveCategory] = useState('Latest');
   const [activeVideo, setActiveVideo] = useState<typeof VIDEOS[0] | null>(null);
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
-
   const gridVideos = activeCategory === 'Latest' 
     ? [...VIDEOS].sort((a, b) => b.id - a.id) // Mock sort
     : VIDEOS.filter(v => v.category === activeCategory);
-
   // Load Facebook SDK only when modal opens
   useEffect(() => {
     if (activeVideo && !isScriptLoaded) {
@@ -121,30 +115,24 @@ export default function AzlaanCinemaPage() {
       }, 100);
     }
   }, [activeVideo, isScriptLoaded]);
-
   // Lock body scroll when modal is open
   useEffect(() => {
     if (activeVideo) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
     return () => { document.body.style.overflow = 'auto'; };
   }, [activeVideo]);
-
   return (
     <div className="min-h-screen bg-[#0F0F0F] text-[#F1F1F1] pt-24 pb-20 selection:bg-blue-500/30 font-sans">
-      
       <div className="max-w-[1280px] mx-auto px-4 md:px-8">
-        
         {/* ── Channel Profile Header (YouTube Style) ── */}
         <div className="flex flex-col md:flex-row gap-6 lg:gap-8 mb-8 items-start md:items-center">
           {/* Profile Picture */}
           <div className="w-[120px] h-[120px] md:w-[160px] md:h-[160px] rounded-full overflow-hidden bg-black shrink-0 shadow-lg border border-white/5">
             <img src="/og-image.png" alt="Azlaan" className="w-full h-full object-cover scale-110" />
           </div>
-          
           {/* Channel Details */}
           <div className="flex-1">
             <h1 className="text-[28px] md:text-[36px] font-bold text-white mb-1.5 tracking-tight">Azlaan</h1>
-            
             <div className="flex flex-wrap items-center gap-2 text-[#AAAAAA] text-[14px] mb-3">
               <span className="font-medium text-white/80">@AzlaanOfficial</span>
               <span>•</span>
@@ -152,11 +140,9 @@ export default function AzlaanCinemaPage() {
               <span>•</span>
               <span>142 videos</span>
             </div>
-            
             <p className="text-[#AAAAAA] text-[14px] max-w-2xl mb-5 line-clamp-2 leading-relaxed">
               Unscripted, unbiased content on premium menswear. Immerse yourself in our world of campaigns, exclusive behind-the-scenes, and cinematic fashion films. <span className="text-white cursor-pointer hover:underline">...more</span>
             </p>
-            
             {/* Actions */}
             <div className="flex items-center gap-3">
               <button className="bg-[#F1F1F1] text-[#0F0F0F] font-semibold text-[14px] px-5 py-2 rounded-full hover:bg-[#D9D9D9] transition-colors">
@@ -168,7 +154,6 @@ export default function AzlaanCinemaPage() {
             </div>
           </div>
         </div>
-
         {/* ── Navigation Tabs ── */}
         <div className="flex items-center gap-8 border-b border-white/10 mb-6 overflow-x-auto scrollbar-hide">
           {TABS.map((tab) => (
@@ -187,7 +172,6 @@ export default function AzlaanCinemaPage() {
             </button>
           ))}
         </div>
-
         {/* ── Filter Pills ── */}
         <div className="flex items-center gap-3 mb-8 overflow-x-auto scrollbar-hide">
           {CATEGORIES.map((cat) => (
@@ -204,7 +188,6 @@ export default function AzlaanCinemaPage() {
             </button>
           ))}
         </div>
-
         {/* ── Vertical Shorts Grid ── */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-2 gap-y-8 md:gap-x-4">
           <AnimatePresence mode="popLayout">
@@ -226,7 +209,6 @@ export default function AzlaanCinemaPage() {
                     alt={video.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                   />
-                  
                   {/* Hover Overlay with Play Icon */}
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors flex items-center justify-center">
                     <div className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300">
@@ -234,7 +216,6 @@ export default function AzlaanCinemaPage() {
                     </div>
                   </div>
                 </div>
-                
                 {/* Meta Data (Below Thumbnail) */}
                 <div className="flex items-start justify-between gap-2 px-1">
                   <div className="flex-1">
@@ -253,9 +234,7 @@ export default function AzlaanCinemaPage() {
             ))}
           </AnimatePresence>
         </div>
-
       </div>
-
       {/* ── Theater Mode Modal ── */}
       <AnimatePresence>
         {activeVideo && (
@@ -272,7 +251,6 @@ export default function AzlaanCinemaPage() {
             >
               <X className="w-6 h-6" />
             </button>
-
             {/* Modal Content Grid */}
             <motion.div 
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
@@ -294,7 +272,6 @@ export default function AzlaanCinemaPage() {
                   ></div>
                 </div>
               </div>
-
               {/* Right: Info Panel (Only visible on desktop/large screens) */}
               <div className="hidden lg:flex w-[350px] flex-col border-l border-white/10 bg-[#151515]">
                 <div className="p-6 flex-1 overflow-y-auto">
@@ -305,11 +282,9 @@ export default function AzlaanCinemaPage() {
                       <p className="text-[#AAAAAA] text-[12px]">{activeVideo.date}</p>
                     </div>
                   </div>
-                  
                   <h2 className="text-[16px] font-semibold text-[#F1F1F1] leading-snug mb-3">
                     {activeVideo.title}
                   </h2>
-                  
                   <div className="flex items-center gap-4 text-[#AAAAAA] text-[13px] font-medium mb-6 pb-4 border-b border-white/10">
                     <div className="flex items-center gap-1.5">
                       <Eye className="w-4 h-4" />
@@ -320,7 +295,6 @@ export default function AzlaanCinemaPage() {
                       {activeVideo.duration}
                     </div>
                   </div>
-
                   {/* YT Style Actions */}
                   <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4 gap-2">
                     <button className="flex-1 flex flex-col items-center justify-center gap-1.5 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white transition-colors">
@@ -342,7 +316,6 @@ export default function AzlaanCinemaPage() {
           </motion.div>
         )}
       </AnimatePresence>
-
       <style jsx global>{`
         .fb-video iframe {
           width: 100% !important;

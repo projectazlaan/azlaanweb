@@ -1,32 +1,26 @@
 'use client';
-
 import { Product } from '@/types';
 import Image from 'next/image';
 import { X, ShoppingBag, Heart } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useCartStore } from '@/store/cartStore';
-
 interface QuickViewModalProps {
   product: Product;
   isOpen: boolean;
   onClose: () => void;
 }
-
 export default function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps) {
   const [activeImage, setActiveImage] = useState(0);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
     setMounted(true);
     if (isOpen) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
     return () => { document.body.style.overflow = 'auto'; };
   }, [isOpen]);
-
   if (!isOpen || !mounted) return null;
-
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       {/* Backdrop */}
@@ -34,7 +28,6 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
-
       {/* Modal Content */}
       <div className="relative bg-white w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-xl shadow-2xl flex flex-col md:flex-row z-10 animate-in fade-in zoom-in-95 duration-300">
         <button 
@@ -43,7 +36,6 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
         >
           <X className="w-5 h-5" />
         </button>
-
         {/* Image Gallery */}
         <div className="w-full md:w-1/2 bg-gray-50 p-6 flex flex-col gap-4">
           <div className="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-white shadow-sm">
@@ -51,7 +43,6 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
               src={(product.images && product.images[activeImage]) || product.image || ''}
               alt={product.name || 'Product Image'}
               fill
-
               className="object-cover"
             />
             {product.badge && (
@@ -60,7 +51,6 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
               </span>
             )}
           </div>
-
           {product.images && product.images.length > 1 && (
             <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
               {product.images.map((img, idx) => (
@@ -77,7 +67,6 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
             </div>
           )}
         </div>
-
         {/* Product Details */}
         <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col overflow-y-auto">
           <p className="text-[10px] text-black/40 font-bold uppercase tracking-[0.2em] mb-2">
@@ -86,7 +75,6 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
           <h2 className="text-2xl md:text-3xl font-sans font-extrabold tracking-tight mb-2 uppercase">
             {product.name}
           </h2>
-
           <div className="flex items-center gap-3 mb-6">
             <span className="text-xl font-bold text-black">{product.priceDisplay}</span>
             {product.originalPrice && product.originalPrice > product.price && (
@@ -100,12 +88,10 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
               </span>
             )}
           </div>
-
           <div className="prose prose-sm text-black/70 font-light mb-8 line-clamp-4">
             {/* TODO: User to fill [Bangla/English] content for product description */}
             <p>{product.description || 'Premium quality product tailored to perfection. Experience the ultimate comfort and style with Azlaan.'}</p>
           </div>
-
           {product.sizes && product.sizes.length > 0 && (
             <div className="mb-6">
               <p className="text-[10px] font-bold uppercase tracking-widest mb-3">Select Size</p>
@@ -118,7 +104,6 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
               </div>
             </div>
           )}
-
           <div className="mt-auto pt-6 border-t border-black/5 flex items-center gap-3">
             <button 
               onClick={() => {

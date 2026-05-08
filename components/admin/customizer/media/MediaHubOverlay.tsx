@@ -1,8 +1,6 @@
 'use client'
-
 import { useState, useCallback, useRef } from 'react'
 import { Upload, X, Link, Cloud, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
-
 interface UploadFile {
   id: string
   file?: File
@@ -12,13 +10,11 @@ interface UploadFile {
   progress: number
   error?: string
 }
-
 interface MediaHubOverlayProps {
   isOpen: boolean
   onClose: () => void
   onUploadComplete: (files: UploadFile[]) => void
 }
-
 export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubOverlayProps) {
   const [mode, setMode] = useState<'upload' | 'url'>('upload')
   const [urlInput, setUrlInput] = useState('')
@@ -26,7 +22,6 @@ export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubO
   const [files, setFiles] = useState<UploadFile[]>([])
   const [isProcessing, setIsProcessing] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
-
   const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || [])
     const newFiles: UploadFile[] = selectedFiles.map(file => ({
@@ -39,36 +34,28 @@ export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubO
     setFiles(prev => [...prev, ...newFiles])
     processUploads([...newFiles])
   }, [])
-
   const addUrl = () => {
     if (urlInput.trim()) {
       setUrlList(prev => [...prev, urlInput.trim()])
       setUrlInput('')
     }
   }
-
   const removeUrl = (index: number) => {
     setUrlList(prev => prev.filter((_, i) => i !== index))
   }
-
   const processUploads = async (filesToUpload: UploadFile[]) => {
     setIsProcessing(true)
-    
     for (const uploadFile of filesToUpload) {
       setFiles(prev => prev.map(f => 
         f.id === uploadFile.id ? { ...f, status: 'uploading' as const, progress: 10 } : f
       ))
-
       await simulateUpload(uploadFile.id)
-
       setFiles(prev => prev.map(f => 
         f.id === uploadFile.id ? { ...f, status: 'complete' as const, progress: 100 } : f
       ))
     }
-
     setIsProcessing(false)
   }
-
   const simulateUpload = (fileId: string) => {
     return new Promise<void>(resolve => {
       let progress = 10
@@ -84,11 +71,9 @@ export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubO
       }, 200)
     })
   }
-
   const processUrls = async () => {
     if (urlList.length === 0) return
     setIsProcessing(true)
-
     const urlFiles: UploadFile[] = urlList.map(url => ({
       id: crypto.randomUUID(),
       url,
@@ -97,18 +82,15 @@ export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubO
       progress: 10
     }))
     setFiles(prev => [...prev, ...urlFiles])
-
     for (const urlFile of urlFiles) {
       await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000))
       setFiles(prev => prev.map(f => 
         f.id === urlFile.id ? { ...f, status: 'complete' as const, progress: 100 } : f
       ))
     }
-
     setIsProcessing(false)
     setUrlList([])
   }
-
   const removeFile = (id: string) => {
     setFiles(prev => {
       const file = prev.find(f => f.id === id)
@@ -118,15 +100,12 @@ export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubO
       return prev.filter(f => f.id !== id)
     })
   }
-
   const handleConfirm = () => {
     const completedFiles = files.filter(f => f.status === 'complete')
     onUploadComplete(completedFiles)
     onClose()
   }
-
   if (!isOpen) return null
-
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-gray-900 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden border border-gray-700 shadow-2xl">
@@ -139,7 +118,6 @@ export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubO
             <X size={20} className="text-gray-400" />
           </button>
         </div>
-
         <div className="flex border-b border-gray-800">
           <button
             onClick={() => setMode('upload')}
@@ -164,7 +142,6 @@ export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubO
             URL Import
           </button>
         </div>
-
         <div className="p-4 max-h-[400px] overflow-y-auto">
           {mode === 'upload' && (
             <div>
@@ -186,7 +163,6 @@ export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubO
               </div>
             </div>
           )}
-
           {mode === 'url' && (
             <div className="space-y-3">
               <div className="flex gap-2">
@@ -205,7 +181,6 @@ export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubO
                   Add
                 </button>
               </div>
-
               {urlList.length > 0 && (
                 <div className="space-y-2">
                   {urlList.map((url, i) => (
@@ -228,7 +203,6 @@ export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubO
               )}
             </div>
           )}
-
           {files.length > 0 && (
             <div className="mt-4 grid grid-cols-4 gap-3">
               {files.map(file => (
@@ -270,7 +244,6 @@ export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubO
             </div>
           )}
         </div>
-
         <div className="flex justify-end gap-3 p-4 border-t border-gray-800">
           <button
             onClick={onClose}
@@ -290,5 +263,4 @@ export function MediaHubOverlay({ isOpen, onClose, onUploadComplete }: MediaHubO
     </div>
   )
 }
-
 export type { UploadFile }

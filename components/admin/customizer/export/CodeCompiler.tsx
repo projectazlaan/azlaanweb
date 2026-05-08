@@ -1,13 +1,10 @@
 'use client'
-
 import { useState } from 'react'
 import { Code, Trash2, Download, CheckCircle } from 'lucide-react'
 import { compileJSONToCleanCode, generatePageComponent } from '@/lib/export/compiler'
-
 interface CodeCompilerProps {
   components?: any[]
 }
-
 export default function CodeCompiler({ components = [] }: CodeCompilerProps) {
   const [jsonInput, setJsonInput] = useState('')
   const [output, setOutput] = useState('')
@@ -15,12 +12,10 @@ export default function CodeCompiler({ components = [] }: CodeCompilerProps) {
   const [unusedStyles, setUnusedStyles] = useState<string[]>([])
   const [compiled, setCompiled] = useState(false)
   const [error, setError] = useState('')
-
   const handleCompile = () => {
     try {
       setError('')
       let parsed: any[] = []
-      
       if (jsonInput.trim()) {
         parsed = JSON.parse(jsonInput)
       } else if (components.length > 0) {
@@ -29,11 +24,9 @@ export default function CodeCompiler({ components = [] }: CodeCompilerProps) {
         setError('No JSON input or components provided')
         return
       }
-      
       if (!Array.isArray(parsed)) {
         parsed = [parsed]
       }
-      
       const result = compileJSONToCleanCode(parsed)
       setOutput(result.optimizedJSX)
       setCssOutput(result.globalCSS)
@@ -43,13 +36,11 @@ export default function CodeCompiler({ components = [] }: CodeCompilerProps) {
       setError(`Compilation error: ${err instanceof Error ? err.message : 'Invalid JSON'}`)
     }
   }
-
   const handleExportJSX = () => {
     const pageComponent = generatePageComponent(
       jsonInput.trim() ? JSON.parse(jsonInput) : components,
       'ExportedPage'
     )
-    
     const blob = new Blob([pageComponent], { type: 'text/typescript' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
@@ -58,7 +49,6 @@ export default function CodeCompiler({ components = [] }: CodeCompilerProps) {
     a.click()
     URL.revokeObjectURL(url)
   }
-
   const handlePurgeStyles = () => {
     try {
       const parsed = jsonInput.trim() ? JSON.parse(jsonInput) : components
@@ -73,7 +63,6 @@ export default function CodeCompiler({ components = [] }: CodeCompilerProps) {
       setError(`Purge error: ${err instanceof Error ? err.message : 'Unknown error'}`)
     }
   }
-
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -99,13 +88,11 @@ export default function CodeCompiler({ components = [] }: CodeCompilerProps) {
           )}
         </div>
       </div>
-
       {error && (
         <div className="p-3 bg-red-900/50 border border-red-700 rounded-lg text-red-200 text-sm">
           {error}
         </div>
       )}
-
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm text-gray-400 mb-2">JSON Input</label>
@@ -124,7 +111,6 @@ export default function CodeCompiler({ components = [] }: CodeCompilerProps) {
             </button>
           )}
         </div>
-
         <div>
           <label className="block text-sm text-gray-400 mb-2">Compiled JSX Output</label>
           <pre className="w-full h-64 bg-gray-800 border border-gray-700 rounded-lg p-3 text-gray-200 text-xs font-mono overflow-auto">
@@ -132,7 +118,6 @@ export default function CodeCompiler({ components = [] }: CodeCompilerProps) {
           </pre>
         </div>
       </div>
-
       {compiled && (
         <>
           <div>
@@ -150,7 +135,6 @@ export default function CodeCompiler({ components = [] }: CodeCompilerProps) {
               {cssOutput || 'No CSS generated'}
             </pre>
           </div>
-
           {unusedStyles.length > 0 && (
             <div className="p-3 bg-yellow-900/30 border border-yellow-700 rounded-lg">
               <p className="text-yellow-200 text-sm font-medium mb-2 flex items-center gap-1">
@@ -166,7 +150,6 @@ export default function CodeCompiler({ components = [] }: CodeCompilerProps) {
               </div>
             </div>
           )}
-
           <div className="p-3 bg-green-900/30 border border-green-700 rounded-lg">
             <p className="text-green-200 text-sm flex items-center gap-2">
               <CheckCircle size={16} />

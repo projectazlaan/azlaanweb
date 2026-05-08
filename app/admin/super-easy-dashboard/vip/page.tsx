@@ -1,9 +1,7 @@
 'use client';
-
 import { motion } from 'framer-motion';
 import { Star, Crown, Gift, Send, Users, TrendingUp } from 'lucide-react';
 import { useState } from 'react';
-
 const VIP_MEMBERS = [
   { id: 1, name: 'Nusrat Jahan', email: 'nusrat@email.com', tier: 'Platinum', points: 4850, totalSpent: '৳ 28,000', joined: 'Jan 2025', avatar: 'bg-pink-500', premier: true },
   { id: 2, name: 'Sajib Rahman', email: 'sajib@email.com', tier: 'Gold', points: 2320, totalSpent: '৳ 14,500', joined: 'Feb 2025', avatar: 'bg-blue-500', premier: false },
@@ -11,32 +9,25 @@ const VIP_MEMBERS = [
   { id: 4, name: 'Mitu Akter', email: 'mitu@email.com', tier: 'Silver', points: 730, totalSpent: '৳ 4,600', joined: 'Apr 2025', avatar: 'bg-purple-500', premier: false },
   { id: 5, name: 'Farhan Islam', email: 'farhan@email.com', tier: 'Silver', points: 590, totalSpent: '৳ 3,700', joined: 'Apr 2025', avatar: 'bg-orange-500', premier: false },
 ];
-
 const TIER_STYLE: Record<string, string> = {
   Platinum: 'bg-violet-100 text-violet-700',
   Gold: 'bg-amber-100 text-amber-700',
   Silver: 'bg-gray-100 text-gray-700',
 };
-
 export default function VIPCircle() {
   const [selected, setSelected] = useState<number[]>([]);
   const [sent, setSent] = useState(false);
-
   const toggleSelect = (id: number) => {
     setSelected(prev => prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]);
   };
-
   const selectAll = () => setSelected(VIP_MEMBERS.map(m => m.id));
   const clearAll = () => setSelected([]);
-
   const sendGift = () => {
     setSent(true);
     setTimeout(() => { setSent(false); setSelected([]); }, 3000);
   };
-
   return (
     <div className="space-y-8 pb-20">
-
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100">
         <div>
@@ -52,7 +43,6 @@ export default function VIPCircle() {
           </button>
         )}
       </div>
-
       {/* Quick Stats */}
       <div className="grid grid-cols-3 gap-4">
         {[
@@ -69,14 +59,12 @@ export default function VIPCircle() {
           </div>
         ))}
       </div>
-
       {/* Select Controls */}
       <div className="flex items-center gap-4">
         <button onClick={selectAll} className="text-sm font-bold text-blue-600 hover:underline">Select All</button>
         <button onClick={clearAll} className="text-sm font-bold text-gray-400 hover:underline">Clear</button>
         {selected.length > 0 && <span className="text-sm font-bold text-gray-600">{selected.length} selected</span>}
       </div>
-
       {/* Members List */}
       <div className="space-y-4">
         {VIP_MEMBERS.map((member, index) => (
@@ -90,7 +78,6 @@ export default function VIPCircle() {
             <div className={`w-14 h-14 rounded-full ${member.avatar} flex items-center justify-center text-white font-black text-xl flex-shrink-0 shadow-inner`}>
               {member.name.charAt(0)}
             </div>
-
             {/* Info */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
@@ -108,7 +95,6 @@ export default function VIPCircle() {
                 <span className="text-sm font-bold text-gray-400">Total: {member.totalSpent}</span>
               </div>
             </div>
-
             {/* Selection Indicator */}
             <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${selected.includes(member.id) ? 'bg-blue-600 border-blue-600' : 'border-gray-300'}`}>
               {selected.includes(member.id) && <div className="w-2.5 h-2.5 bg-white rounded-full" />}

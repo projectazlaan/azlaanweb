@@ -1,12 +1,10 @@
 'use client';
-
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { 
   LayoutDashboard, ShoppingBag, Film, Users, Palette,
   Truck, Settings, LogOut, Home, Zap, Tag, BarChart3, Bell
 } from 'lucide-react';
-
 const MENU_GROUPS = [
   {
     label: '🏠 Site Control',
@@ -41,16 +39,13 @@ const MENU_GROUPS = [
     ],
   },
 ];
-
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
-
   const handleLogout = async () => {
     await fetch('/api/admin/auth', { method: 'DELETE' });
     router.replace('/admin/login');
   };
-
   return (
     <div className="w-64 bg-white border-r border-gray-200 h-full flex flex-col hidden md:flex shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-10 relative">
       {/* Brand Logo */}
@@ -59,7 +54,6 @@ export default function Sidebar() {
           AZLAAN <span className="text-blue-600">PRO</span>
         </h1>
       </div>
-
       {/* Navigation Links */}
       <div className="flex-1 overflow-y-auto py-4 px-3 space-y-5">
         {MENU_GROUPS.map((group) => (
@@ -89,7 +83,6 @@ export default function Sidebar() {
           </div>
         ))}
       </div>
-
       {/* Bottom Profile + Logout */}
       <div className="p-4 border-t border-gray-100 space-y-2">
         <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-2xl">

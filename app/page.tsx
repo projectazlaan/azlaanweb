@@ -6,24 +6,20 @@ import Testimonials from '@/components/Testimonials';
 import Newsletter from '@/components/Newsletter';
 import StudioRenderer from '@/components/StudioRenderer';
 import { getDb } from '@/lib/db';
-
 export default async function HomePage() {
   // Fetch data on the server for maximum speed
   const db = getDb();
   const products = db.prepare('SELECT * FROM products').all();
   const categories = ['All', 'Men', 'Women', 'Fabric', 'Exclusive Collection', 'Series']
   const heroData = db.prepare('SELECT * FROM hero').get();
-
   return (
     <div className="min-h-screen">
       {/* Studio Pro V12 — apply saved styles to live site */}
       <StudioRenderer pageKey="homepage" />
-      
       <div data-customizer-key="HeroSection" className="mt-[-72px] md:mt-[-80px]">
         <HeroSection initialHero={heroData} />
       </div>
       {/* CategorySection removed as per request */}
-      
       <div className="space-y-8 md:space-y-12">
         <div data-customizer-key="FeaturedProducts">
           <FeaturedProducts initialProducts={products} />

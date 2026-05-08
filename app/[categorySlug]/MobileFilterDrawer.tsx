@@ -1,32 +1,26 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { SlidersHorizontal, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { useCategoryStore } from '@/store/categoryStore';
 import { Category } from '@/types';
-
 interface MobileFilterDrawerProps {
   category: Category;
 }
-
 export default function MobileFilterDrawer({ category }: MobileFilterDrawerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [openSection, setOpenSection] = useState<string | null>('subcategory');
   const { filters, setFilter, clearAllFilters } = useCategoryStore();
   const { filters: categoryFilters, subcategories } = category;
-
   useEffect(() => {
     setMounted(true);
     if (isOpen) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
     return () => { document.body.style.overflow = 'auto'; };
   }, [isOpen]);
-
   const toggleSection = (section: string) =>
     setOpenSection(openSection === section ? null : section);
-
   const activeFilterCount = [
     filters.subcategory !== 'All' ? 1 : 0,
     filters.size.length,
@@ -36,7 +30,6 @@ export default function MobileFilterDrawer({ category }: MobileFilterDrawerProps
     filters.occasion.length,
     filters.rating > 0 ? 1 : 0,
   ].reduce((a, b) => a + b, 0);
-
   return (
     <>
       {/* Trigger Button */}
@@ -51,7 +44,6 @@ export default function MobileFilterDrawer({ category }: MobileFilterDrawerProps
           </span>
         )}
       </button>
-
       {mounted && createPortal(
         <div className="z-[999] relative">
           {/* Overlay */}
@@ -61,7 +53,6 @@ export default function MobileFilterDrawer({ category }: MobileFilterDrawerProps
             }`}
             onClick={() => setIsOpen(false)}
           />
-
           {/* Drawer (Right Sidebar) */}
           <div
             className={`fixed top-0 right-0 bottom-0 z-[101] w-[85vw] max-w-[400px] bg-white transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl flex flex-col
@@ -84,7 +75,6 @@ export default function MobileFilterDrawer({ category }: MobileFilterDrawerProps
             </button>
           </div>
         </div>
-
         {/* Drawer Body */}
         <div className="overflow-y-auto flex-1 px-6 py-4 space-y-4">
           {/* Subcategory */}
@@ -106,7 +96,6 @@ export default function MobileFilterDrawer({ category }: MobileFilterDrawerProps
               ))}
             </div>
           </FilterSection>
-
           {/* Size */}
           {categoryFilters.size && (
             <FilterSection
@@ -136,7 +125,6 @@ export default function MobileFilterDrawer({ category }: MobileFilterDrawerProps
               </div>
             </FilterSection>
           )}
-
           {/* Occasion */}
           {categoryFilters.occasion && (
             <FilterSection
@@ -166,7 +154,6 @@ export default function MobileFilterDrawer({ category }: MobileFilterDrawerProps
               </div>
             </FilterSection>
           )}
-
           {/* Price Range */}
           <FilterSection
             title={`Price: ৳${filters.minPrice.toLocaleString()} – ৳${filters.maxPrice.toLocaleString()}`}
@@ -190,7 +177,6 @@ export default function MobileFilterDrawer({ category }: MobileFilterDrawerProps
             </div>
           </FilterSection>
         </div>
-
         {/* Apply Button */}
         <div className="px-6 py-6 border-t border-black/5 bg-gray-50 mt-auto">
           <button
@@ -207,7 +193,6 @@ export default function MobileFilterDrawer({ category }: MobileFilterDrawerProps
     </>
   );
 }
-
 // ─── Helper: Collapsible Section ──────────────────────────────
 function FilterSection({
   title,

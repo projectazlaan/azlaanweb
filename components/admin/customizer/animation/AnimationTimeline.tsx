@@ -1,9 +1,7 @@
 'use client'
-
 import { useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, Plus, Trash2, GripVertical, ChevronDown, ChevronRight, X } from 'lucide-react'
-
 interface Keyframe {
   id: string
   time: number
@@ -15,7 +13,6 @@ interface Keyframe {
     opacity?: number
   }
 }
-
 interface AnimationSequence {
   id: string
   name: string
@@ -23,13 +20,11 @@ interface AnimationSequence {
   easing: string
   keyframes: Keyframe[]
 }
-
 const easingPresets = [
   'ease', 'easeIn', 'easeOut', 'easeInOut', 
   'linear', 'circIn', 'circOut', 'circInOut',
   'backIn', 'backOut', 'backInOut', 'elasticIn', 'elasticOut'
 ]
-
 export default function AnimationTimeline() {
   const [sequences, setSequences] = useState<AnimationSequence[]>([
     {
@@ -48,9 +43,7 @@ export default function AnimationTimeline() {
   const [currentTime, setCurrentTime] = useState(0)
   const [selectedKeyframe, setSelectedKeyframe] = useState<string | null>(null)
   const [expandedSequence, setExpandedSequence] = useState<string | null>('1')
-
   const activeSequence = sequences.find(s => s.id === activeSequenceId)
-
   const addSequence = () => {
     const newSequence: AnimationSequence = {
       id: Date.now().toString(),
@@ -63,18 +56,15 @@ export default function AnimationTimeline() {
     setActiveSequenceId(newSequence.id)
     setExpandedSequence(newSequence.id)
   }
-
   const deleteSequence = (id: string) => {
     setSequences(sequences.filter(s => s.id !== id))
     if (activeSequenceId === id && sequences.length > 1) {
       setActiveSequenceId(sequences.find(s => s.id !== id)?.id || '')
     }
   }
-
   const updateSequence = (id: string, updates: Partial<AnimationSequence>) => {
     setSequences(sequences.map(s => s.id === id ? { ...s, ...updates } : s))
   }
-
   const addKeyframe = () => {
     if (!activeSequence) return
     const newKeyframe: Keyframe = {
@@ -86,7 +76,6 @@ export default function AnimationTimeline() {
       keyframes: [...activeSequence.keyframes, newKeyframe].sort((a, b) => a.time - b.time)
     })
   }
-
   const updateKeyframe = (keyframeId: string, updates: Partial<Keyframe>) => {
     if (!activeSequence) return
     const updatedKeyframes = activeSequence.keyframes.map(k => 
@@ -94,7 +83,6 @@ export default function AnimationTimeline() {
     ).sort((a, b) => a.time - b.time)
     updateSequence(activeSequence.id, { keyframes: updatedKeyframes })
   }
-
   const deleteKeyframe = (keyframeId: string) => {
     if (!activeSequence) return
     updateSequence(activeSequence.id, {
@@ -102,18 +90,14 @@ export default function AnimationTimeline() {
     })
     setSelectedKeyframe(null)
   }
-
   const renderPreview = () => {
     if (!activeSequence) return null
-    
     const progress = currentTime / activeSequence.duration
     const keyframes = activeSequence.keyframes
     const prevKf = keyframes.find(k => k.time <= currentTime) || keyframes[0]
     const nextKf = keyframes.find(k => k.time > currentTime) || keyframes[keyframes.length - 1]
     const t = nextKf.time === prevKf.time ? 0 : (currentTime - prevKf.time) / (nextKf.time - prevKf.time)
-    
     const interpolate = (start: number, end: number) => start + (end - start) * t
-    
     const props = {
       x: interpolate(prevKf.properties.x || 0, nextKf.properties.x || 0),
       y: interpolate(prevKf.properties.y || 0, nextKf.properties.y || 0),
@@ -121,7 +105,6 @@ export default function AnimationTimeline() {
       rotate: interpolate(prevKf.properties.rotate || 0, nextKf.properties.rotate || 0),
       opacity: interpolate(prevKf.properties.opacity ?? 1, nextKf.properties.opacity ?? 1)
     }
-
     return (
       <motion.div
         className="w-24 h-24 bg-indigo-500 rounded-lg shadow-lg flex items-center justify-center"
@@ -132,7 +115,6 @@ export default function AnimationTimeline() {
       </motion.div>
     )
   }
-
   return (
     <div className="bg-gray-900 rounded-xl p-4 text-white">
       <div className="flex items-center justify-between mb-4">
@@ -152,7 +134,6 @@ export default function AnimationTimeline() {
           </button>
         </div>
       </div>
-
       <div className="flex gap-4 mb-4">
         <div className="flex-1">
           <label className="text-xs text-gray-400 mb-1 block">Sequence</label>
@@ -188,7 +169,6 @@ export default function AnimationTimeline() {
           </select>
         </div>
       </div>
-
       <div className="bg-gray-800 rounded-lg p-3 mb-4">
         <div className="flex items-center gap-4 mb-3">
           <label className="text-xs text-gray-400">Preview</label>
@@ -205,7 +185,6 @@ export default function AnimationTimeline() {
             )}
           </div>
         </div>
-        
         <div className="relative">
           <input
             type="range"
@@ -221,7 +200,6 @@ export default function AnimationTimeline() {
           </div>
         </div>
       </div>
-
       <div className="space-y-2">
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs text-gray-400">Keyframes</span>
@@ -232,7 +210,6 @@ export default function AnimationTimeline() {
             <Plus size={12} /> Add Keyframe
           </button>
         </div>
-        
         {activeSequence?.keyframes.map((kf, idx) => (
           <div
             key={kf.id}
@@ -252,7 +229,6 @@ export default function AnimationTimeline() {
                 <Trash2 size={14} />
               </button>
             </div>
-            
             {selectedKeyframe === kf.id && (
               <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-gray-700">
                 <div>
@@ -319,7 +295,6 @@ export default function AnimationTimeline() {
           </div>
         ))}
       </div>
-
       <div className="mt-4 pt-3 border-t border-gray-700 flex justify-between">
         <button
           onClick={() => deleteSequence(activeSequenceId)}

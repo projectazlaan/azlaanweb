@@ -1,11 +1,9 @@
 'use client';
-
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-
 const COLLECTION_IMAGES = [
   { url: '/media-pro/cover/cover 1.jpg', title: 'Premium Silk Panjabi' },
   { url: '/media-pro/cover/cover 2.jpg', title: 'Hand-embroidered Kamiz' },
@@ -20,31 +18,26 @@ const COLLECTION_IMAGES = [
   { url: '/media-pro/men/Design%201/649824908_122120770023151981_1372810042799937270_n.webp', title: 'Traditional Panjabi' },
   { url: '/media-pro/women/Design%201/673191812_122125962327151981_8385571386878315506_n.webp', title: 'Bridal Couture' },
 ];
-
 export default function NewCollectionPanel() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(1); // Start from 1 because of clones
   const [isTransitioning, setIsTransitioning] = useState(false);
-
   // Clone logic: [Last, 1, 2, ..., Last, 1]
   const extendedImages = [
     COLLECTION_IMAGES[COLLECTION_IMAGES.length - 1],
     ...COLLECTION_IMAGES,
     COLLECTION_IMAGES[0]
   ];
-
   const next = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrent((prev) => prev + 1);
   }, [isTransitioning]);
-
   const prev = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrent((prev) => prev - 1);
   }, [isTransitioning]);
-
   // Handle Teleportation
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -65,17 +58,14 @@ export default function NewCollectionPanel() {
     }
     return () => clearTimeout(timer);
   }, [current, extendedImages.length]);
-
   // Auto-slide every 6 seconds to allow for slow motion
   useEffect(() => {
     const timer = setInterval(next, 6000);
     return () => clearInterval(timer);
   }, [next]);
-
   return (
     <section className="pt-8 md:pt-16 pb-12 bg-white overflow-hidden relative">
       <div className="max-w-full mx-auto relative">
-
         {/* ── Header ── */}
         <div className="text-center mb-10 md:mb-16 px-4 relative flex flex-col items-center">
           <motion.h2
@@ -91,7 +81,6 @@ export default function NewCollectionPanel() {
               Collection
             </span>
           </motion.h2>
-
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -106,10 +95,8 @@ export default function NewCollectionPanel() {
             <div className="h-[1px] w-4 md:w-8 bg-[#0071E3]" />
           </motion.div>
         </div>
-
         {/* ── Carousel wrapper ── */}
         <div className="relative group/nav">
-
           {/* Prev Arrow */}
           <button
             onClick={(e) => { e.stopPropagation(); prev(); }}
@@ -124,7 +111,6 @@ export default function NewCollectionPanel() {
           >
             <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
           </button>
-
           {/* Next Arrow */}
           <button
             onClick={(e) => { e.stopPropagation(); next(); }}
@@ -139,7 +125,6 @@ export default function NewCollectionPanel() {
           >
             <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
           </button>
-
           {/* Infinite Container */}
           <div className="flex items-center justify-center">
             <div className="w-[70vw] md:w-[420px] aspect-[3/4] relative">
@@ -149,7 +134,6 @@ export default function NewCollectionPanel() {
               >
                 {extendedImages.map((item, idx) => {
                   const isMain = current === idx || (current === extendedImages.length - 1 && idx === 1) || (current === 0 && idx === extendedImages.length - 2);
-
                   return (
                     <div
                       key={`${item.url}-${idx}`}
@@ -168,14 +152,11 @@ export default function NewCollectionPanel() {
                           src={item.url}
                           alt={item.title}
                           fill
-
                           className="object-cover transition-transform duration-1000 group-hover:scale-110"
                           sizes="(max-width: 768px) 70vw, 420px"
                         />
-
                         {/* Overlay */}
                         <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-700 ${isMain ? 'opacity-100' : 'opacity-0'}`} />
-
                         {/* Content */}
                         <div className={`absolute inset-0 p-6 md:p-10 flex flex-col justify-end transition-all duration-700 delay-100 transform ${isMain ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'}`}>
                           <h3 className="text-white text-xl md:text-2xl font-bold mb-3 tracking-tight">{item.title}</h3>
@@ -195,7 +176,6 @@ export default function NewCollectionPanel() {
             </div>
           </div>
         </div>
-
         {/* ── Pagination Dots ── */}
         <div className="flex justify-center items-center gap-3 mt-12 md:mt-16">
           {COLLECTION_IMAGES.map((_, idx) => {
@@ -219,7 +199,6 @@ export default function NewCollectionPanel() {
             );
           })}
         </div>
-
       </div>
     </section>
   );

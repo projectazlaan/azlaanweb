@@ -1,12 +1,10 @@
 'use client';
-
 import { useState } from 'react';
 import { Product, ViewMode } from '@/types';
 import { useCategoryStore } from '@/store/categoryStore';
 import ProductCard from '@/components/product/ProductCard';
 import Pagination from './Pagination';
 import QuickViewModal from './QuickViewModal';
-
 interface ProductGridProps {
   products: Product[];
   viewMode: ViewMode;
@@ -14,7 +12,6 @@ interface ProductGridProps {
   currentPage: number;
   totalPages: number;
 }
-
 export default function ProductGrid({
   products,
   viewMode,
@@ -24,7 +21,6 @@ export default function ProductGrid({
 }: ProductGridProps) {
   const { clearAllFilters } = useCategoryStore();
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-
   if (products.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-32 text-center">
@@ -47,14 +43,12 @@ export default function ProductGrid({
       </div>
     );
   }
-
   return (
     <div>
       {/* Results count */}
       <p className="text-[10px] text-black/40 uppercase tracking-widest font-bold mb-6">
         Showing {products.length} of {totalCount} items
       </p>
-
       {/* Grid or List */}
       {viewMode === 'grid' ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-1 gap-y-12">
@@ -79,14 +73,12 @@ export default function ProductGrid({
           ))}
         </div>
       )}
-
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="mt-16">
           <Pagination currentPage={currentPage} totalPages={totalPages} />
         </div>
       )}
-
       {/* Quick View Modal */}
       {quickViewProduct && (
         <QuickViewModal

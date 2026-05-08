@@ -1,9 +1,7 @@
 import Image from 'next/image';
-
 export default async function AboutPage({ searchParams }: { searchParams: Promise<{ lang?: string }> }) {
   const resolvedSearchParams = await searchParams;
   const isBangla = resolvedSearchParams?.lang === 'bn';
-
   return (
     <main className="min-h-screen pt-24 pb-12">
       <section className="relative h-48 sm:h-64 md:h-80 bg-primary">
@@ -18,7 +16,6 @@ export default async function AboutPage({ searchParams }: { searchParams: Promis
           </div>
         </div>
       </section>
-
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
         <section className="mb-8 md:mb-12">
           <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-center">
@@ -29,7 +26,6 @@ export default async function AboutPage({ searchParams }: { searchParams: Promis
                   alt="Craftsmanship"
                   fill
                   className="object-cover"
-
                 />
               </div>
             </div>
@@ -52,7 +48,6 @@ export default async function AboutPage({ searchParams }: { searchParams: Promis
             </div>
           </div>
         </section>
-
         <section className="mb-8 md:mb-12">
           <h2 className="font-serif text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8 text-primary">
             {isBangla ? 'আমাদের মূল্যবোধ' : 'Our Values'}
@@ -74,7 +69,6 @@ export default async function AboutPage({ searchParams }: { searchParams: Promis
             ))}
           </div>
         </section>
-
         <section className="bg-section-bg text-primary rounded-2xl p-6 md:p-10">
           <div className="grid grid-cols-3 gap-4 md:gap-8 text-center">
             <div>

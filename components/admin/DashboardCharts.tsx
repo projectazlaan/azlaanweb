@@ -1,24 +1,18 @@
 'use client'
-
 import { useState, useMemo } from 'react'
-
 interface ChartProps {
   data: { date: string; amount: number }[]
 }
-
 export default function SalesChart({ data }: ChartProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-
   const height = 300
   const width = 800
   const padding = 40
-
   const maxAmount = useMemo(() => {
     const max = Math.max(...data.map((d) => d.amount), 1000)
     return max * 1.2 // Add some breathing room at the top
   }, [data])
-
   const points = useMemo(() => {
     return data.map((d, i) => {
       const x = (i / (data.length - 1)) * (width - padding * 2) + padding
@@ -26,19 +20,16 @@ export default function SalesChart({ data }: ChartProps) {
       return { x, y, amount: d.amount, date: d.date }
     })
   }, [data, maxAmount])
-
   const pathData = useMemo(() => {
     if (points.length === 0) return { line: '', area: '' }
     const line = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ')
     const area = `${line} L ${points[points.length - 1].x} ${height - padding} L ${points[0].x} ${height - padding} Z`
     return { line, area }
   }, [points])
-
   const handleMouseMove = (e: React.MouseEvent, index: number) => {
     setHoveredIndex(index)
     setMousePos({ x: e.clientX, y: e.clientY })
   }
-
   return (
     <div className="relative w-full h-[350px] mt-4 select-none">
       <svg
@@ -52,7 +43,6 @@ export default function SalesChart({ data }: ChartProps) {
             <stop offset="100%" stopColor="#0071E3" stopOpacity="0" />
           </linearGradient>
         </defs>
-
         {/* Grid Lines */}
         {[0, 0.25, 0.5, 0.75, 1].map((p) => {
           const y = height - p * (height - padding * 2) - padding
@@ -77,14 +67,12 @@ export default function SalesChart({ data }: ChartProps) {
             </g>
           )
         })}
-
         {/* Area Fill */}
         <path
           d={pathData.area}
           fill="url(#chartGradient)"
           className="transition-all duration-700 ease-in-out"
         />
-
         {/* Line */}
         <path
           d={pathData.line}
@@ -95,7 +83,6 @@ export default function SalesChart({ data }: ChartProps) {
           strokeLinejoin="round"
           className="transition-all duration-700 ease-in-out"
         />
-
         {/* Points & Interaction Areas */}
         {points.map((p, i) => (
           <g key={i}>
@@ -110,7 +97,6 @@ export default function SalesChart({ data }: ChartProps) {
               onMouseLeave={() => setHoveredIndex(null)}
               className="cursor-crosshair"
             />
-            
             {/* Data Point Dot */}
             <circle
               cx={p.x}
@@ -122,7 +108,6 @@ export default function SalesChart({ data }: ChartProps) {
               className="transition-all duration-300"
               style={{ opacity: hoveredIndex === i || data.length < 15 ? 1 : 0 }}
             />
-
             {/* X Axis Labels */}
             {i % Math.ceil(data.length / 7) === 0 && (
               <text
@@ -136,7 +121,6 @@ export default function SalesChart({ data }: ChartProps) {
             )}
           </g>
         ))}
-
         {/* Vertical Scan Line */}
         {hoveredIndex !== null && (
           <line
@@ -150,7 +134,6 @@ export default function SalesChart({ data }: ChartProps) {
           />
         )}
       </svg>
-
       {/* Custom Tooltip */}
       {hoveredIndex !== null && (
         <div 

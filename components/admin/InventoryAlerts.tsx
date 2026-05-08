@@ -1,15 +1,12 @@
 'use client'
-
 import React from 'react'
 import { AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
-
 interface LowStockProduct {
   id: string
   name: string
   stock: number
 }
-
 export default function InventoryAlerts({ products }: { products: LowStockProduct[] }) {
   return (
     <div className="bg-white p-6 rounded-3xl shadow-sm h-full flex flex-col border border-transparent">
@@ -23,7 +20,6 @@ export default function InventoryAlerts({ products }: { products: LowStockProduc
           </span>
         )}
       </div>
-      
       <div className="space-y-3 flex-1 overflow-y-auto scrollbar-hide pr-1">
         {products.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center space-y-3 py-10">

@@ -1,9 +1,7 @@
 'use client'
-
 import React from 'react'
 import { PlusCircle, Tag, Layout, Users, ShoppingBag, Settings } from 'lucide-react'
 import Link from 'next/link'
-
 export default function QuickActions() {
   const actions = [
     { label: 'Add Product', icon: PlusCircle, href: '/admin/products/new', color: 'bg-blue-500' },
@@ -13,13 +11,11 @@ export default function QuickActions() {
     { label: 'Orders', icon: ShoppingBag, href: '/admin/orders', color: 'bg-indigo-500' },
     { label: 'Settings', icon: Settings, href: '/admin/settings', color: 'bg-slate-500' },
   ]
-
   return (
     <div className="bg-white p-6 rounded-3xl shadow-sm h-full flex flex-col border border-transparent">
       <div className="mb-6">
         <h3 className="text-sm font-bold text-primary uppercase tracking-widest opacity-60">Quick Actions</h3>
       </div>
-      
       <div className="grid grid-cols-2 gap-4 flex-1">
         {actions.map((action) => (
           <Link

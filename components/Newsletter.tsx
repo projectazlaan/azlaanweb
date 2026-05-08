@@ -1,14 +1,11 @@
 'use client';
-
 import { motion } from 'framer-motion';
 import { ArrowRight, Gift } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
-
 export default function Newsletter({ isBangla = false }: { isBangla?: boolean }) {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
-
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
@@ -19,7 +16,6 @@ export default function Newsletter({ isBangla = false }: { isBangla?: boolean })
       }, 3000);
     }
   };
-
   return (
     <section className="relative py-16 md:py-20 bg-[#F5F5F7] overflow-hidden flex justify-center border-t border-black/5">
       <motion.div 
@@ -30,7 +26,6 @@ export default function Newsletter({ isBangla = false }: { isBangla?: boolean })
         className="relative z-10 w-full max-w-2xl px-4 md:px-8"
       >
         <div className="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-black/[0.02] flex flex-col items-center text-center">
-          
           {/* Header */}
           <div className="flex items-center gap-2 mb-4 bg-[#0071E3]/5 px-4 py-1.5 rounded-full border border-[#0071E3]/10">
             <Gift className="w-4 h-4 text-[#0071E3]" />
@@ -46,7 +41,6 @@ export default function Newsletter({ isBangla = false }: { isBangla?: boolean })
               ? 'আজই আজলান ইনার সার্কেলে জয়েন করুন এবং আপনার প্রথম অর্ডারে সম্পূর্ণ ফ্রি ডেলিভারি উপভোগ করুন।' 
               : 'Join the Azlaan Inner Circle today and enjoy complimentary shipping on your first order.'}
           </p>
-
           {/* Email Form */}
           <form onSubmit={handleSubscribe} className="w-full max-w-md relative flex items-center mb-8 group/form">
             <input
@@ -66,13 +60,11 @@ export default function Newsletter({ isBangla = false }: { isBangla?: boolean })
               {isSubscribed ? <CheckIcon className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
             </button>
           </form>
-
           <div className="w-full max-w-md flex items-center gap-4 mb-8">
             <div className="h-[1px] flex-1 bg-black/5" />
             <span className="text-xs text-[#86868B] font-medium">Or continue with</span>
             <div className="h-[1px] flex-1 bg-black/5" />
           </div>
-
           {/* Social Logins */}
           <div className="flex items-center justify-center gap-3 w-full max-w-md">
             {/* Google */}
@@ -84,14 +76,12 @@ export default function Newsletter({ isBangla = false }: { isBangla?: boolean })
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
               </svg>
             </Link>
-            
             {/* Facebook */}
             <Link href="/login?provider=facebook" className="flex-1 flex justify-center items-center py-4 bg-[#1877F2]/5 hover:bg-[#1877F2]/10 border border-[#1877F2]/20 rounded-2xl transition-colors">
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="#1877F2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
               </svg>
             </Link>
-
             {/* Apple */}
             <Link href="/login?provider=apple" className="flex-1 flex justify-center items-center py-4 bg-white hover:bg-[#F5F5F7] border border-black/10 rounded-2xl transition-colors">
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -99,13 +89,11 @@ export default function Newsletter({ isBangla = false }: { isBangla?: boolean })
               </svg>
             </Link>
           </div>
-
         </div>
       </motion.div>
     </section>
   );
 }
-
 function CheckIcon(props: any) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" {...props}>

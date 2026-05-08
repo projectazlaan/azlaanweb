@@ -1,9 +1,7 @@
 'use client'
-
 import { useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Plus, Trash2, Eye, EyeOff, Settings, ChevronDown, ArrowUp, ArrowDown, Move } from 'lucide-react'
-
 interface ScrollTrigger {
   id: string
   name: string
@@ -21,7 +19,6 @@ interface ScrollTrigger {
   }
   enabled: boolean
 }
-
 const animationTypes = [
   { value: 'parallax', label: 'Parallax' },
   { value: 'fade', label: 'Fade' },
@@ -29,14 +26,12 @@ const animationTypes = [
   { value: 'scale', label: 'Scale' },
   { value: 'rotate', label: 'Rotate' }
 ]
-
 const directions = [
   { value: 'up', label: '↑ Up' },
   { value: 'down', label: '↓ Down' },
   { value: 'left', label: '← Left' },
   { value: 'right', label: '→ Right' }
 ]
-
 export default function ScrollParallaxEditor() {
   const [triggers, setTriggers] = useState<ScrollTrigger[]>([
     {
@@ -59,9 +54,7 @@ export default function ScrollParallaxEditor() {
   ])
   const [selectedTrigger, setSelectedTrigger] = useState<string | null>('1')
   const [previewMode, setPreviewMode] = useState(false)
-
   const activeTrigger = triggers.find(t => t.id === selectedTrigger)
-
   const addTrigger = () => {
     const newTrigger: ScrollTrigger = {
       id: Date.now().toString(),
@@ -83,27 +76,21 @@ export default function ScrollParallaxEditor() {
     setTriggers([...triggers, newTrigger])
     setSelectedTrigger(newTrigger.id)
   }
-
   const updateTrigger = (id: string, updates: Partial<ScrollTrigger>) => {
     setTriggers(triggers.map(t => t.id === id ? { ...t, ...updates } : t))
   }
-
   const updateAnimation = (id: string, animationUpdates: Partial<ScrollTrigger['animation']>) => {
     setTriggers(triggers.map(t => 
       t.id === id ? { ...t, animation: { ...t.animation, ...animationUpdates } } : t
     ))
   }
-
   const deleteTrigger = (id: string) => {
     setTriggers(triggers.filter(t => t.id !== id))
     if (selectedTrigger === id) setSelectedTrigger(null)
   }
-
   const renderPreview = () => {
     if (!activeTrigger || !previewMode) return null
-
     const { animation } = activeTrigger
-    
     return (
       <div className="h-64 bg-gray-800 rounded-lg overflow-hidden relative">
         <div className="absolute inset-0 bg-gradient-to-b from-gray-700 to-gray-600" />
@@ -136,7 +123,6 @@ export default function ScrollParallaxEditor() {
       </div>
     )
   }
-
   return (
     <div className="bg-gray-900 rounded-xl p-4 text-white">
       <div className="flex items-center justify-between mb-4">
@@ -158,7 +144,6 @@ export default function ScrollParallaxEditor() {
           </button>
         </div>
       </div>
-
       <div className="flex gap-4 mb-4">
         <div className="w-48">
           <label className="text-xs text-gray-400 mb-1 block">Trigger</label>
@@ -199,9 +184,7 @@ export default function ScrollParallaxEditor() {
           </label>
         </div>
       </div>
-
       {previewMode && renderPreview()}
-
       {activeTrigger && (
         <>
           <div className="grid grid-cols-2 gap-3 mb-4">
@@ -228,10 +211,8 @@ export default function ScrollParallaxEditor() {
               />
             </div>
           </div>
-
           <div className="bg-gray-800 rounded-lg p-3 mb-3">
             <h4 className="text-xs font-medium text-gray-300 mb-3">Animation Settings</h4>
-            
             <div className="grid grid-cols-2 gap-3 mb-3">
               <div>
                 <label className="text-xs text-gray-500 mb-1 block">Type</label>
@@ -262,7 +243,6 @@ export default function ScrollParallaxEditor() {
                 </select>
               </div>
             </div>
-
             <div className="mb-3">
               <label className="text-xs text-gray-500 mb-1 block">
                 Intensity: {activeTrigger.animation.intensity}px
@@ -278,7 +258,6 @@ export default function ScrollParallaxEditor() {
                 className="w-full accent-indigo-500"
               />
             </div>
-
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="text-xs text-gray-500 mb-1 block">Start Opacity</label>
@@ -334,7 +313,6 @@ export default function ScrollParallaxEditor() {
               </div>
             </div>
           </div>
-
           <div className="flex justify-between pt-2 border-t border-gray-700">
             <button
               onClick={() => deleteTrigger(selectedTrigger!)}

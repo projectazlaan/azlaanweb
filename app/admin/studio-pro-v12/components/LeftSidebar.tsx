@@ -1,11 +1,9 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import LayersPanel from './LayersPanel'
 import { StudioBlocks } from '../blocks'
 import { ChevronDown, ChevronRight, X } from 'lucide-react'
-
 export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<HTMLIFrameElement | null> }) {
   const [mounted, setMounted] = useState(false)
   const [previewBlock, setPreviewBlock] = useState<{html: string, label: string} | null>(null)
@@ -15,15 +13,12 @@ export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<
     'heroes': true,
     'features': true,
   })
-
   useEffect(() => {
     setMounted(true)
   }, [])
-
   const toggleCategory = (id: string) => {
     setExpandedCategories(prev => ({ ...prev, [id]: !prev[id] }))
   }
-
   // Filter blocks
   const filteredBlocks = StudioBlocks.map(cat => {
     const filteredVariants = cat.variants.filter(v => 
@@ -31,7 +26,6 @@ export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<
     )
     return { ...cat, variants: filteredVariants }
   }).filter(cat => cat.variants.length > 0)
-
   return (
     <aside className="w-64 bg-[#111] border-r border-white/5 flex flex-col overflow-hidden flex-shrink-0">
       {/* Tabs */}
@@ -45,7 +39,6 @@ export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<
           </button>
         ))}
       </div>
-
       {/* BLOCKS */}
       {tab === 'blocks' && (
         <>
@@ -54,7 +47,6 @@ export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<
               onChange={e => setSearch(e.target.value)}
               className="w-full px-3 py-2 bg-[#1a1a1a] border border-white/10 rounded-xl text-xs text-white placeholder-gray-600 focus:outline-none focus:border-indigo-500 transition-colors" />
           </div>
-          
           <div className="flex-1 overflow-y-auto p-2 space-y-2">
             {filteredBlocks.map(category => {
               const isExpanded = expandedCategories[category.id] || search !== ''
@@ -74,7 +66,6 @@ export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<
                     </div>
                     {isExpanded ? <ChevronDown size={14} className="text-gray-500" /> : <ChevronRight size={14} className="text-gray-500" />}
                   </button>
-
                   {/* Variants List */}
                   {isExpanded && (
                     <div className="p-2 space-y-1 bg-black/20 border-t border-white/5">
@@ -100,7 +91,6 @@ export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<
                 </div>
               )
             })}
-            
             {filteredBlocks.length === 0 && (
               <div className="p-4 text-center text-xs text-gray-600">
                 No blocks found matching "{search}"
@@ -109,14 +99,12 @@ export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<
           </div>
         </>
       )}
-
       {/* LAYERS */}
       {tab === 'layers' && (
         <div className="flex-1 overflow-hidden flex flex-col">
           <LayersPanel iframeRef={iframeRef} />
         </div>
       )}
-      
       {/* PREMIUM FLOATING PREVIEW PORTAL */}
       {mounted && previewBlock && createPortal(
         <>
@@ -125,7 +113,6 @@ export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<
             className="fixed inset-0 z-[1999999] bg-black/20 backdrop-blur-[2px]"
             onClick={() => setPreviewBlock(null)}
           />
-
           <div 
             style={{
               position: 'fixed',
@@ -172,7 +159,6 @@ export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<
                   </button>
                 </div>
               </div>
-              
               {/* Content Area */}
               <div className="flex-1 bg-[#0a0a0a] relative overflow-hidden flex items-center justify-center p-6">
                 {/* Dot Grid Background */}
@@ -180,7 +166,6 @@ export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<
                   className="absolute inset-0 opacity-20 pointer-events-none"
                   style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #4f46e5 1px, transparent 0)', backgroundSize: '32px 32px' }}
                 />
-                
                 <div className="relative w-full h-full flex items-center justify-center pointer-events-none">
                   {/* Scaled Canvas */}
                   <div 
@@ -226,7 +211,6 @@ export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<
                       style={{ width: '100%', height: '100%', border: 'none' }}
                     />
                   </div>
-                  
                   {/* Drag Indicator Overlay */}
                   <div className="absolute inset-0 pointer-events-none flex items-end justify-center pb-12">
                     <div className="px-6 py-2 bg-indigo-600/90 backdrop-blur-md rounded-full border border-indigo-400/30 shadow-2xl animate-bounce">
@@ -237,7 +221,6 @@ export default function LeftSidebar({ iframeRef }: { iframeRef: React.RefObject<
               </div>
             </div>
           </div>
-          
           <style jsx global>{`
             @keyframes preview-pop-in {
               from { opacity: 0; transform: scale(0.95) translateX(-20px); }

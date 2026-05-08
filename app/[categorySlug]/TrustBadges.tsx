@@ -1,5 +1,4 @@
 import { ShieldCheck, Truck, RotateCcw, HeadphonesIcon } from 'lucide-react';
-
 const badges = [
   {
     id: 1,
@@ -26,7 +25,6 @@ const badges = [
     description: 'Dedicated customer service at your fingertips',
   },
 ];
-
 export default function TrustBadges() {
   return (
     <section className="bg-[#0d0d0d] text-white py-6 md:py-14 border-t border-white/[0.03]">

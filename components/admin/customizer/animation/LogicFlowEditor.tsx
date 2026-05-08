@@ -1,9 +1,7 @@
 'use client'
-
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Plus, Trash2, Play, Zap, GitBranch, ArrowRight, X, ChevronDown } from 'lucide-react'
-
 interface LogicNode {
   id: string
   type: 'condition' | 'action' | 'trigger'
@@ -17,7 +15,6 @@ interface LogicNode {
   }
   children?: LogicNode[]
 }
-
 interface LogicFlow {
   id: string
   name: string
@@ -25,7 +22,6 @@ interface LogicFlow {
   nodes: LogicNode[]
   enabled: boolean
 }
-
 const operators = [
   { value: 'equals', label: 'equals' },
   { value: 'notEquals', label: 'not equals' },
@@ -34,7 +30,6 @@ const operators = [
   { value: 'contains', label: 'contains' },
   { value: 'isEmpty', label: 'is empty' }
 ]
-
 const triggerTypes = [
   { value: 'click', label: 'On Click' },
   { value: 'hover', label: 'On Hover' },
@@ -42,7 +37,6 @@ const triggerTypes = [
   { value: 'scroll', label: 'On Scroll' },
   { value: 'load', label: 'On Load' }
 ]
-
 const actionTypes = [
   { value: 'show', label: 'Show Element' },
   { value: 'hide', label: 'Hide Element' },
@@ -51,7 +45,6 @@ const actionTypes = [
   { value: 'setState', label: 'Set State' },
   { value: 'callApi', label: 'Call API' }
 ]
-
 export default function LogicFlowEditor() {
   const [flows, setFlows] = useState<LogicFlow[]>([
     {
@@ -78,9 +71,7 @@ export default function LogicFlowEditor() {
   const [activeFlowId, setActiveFlowId] = useState<string>('1')
   const [draggedNode, setDraggedNode] = useState<string | null>(null)
   const [previewMode, setPreviewMode] = useState(false)
-
   const activeFlow = flows.find(f => f.id === activeFlowId)
-
   const addFlow = () => {
     const newFlow: LogicFlow = {
       id: Date.now().toString(),
@@ -94,11 +85,9 @@ export default function LogicFlowEditor() {
     setFlows([...flows, newFlow])
     setActiveFlowId(newFlow.id)
   }
-
   const updateFlow = (id: string, updates: Partial<LogicFlow>) => {
     setFlows(flows.map(f => f.id === id ? { ...f, ...updates } : f))
   }
-
   const addNode = (type: LogicNode['type']) => {
     if (!activeFlow) return
     const newNode: LogicNode = {
@@ -109,21 +98,18 @@ export default function LogicFlowEditor() {
     }
     updateFlow(activeFlowId, { nodes: [...activeFlow.nodes, newNode] })
   }
-
   const updateNode = (nodeId: string, updates: Partial<LogicNode>) => {
     if (!activeFlow) return
     updateFlow(activeFlowId, {
       nodes: activeFlow.nodes.map(n => n.id === nodeId ? { ...n, ...updates } : n)
     })
   }
-
   const deleteNode = (nodeId: string) => {
     if (!activeFlow) return
     updateFlow(activeFlowId, {
       nodes: activeFlow.nodes.filter(n => n.id !== nodeId)
     })
   }
-
   const getNodeColor = (type: LogicNode['type']) => {
     switch (type) {
       case 'trigger': return 'bg-amber-500'
@@ -131,10 +117,8 @@ export default function LogicFlowEditor() {
       case 'action': return 'bg-emerald-500'
     }
   }
-
   const renderPreview = () => {
     if (!previewMode || !activeFlow) return null
-
     return (
       <div className="h-48 bg-gray-800 rounded-lg p-4 flex flex-col items-center justify-center gap-4">
         <div className="text-xs text-gray-500 mb-2">Interactive Preview</div>
@@ -161,7 +145,6 @@ export default function LogicFlowEditor() {
       </div>
     )
   }
-
   return (
     <div className="bg-gray-900 rounded-xl p-4 text-white">
       <div className="flex items-center justify-between mb-4">
@@ -183,7 +166,6 @@ export default function LogicFlowEditor() {
           </button>
         </div>
       </div>
-
       <div className="flex gap-4 mb-4">
         <div className="flex-1">
           <label className="text-xs text-gray-400 mb-1 block">Flow</label>
@@ -221,9 +203,7 @@ export default function LogicFlowEditor() {
           </label>
         </div>
       </div>
-
       {previewMode && renderPreview()}
-
       <div className="flex gap-2 mb-4">
         <button
           onClick={() => addNode('trigger')}
@@ -244,7 +224,6 @@ export default function LogicFlowEditor() {
           <ArrowRight size={12} className="inline mr-1" /> Action
         </button>
       </div>
-
       <div className="space-y-3">
         {activeFlow?.nodes.map((node, idx) => (
           <motion.div
@@ -275,7 +254,6 @@ export default function LogicFlowEditor() {
                 <X size={14} />
               </button>
             </div>
-
             {node.type === 'condition' && (
               <div className="grid grid-cols-3 gap-2">
                 <input
@@ -309,7 +287,6 @@ export default function LogicFlowEditor() {
                 />
               </div>
             )}
-
             {node.type === 'action' && (
               <div className="grid grid-cols-2 gap-2">
                 <select
@@ -334,7 +311,6 @@ export default function LogicFlowEditor() {
                 />
               </div>
             )}
-
             {node.type === 'trigger' && (
               <div className="text-xs text-gray-500">
                 Waits for: {triggerTypes.find(t => t.value === activeFlow.trigger)?.label}
@@ -343,13 +319,11 @@ export default function LogicFlowEditor() {
           </motion.div>
         ))}
       </div>
-
       {activeFlow?.nodes.length === 0 && (
         <div className="text-center py-8 text-gray-500 text-sm">
           Add nodes to build your logic flow
         </div>
       )}
-
       <div className="mt-4 pt-3 border-t border-gray-700 flex justify-between">
         <button
           onClick={() => setFlows(flows.filter(f => f.id !== activeFlowId))}

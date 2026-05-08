@@ -2,7 +2,6 @@
 import React from 'react';
 import { Globe, Plus, Image as ImageIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
-
 export default function MediaPage() {
   return (
     <div className="space-y-8">

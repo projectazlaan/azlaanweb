@@ -2,7 +2,6 @@
 import React from 'react';
 import { Tag, Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
-
 export default function PromosPage() {
   return (
     <div className="space-y-8">

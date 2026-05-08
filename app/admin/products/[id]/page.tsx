@@ -1,15 +1,12 @@
 'use client'
-
 import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { ArrowLeft, Trash2 } from 'lucide-react'
 import Image from 'next/image'
-
 export default function EditProduct() {
   const router = useRouter()
   const params = useParams()
   const id = params.id as string
-
   const [form, setForm] = useState({
     name: '',
     nameBn: '',
@@ -24,11 +21,9 @@ export default function EditProduct() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
-
   useEffect(() => {
     fetchProduct()
   }, [id])
-
   const fetchProduct = async () => {
     try {
       const res = await fetch(`/api/admin/products/${id}`)
@@ -52,12 +47,10 @@ export default function EditProduct() {
       setLoading(false)
     }
   }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setSaving(true)
-
     try {
       const res = await fetch(`/api/admin/products/${id}`, {
         method: 'PUT',
@@ -67,7 +60,6 @@ export default function EditProduct() {
           price: parseInt(form.price),
         }),
       })
-
       if (res.ok) {
         router.push('/admin/products')
       } else {
@@ -79,10 +71,8 @@ export default function EditProduct() {
       setSaving(false)
     }
   }
-
   const handleDelete = async () => {
     if (!confirm('Delete this product? This cannot be undone.')) return
-
     try {
       const res = await fetch(`/api/admin/products/${id}`, { method: 'DELETE' })
       if (res.ok) {
@@ -92,15 +82,12 @@ export default function EditProduct() {
       console.error('Failed to delete:', error)
     }
   }
-
   const categoryMap: Record<string, string> = {
     Men: 'পুরুষ',
     Women: 'নারী',
     Kids: 'শিশু',
   }
-
   if (loading) return <div className="text-text-muted">Loading...</div>
-
   return (
     <div>
       <div className="mb-6">
@@ -120,12 +107,10 @@ export default function EditProduct() {
           </button>
         </div>
       </div>
-
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-2xl shadow-sm max-w-2xl">
         {error && (
           <div className="bg-red-50 text-red-600 p-3 rounded-xl text-sm mb-6">{error}</div>
         )}
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
           <div>
             <label className="block text-sm font-medium text-primary mb-1.5">Name (EN) *</label>
@@ -169,7 +154,6 @@ export default function EditProduct() {
             </select>
           </div>
         </div>
-
         <div className="mb-5">
           <label className="block text-sm font-medium text-primary mb-1.5">Image URL *</label>
           <input
@@ -185,7 +169,6 @@ export default function EditProduct() {
             </div>
           )}
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
           <div>
             <label className="block text-sm font-medium text-primary mb-1.5">Description (EN)</label>
@@ -204,7 +187,6 @@ export default function EditProduct() {
             />
           </div>
         </div>
-
         <div className="mb-6">
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -216,7 +198,6 @@ export default function EditProduct() {
             <span className="text-sm text-primary">In Stock</span>
           </label>
         </div>
-
         <button
           type="submit"
           disabled={saving}

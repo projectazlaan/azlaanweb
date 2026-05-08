@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -8,69 +7,55 @@ import { Product } from '@/types';
 import { useCartStore } from '@/store/cartStore';
 import { getProductById } from '@/lib/data';
 import { trackEvent } from '@/lib/analytics';
-
 interface BundleBuilderProps {
   mainProduct: Product;
 }
-
 export default function BundleBuilder({ mainProduct }: BundleBuilderProps) {
   const [bundleItems, setBundleItems] = useState<Product[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([mainProduct.id]);
   const { addItem } = useCartStore();
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     async function loadBundle() {
       if (!mainProduct.completeTheLook) {
         setLoading(false);
         return;
       }
-
       const items = await Promise.all(
         mainProduct.completeTheLook.items.map(item => getProductById(item.productId))
       );
-
       const validItems = items.filter((item): item is Product => item !== null);
       setBundleItems(validItems);
-
       // Auto-select mandatory/suggested items
       setSelectedIds([mainProduct.id, ...validItems.map(item => item.id)]);
       setLoading(false);
     }
-
     loadBundle();
   }, [mainProduct]);
-
   const toggleItem = (id: string) => {
     if (id === mainProduct.id) return; // Main product is mandatory
     setSelectedIds(prev => 
       prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
     );
   };
-
   const totalPrice = [mainProduct, ...bundleItems]
     .filter(item => selectedIds.includes(item.id))
     .reduce((sum, item) => sum + item.price, 0);
-
   const originalTotalPrice = [mainProduct, ...bundleItems]
     .filter(item => selectedIds.includes(item.id))
     .reduce((sum, item) => sum + (item.originalPrice || item.price), 0);
-
   const handleAddBundle = () => {
     const selectedProducts = [mainProduct, ...bundleItems].filter(item => selectedIds.includes(item.id));
     selectedProducts.forEach(product => {
       addItem(product, 1, product.sizes?.[0], product.colors?.[0]?.name);
     });
-
     trackEvent('add_to_cart_bundle', {
       main_product_id: mainProduct.id,
       bundle_size: selectedProducts.length,
       total_price: totalPrice
     });
   };
-
   if (loading || (!mainProduct.completeTheLook && bundleItems.length === 0)) return null;
-
   return (
     <section className="my-12 p-6 md:p-8 bg-gray-50 rounded-3xl border border-gray-100">
       <div className="flex items-center gap-3 mb-6">
@@ -86,7 +71,6 @@ export default function BundleBuilder({ mainProduct }: BundleBuilderProps) {
           </p>
         </div>
       </div>
-
       <div className="flex flex-col md:flex-row gap-8 items-center">
         {/* Visual Stack */}
         <div className="flex items-center gap-4">
@@ -98,9 +82,7 @@ export default function BundleBuilder({ mainProduct }: BundleBuilderProps) {
               <Check className="w-3 h-3" />
             </div>
           </div>
-
           <Plus className="w-6 h-6 text-gray-300" />
-
           <div className="flex -space-x-12 md:-space-x-16">
             {bundleItems.map((item, idx) => (
               <button
@@ -121,7 +103,6 @@ export default function BundleBuilder({ mainProduct }: BundleBuilderProps) {
             ))}
           </div>
         </div>
-
         {/* Price & Action */}
         <div className="flex-1 w-full md:w-auto bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
           <div className="mb-4">
@@ -138,7 +119,6 @@ export default function BundleBuilder({ mainProduct }: BundleBuilderProps) {
               </p>
             )}
           </div>
-
           <button
             onClick={handleAddBundle}
             className="w-full bg-primary text-white py-4 rounded-xl font-black uppercase tracking-[0.2em] text-xs flex items-center justify-center gap-3 hover:bg-black transition-colors active:scale-95"
@@ -146,7 +126,6 @@ export default function BundleBuilder({ mainProduct }: BundleBuilderProps) {
             <ShoppingBag className="w-4 h-4" />
             Add Bundle to Cart
           </button>
-
           <p className="text-center text-[10px] text-gray-400 mt-4 uppercase font-medium tracking-widest">
             {selectedIds.length} items selected in this set
           </p>

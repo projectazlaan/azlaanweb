@@ -1,5 +1,4 @@
 'use client'
-
 import { useState, useRef, useEffect, useCallback } from 'react'
 import {
   X, Send, Loader2, Plus, Check, Copy,
@@ -10,11 +9,8 @@ import { useStudioStore } from '../store'
 import { usePostMessage } from '../hooks/usePostMessage'
 import toast from 'react-hot-toast'
 import { createPortal } from 'react-dom'
-
 // ─── Types ──────────────────────────────────────────────────────
-
 type AIMode = 'section' | 'text' | 'palette'
-
 interface Message {
   id: string
   role: 'user' | 'assistant' | 'error'
@@ -22,15 +18,12 @@ interface Message {
   mode: AIMode
   applied?: boolean
 }
-
 // ─── Config ─────────────────────────────────────────────────────
-
 const MODES = [
   { id: 'section' as AIMode, label: 'Build',  icon: <SquareCode size={11} />, hint: 'Generate HTML sections' },
   { id: 'text'    as AIMode, label: 'Write',  icon: <Type size={11} />,       hint: 'Edit & rewrite text' },
   { id: 'palette' as AIMode, label: 'Colors', icon: <Palette size={11} />,    hint: 'Generate palettes' },
 ]
-
 const MODELS = [
   { id: 'gemini-high', name: 'Gemini 3.1 Pro (High)', tag: 'New',  free: true },
   { id: 'gemini-low',  name: 'Gemini 3.1 Pro (Low)',  tag: 'New',  free: true },
@@ -39,15 +32,12 @@ const MODELS = [
   { id: 'anthropic-opus', name: 'Claude Opus 4.6 (Thinking)', tag: null, free: false },
   { id: 'openai',      name: 'GPT-OSS 120B (Medium)', tag: null,  free: false },
 ]
-
 const QUICK = {
   section: ['Modern hero with CTA', 'Feature cards grid', 'Pricing table', 'FAQ accordion'],
   text:    ['More professional tone', 'Shorter & punchier', 'Translate to English', 'Add emojis'],
   palette: ['Dark SaaS minimal', 'Warm luxury brand', 'Vibrant startup', 'Ocean & calm'],
 }
-
 // ─── Studio AI Logo ──────────────────────────────────────────────
-
 function StudioLogo() {
   return (
     <div className="relative w-14 h-14 flex items-center justify-center">
@@ -58,9 +48,7 @@ function StudioLogo() {
     </div>
   )
 }
-
 // ─── Portaled Dropdowns (Fixes Clipping) ─────────────────────────
-
 function FloatingMenu({ 
   triggerRef, 
   onClose, 
@@ -77,7 +65,6 @@ function FloatingMenu({
   const [pos, setPos] = useState({ top: 0, left: 0 })
   const [isPositioned, setIsPositioned] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
-
   useEffect(() => {
     if (triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect()
@@ -88,7 +75,6 @@ function FloatingMenu({
       setIsPositioned(true)
     }
   }, [triggerRef, width, align])
-
   useEffect(() => {
     const fn = (e: MouseEvent) => {
       // Don't close if clicking the trigger itself
@@ -98,9 +84,7 @@ function FloatingMenu({
     document.addEventListener('mousedown', fn)
     return () => document.removeEventListener('mousedown', fn)
   }, [onClose, triggerRef])
-
   if (!isPositioned) return null
-
   return createPortal(
     <div 
       ref={menuRef}
@@ -117,13 +101,10 @@ function FloatingMenu({
     document.body
   )
 }
-
 // ─── Main ────────────────────────────────────────────────────────
-
 export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<HTMLIFrameElement | null> }) {
   const { setAiOpen, settings, updateSettings, selectedElement } = useStudioStore()
   const { sendMessage, updateContent } = usePostMessage(iframeRef)
-
   const [mode, setMode]               = useState<AIMode>('section')
   const [prompt, setPrompt]           = useState('')
   const [messages, setMessages]       = useState<Message[]>([])
@@ -133,33 +114,26 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
   const [showSettingsPanel, setShowSettingsPanel] = useState(false)
   const [apiKeys, setApiKeys]         = useState<Record<string, string>>({})
   const [copiedId, setCopiedId]       = useState<string | null>(null)
-
   const endRef      = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const plusBtnRef  = useRef<HTMLButtonElement>(null)
   const modelBtnRef = useRef<HTMLButtonElement>(null)
-  
   const activeModel = MODELS.find(m => m.id === settings.ai.model) || MODELS.find(m => m.id === settings.ai.provider) || MODELS[2] // Default to Gemini 3 Flash
-
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, isLoading])
-
   const resizeTextarea = (el: HTMLTextAreaElement) => {
     el.style.height = 'auto'
     el.style.height = `${Math.min(el.scrollHeight, 120)}px`
   }
-
   const handleAction = (id: string) => {
     if (id === 'clear') setMessages([])
     else if (id === 'search') toast('Web search enabled for this prompt', { icon: '🌐' })
     else if (id === 'analysis') toast('Analyzing current page structure...', { icon: '🔍' })
     else if (id === 'code') setMode('section')
   }
-
   // ── Send ──
   const send = useCallback(async (override?: string) => {
     const text = (override ?? prompt).trim()
     if (!text || isLoading) return
-
     const userMsg: Message = { id: `u${Date.now()}`, role: 'user', content: text, mode }
     setMessages(p => [...p, userMsg])
     setPrompt('')
@@ -167,7 +141,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
     setShowSettingsPanel(false)
     if (textareaRef.current) { textareaRef.current.style.height = '36px' }
     setIsLoading(true)
-
     try {
       const body: Record<string, any> = {
         prompt: text, mode,
@@ -182,11 +155,9 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
           styles: selectedElement.computedStyles,
         }
       }
-
       const res  = await fetch('/api/studio-pro/ai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
       const data = await res.json()
       if (data.error) throw new Error(data.error)
-
       const content = (mode === 'palette' && data.colors) ? JSON.stringify(data.colors, null, 2) : data.result
       setMessages(p => [...p, { id: `a${Date.now()}`, role: 'assistant', content, mode }])
     } catch (e: any) {
@@ -195,7 +166,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
       setIsLoading(false)
     }
   }, [prompt, mode, settings.ai.provider, apiKeys, selectedElement, isLoading])
-
   // ── Apply ──
   const apply = useCallback((msg: Message) => {
     if (msg.mode === 'section') {
@@ -214,7 +184,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
     }
     setMessages(p => p.map(m => m.id === msg.id ? { ...m, applied: true } : m))
   }, [selectedElement, sendMessage, updateContent, updateSettings, settings.colors])
-
   // ── Copy ──
   const copy = (msg: Message) => {
     navigator.clipboard.writeText(msg.content)
@@ -222,10 +191,8 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
     setTimeout(() => setCopiedId(null), 2000)
     toast.success('Copied!')
   }
-
   return (
     <div className="flex flex-col h-full bg-[#111] relative">
-
       {/* ── Header ── */}
       <div className="flex items-center justify-between px-3 py-2.5 border-b border-white/5 flex-shrink-0 z-10 bg-[#111]">
         {/* Mode tabs */}
@@ -243,7 +210,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
             </button>
           ))}
         </div>
-
         <div className="flex items-center gap-1">
           {/* Settings replaces Delete */}
           <button 
@@ -258,10 +224,8 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
           </button>
         </div>
       </div>
-
       {/* ── Main Scroll Area ── */}
       <div className="flex-1 overflow-y-auto custom-scrollbar relative">
-        
         {/* Settings View */}
         {showSettingsPanel ? (
           <div className="p-5 h-full bg-[#111] animate-in fade-in slide-in-from-bottom-2 duration-300 z-20 relative">
@@ -274,12 +238,10 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
                 <p className="text-gray-500 text-[9px]">Manage models & API keys</p>
               </div>
             </div>
-
             <div className="space-y-5">
               {/* API Keys Config */}
               <div className="space-y-3">
                 <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-white/5 pb-2">Custom API Keys</h3>
-                
                 <div className="space-y-2">
                   <div className="flex justify-between items-end">
                     <label className="text-[11px] font-medium text-gray-300">OpenAI (GPT-4o, etc)</label>
@@ -296,7 +258,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
                     />
                   </div>
                 </div>
-
                 <div className="space-y-2">
                   <div className="flex justify-between items-end">
                     <label className="text-[11px] font-medium text-gray-300">Anthropic (Claude 3.5)</label>
@@ -313,7 +274,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
                     />
                   </div>
                 </div>
-                
                 <div className="space-y-2">
                   <div className="flex justify-between items-end">
                     <label className="text-[11px] font-medium text-gray-300">Google Gemini</label>
@@ -331,7 +291,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         ) : messages.length === 0 ? (
@@ -346,7 +305,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
                   : 'Select canvas element or describe what to build'}
               </p>
             </div>
-
             {/* Quick actions */}
             <div className="w-full space-y-1">
               <p className="text-[8px] font-black text-gray-700 uppercase tracking-[0.15em] px-1 mb-1.5 mt-4">Quick start</p>
@@ -375,7 +333,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
                     </div>
                   </div>
                 )}
-
                 {/* Error */}
                 {msg.role === 'error' && (
                   <div className="flex gap-2 p-2.5 bg-red-950/30 border border-red-500/20 rounded-xl">
@@ -383,7 +340,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
                     <p className="text-[10px] text-red-300 leading-relaxed">{msg.content}</p>
                   </div>
                 )}
-
                 {/* Assistant */}
                 {msg.role === 'assistant' && (
                   <div className="flex gap-2 items-start">
@@ -414,7 +370,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
                 )}
               </div>
             ))}
-
             {isLoading && (
               <div className="flex gap-2 items-center px-1">
                 <div className="w-5 h-5 rounded-lg bg-gradient-to-br from-indigo-600 to-violet-700 flex items-center justify-center">
@@ -431,7 +386,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
           </div>
         )}
       </div>
-
       {/* ── Context badge ── */}
       {selectedElement && !showSettingsPanel && (
         <div className="mx-3 mb-1.5 px-2.5 py-1.5 rounded-xl border border-indigo-500/15 flex items-center gap-2" style={{ background: 'rgba(99,102,241,0.06)' }}>
@@ -443,7 +397,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
           <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse flex-shrink-0" />
         </div>
       )}
-
       {/* ── Input bar ── */}
       <div className="mx-3 mb-3 bg-[#1a1a1a] border-none rounded-2xl flex-shrink-0 z-20">
         <textarea
@@ -456,7 +409,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
           style={{ height: '36px' }}
           className="w-full bg-transparent px-4 pt-3 pb-1 text-[11px] text-gray-200 placeholder-gray-600 focus:outline-none resize-none overflow-hidden leading-snug"
         />
-
         {/* Bottom actions */}
         <div className="flex items-center justify-between px-3 pb-2.5 pt-0.5">
           <div className="flex items-center gap-1">
@@ -469,7 +421,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
             >
               <Plus size={16} />
             </button>
-            
             {showQuick && (
               <FloatingMenu triggerRef={plusBtnRef as React.RefObject<HTMLElement>} onClose={() => setShowQuick(false)} width={200} align="left">
                 {[
@@ -495,7 +446,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
               </FloatingMenu>
             )}
           </div>
-
           <div className="flex items-center gap-2">
             {/* Portaled Model Selector */}
             <button
@@ -505,7 +455,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
             >
               <span className="text-[10px] font-semibold text-gray-400">{activeModel.name}</span>
             </button>
-            
             {showModel && (
               <FloatingMenu triggerRef={modelBtnRef as React.RefObject<HTMLElement>} onClose={() => setShowModel(false)} width={260} align="right">
                 <div className="px-3 py-1 mb-1 border-b border-white/5 pb-2">
@@ -544,7 +493,6 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
                 })}
               </FloatingMenu>
             )}
-
             {/* Send */}
             <button
               onClick={() => send()}
@@ -562,4 +510,3 @@ export default function AIGenerator({ iframeRef }: { iframeRef: React.RefObject<
     </div>
   )
 }
-

@@ -1,25 +1,19 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Zap, Play, Square, Clock } from 'lucide-react';
-
 function pad(n: number) { return String(n).padStart(2, '0'); }
-
 function Countdown({ endsAt }: { endsAt: Date }) {
   const [remaining, setRemaining] = useState(0);
-
   useEffect(() => {
     const tick = () => setRemaining(Math.max(0, Math.floor((endsAt.getTime() - Date.now()) / 1000)));
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, [endsAt]);
-
   const h = Math.floor(remaining / 3600);
   const m = Math.floor((remaining % 3600) / 60);
   const s = remaining % 60;
-
   return (
     <div className="flex items-center gap-2">
       {[pad(h), pad(m), pad(s)].map((v, i) => (
@@ -31,7 +25,6 @@ function Countdown({ endsAt }: { endsAt: Date }) {
     </div>
   );
 }
-
 const PRESET_DURATIONS = [
   { label: '1 Hour', hours: 1 },
   { label: '3 Hours', hours: 3 },
@@ -39,9 +32,7 @@ const PRESET_DURATIONS = [
   { label: '12 Hours', hours: 12 },
   { label: '24 Hours', hours: 24 },
 ];
-
 const PRESET_DISCOUNTS = [10, 15, 20, 25, 30, 50];
-
 export default function FlashSalePage() {
   const [active, setActive] = useState(false);
   const [discount, setDiscount] = useState(20);
@@ -49,13 +40,11 @@ export default function FlashSalePage() {
   const [endsAt, setEndsAt] = useState<Date | null>(null);
   const [message, setMessage] = useState('🔥 Flash Sale! Extra 20% OFF — Today Only!');
   const [saving, setSaving] = useState(false);
-
   const startSale = async () => {
     setSaving(true);
     const end = new Date(Date.now() + duration * 60 * 60 * 1000);
     setEndsAt(end);
     setActive(true);
-    
     await fetch('/api/admin/site-config', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -66,15 +55,12 @@ export default function FlashSalePage() {
         flash_sale_message: message
       })
     });
-    
     setSaving(false);
   };
-
   const stopSale = async () => {
     setSaving(true);
     setActive(false);
     setEndsAt(null);
-    
     await fetch('/api/admin/site-config', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -83,13 +69,10 @@ export default function FlashSalePage() {
         flash_sale_ends: ''
       })
     });
-    
     setSaving(false);
   };
-
   return (
     <div className="space-y-8 pb-20 max-w-2xl mx-auto">
-
       {/* Header */}
       <div className={`p-6 rounded-[2rem] border transition-all ${active ? 'bg-orange-50 border-orange-200' : 'bg-white border-gray-100'}`}>
         <div className="flex items-center justify-between">
@@ -107,7 +90,6 @@ export default function FlashSalePage() {
           {active && <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />}
         </div>
       </div>
-
       {/* Live Countdown */}
       {active && endsAt && (
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-black text-white p-8 rounded-[2rem] text-center space-y-4">
@@ -116,10 +98,8 @@ export default function FlashSalePage() {
           <p className="text-white/60 font-bold">{discount}% OFF on ALL products</p>
         </motion.div>
       )}
-
       {/* Config Card */}
       <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 space-y-8">
-
         {/* Discount % */}
         <div>
           <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-3">Discount Percentage</label>
@@ -139,7 +119,6 @@ export default function FlashSalePage() {
             <span className="font-black text-2xl text-gray-900 min-w-[60px] text-right">{discount}%</span>
           </div>
         </div>
-
         {/* Duration */}
         <div>
           <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-3">Sale Duration</label>
@@ -151,7 +130,6 @@ export default function FlashSalePage() {
             ))}
           </div>
         </div>
-
         {/* Banner Message */}
         <div>
           <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Announcement Message (shown on site)</label>
@@ -160,7 +138,6 @@ export default function FlashSalePage() {
             className="w-full border border-gray-200 rounded-2xl px-5 py-4 outline-none focus:border-orange-400 text-gray-900 font-medium text-sm transition-colors"
           />
         </div>
-
         {/* Summary */}
         <div className="bg-gray-50 rounded-2xl p-5">
           <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Preview</p>
@@ -170,7 +147,6 @@ export default function FlashSalePage() {
             <p>📢 Message: <span className="text-gray-900">"{message}"</span></p>
           </div>
         </div>
-
         {/* Action Buttons */}
         {!active ? (
           <button

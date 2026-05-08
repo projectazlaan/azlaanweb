@@ -1,5 +1,4 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import { GitBranch, Cloud, RotateCcw, Clock, Trash2, Download, CheckCircle, AlertCircle } from 'lucide-react'
 import { 
@@ -17,12 +16,10 @@ import {
   importVersionData,
   Version 
 } from '@/lib/versioning'
-
 interface StagingVersioningProps {
   pageId?: string
   currentContent?: any
 }
-
 export default function StagingVersioning({ 
   pageId = 'main-page', 
   currentContent = {} 
@@ -34,30 +31,25 @@ export default function StagingVersioning({
   const [syncResult, setSyncResult] = useState<{ success: boolean; message: string } | null>(null)
   const [importJson, setImportJson] = useState('')
   const [showHistory, setShowHistory] = useState(false)
-
   useEffect(() => {
     loadData()
   }, [pageId])
-
   const loadData = () => {
     setVersions(getVersionHistory(pageId))
     setDraft(getDraft(pageId))
     setProduction(getProductionVersion(pageId))
   }
-
   const handleSaveDraft = () => {
     const version = saveDraft(pageId, currentContent)
     setDraft(version)
     loadData()
   }
-
   const handlePublishToProduction = () => {
     const version = publishToProduction(pageId, currentContent, note || undefined)
     setProduction(version)
     setNote('')
     loadData()
   }
-
   const handleSyncToProduction = () => {
     const result = syncDraftToProduction(pageId)
     setSyncResult({ success: result.success, message: result.message })
@@ -66,7 +58,6 @@ export default function StagingVersioning({
     }
     setTimeout(() => setSyncResult(null), 5000)
   }
-
   const handleRollback = (versionId: string) => {
     const rolledBack = rollbackToVersion(pageId, versionId)
     if (rolledBack) {
@@ -74,14 +65,12 @@ export default function StagingVersioning({
       loadData()
     }
   }
-
   const handleDeleteVersion = (versionId: string) => {
     if (confirm('Are you sure you want to delete this version?')) {
       deleteVersion(pageId, versionId)
       loadData()
     }
   }
-
   const handleExportData = () => {
     const data = exportVersionData(pageId)
     const blob = new Blob([data], { type: 'application/json' })
@@ -92,7 +81,6 @@ export default function StagingVersioning({
     a.click()
     URL.revokeObjectURL(url)
   }
-
   const handleImportData = () => {
     if (!importJson.trim()) return
     const success = importVersionData(importJson)
@@ -104,7 +92,6 @@ export default function StagingVersioning({
       alert('Import failed. Please check the JSON format.')
     }
   }
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'production': return 'text-green-400 bg-green-900/30 border-green-700'
@@ -113,7 +100,6 @@ export default function StagingVersioning({
       default: return 'text-gray-400 bg-gray-800 border-gray-700'
     }
   }
-
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -138,7 +124,6 @@ export default function StagingVersioning({
           </button>
         </div>
       </div>
-
       {syncResult && (
         <div className={`p-3 rounded-lg border text-sm ${
           syncResult.success 
@@ -151,7 +136,6 @@ export default function StagingVersioning({
           </div>
         </div>
       )}
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
           <div className="flex items-center gap-2 mb-3">
@@ -163,7 +147,6 @@ export default function StagingVersioning({
               </span>
             )}
           </div>
-          
           {draft ? (
             <div className="space-y-2">
               <p className="text-xs text-gray-400">
@@ -185,7 +168,6 @@ export default function StagingVersioning({
           ) : (
             <p className="text-xs text-gray-500">No draft saved</p>
           )}
-          
           <button
             onClick={handleSaveDraft}
             className="mt-3 w-full py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors"
@@ -193,7 +175,6 @@ export default function StagingVersioning({
             Save Draft
           </button>
         </div>
-
         <div className="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
           <div className="flex items-center gap-2 mb-3">
             <CheckCircle size={16} className="text-green-400" />
@@ -204,7 +185,6 @@ export default function StagingVersioning({
               </span>
             )}
           </div>
-          
           {production ? (
             <div className="space-y-2">
               <p className="text-xs text-gray-400">
@@ -219,7 +199,6 @@ export default function StagingVersioning({
           ) : (
             <p className="text-xs text-gray-500">No production version</p>
           )}
-          
           <div className="mt-3 space-y-2">
             <input
               type="text"
@@ -238,14 +217,12 @@ export default function StagingVersioning({
           </div>
         </div>
       </div>
-
       {showHistory && (
         <div className="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
           <h4 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
             <Clock size={16} />
             Version History
           </h4>
-          
           {versions.length === 0 ? (
             <p className="text-xs text-gray-500">No versions yet</p>
           ) : (
@@ -289,7 +266,6 @@ export default function StagingVersioning({
           )}
         </div>
       )}
-
       <div className="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
         <h4 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
           <Upload size={16} />
@@ -311,7 +287,6 @@ export default function StagingVersioning({
     </div>
   )
 }
-
 function Upload(props: any) {
   return (
     <svg

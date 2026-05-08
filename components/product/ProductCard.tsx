@@ -1,5 +1,4 @@
 'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -8,34 +7,28 @@ import { Product, ViewMode } from '@/types';
 import { toast } from 'react-hot-toast';
 import { useCartStore } from '@/store/cartStore';
 import { trackEvent } from '@/lib/analytics';
-
 interface ProductCardProps {
   product: Product;
   viewMode: ViewMode;
   onQuickView?: () => void;
 }
-
 const BADGE_STYLES: Record<string, string> = {
   new: 'bg-black text-white',
   bestseller: 'bg-amber-500 text-white',
   limited: 'bg-red-600 text-white',
 };
-
 const BADGE_LABELS: Record<string, string> = {
   new: 'New Arrival',
   bestseller: 'Bestseller',
   limited: 'Limited',
 };
-
 export default function ProductCard({ product, viewMode, onQuickView }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
   const [rating, setRating] = useState(4.5);
   const [isRatingMode, setIsRatingMode] = useState(false);
-
   const displayImage = (product.images && product.images[activeImage]) || product.image || '';
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
-
   // Render static stars
   const renderStars = (val: number, size = 10) => {
     return (
@@ -52,7 +45,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
       </div>
     );
   };
-
   if (viewMode === 'list') {
     return (
       <Link
@@ -90,7 +82,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
       </Link>
     );
   }
-
   // Grid View
   return (
     <Link 
@@ -109,7 +100,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
           className="object-cover group-hover:scale-110 transition-transform duration-[1500ms] ease-out"
           sizes="(max-width: 768px) 50vw, 25vw"
         />
-
         {/* Image Switcher — hover over sub-images */}
         {product.images.length > 1 && (
           <div className="absolute bottom-2 left-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -122,7 +112,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
             ))}
           </div>
         )}
-
         {/* Badge */}
         {product.badge && (
           <div className="absolute top-3 left-3">
@@ -131,7 +120,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
             </span>
           </div>
         )}
-
         {/* Out of Stock Overlay */}
         {!product.isInStock && (
           <div className="absolute inset-0 bg-white/60 flex items-center justify-center">
@@ -140,7 +128,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
             </span>
           </div>
         )}
-
         {/* Wishlist, Quick View & Rating Buttons */}
         <div className="absolute top-3 inset-x-3 flex justify-between opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
           {/* Rating Trigger (Left) */}
@@ -154,7 +141,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
           >
             <Star className={`w-3.5 h-3.5 ${isRatingMode ? 'fill-white' : ''}`} />
           </button>
-
           <div className="flex flex-col gap-2">
             <button
               onClick={(e) => {
@@ -168,7 +154,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
                 className={`w-3.5 h-3.5 transition-colors ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-black'}`}
               />
             </button>
-            
             {onQuickView && (
               <button
                 onClick={(e) => {
@@ -183,7 +168,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
             )}
           </div>
         </div>
-
         {/* Interactive Rating Overlay */}
         {isRatingMode && (
           <div 
@@ -217,14 +201,12 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
           </div>
         )}
       </div>
-
       {/* Product Info Container */}
       <div className="bg-white p-2 md:p-3 flex flex-col gap-1 relative">
         {/* Product Name (Black - Better Fit) */}
         <h3 className="text-black text-[11px] md:text-[14px] font-bold tracking-tight leading-[1.2] line-clamp-1">
           {product.name}
         </h3>
-        
         {/* Category Name & Rating Display (More Compact) */}
         <div className="flex items-center gap-1.5">
           <p className="text-gray-400 text-[8px] md:text-[9px] font-bold tracking-wide uppercase">
@@ -237,7 +219,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
             {renderStars(rating)}
           </div>
         </div>
-        
         <div className="flex items-center justify-between mt-0.5 md:mt-1">
           {/* Price Section */}
           <div className="flex flex-col">
@@ -250,7 +231,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
               </span>
             )}
           </div>
-
           {/* Add to Cart Button (Slimmer Fit) */}
           <button 
             onClick={(e) => {

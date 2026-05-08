@@ -1,10 +1,8 @@
 'use client';
-
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
-
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([
     {
@@ -26,27 +24,22 @@ export default function CartPage() {
       image: '/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp',
     },
   ]);
-
   const updateQuantity = (id: number, newQty: number) => {
     if (newQty < 1) return;
     setCartItems(items =>
       items.map(item => item.id === id ? { ...item, quantity: newQty } : item)
     );
   };
-
   const removeItem = (id: number) => {
     setCartItems(items => items.filter(item => item.id !== id));
   };
-
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const shipping = 120;
   const total = subtotal + shipping;
-
   return (
     <main className="min-h-screen pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-4">
         <h1 className="font-serif text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-primary">Shopping Cart</h1>
-
         {cartItems.length === 0 ? (
           <div className="text-center py-12">
             <ShoppingBag className="w-16 h-16 mx-auto text-text-muted mb-4" />
@@ -94,7 +87,6 @@ export default function CartPage() {
                 </div>
               ))}
             </div>
-
             <div className="bg-white p-5 md:p-6 rounded-2xl h-fit">
               <h2 className="font-serif text-xl md:text-2xl font-bold mb-4 text-primary">Order Summary</h2>
               <div className="space-y-3 mb-4">
@@ -113,7 +105,6 @@ export default function CartPage() {
                   </div>
                 </div>
               </div>
-
               <div className="mb-4">
                 <input
                   type="text"
@@ -121,7 +112,6 @@ export default function CartPage() {
                   className="w-full px-4 py-3 border border-border-light rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-secondary"
                 />
               </div>
-
               <Link
                 href="/checkout"
                 className="block w-full bg-secondary text-white text-center py-3 rounded-full font-semibold hover:bg-secondary/90 transition-colors cursor-pointer"

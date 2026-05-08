@@ -1,22 +1,18 @@
 'use client'
-
 import React from 'react'
 import { Clock, User, ShieldCheck, ShoppingBag } from 'lucide-react'
-
 interface Activity {
   id: string
   user: string
   action: string
   timestamp: string
 }
-
 export default function ActivityFeed({ activities }: { activities: Activity[] }) {
   const getIcon = (action: string) => {
     if (action.toLowerCase().includes('order')) return <ShoppingBag size={14} className="text-blue-500" />
     if (action.toLowerCase().includes('product')) return <ShieldCheck size={14} className="text-green-500" />
     return <User size={14} className="text-purple-500" />
   }
-
   return (
     <div className="bg-white p-6 rounded-3xl shadow-sm h-full flex flex-col border border-transparent">
       <div className="flex items-center justify-between mb-6">

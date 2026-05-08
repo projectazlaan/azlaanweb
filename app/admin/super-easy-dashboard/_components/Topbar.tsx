@@ -1,7 +1,5 @@
 'use client';
-
 import { Search, Bell, Zap } from 'lucide-react';
-
 export default function Topbar() {
   return (
     <header className="h-20 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 sticky top-0 z-40 px-6 md:px-10 flex items-center justify-between">
@@ -16,7 +14,6 @@ export default function Topbar() {
           />
         </div>
       </div>
-
       {/* Right Actions */}
       <div className="flex items-center gap-4">
         {/* Flash Sale Quick Button */}
@@ -24,7 +21,6 @@ export default function Topbar() {
           <Zap className="w-4 h-4 fill-white" />
           Flash Sale
         </button>
-
         {/* Notifications */}
         <button className="relative p-3 rounded-full hover:bg-gray-100 transition-colors group">
           <Bell className="w-6 h-6 text-gray-600 group-hover:text-black transition-colors" />

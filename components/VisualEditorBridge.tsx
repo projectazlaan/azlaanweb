@@ -1,18 +1,13 @@
 'use client';
-
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-
 export default function VisualEditorBridge() {
   const searchParams = useSearchParams();
   const isEditorMode = searchParams.get('editor') === 'true';
-
   useEffect(() => {
     if (!isEditorMode) return;
-
     const handleElementClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      
       // Find the closest editable parent or check if target is editable
       // We look for elements with text content or specific data attributes
       const editableElement = target.closest('[data-editable-id]') || 
@@ -21,21 +16,17 @@ export default function VisualEditorBridge() {
                               target.tagName === 'SPAN' || target.tagName === 'BUTTON' ||
                               target.tagName === 'A' || target.tagName === 'LI' ||
                               target.tagName === 'IMG' ? target : null);
-
       if (editableElement) {
         e.preventDefault();
         e.stopPropagation();
-
         // Highlight the element visually
         const allEditables = document.querySelectorAll('.editor-highlight');
         allEditables.forEach(el => el.classList.remove('editor-highlight'));
         (editableElement as HTMLElement).classList.add('editor-highlight');
-
         // Extract content
         const content = editableElement.tagName === 'IMG' 
           ? (editableElement as HTMLImageElement).src 
           : (editableElement as HTMLElement).innerText;
-
         // Send message to parent (The Admin Dashboard Iframe)
         window.parent.postMessage({
           type: 'ELEMENT_SELECTED',
@@ -49,7 +40,6 @@ export default function VisualEditorBridge() {
         }, '*');
       }
     };
-
     // Add styles for highlighting
     const style = document.createElement('style');
     style.id = 'editor-styles';
@@ -82,9 +72,7 @@ export default function VisualEditorBridge() {
     `;
     document.head.appendChild(style);
     document.body.setAttribute('data-editor-mode', 'true');
-
     document.addEventListener('click', handleElementClick, true);
-
     // Add a floating indicator
     const indicator = document.createElement('div');
     indicator.id = 'editor-indicator';
@@ -106,7 +94,6 @@ export default function VisualEditorBridge() {
       pointer-events: none;
     `;
     document.body.appendChild(indicator);
-
     return () => {
       document.removeEventListener('click', handleElementClick, true);
       const styleEl = document.getElementById('editor-styles');
@@ -116,6 +103,5 @@ export default function VisualEditorBridge() {
       document.body.removeAttribute('data-editor-mode');
     };
   }, [isEditorMode]);
-
   return null;
 }

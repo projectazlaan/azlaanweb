@@ -1,19 +1,15 @@
 'use client';
-
 import { useCategoryStore } from '@/store/categoryStore';
 import { SortOption } from '@/types';
 import { ArrowUpDown } from 'lucide-react';
-
 const SORT_OPTIONS: SortOption[] = [
   { label: 'Newest', labelBn: 'নতুন', value: 'newest' },
   { label: 'Price: Low → High', labelBn: 'দাম: কম থেকে বেশি', value: 'price_asc' },
   { label: 'Price: High → Low', labelBn: 'দাম: বেশি থেকে কম', value: 'price_desc' },
   { label: 'Top Rated', labelBn: 'সর্বোচ্চ রেটিং', value: 'rating_desc' },
 ];
-
 export default function SortSelect() {
   const { sortBy, setSortBy } = useCategoryStore();
-
   return (
     <div className="relative flex items-center group">
       <div className="flex items-center transition-colors">

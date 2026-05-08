@@ -1,9 +1,7 @@
 'use client'
-
 import { useState } from 'react'
 import { Plus, Trash2, Edit2, Database, Save, X, Type, Hash, ToggleLeft, Calendar, Image, Link } from 'lucide-react'
 import { createCollection, getCollections, addCollectionItem, type Collection, type CollectionField } from '@/lib/cms'
-
 const fieldTypes = [
   { value: 'text', label: 'Text', icon: Type },
   { value: 'number', label: 'Number', icon: Hash },
@@ -13,7 +11,6 @@ const fieldTypes = [
   { value: 'url', label: 'URL', icon: Link },
   { value: 'richtext', label: 'Rich Text', icon: Type }
 ]
-
 export function CollectionManager() {
   const [collections, setCollections] = useState<Collection[]>(() => getCollections())
   const [showCreateModal, setShowCreateModal] = useState(false)
@@ -21,42 +18,34 @@ export function CollectionManager() {
   const [fields, setFields] = useState<Omit<CollectionField, 'id'>[]>([])
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null)
   const [newItem, setNewItem] = useState<Record<string, unknown>>({})
-
   const addField = () => {
     setFields([...fields, { name: '', type: 'text', required: false }])
   }
-
   const updateField = (index: number, updates: Partial<CollectionField>) => {
     setFields(fields.map((f, i) => i === index ? { ...f, ...updates } : f))
   }
-
   const removeField = (index: number) => {
     setFields(fields.filter((_, i) => i !== index))
   }
-
   const handleCreateCollection = () => {
     if (!collectionName.trim() || fields.length === 0) return
-
     const collectionFields: CollectionField[] = fields.map((f, i) => ({
       ...f,
       id: crypto.randomUUID(),
       name: f.name || `field_${i}`
     }))
-
     const newCollection = createCollection(collectionName, collectionFields)
     setCollections([...collections, newCollection])
     setCollectionName('')
     setFields([])
     setShowCreateModal(false)
   }
-
   const handleAddItem = (collection: Collection) => {
     if (!collection) return
     addCollectionItem(collection.slug, newItem)
     setNewItem({})
     setCollections([...getCollections()])
   }
-
   const renderFieldInput = (field: CollectionField) => {
     switch (field.type) {
       case 'number':
@@ -72,7 +61,6 @@ export function CollectionManager() {
         return <input type="text" placeholder="Enter text..." className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-white text-sm flex-1" />
     }
   }
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -88,7 +76,6 @@ export function CollectionManager() {
           New Collection
         </button>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {collections.map(collection => (
           <div
@@ -111,7 +98,6 @@ export function CollectionManager() {
             </div>
           </div>
         ))}
-
         {collections.length === 0 && (
           <div className="col-span-full p-8 text-center text-gray-500">
             <Database size={48} className="mx-auto mb-3 text-gray-700" />
@@ -119,7 +105,6 @@ export function CollectionManager() {
           </div>
         )}
       </div>
-
       {selectedCollection && (
         <div className="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
           <div className="flex items-center justify-between mb-4">
@@ -128,7 +113,6 @@ export function CollectionManager() {
               <X size={18} />
             </button>
           </div>
-
           <div className="space-y-4 mb-6">
             {selectedCollection.items.map((item, index) => (
               <div key={item.id as string} className="p-3 bg-gray-900 rounded-lg border border-gray-700">
@@ -149,7 +133,6 @@ export function CollectionManager() {
               </div>
             ))}
           </div>
-
           <div className="p-4 bg-gray-900 rounded-lg border border-gray-700">
             <h4 className="text-sm font-medium text-white mb-3">Add New Item</h4>
             <div className="space-y-3">
@@ -170,7 +153,6 @@ export function CollectionManager() {
           </div>
         </div>
       )}
-
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-gray-900 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden border border-gray-700">
@@ -180,7 +162,6 @@ export function CollectionManager() {
                 <X size={20} />
               </button>
             </div>
-
             <div className="p-6 overflow-y-auto max-h-[60vh]">
               <div className="mb-6">
                 <label className="text-sm text-gray-400 mb-2 block">Collection Name</label>
@@ -192,7 +173,6 @@ export function CollectionManager() {
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white placeholder-gray-500"
                 />
               </div>
-
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="text-sm font-medium text-white">Fields</h4>
@@ -201,7 +181,6 @@ export function CollectionManager() {
                     Add Field
                   </button>
                 </div>
-
                 <div className="space-y-3">
                   {fields.map((field, index) => (
                     <div key={index} className="flex items-center gap-2 p-3 bg-gray-800 rounded-lg">
@@ -235,14 +214,12 @@ export function CollectionManager() {
                       </button>
                     </div>
                   ))}
-
                   {fields.length === 0 && (
                     <p className="text-sm text-gray-500 text-center py-4">No fields added yet.</p>
                   )}
                 </div>
               </div>
             </div>
-
             <div className="flex justify-end gap-3 p-4 border-t border-gray-800">
               <button
                 onClick={() => setShowCreateModal(false)}

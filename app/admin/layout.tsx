@@ -1,11 +1,9 @@
 'use client'
-
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { LayoutDashboard, Package, MessageSquare, ShoppingCart, Users, Settings, LogOut, Menu, X, Layout } from 'lucide-react'
 import SiteHealth from '@/components/admin/SiteHealth'
-
 const navItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/studio', label: 'Azlaan Studio', icon: Layout },
@@ -16,17 +14,14 @@ const navItems = [
   { href: '/admin/customers', label: 'Customers', icon: Users },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
-
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [adminUser, setAdminUser] = useState<{ username: string } | null>(null)
-
   useEffect(() => {
     checkAuth()
   }, [])
-
   const checkAuth = async () => {
     try {
       const res = await fetch('/api/admin/verify', { credentials: 'include' })
@@ -40,27 +35,22 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       router.push('/admin/login')
     }
   }
-
   const handleLogout = async () => {
     await fetch('/api/admin/logout', { method: 'POST' })
     router.push('/admin/login')
   }
-
   const isLoginPage = pathname === '/admin/login'
   const isCustomizerPage = pathname === '/admin/customizer'
   const isStudioPage = pathname === '/admin/studio'
   const isStudioProPage = pathname === '/admin/studio-pro-v12'
   const isPortalPage = pathname === '/admin'
   const isSuperEasyPage = pathname.startsWith('/admin/super-easy-dashboard')
-
   if (isLoginPage) {
     return <div className="min-h-screen bg-section-bg">{children}</div>
   }
-
   if (isCustomizerPage || isStudioPage || isStudioProPage || isPortalPage || isSuperEasyPage) {
     return <div className="min-h-screen bg-transparent">{children}</div>
   }
-
   return (
     <div className="min-h-screen bg-section-bg flex">
       {/* Sidebar */}
@@ -79,7 +69,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <X size={20} />
             </button>
           </div>
-
           <nav className="flex-1 p-4 space-y-2 overflow-y-auto custom-scrollbar">
             {navItems.map((item) => {
               const isActive = pathname === item.href
@@ -100,9 +89,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               )
             })}
           </nav>
-
           <SiteHealth />
-
           <div className="p-4 border-t border-border-light bg-white">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -125,7 +112,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
         </div>
       </aside>
-
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 max-h-screen overflow-hidden">
         {/* Mobile Header */}
@@ -135,7 +121,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Menu size={24} />
           </button>
         </header>
-
         {/* Page Content with independent scroll */}
         <main className="flex-1 overflow-y-auto p-4 md:p-8 lg:p-10 scroll-smooth">
           {children}

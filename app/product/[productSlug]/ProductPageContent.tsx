@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -20,14 +19,11 @@ import SocialProofToast from '@/components/product/SocialProofToast';
 import BundleBuilder from '@/components/product/BundleBuilder';
 import ProductCard from '@/components/product/ProductCard';
 import TrustBadges from '@/app/[categorySlug]/TrustBadges';
-
 import FabricSelectionUI from '@/components/product/FabricSelectionUI';
-
 interface ProductPageContentProps {
   product: Product;
   recommended: Product[];
 }
-
 export default function ProductPageContent({ product, recommended }: ProductPageContentProps) {
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || '');
   const [selectedColor, setSelectedColor] = useState(product.colors?.[0]?.name || '');
@@ -35,12 +31,9 @@ export default function ProductPageContent({ product, recommended }: ProductPage
   const [showStickyBar, setShowStickyBar] = useState(false);
   const buyButtonRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-
   const { addItem, clearCart } = useCartStore();
   const { addToRecentlyViewed, toggleWishlist, isInWishlist } = useProductStore();
-
   const isWished = isInWishlist(product.id);
-
   // Scroll detection for sticky bar
   useEffect(() => {
     const handleScroll = () => {
@@ -51,7 +44,6 @@ export default function ProductPageContent({ product, recommended }: ProductPage
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
   useEffect(() => {
     addToRecentlyViewed(product);
     trackEvent('view_item', {
@@ -61,7 +53,6 @@ export default function ProductPageContent({ product, recommended }: ProductPage
       price: product.price
     });
   }, [product, addToRecentlyViewed]);
-
   const handleAddToCart = () => {
     addItem(product, quantity, selectedSize, selectedColor);
     trackEvent('add_to_cart', {
@@ -73,7 +64,6 @@ export default function ProductPageContent({ product, recommended }: ProductPage
       price: product.price
     });
   };
-
   const handleBuyNow = () => {
     addItem(product, quantity, selectedSize, selectedColor);
     trackEvent('begin_checkout', {
@@ -86,16 +76,13 @@ export default function ProductPageContent({ product, recommended }: ProductPage
     });
     router.push('/checkout');
   };
-
   const discountPercentage = product.originalPrice 
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) 
     : 0;
-
   return (
     <main className="min-h-screen bg-white">
       {/* Social Proof Notification */}
       <SocialProofToast purchases={product.recentPurchases || []} />
-
       {/* ── Sticky Purchase Bar (The WOW Factor) ── */}
       <AnimatePresence>
         {showStickyBar && (
@@ -117,7 +104,6 @@ export default function ProductPageContent({ product, recommended }: ProductPage
                   </p>
                 </div>
               </div>
-
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2 mr-4">
                    {product.sizes?.map(s => (
@@ -154,10 +140,8 @@ export default function ProductPageContent({ product, recommended }: ProductPage
           </motion.div>
         )}
       </AnimatePresence>
-
       <section className="max-w-[1400px] mx-auto px-4 pt-8 md:pt-12 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-24">
-
           {/* Left: Product Gallery (Col-7) */}
           <div className="lg:col-span-7">
             <motion.div 
@@ -167,10 +151,8 @@ export default function ProductPageContent({ product, recommended }: ProductPage
               className="relative"
             >
               <ProductGallery images={product.images} name={product.name} />
-
             </motion.div>
           </div>
-
           {/* Right: Product Info (Col-5) */}
           <div className="lg:col-span-5 flex flex-col">
             <motion.div
@@ -186,7 +168,6 @@ export default function ProductPageContent({ product, recommended }: ProductPage
                 <ChevronRight className="w-3 h-3" />
                 <span className="text-black/60">{product.name}</span>
               </nav>
-
               <div className="flex items-center gap-2 mb-4">
                 <div className="flex text-yellow-400">
                   {[...Array(5)].map((_, i) => (
@@ -197,7 +178,6 @@ export default function ProductPageContent({ product, recommended }: ProductPage
                   {product.reviewCount} Reviews • {product.isSoldByLength ? 'Premium Textile' : 'Heritage Series'}
                 </span>
               </div>
-
               {/* Luxury Badges (Moved from image overlay) */}
               <div className="flex flex-wrap gap-2 mb-6">
                 {product.badge && (
@@ -209,11 +189,9 @@ export default function ProductPageContent({ product, recommended }: ProductPage
                   <Eye className="w-3 h-3" /> {product.viewersCount || 42} Viewing Now
                 </span>
               </div>
-
               <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-primary leading-[0.85] mb-6">
                 {product.name}
               </h1>
-
               <div className="flex items-baseline gap-4 mb-8">
                 <span className="text-4xl font-black text-[#1D1D1F]">
                   ৳{product.isSoldByLength ? product.price.toLocaleString() + ' / meter' : product.price.toLocaleString()}
@@ -229,17 +207,14 @@ export default function ProductPageContent({ product, recommended }: ProductPage
                   </div>
                 )}
               </div>
-
               <div className="h-px w-full bg-black/5 mb-8" />
             </motion.div>
-
             {/* Urgency Widget */}
             <ScarcityUrgency 
               stockCount={product.stockCount} 
               viewersCount={product.viewersCount || 0} 
               offerEndsAt={product.offerEndsAt}
             />
-
             {/* Selectors / Fabric UI */}
             <div className="space-y-10 my-10">
               {product.isSoldByLength ? (
@@ -271,7 +246,6 @@ export default function ProductPageContent({ product, recommended }: ProductPage
                       </div>
                     </motion.div>
                   )}
-
                   {/* Size Selector */}
                   {product.sizes && product.sizes.length > 0 && (
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
@@ -301,7 +275,6 @@ export default function ProductPageContent({ product, recommended }: ProductPage
                 </>
               )}
             </div>
-
             {/* Main Action Buttons */}
             <div className="flex flex-col gap-4 mt-4" ref={buyButtonRef}>
               <div className="flex gap-4">
@@ -321,7 +294,6 @@ export default function ProductPageContent({ product, recommended }: ProductPage
                   <Heart className={`w-6 h-6 ${isWished ? 'fill-current' : ''}`} />
                 </button>
               </div>
-
               <button
                 onClick={handleBuyNow}
                 className="w-full bg-black text-white py-6 rounded-2xl font-black uppercase tracking-[0.3em] text-[12px] shadow-[0_20px_50px_rgba(0,0,0,0.2)] flex items-center justify-center gap-3 hover:bg-[#1D1D1F] transition-all hover:-translate-y-1 active:translate-y-0"
@@ -330,11 +302,9 @@ export default function ProductPageContent({ product, recommended }: ProductPage
                 Buy It Now
               </button>
             </div>
-
             <div className="mt-6 flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-green-600 bg-green-50/50 py-3 rounded-xl border border-green-100">
                <CheckCircle2 className="w-3.5 h-3.5" /> Secure Checkout Verified
             </div>
-
             {/* Style Tip Box */}
             <div className="mt-12 p-6 bg-blue-50/30 rounded-3xl border border-blue-100 relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform">
@@ -348,7 +318,6 @@ export default function ProductPageContent({ product, recommended }: ProductPage
                 <span className="font-bold underline cursor-pointer mx-1 text-blue-600">Signature White Chinos</span> for a clean, high-editorial look that commands attention."
               </p>
             </div>
-
             {/* Secure Checkout Badge */}
             <div className="mt-12 flex flex-col items-center gap-4 bg-gray-50 py-6 rounded-3xl border border-black/[0.03]">
                <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.3em] text-black/30">
@@ -358,7 +327,6 @@ export default function ProductPageContent({ product, recommended }: ProductPage
             </div>
           </div>
         </div>
-
         {/* ── Immersive Details Sections ── */}
         <section className="mt-32">
            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -385,12 +353,10 @@ export default function ProductPageContent({ product, recommended }: ProductPage
               </div>
            </div>
         </section>
-
         {/* Complete the Look Bundle Builder */}
         <div className="mt-32">
           <BundleBuilder mainProduct={product} />
         </div>
-
         {/* Recommended Products */}
         <section className="mt-32">
           <div className="flex items-center justify-between mb-12">
@@ -407,7 +373,6 @@ export default function ProductPageContent({ product, recommended }: ProductPage
           </div>
         </section>
       </section>
-
       <TrustBadges />
     </main>
   );

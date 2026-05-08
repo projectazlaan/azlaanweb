@@ -1,9 +1,7 @@
 'use client';
-
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Save, Plus, Trash2, Pencil, X, UploadCloud, ChevronDown, ChevronUp, Loader2, Eye, EyeOff } from 'lucide-react';
-
 /* ─── Types ─────────────────────────────────────────── */
 type Slide = {
   id: string; title: string; subtitle: string;
@@ -11,28 +9,23 @@ type Slide = {
   cta1Text: string; cta1Link: string;
   cta2Text: string; cta2Link: string;
 };
-
 type Testimonial = {
   id: string; name: string; nameBn: string;
   location: string; locationBn: string;
   review: string; reviewBn: string;
   image: string; rating: number;
 };
-
 type SectionToggle = { key: string; label: string; enabled: boolean };
-
 /* ─── Default Data ───────────────────────────────────── */
 const DEFAULT_SLIDES: Slide[] = [
   { id: 's1', title: 'Handcrafted Elegance', subtitle: 'Azlaan Premium Quality', description: 'Discover ethically made, artisan-crafted products that blend tradition with contemporary style.', bgImage: '/media-pro/cover/cover 1.jpg', cta1Text: 'Explore Now', cta1Link: '/shop', cta2Text: 'Learn More', cta2Link: '/about' },
   { id: 's2', title: 'Winter Warmth', subtitle: 'Stay Cozy, Look Sharp', description: 'Premium woolens and modern silhouettes for the cold season.', bgImage: '/media-pro/cover/cover 2.jpg', cta1Text: 'Shop Winter', cta1Link: '/men', cta2Text: 'View Lookbook', cta2Link: '/about' },
   { id: 's3', title: 'New Arrivals', subtitle: 'Fresh Designs Just For You', description: 'Explore our latest collection of handcrafted fashion and lifestyle products.', bgImage: '/media-pro/cover/cover 3.jpg', cta1Text: 'Discover', cta1Link: '/women', cta2Text: 'All Styles', cta2Link: '/shop' },
 ];
-
 const DEFAULT_TESTIMONIALS: Testimonial[] = [
   { id: 't1', name: 'Rahim Khan', nameBn: 'রহিম খান', location: 'Dhaka', locationBn: 'ঢাকা', review: 'The quality of Azlaan suits is unmatched in Bangladesh. Truly premium feel and perfect fit!', reviewBn: 'আজলানের স্যুটের মান বাংলাদেশে অপ্রতিদ্বন্দ্বী।', image: '', rating: 5 },
   { id: 't2', name: 'Sarah Ahmed', nameBn: 'সারাহ আহমেদ', location: 'Chittagong', locationBn: 'চট্টগ্রাম', review: 'Elegant designs and comfortable fabric. Azlaan has become my go-to brand for festive wear.', reviewBn: 'বিশুদ্ধ ডিজাইন এবং আরামদায়ক কাপড়।', image: '', rating: 5 },
 ];
-
 const DEFAULT_TOGGLES: SectionToggle[] = [
   { key: 'hero', label: 'Hero Slider', enabled: true },
   { key: 'featured', label: 'Featured Products', enabled: true },
@@ -42,7 +35,6 @@ const DEFAULT_TOGGLES: SectionToggle[] = [
   { key: 'reels', label: 'Videos / Reels Section', enabled: true },
   { key: 'announcement', label: 'Top Announcement Bar', enabled: true },
 ];
-
 /* ─── Helpers ────────────────────────────────────────── */
 function SectionCard({ title, open, onToggle, children }: { title: string; open: boolean; onToggle: () => void; children: React.ReactNode }) {
   return (
@@ -61,7 +53,6 @@ function SectionCard({ title, open, onToggle, children }: { title: string; open:
     </div>
   );
 }
-
 function Field({ label, value, onChange, textarea = false }: { label: string; value: string; onChange: (v: string) => void; textarea?: boolean }) {
   return (
     <div>
@@ -74,7 +65,6 @@ function Field({ label, value, onChange, textarea = false }: { label: string; va
     </div>
   );
 }
-
 /* ─── Main Page ──────────────────────────────────────── */
 export default function HomepageControl() {
   const [open, setOpen] = useState<Record<string, boolean>>({ hero: true });
@@ -87,40 +77,30 @@ export default function HomepageControl() {
   const [saved, setSaved] = useState(false);
   const [activeSlide, setActiveSlide] = useState<string | null>(null);
   const [activeTestimonial, setActiveTestimonial] = useState<string | null>(null);
-
   const toggleSection = (key: string) => setOpen(o => ({ ...o, [key]: !o[key] }));
-
   const updateSlide = (id: string, field: keyof Slide, value: string) => {
     setSlides(s => s.map(sl => sl.id === id ? { ...sl, [field]: value } : sl));
   };
-
   const addSlide = () => {
     const id = `s${Date.now()}`;
     setSlides(s => [...s, { id, title: 'New Slide', subtitle: 'Subtitle here', description: 'Description...', bgImage: '', cta1Text: 'Shop Now', cta1Link: '/shop', cta2Text: 'Learn More', cta2Link: '/about' }]);
     setActiveSlide(id);
   };
-
   const removeSlide = (id: string) => setSlides(s => s.filter(sl => sl.id !== id));
-
   const updateTestimonial = (id: string, field: keyof Testimonial, value: string | number) => {
     setTestimonials(t => t.map(te => te.id === id ? { ...te, [field]: value } : te));
   };
-
   const addTestimonial = () => {
     const id = `t${Date.now()}`;
     setTestimonials(t => [...t, { id, name: 'New Customer', nameBn: 'নতুন কাস্টমার', location: 'Dhaka', locationBn: 'ঢাকা', review: 'Great product!', reviewBn: 'দারুণ পণ্য!', image: '', rating: 5 }]);
     setActiveTestimonial(id);
   };
-
   const removeTestimonial = (id: string) => setTestimonials(t => t.filter(te => te.id !== id));
-
   const toggleSectionVisibility = (key: string) => {
     setToggles(ts => ts.map(t => t.key === key ? { ...t, enabled: !t.enabled } : t));
   };
-
   const handleSave = async () => {
     setSaved(true);
-    
     // Save to DB
     const payload: Record<string, string> = {
       announcement_text: announcement,
@@ -135,24 +115,19 @@ export default function HomepageControl() {
       hero_slides_json: JSON.stringify(slides),
       testimonials_json: JSON.stringify(testimonials),
     };
-    
     // Add visibility toggles
     toggles.forEach(t => {
       payload[`section_${t.key}_enabled`] = t.enabled ? 'true' : 'false';
     });
-
     await fetch('/api/admin/site-config', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    
     setTimeout(() => setSaved(false), 2500);
   };
-
   return (
     <div className="space-y-6 pb-20">
-
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100">
         <div>
@@ -163,7 +138,6 @@ export default function HomepageControl() {
           <Save className="w-5 h-5" /> {saved ? '✅ Saved!' : 'Save All Changes'}
         </button>
       </div>
-
       {/* ── Section Visibility Toggles ── */}
       <SectionCard title="⚡ Section Visibility (On/Off)" open={!!open['visibility']} onToggle={() => toggleSection('visibility')}>
         <div className="space-y-3">
@@ -177,13 +151,11 @@ export default function HomepageControl() {
           ))}
         </div>
       </SectionCard>
-
       {/* ── Announcement Bar ── */}
       <SectionCard title="📢 Announcement Bar (Top of Site)" open={!!open['announcement']} onToggle={() => toggleSection('announcement')}>
         <Field label="Announcement Text" value={announcement} onChange={setAnnouncement} />
         <p className="text-xs text-gray-400 mt-2 font-medium">This shows as a thin bar at the very top of every page.</p>
       </SectionCard>
-
       {/* ── Hero Slider ── */}
       <SectionCard title="🎬 Hero Slider (Homepage Banner)" open={!!open['hero']} onToggle={() => toggleSection('hero')}>
         <div className="space-y-4">
@@ -207,7 +179,6 @@ export default function HomepageControl() {
                   {activeSlide === slide.id ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
                 </div>
               </div>
-
               <AnimatePresence>
                 {activeSlide === slide.id && (
                   <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }} className="overflow-hidden">
@@ -231,7 +202,6 @@ export default function HomepageControl() {
           </button>
         </div>
       </SectionCard>
-
       {/* ── Brand Story ── */}
       <SectionCard title="📖 Brand Story / Our Story" open={!!open['brandstory']} onToggle={() => toggleSection('brandstory')}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -242,7 +212,6 @@ export default function HomepageControl() {
           <Field label="Years in Business" value={brandStory.years} onChange={v => setBrandStory(b => ({ ...b, years: v }))} />
         </div>
       </SectionCard>
-
       {/* ── Testimonials ── */}
       <SectionCard title="⭐ Customer Reviews (Testimonials)" open={!!open['testimonials']} onToggle={() => toggleSection('testimonials')}>
         <div className="space-y-3">
@@ -298,7 +267,6 @@ export default function HomepageControl() {
           </button>
         </div>
       </SectionCard>
-
       {/* ── Newsletter ── */}
       <SectionCard title="💌 Newsletter / Inner Circle Section" open={!!open['newsletter']} onToggle={() => toggleSection('newsletter')}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -306,7 +274,6 @@ export default function HomepageControl() {
           <Field label="Subtitle / Description" value={newsletter.subtitle} onChange={v => setNewsletter(n => ({ ...n, subtitle: v }))} textarea />
         </div>
       </SectionCard>
-
     </div>
   );
 }

@@ -1,41 +1,32 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import ProductCard from '@/components/product/ProductCard'
 import { Product } from '@/types'
-
 export default function AllProductsPanel() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
-
   useEffect(() => {
     // Directly use productsData for reliability
     import('@/data/products.json').then((data) => {
       const allProducts = data.default as any[];
-      
       const updateCount = () => {
         const width = window.innerWidth;
         let count = 4; // Mobile: 2 cols * 2 rows = 4
         if (width >= 1280) count = 12; // xl: 6 cols * 2 rows = 12
         else if (width >= 1024) count = 10; // lg: 5 cols * 2 rows = 10
         else if (width >= 768) count = 8; // md: 4 cols * 2 rows = 8
-        
         setProducts(allProducts.slice(0, count));
       };
-
       updateCount();
       window.addEventListener('resize', updateCount);
       setLoading(false);
-
       return () => window.removeEventListener('resize', updateCount);
     })
   }, [])
-
   if (loading) return null
-
   return (
     <section className="pt-[15px] pb-[15px] bg-section-bg px-4 md:px-8 lg:px-12">
       <div className="w-full">
@@ -54,19 +45,16 @@ export default function AllProductsPanel() {
               Entire Collection
             </span>
           </motion.h2>
-          
           <p className="text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase text-gray-400 mt-[6px]">
             Premium Craftsmanship • Timeless Essentials
           </p>
         </div>
-
         {/* Grid - Edge to Edge */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-12">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} viewMode="grid" />
           ))}
         </div>
-
         {/* See More Button - Minimal Style */}
         <div className="mt-8 md:mt-12 flex justify-center">
           <Link

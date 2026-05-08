@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -18,7 +17,6 @@ import {
   ExternalLink,
   Filter
 } from 'lucide-react';
-
 interface Order {
   id: string;
   customer_name: string;
@@ -28,24 +26,20 @@ interface Order {
   status: 'pending' | 'packing' | 'shipped' | 'delivered';
   created_at: string;
 }
-
 const columns = [
   { id: 'pending', label: 'Pending Orders', icon: Clock, color: 'text-red-500', bg: 'bg-red-50' },
   { id: 'packing', label: 'Processing / Packing', icon: Package, color: 'text-amber-500', bg: 'bg-amber-50' },
   { id: 'shipped', label: 'On The Way', icon: Truck, color: 'text-blue-500', bg: 'bg-blue-50' },
   { id: 'delivered', label: 'Delivered', icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-emerald-50' },
 ];
-
 export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
-
   useEffect(() => {
     fetchOrders();
   }, []);
-
   const fetchOrders = async () => {
     try {
       const res = await fetch('/api/admin/orders');
@@ -56,11 +50,9 @@ export default function OrdersPage() {
       console.error('Failed to fetch orders');
     }
   };
-
   const updateOrderStatus = async (id: string, newStatus: string) => {
     // Optimistic UI update
     setOrders(prev => prev.map(o => o.id === id ? { ...o, status: newStatus as any } : o));
-
     try {
       await fetch('/api/admin/orders/status', {
         method: 'PATCH',
@@ -72,15 +64,12 @@ export default function OrdersPage() {
       fetchOrders(); // Rollback on error
     }
   };
-
   const filteredOrders = orders.filter(o => 
     o.customer_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
     o.phone?.includes(searchQuery) ||
     o.id?.includes(searchQuery)
   );
-
   const getOrdersByStatus = (status: string) => filteredOrders.filter(o => o.status === status);
-
   return (
     <div className="h-[calc(100vh-140px)] flex flex-col gap-8">
       {/* Header */}
@@ -109,7 +98,6 @@ export default function OrdersPage() {
           </motion.button>
         </div>
       </div>
-
       {/* Kanban Board */}
       <div className="flex-1 flex gap-6 overflow-x-auto pb-4 custom-scrollbar min-h-0">
         {columns.map((col) => (
@@ -128,7 +116,6 @@ export default function OrdersPage() {
                 <MoreHorizontal size={20} />
               </motion.button>
             </div>
-
             <div className="flex-1 bg-gray-50/50 rounded-b-[2.5rem] p-4 space-y-4 overflow-y-auto border-x border-b border-gray-100/50">
               {getOrdersByStatus(col.id).map((order) => (
                 <motion.div
@@ -144,12 +131,10 @@ export default function OrdersPage() {
                     <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest bg-gray-50 px-3 py-1 rounded-full">#{order.id.slice(0, 8)}</span>
                     <p className="text-xs text-gray-400 font-bold">{new Date(order.created_at).toLocaleDateString()}</p>
                   </div>
-                  
                   <h4 className="font-black text-gray-900 text-lg mb-1 group-hover:text-blue-600 transition-colors">{order.customer_name}</h4>
                   <div className="flex items-center gap-2 text-xs text-gray-500 font-medium mb-5">
                     <Phone size={12} className="text-gray-300" /> {order.phone}
                   </div>
-
                   <div className="pt-4 border-t border-gray-50 flex items-center justify-between">
                     <div>
                       <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-0.5">Grand Total</p>
@@ -172,7 +157,6 @@ export default function OrdersPage() {
                   </div>
                 </motion.div>
               ))}
-              
               {getOrdersByStatus(col.id).length === 0 && (
                 <div className="flex flex-col items-center justify-center py-12 text-center opacity-40">
                   <Package size={32} className="text-gray-300 mb-3" />
@@ -183,7 +167,6 @@ export default function OrdersPage() {
           </div>
         ))}
       </div>
-
       {/* Order Detail Modal */}
       <AnimatePresence>
         {selectedOrder && (
@@ -215,7 +198,6 @@ export default function OrdersPage() {
                    <ChevronRight size={24} />
                 </button>
               </div>
-
               <div className="space-y-8">
                 {/* Customer Info */}
                 <div className="bg-gray-50 rounded-[2rem] p-8 space-y-6 border border-gray-100 shadow-inner">
@@ -241,7 +223,6 @@ export default function OrdersPage() {
                     </div>
                   </div>
                 </div>
-
                 {/* Status Selector */}
                 <div>
                    <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4 px-2">Update Order Status</p>
@@ -261,7 +242,6 @@ export default function OrdersPage() {
                       ))}
                    </div>
                 </div>
-
                 {/* Order Summary */}
                 <div className="border-t border-gray-100 pt-8">
                    <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-6 px-2">Financial Summary</p>
@@ -280,7 +260,6 @@ export default function OrdersPage() {
                       </div>
                    </div>
                 </div>
-
                 {/* Actions */}
                 <div className="pt-10 flex gap-4">
                    <button className="flex-1 py-5 bg-gray-900 text-white rounded-[1.5rem] font-black text-sm hover:bg-gray-800 transition-all shadow-xl shadow-gray-900/20 flex items-center justify-center gap-3">

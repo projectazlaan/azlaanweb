@@ -1,5 +1,4 @@
 'use client'
-
 import { useState } from 'react'
 import {
   Clock,
@@ -17,16 +16,13 @@ import {
 import { AnimationTimeline, ScrollParallaxEditor, LogicFlowEditor, StatefulEditor } from '@/components/admin/customizer/animation'
 import { CodeCompiler, FrameworkExport, PerformanceAuditor, StagingVersioning } from '@/components/admin/customizer/export'
 import { CollectionManager, DataBinding, RepeaterEditor, EcommerceBridge } from '@/components/admin/customizer/cms'
-
 type TabType = 'timeline' | 'scroll' | 'logic' | 'state' | 'collections' | 'binding' | 'repeater' | 'ecommerce' | 'export'
-
 interface Tab {
   id: TabType
   label: string
   icon: React.ReactNode
   category?: string
 }
-
 const tabs: Tab[] = [
   { id: 'timeline', label: 'Animation Timeline', icon: <Clock size={16} />, category: 'animation' },
   { id: 'scroll', label: 'Scroll & Parallax', icon: <Scroll size={16} />, category: 'animation' },
@@ -38,14 +34,11 @@ const tabs: Tab[] = [
   { id: 'ecommerce', label: 'E-commerce', icon: <ShoppingCart size={16} />, category: 'cms' },
   { id: 'export', label: 'Export & Audit', icon: <Download size={16} />, category: 'export' },
 ]
-
 export default function CustomizerPage() {
   const [activeTab, setActiveTab] = useState<TabType>('timeline')
-
   const animationTabs = tabs.filter(t => t.category === 'animation')
   const cmsTabs = tabs.filter(t => t.category === 'cms')
   const exportTabs = tabs.filter(t => t.category === 'export')
-
   return (
     <div className="flex h-screen bg-gray-950">
       <aside className="w-64 bg-gray-900 border-r border-gray-800 flex flex-col">
@@ -56,7 +49,6 @@ export default function CustomizerPage() {
           </h1>
           <p className="text-xs text-gray-500 mt-1">Build & Design</p>
         </div>
-
         <div className="flex-1 overflow-auto p-3">
           <div className="mb-4">
             <div className="text-xs text-gray-500 uppercase tracking-wider mb-2 px-2">Animation & Logic</div>
@@ -80,7 +72,6 @@ export default function CustomizerPage() {
               ))}
             </nav>
           </div>
-
           <div className="mb-4">
             <div className="text-xs text-gray-500 uppercase tracking-wider mb-2 px-2">Data & CMS</div>
             <nav className="space-y-1">
@@ -103,7 +94,6 @@ export default function CustomizerPage() {
               ))}
             </nav>
           </div>
-
           <div className="mb-4">
             <div className="text-xs text-gray-500 uppercase tracking-wider mb-2 px-2">Export & Audit</div>
             <nav className="space-y-1">
@@ -127,7 +117,6 @@ export default function CustomizerPage() {
             </nav>
           </div>
         </div>
-
           <div className="p-4 border-t border-gray-800">
             <div className="text-xs text-gray-500">
               {activeTab === 'export' ? 'Phase 6: Export & Production Audit' : 
@@ -137,7 +126,6 @@ export default function CustomizerPage() {
             </div>
           </div>
       </aside>
-
       <main className="flex-1 overflow-auto">
         <div className="max-w-4xl mx-auto p-6">
           <div className="mb-6">
@@ -152,18 +140,15 @@ export default function CustomizerPage() {
               {activeTab === 'export' && 'Compile code, export frameworks, audit performance, and manage versions'}
             </p>
           </div>
-
             <div className="space-y-6">
               {activeTab === 'timeline' && <AnimationTimeline />}
               {activeTab === 'scroll' && <ScrollParallaxEditor />}
               {activeTab === 'logic' && <LogicFlowEditor />}
               {activeTab === 'state' && <StatefulEditor />}
-
               {activeTab === 'collections' && <CollectionManager />}
               {activeTab === 'binding' && <DataBinding />}
               {activeTab === 'repeater' && <RepeaterEditor />}
               {activeTab === 'ecommerce' && <EcommerceBridge />}
-
               {activeTab === 'export' && (
                 <div className="space-y-6">
                   <CodeCompiler />
@@ -173,7 +158,6 @@ export default function CustomizerPage() {
                 </div>
               )}
             </div>
-
           {activeTab !== 'export' && (
             <div className="mt-8 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
               <h3 className="text-sm font-medium text-white mb-2">Integration Notes</h3>

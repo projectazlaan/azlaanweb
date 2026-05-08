@@ -1,11 +1,9 @@
 'use client'
-
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Plus, Search, Edit, Trash2, Filter } from 'lucide-react'
 import Image from 'next/image'
-
 interface Product {
   id: string
   name: string
@@ -18,18 +16,15 @@ interface Product {
   inStock: number
   createdAt: string
 }
-
 export default function AdminProducts() {
   const router = useRouter()
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('all')
-
   useEffect(() => {
     fetchProducts()
   }, [])
-
   const fetchProducts = async () => {
     try {
       const res = await fetch('/api/admin/products')
@@ -43,10 +38,8 @@ export default function AdminProducts() {
       setLoading(false)
     }
   }
-
   const handleDelete = async (id: string, name: string) => {
     if (!confirm(`Delete "${name}"? This cannot be undone.`)) return
-
     try {
       const res = await fetch(`/api/admin/products/${id}`, { method: 'DELETE' })
       if (res.ok) {
@@ -56,14 +49,12 @@ export default function AdminProducts() {
       console.error('Failed to delete:', error)
     }
   }
-
   const filtered = products.filter(p => {
     const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase()) ||
       p.nameBn.toLowerCase().includes(search.toLowerCase())
     const matchesCategory = categoryFilter === 'all' || p.category === categoryFilter
     return matchesSearch && matchesCategory
   })
-
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
@@ -80,7 +71,6 @@ export default function AdminProducts() {
           <Plus size={18} /> Add Product
         </Link>
       </div>
-
       {/* Filters */}
       <div className="bg-white p-4 rounded-2xl shadow-sm mb-6 flex flex-col sm:flex-row gap-3">
         <div className="flex-1 relative">
@@ -104,7 +94,6 @@ export default function AdminProducts() {
           <option value="Kids">Kids</option>
         </select>
       </div>
-
       {/* Products Table */}
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         {loading ? (
@@ -176,7 +165,6 @@ export default function AdminProducts() {
     </div>
   )
 }
-
 function Package({ size, ...props }: { size: number; [key: string]: any }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}>

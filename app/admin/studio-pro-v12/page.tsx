@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect, useRef, useState, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import { Toaster } from 'react-hot-toast'
@@ -12,9 +11,7 @@ import RightPanel from './components/RightPanel'
 import GalleryDrawer from './components/GalleryDrawer'
 import ExportModal from './components/ExportModal'
 import SaveSuccessModal from './components/SaveSuccessModal'
-
 // ─── Heavy canvas loaded client-only ──────────────────────────
-
 const CanvasPreview = dynamic(() => import('./components/CanvasPreview'), {
   ssr: false,
   loading: () => (
@@ -26,9 +23,7 @@ const CanvasPreview = dynamic(() => import('./components/CanvasPreview'), {
     </div>
   )
 })
-
 // ─── Command Palette ───────────────────────────────────────────
-
 function CommandPalette({
   isOpen,
   onClose,
@@ -42,7 +37,6 @@ function CommandPalette({
 }) {
   const [query, setQuery] = useState('')
   const setDeviceMode = useStudioStore(s => s.setDeviceMode)
-
   const commands = [
     { icon: '💾', label: 'Save Design',          group: 'Actions',    shortcut: '⌘S', action: () => { onSave(); onClose() } },
     { icon: '🖼️', label: 'Open Media Gallery',   group: 'Actions',    shortcut: 'G',  action: () => { onOpenGallery(); onClose() } },
@@ -51,16 +45,13 @@ function CommandPalette({
     { icon: '🗂️', label: 'Switch to Tablet',     group: 'Device',     shortcut: '',   action: () => { setDeviceMode('tablet'); onClose() } },
     { icon: '← ', label: 'Back to Portal',       group: 'Navigate',   shortcut: '',   action: () => { window.location.href = '/admin'; onClose() } },
   ]
-
   const filtered = query
     ? commands.filter(c =>
         c.label.toLowerCase().includes(query.toLowerCase()) ||
         c.group.toLowerCase().includes(query.toLowerCase())
       )
     : commands
-
   if (!isOpen) return null
-
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh]">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
@@ -104,30 +95,23 @@ function CommandPalette({
     </div>
   )
 }
-
 // ─── Main Page ─────────────────────────────────────────────────
-
 export default function StudioProV12Page() {
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
   const [exportOpen, setExportOpen] = useState(false)
-
   // ── Single root message listener ──
   useMessageListener()
-
   const { undo, redo } = useHistory()
   const { sendMessage } = usePostMessage(iframeRef)
-
   const handleUndo = () => {
     const restored = undo()
     if (restored) sendMessage({ type: 'UPDATE_THEME', data: restored as unknown as Record<string, unknown> })
   }
-
   const handleRedo = () => {
     const restored = redo()
     if (restored) sendMessage({ type: 'UPDATE_THEME', data: restored as unknown as Record<string, unknown> })
   }
-
   const {
     saveToServer,
     openGallery,
@@ -135,7 +119,6 @@ export default function StudioProV12Page() {
     updateSettings,
     canvasUrl,
   } = useStudioStore()
-
   // ── Derived Page Key ──
   const currentPageKey = useMemo(() => {
     try {
@@ -147,7 +130,6 @@ export default function StudioProV12Page() {
       return 'homepage'
     }
   }, [canvasUrl])
-
   // ── Restore saved settings on load & when page changes ──
   useEffect(() => {
     fetch(`/api/studio-pro/save?key=${currentPageKey}`)
@@ -159,7 +141,6 @@ export default function StudioProV12Page() {
       })
       .catch(() => {}) // silent fail
   }, [updateSettings, currentPageKey])
-
   // ── Keyboard Shortcuts ──
   useKeyboardShortcuts({
     iframeRef,
@@ -169,11 +150,9 @@ export default function StudioProV12Page() {
     onDuplicate: () => {},
     onDelete: () => {},
   })
-
   // Expose currentPageKey for debugging
   // eslint-disable-next-line no-console
   // console.debug('[Studio] currentPageKey =', currentPageKey)
-
   return (
     <div className="h-screen bg-black flex flex-col overflow-hidden text-white font-sans">
       <Toaster
@@ -188,7 +167,6 @@ export default function StudioProV12Page() {
           },
         }}
       />
-
       <TopToolbar
         onOpenGallery={() => openGallery()}
         onOpenCommandPalette={() => setCommandPaletteOpen(true)}
@@ -197,7 +175,6 @@ export default function StudioProV12Page() {
         onUndo={handleUndo}
         onRedo={handleRedo}
       />
-
       <div className="flex-1 flex overflow-hidden">
         <LeftSidebar iframeRef={iframeRef} />
         <main className="flex-1 overflow-hidden flex flex-col">
@@ -205,7 +182,6 @@ export default function StudioProV12Page() {
         </main>
         <RightPanel iframeRef={iframeRef} />
       </div>
-
       <GalleryDrawer />
       <CommandPalette
         isOpen={commandPaletteOpen}

@@ -1,13 +1,9 @@
 'use client';
-
 import { X } from 'lucide-react';
 import { useCategoryStore } from '@/store/categoryStore';
-
 export default function ActiveFilterChips() {
   const { filters, removeFilter, clearAllFilters } = useCategoryStore();
-
   const chips: { label: string; onRemove: () => void }[] = [];
-
   // Subcategory chip is removed as it's managed by the FilterBar
   filters.size.forEach((s) => chips.push({ label: `Size: ${s}`, onRemove: () => removeFilter('size', s) }));
   filters.color.forEach((c) => chips.push({ label: `Color: ${c}`, onRemove: () => removeFilter('color', c) }));
@@ -23,9 +19,7 @@ export default function ActiveFilterChips() {
       onRemove: () => removeFilter('maxPrice'),
     });
   }
-
   if (chips.length === 0) return null;
-
   return (
     <div className="flex items-center gap-2 flex-wrap pb-3 pt-1">
       {chips.map((chip, i) => (

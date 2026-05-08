@@ -1,10 +1,8 @@
 'use client'
-
 import { Star, Quote } from 'lucide-react'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-
 interface Testimonial {
   id: string
   name: string
@@ -17,7 +15,6 @@ interface Testimonial {
   image: string
   rating: number
 }
-
 const DUMMY_TESTIMONIALS: Testimonial[] = [
   {
     id: 't1',
@@ -80,19 +77,15 @@ const DUMMY_TESTIMONIALS: Testimonial[] = [
     rating: 5
   }
 ]
-
 export default function Testimonials() {
   const [testimonials] = useState<Testimonial[]>(DUMMY_TESTIMONIALS)
-
   // Create infinite scroll array
   const infiniteTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials]
-
   return (
     <section className="py-24 overflow-hidden bg-white relative">
       {/* Decorative Blur Backgrounds */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#0071E3]/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gray-100 rounded-full blur-[120px] pointer-events-none" />
-
       <div className="w-full">
         {/* Header - Minimal & Premium */}
         <div className="text-center mb-16 md:mb-24 px-4">
@@ -113,7 +106,6 @@ export default function Testimonials() {
             Real Stories From Our Valued Clients
           </p>
         </div>
-
         {/* Scrolling Row */}
         <div className="flex overflow-hidden relative">
           <motion.div 
@@ -131,7 +123,6 @@ export default function Testimonials() {
                 className="w-[320px] md:w-[500px] shrink-0"
               >
                 <div className="h-full bg-white border border-black/[0.03] p-8 md:p-12 rounded-[2.5rem] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(0,113,227,0.1)] transition-all duration-700 group flex flex-col justify-between">
-
                   <div>
                     {/* Header: Profile & Quote */}
                     <div className="flex items-start justify-between mb-8">
@@ -142,7 +133,6 @@ export default function Testimonials() {
                             alt={t.name}
                             fill
                             className="object-cover"
-
                           />
                         </div>
                         <div>
@@ -156,14 +146,12 @@ export default function Testimonials() {
                       </div>
                       <Quote className="w-8 h-8 md:w-12 md:h-12 text-black opacity-5" />
                     </div>
-
                     {/* Stars */}
                     <div className="flex gap-1 mb-6">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                       ))}
                     </div>
-
                     {/* Dual Language Review */}
                     <div className="space-y-4">
                       <p className="text-black text-sm md:text-lg font-medium leading-relaxed tracking-tight italic">
@@ -175,7 +163,6 @@ export default function Testimonials() {
                       </p>
                     </div>
                   </div>
-
                   {/* Customer Footer Info */}
                   <div className="mt-10 pt-6 border-t border-black/5 flex items-center justify-between">
                     <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-gray-300">

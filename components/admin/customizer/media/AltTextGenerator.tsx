@@ -1,47 +1,38 @@
 'use client'
-
 import { useState } from 'react'
 import { Sparkles, X, Copy, Check, Tags, FileText } from 'lucide-react'
-
 interface AltTextGeneratorProps {
   imageSrc: string
   onSave: (data: { altText: string; tags: string[] }) => void
   onCancel: () => void
 }
-
 interface AnalysisResult {
   altText: string
   tags: string[]
   description: string
 }
-
 export function AltTextGenerator({ imageSrc, onSave, onCancel }: AltTextGeneratorProps) {
   const [isProcessing, setIsProcessing] = useState(false)
   const [result, setResult] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [apiKey, setApiKey] = useState('')
   const [copied, setCopied] = useState(false)
-
   const analyzeImage = async () => {
     if (!apiKey) {
       setError('Please enter a Google AI API key')
       return
     }
-
     setIsProcessing(true)
     setError(null)
-
     try {
       const response = await fetch('/api/ai/alt-text', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ imageUrl: imageSrc, apiKey })
       })
-
       if (!response.ok) {
         throw new Error('Failed to analyze image')
       }
-
       const data = await response.json()
       setResult(data.result)
     } catch (err) {
@@ -50,19 +41,16 @@ export function AltTextGenerator({ imageSrc, onSave, onCancel }: AltTextGenerato
       setIsProcessing(false)
     }
   }
-
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
-
   const handleSave = () => {
     if (result) {
       onSave({ altText: result.altText, tags: result.tags })
     }
   }
-
   return (
     <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
       <div className="bg-gray-900 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden border border-gray-700 shadow-2xl">
@@ -75,7 +63,6 @@ export function AltTextGenerator({ imageSrc, onSave, onCancel }: AltTextGenerato
             <X size={20} className="text-gray-400" />
           </button>
         </div>
-
         <div className="p-6">
           <div className="mb-6">
             <label className="text-sm text-gray-400 mb-2 block">Google AI API Key (Gemini)</label>
@@ -88,7 +75,6 @@ export function AltTextGenerator({ imageSrc, onSave, onCancel }: AltTextGenerato
             />
             <p className="text-xs text-gray-500 mt-1">Get your API key from Google AI Studio</p>
           </div>
-
           <div className="grid grid-cols-2 gap-6">
             <div>
               <h3 className="text-sm font-medium text-gray-400 mb-3">Image</h3>
@@ -142,14 +128,12 @@ export function AltTextGenerator({ imageSrc, onSave, onCancel }: AltTextGenerato
               )}
             </div>
           </div>
-
           {error && (
             <div className="mt-4 p-3 bg-red-900/50 border border-red-700 rounded-lg">
               <p className="text-sm text-red-400">{error}</p>
             </div>
           )}
         </div>
-
         <div className="flex justify-end gap-3 p-4 border-t border-gray-800">
           <button
             onClick={onCancel}

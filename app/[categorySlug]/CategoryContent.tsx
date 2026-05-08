@@ -1,5 +1,4 @@
 'use client';
-
 import { useMemo, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -19,9 +18,7 @@ import SortSelect from './SortSelect';
 import ViewToggle from './ViewToggle';
 import TrustBadges from './TrustBadges';
 import Footer from '@/components/Footer';
-
 const PRODUCTS_PER_PAGE = 12;
-
 interface CategoryContentProps {
   category: Category;
   initialProducts: Product[];
@@ -32,7 +29,6 @@ interface CategoryContentProps {
   overrideTitle?: string;
   overrideDesc?: string;
 }
-
 export default function CategoryContent({ 
   category, 
   initialProducts, 
@@ -49,15 +45,12 @@ export default function CategoryContent({
   const [isSticky, setIsSticky] = useState(false);
   const [lang] = useState<Language>('en');
   const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
     setMounted(true);
   }, []);
-
   // ─── Scroll Spy & Sticky Detection ────────────────────────────
   useEffect(() => {
     if (!mounted) return;
-
     // 2. Scroll Spy for Sub-sections
     const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -67,15 +60,12 @@ export default function CategoryContent({
         }
       });
     }, { threshold: [0.5], rootMargin: '-10% 0px -40% 0px' });
-
     const sections = document.querySelectorAll('[data-section]');
     sections.forEach(s => sectionObserver.observe(s));
-
     return () => {
       sectionObserver.disconnect();
     };
   }, [setActiveSection, mounted]);
-
   // Initial Sync for Subcategory Page or Main Category Page
   useEffect(() => {
     if (mounted) {
@@ -93,19 +83,15 @@ export default function CategoryContent({
       }
     }
   }, [isSubcategoryPage, activeSubcategory, activeSubSubCategory, setFilter, setActiveSection, mounted]);
-
   // ... (Filter Logic)
-
   // ─── Filter Logic ─────────────────────────────────────────────
   const filteredProducts = useMemo(() => {
     // During hydration, the store might still be 'All', so we use activeSubcategory prop as a fallback
     const effectiveSubcategory = (mounted ? filters.subcategory : activeSubcategory) || 'All';
     const effectiveSubSubCategory = (mounted ? filters.subSubCategory : activeSubSubCategory) || 'All';
-
     return initialProducts.filter((p) => {
       // Subcategory check
       if (effectiveSubcategory !== 'All' && p.subcategory !== effectiveSubcategory) return false;
-      
       // Sub-Subcategory check (if applicable, mapping to occasion or another field if not present)
       // For now, let's assume we filter by occasion if subSubCategory is set
       if (effectiveSubSubCategory !== 'All' && p.occasion !== effectiveSubSubCategory && (p as any).badge !== effectiveSubSubCategory) {
@@ -113,7 +99,6 @@ export default function CategoryContent({
         const matches = p.name.includes(effectiveSubSubCategory) || p.subcategory === effectiveSubSubCategory;
         if (!matches) return false;
       }
-      
       // Advanced Filters
       if (filters.size.length > 0 && !filters.size.some((s) => p.sizes?.includes(s))) return false;
       if (filters.color.length > 0 && !filters.color.some((c) => p.colors?.some((pc) => pc.name === c))) return false;
@@ -125,9 +110,7 @@ export default function CategoryContent({
       return true;
     });
   }, [initialProducts, filters, activeSubcategory, mounted]);
-
   const [isMobile, setIsMobile] = useState(false);
-
   // ─── Responsive Detection ──────────────────────────────────────
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -135,24 +118,18 @@ export default function CategoryContent({
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-
   // ─── Best Sellers (Exactly 2 Rows) ─────────────────────────────
   const bestSellersCount = isMobile ? 4 : 8;
-
   const bestSellers = useMemo(() => {
     return filteredProducts.slice(0, bestSellersCount);
   }, [filteredProducts, bestSellersCount]);
-
   const remainingProducts = useMemo(() => {
     if (filters.subcategory !== 'All') return filteredProducts;
     return filteredProducts.slice(bestSellersCount);
   }, [filteredProducts, filters.subcategory, bestSellersCount]);
-
   // ─── Sort & Pagination ────────────────────────────────────────
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
-
-
   // ─── Search Logic ─────────────────────────────────────────────
   const suggestions = useMemo(() => {
     if (!searchQuery) return [];
@@ -160,7 +137,6 @@ export default function CategoryContent({
       k.toLowerCase().includes(searchQuery.toLowerCase())
     ).slice(0, 5);
   }, [searchQuery, category.searchKeywords]);
-
   const searchedProducts = useMemo(() => {
     if (!searchQuery) return filteredProducts;
     return filteredProducts.filter(p => 
@@ -168,7 +144,6 @@ export default function CategoryContent({
       p.description?.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [filteredProducts, searchQuery]);
-
   // Update sortedProducts to use searchedProducts
   const finalProducts = useMemo(() => {
     const sorted = [...searchedProducts];
@@ -180,10 +155,8 @@ export default function CategoryContent({
       default: return sorted; // Assuming products are already in some order
     }
   }, [searchedProducts, sortBy]);
-
   const [visibleCount, setVisibleCount] = useState(PRODUCTS_PER_PAGE);
   const displayProducts = finalProducts.slice(0, visibleCount);
-
   const handleLoadMore = () => {
     setVisibleCount(prev => prev + PRODUCTS_PER_PAGE);
     trackEvent('select_item', {
@@ -192,7 +165,6 @@ export default function CategoryContent({
       new_count: visibleCount + PRODUCTS_PER_PAGE
     });
   };
-
   // ─── Analytics: View Item List ────────────────────────────────
   useEffect(() => {
     if (mounted) {
@@ -203,21 +175,16 @@ export default function CategoryContent({
       });
     }
   }, [category.slug, category.name, displayProducts, mounted]);
-
   // ... (Keep existing layout but update product grid calls)
-
   // ─── Expandable Sections State ────────────────────────────────
   const [showAllBestSellers, setShowAllBestSellers] = useState(false);
   const [showAllTopChoices, setShowAllTopChoices] = useState(false);
-
   const bestSellersToDisplay = useMemo(() => {
     return showAllBestSellers ? filteredProducts.slice(0, 24) : bestSellers;
   }, [showAllBestSellers, filteredProducts, bestSellers]);
-
   const topChoicesToDisplay = useMemo(() => {
     return showAllTopChoices ? remainingProducts.slice(0, 24) : remainingProducts.slice(0, bestSellersCount);
   }, [showAllTopChoices, remainingProducts, bestSellersCount]);
-
   // ─── Dynamic Context Mapping ───────────────────────────────
   const subHeroMap: Record<string, { hero: string; desc: string }> = {
     'Panjabi': {
@@ -257,22 +224,17 @@ export default function CategoryContent({
       desc: 'Couture for your special day. Exquisite bridal ensembles crafted with timeless artistry.'
     }
   };
-
   const currentSub = mounted ? filters.subcategory : activeSubcategory;
   const isSubActive = currentSub && currentSub !== 'All';
-  
   const displayTitle = isSubActive 
     ? `${category.name} ${currentSub}` 
     : (overrideTitle || (lang === 'bn' ? category.nameBn : category.name));
-    
   const displayDesc = isSubActive
     ? (subHeroMap[currentSub as string]?.desc || `Explore our exclusive ${currentSub} collection.`)
     : (overrideDesc || (lang === 'bn' ? category.descriptionBn : category.description));
-    
   const displayHero = (isSubActive
     ? (subHeroMap[currentSub as string]?.hero || overrideHero || category.heroImage)
     : (overrideHero || category.heroImage)) || '/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp';
-
   return (
     <main className="min-h-screen bg-white">
       {/* ── Immersive Dynamic Hero (Luxury Editorial Style) ── */}
@@ -287,14 +249,12 @@ export default function CategoryContent({
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-        
         {/* Editorial Vertical Label (Desktop) */}
         <div className="hidden md:block absolute left-8 top-1/2 -translate-y-1/2 -rotate-90 origin-left">
           <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20 whitespace-nowrap">
             ESTABLISHED 2024 • AZLAAN LUXURY
           </span>
         </div>
-
         <div className="absolute bottom-12 left-6 md:left-24 right-6">
           <nav className="flex items-center gap-3 text-white/40 text-[9px] md:text-[10px] font-black uppercase tracking-[0.25em] mb-6">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -309,7 +269,6 @@ export default function CategoryContent({
               </>
             )}
           </nav>
-
           <div className="max-w-4xl">
             <h1 className="text-white text-5xl md:text-[10rem] font-sans font-black tracking-tighter leading-[0.85] mb-6 uppercase">
               {displayTitle.split(' ')[0]}
@@ -328,8 +287,6 @@ export default function CategoryContent({
           </div>
         </div>
       </section>
-
-
       {/* ── Unified Sticky Header (Filter Bar is the Header) ── */}
       <div className="sticky top-[56px] md:top-[68px] z-40 bg-white/95 backdrop-blur-md border-b border-black/[0.03] shadow-sm">
         <div className="w-full flex items-center justify-between px-4 md:px-8">
@@ -339,7 +296,6 @@ export default function CategoryContent({
             <div className="w-px h-4 bg-black/10 mx-1" />
             <MobileFilterDrawer category={category} />
           </div>
-
           {/* Center: The Text Bar (FilterBar) */}
           <div className="flex-1 max-w-4xl mx-auto overflow-hidden">
             <FilterBar 
@@ -350,7 +306,6 @@ export default function CategoryContent({
               onItemSelect={(item) => isSubActive ? setFilter('subSubCategory', item) : setFilter('subcategory', item)}
             />
           </div>
-
           {/* Right: Item Count */}
           <div className="hidden md:flex items-center">
             <p className="text-[9px] font-black uppercase tracking-widest text-black/40">
@@ -358,13 +313,11 @@ export default function CategoryContent({
             </p>
           </div>
         </div>
-
         {/* Bottom row for active chips (if any) */}
         <div className="px-4 md:px-8 bg-white/50">
           <ActiveFilterChips />
         </div>
       </div>
-
       {/* ── Best Sellers Panel (Modern Sans Header) ─────────────────── */}
       {filters.subcategory === 'All' && bestSellers.length > 0 && !searchQuery && (
         <section className="max-w-[1600px] mx-auto px-4 md:px-6 mt-[15px]">
@@ -376,13 +329,11 @@ export default function CategoryContent({
               Featured Selection
             </span>
           </div>
-          
           <div className="pt-[4px] pb-6 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8">
             {bestSellersToDisplay.map((product) => (
               <ProductCard key={product.id} product={product} viewMode="grid" />
             ))}
           </div>
-
           {filteredProducts.length > bestSellersCount && (
             <div className="flex justify-center pb-8 md:pb-12">
               <button
@@ -396,16 +347,13 @@ export default function CategoryContent({
           )}
         </section>
       )}
-
       {/* ── Individual Subcategory Sections (Carousel Model) ── */}
       {filters.subcategory === 'All' && !searchQuery && (
         <section className="bg-white py-4 md:py-8 overflow-hidden">
           {category.subcategories.filter(s => s !== 'All').map((sub) => {
             const subProducts = initialProducts.filter(p => p.subcategory === sub);
             const productsToDisplay = subProducts.slice(0, 6);
-
             if (productsToDisplay.length === 0) return null;
-
             return (
               <div key={sub} id={sub} data-section={sub} className="mb-4 md:mb-8 last:mb-0 scroll-mt-24">
                 {/* Section Header (Image-Inspired Style) */}
@@ -413,7 +361,6 @@ export default function CategoryContent({
                   <h3 className="text-xl md:text-2xl font-sans font-black text-black tracking-tight">
                     {sub} Collection
                   </h3>
-                  
                   <button 
                     onClick={() => {
                       setFilter('subcategory', sub);
@@ -425,7 +372,6 @@ export default function CategoryContent({
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
                   </button>
                 </div>
-
                 {/* Horizontal Product Carousel */}
                 <div className="max-w-full overflow-x-auto no-scrollbar px-4 md:px-6">
                   <div className="flex gap-4 md:gap-8 pb-4 min-w-max">
@@ -441,7 +387,6 @@ export default function CategoryContent({
           })}
         </section>
       )}
-
       {/* ── Main Product Panel (Search / Filter Results) ── */}
       <section className="max-w-[1600px] mx-auto px-4 md:px-6 py-8 md:py-16 border-t border-black/[0.03]">
         <div className="mb-6 md:mb-10 flex flex-col items-center text-center">
@@ -451,13 +396,11 @@ export default function CategoryContent({
           </h3>
           <div className="w-12 h-1 bg-black rounded-full" />
         </div>
-        
         <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-12">
           {displayProducts.map((product) => (
             <ProductCard key={product.id} product={product} viewMode={viewMode} />
           ))}
         </div>
-
         {finalProducts.length > visibleCount && (
           <div className="flex justify-center mt-12">
             <button
@@ -469,7 +412,6 @@ export default function CategoryContent({
             </button>
           </div>
         )}
-
         {finalProducts.length === 0 && (
           <div className="py-20 text-center">
             <p className="text-sm font-bold uppercase tracking-widest text-gray-400">No products found matching your criteria.</p>
@@ -482,7 +424,6 @@ export default function CategoryContent({
           </div>
         )}
       </section>
-
       <TrustBadges />
     </main>
   );

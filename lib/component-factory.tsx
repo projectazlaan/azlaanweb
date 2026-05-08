@@ -1,7 +1,5 @@
 'use client'
-
 import dynamic from 'next/dynamic'
-
 const componentMap: Record<string, React.ComponentType<any>> = {
   Navbar: dynamic(() => import('@/components/Navbar').then(mod => mod.default), { ssr: false }),
   HeroSection: dynamic(() => import('@/components/HeroSection').then(mod => mod.default), { ssr: false }),
@@ -12,11 +10,9 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   Newsletter: dynamic(() => import('@/components/Newsletter').then(mod => mod.default), { ssr: false }),
   Footer: dynamic(() => import('@/components/Footer').then(mod => mod.default), { ssr: false }),
 }
-
 export function getComponentByKey(key: string): React.ComponentType<any> | null {
   return componentMap[key] || null
 }
-
 export function renderComponent(key: string, props?: Record<string, any>) {
   const Component = getComponentByKey(key)
   if (!Component) {
@@ -25,13 +21,10 @@ export function renderComponent(key: string, props?: Record<string, any>) {
   }
   return <Component {...props} />
 }
-
 export function isComponentRegistered(key: string): boolean {
   return key in componentMap
 }
-
 export function getRegisteredComponents(): string[] {
   return Object.keys(componentMap)
 }
-
 export { componentMap }

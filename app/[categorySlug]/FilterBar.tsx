@@ -1,10 +1,8 @@
 'use client';
-
 import { useCategoryStore } from '@/store/categoryStore';
 import { Category } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
-
 interface FilterBarProps {
   category: Category;
   variant?: 'full' | 'compact';
@@ -12,7 +10,6 @@ interface FilterBarProps {
   activeItem?: string;
   onItemSelect?: (item: string) => void;
 }
-
 // Using high-detail realistic paths for a "Real" look
 export const Icons = {
   All: (props: any) => (
@@ -74,13 +71,11 @@ export const Icons = {
     </svg>
   )
 };
-
 export default function FilterBar({ category, variant = 'full', items, activeItem, onItemSelect }: FilterBarProps) {
   const { filters, setFilter, activeSection } = useCategoryStore();
   const router = useRouter();
   const params = useParams();
   const displayItems = items || category.subcategories;
-
   return (
     <div className={`w-full transition-all duration-500 ${variant === 'compact' ? 'py-0.5' : 'py-3 md:py-4'}`}>
       <div className={`
@@ -89,7 +84,6 @@ export default function FilterBar({ category, variant = 'full', items, activeIte
       `}>
         {displayItems.map((item) => {
           const isActive = activeItem ? activeItem === item : (variant === 'compact' ? activeSection === item : filters.subcategory === item);
-          
           return (
             <button
               key={item}
@@ -104,7 +98,6 @@ export default function FilterBar({ category, variant = 'full', items, activeIte
                     // Navigate to separate page address
                     const categorySlug = params.categorySlug || category.slug;
                     const subSlug = params.subcategorySlug;
-
                     if (item === 'All') {
                       if (subSlug) {
                         router.push(`/${categorySlug}/${subSlug}`);
@@ -139,7 +132,6 @@ export default function FilterBar({ category, variant = 'full', items, activeIte
               `}>
                 {item}
               </h3>
-
               <div className={`
                 absolute bottom-0 transition-all duration-500 bg-black rounded-full h-[1.5px] w-4
                 ${isActive ? 'opacity-100 translate-y-1' : 'opacity-0 scale-x-0'}

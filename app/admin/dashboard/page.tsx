@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { LayoutDashboard, Package, ShoppingCart, Users, DollarSign, TrendingUp, Filter, Download } from 'lucide-react'
@@ -8,7 +7,6 @@ import SalesChart from '@/components/admin/DashboardCharts'
 import ActivityFeed from '@/components/admin/ActivityFeed'
 import InventoryAlerts from '@/components/admin/InventoryAlerts'
 import QuickActions from '@/components/admin/QuickActions'
-
 interface DashboardStats {
   totalProducts: number
   totalOrders: number
@@ -20,17 +18,14 @@ interface DashboardStats {
   lowStockProducts: any[]
   activityLog: any[]
 }
-
 export default function AdminDashboard() {
   const router = useRouter()
   const [stats, setStats] = useState<DashboardStats | null>(null)
   const [loading, setLoading] = useState(true)
   const [timeframe, setTimeframe] = useState('7d')
-
   useEffect(() => {
     fetchStats()
   }, [timeframe])
-
   const fetchStats = async () => {
     setLoading(true)
     try {
@@ -45,21 +40,18 @@ export default function AdminDashboard() {
       setLoading(false)
     }
   }
-
   const statCards = [
     { label: 'Total Revenue', value: `৳${(stats?.revenue || 0).toLocaleString('en-IN')}`, icon: DollarSign, color: 'bg-emerald-500', trend: '+12.5%' },
     { label: 'Total Orders', value: stats?.totalOrders || 0, icon: ShoppingCart, color: 'bg-blue-500', trend: '+5.2%' },
     { label: 'Total Customers', value: stats?.totalCustomers || 0, icon: Users, color: 'bg-purple-500', trend: '+8.1%' },
     { label: 'Inventory Items', value: stats?.totalProducts || 0, icon: Package, color: 'bg-orange-500', trend: 'In Stock' },
   ]
-
   const timeframeOptions = [
     { label: '7 Days', value: '7d' },
     { label: '30 Days', value: '30d' },
     { label: '3 Months', value: '90d' },
     { label: '1 Year', value: '1y' },
   ]
-
   return (
     <div className="pb-12">
       {/* Header */}
@@ -82,7 +74,6 @@ export default function AdminDashboard() {
           </button>
         </div>
       </div>
-
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         {statCards.map((card) => (
@@ -100,7 +91,6 @@ export default function AdminDashboard() {
           </div>
         ))}
       </div>
-
       {/* Top Row: Quick Actions and Chart */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
         <div className="lg:col-span-1">
@@ -108,7 +98,6 @@ export default function AdminDashboard() {
             <QuickActions />
           </div>
         </div>
-
         <div className="lg:col-span-2">
           {/* Chart Section */}
           <div className="bg-white rounded-3xl shadow-sm overflow-hidden h-full flex flex-col">
@@ -147,7 +136,6 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
-
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Metrics and Orders */}
@@ -191,19 +179,16 @@ export default function AdminDashboard() {
                 </div>
               )}
             </div>
-
             {/* Inventory Alerts */}
             <div className="h-full">
               <InventoryAlerts products={stats?.lowStockProducts || []} />
             </div>
-
             {/* Activity Feed */}
             <div className="h-full">
               <ActivityFeed activities={stats?.activityLog || []} />
             </div>
           </div>
         </div>
-
         {/* Right Column: Recent Orders */}
         <div className="lg:col-span-1">
           <div className="bg-white p-6 rounded-3xl shadow-sm h-full flex flex-col">

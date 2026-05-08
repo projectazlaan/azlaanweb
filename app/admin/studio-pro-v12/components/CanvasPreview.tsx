@@ -1,5 +1,4 @@
 'use client'
-
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import {
@@ -10,26 +9,21 @@ import {
 } from 'lucide-react'
 import { useStudioStore, useDeviceMode } from '../store'
 import { usePostMessage } from '../hooks/usePostMessage'
-
 interface CanvasPreviewProps {
   iframeRef: React.RefObject<HTMLIFrameElement | null>
 }
-
 const DEVICE_CONFIG = {
   desktop:  { width: '100%',  height: '100%',  label: 'Desktop',  icon: Monitor },
   tablet:   { width: '768px', height: '100%',  label: 'Tablet',   icon: Tablet },
   mobile:   { width: '390px', height: '100%',  label: 'Mobile',   icon: Smartphone },
 } as const
-
 // ─── Page Tree Definition ──────────────────────────────────────
-
 type PageNode = {
   label: string
   icon: string
   path?: string
   children?: { label: string; icon: string; path: string }[]
 }
-
 const SITE_PAGES: PageNode[] = [
   { label: 'Home Page',         icon: '🏠', path: '/' },
   { label: 'About Us',          icon: '✨', path: '/about' },
@@ -58,9 +52,7 @@ const SITE_PAGES: PageNode[] = [
     ],
   },
 ]
-
 // ─── Portal Dropdown ───────────────────────────────────────────
-
 function PageNavigatorPortal({
   anchorRef,
   isOpen,
@@ -75,9 +67,7 @@ function PageNavigatorPortal({
   const [pos, setPos] = useState({ top: 0, left: 0 })
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
-
   useEffect(() => { setMounted(true) }, [])
-
   useEffect(() => {
     if (isOpen && anchorRef.current) {
       const rect = anchorRef.current.getBoundingClientRect()
@@ -85,9 +75,7 @@ function PageNavigatorPortal({
     }
     if (!isOpen) setExpandedCategory(null)
   }, [isOpen, anchorRef])
-
   if (!mounted || !isOpen) return null
-
   return createPortal(
     <>
       <div className="fixed inset-0" style={{ zIndex: 99998 }} onClick={onClose} />
@@ -152,9 +140,7 @@ function PageNavigatorPortal({
     document.body
   )
 }
-
 // ─── History Portal ────────────────────────────────────────────
-
 function HistoryPortal({
   anchorRef,
   isOpen,
@@ -170,18 +156,14 @@ function HistoryPortal({
 }) {
   const [pos, setPos] = useState({ top: 0, left: 0 })
   const [mounted, setMounted] = useState(false)
-
   useEffect(() => { setMounted(true) }, [])
-
   useEffect(() => {
     if (isOpen && anchorRef.current) {
       const rect = anchorRef.current.getBoundingClientRect()
       setPos({ top: rect.bottom + 8, left: rect.left - 150 })
     }
   }, [isOpen, anchorRef])
-
   if (!mounted || !isOpen) return null
-
   return createPortal(
     <>
       <div className="fixed inset-0" style={{ zIndex: 99998 }} onClick={onClose} />
@@ -217,16 +199,13 @@ function HistoryPortal({
     document.body
   )
 }
-
 // ─── Main Component ────────────────────────────────────────────
-
 export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
   const deviceMode = useDeviceMode()
   const setDeviceMode = useStudioStore(s => s.setDeviceMode)
   const canvasUrl = useStudioStore(s => s.canvasUrl)
   const setCanvasUrl = useStudioStore(s => s.setCanvasUrl)
   const urlHistory = useStudioStore(s => s.urlHistory)
-
   const [isLoading, setIsLoading] = useState(true)
   const [zoom, setZoom] = useState(100)
   const [showPageMenu, setShowPageMenu] = useState(false)
@@ -234,19 +213,15 @@ export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
   const [localUrl, setLocalUrl] = useState(canvasUrl)
   const [isDragOver, setIsDragOver] = useState(false)
   const [urlBarFocused, setUrlBarFocused] = useState(false)
-
   const pageMenuBtnRef = useRef<HTMLButtonElement>(null)
   const historyBtnRef = useRef<HTMLButtonElement>(null)
   const { pingIframe, sendMessage } = usePostMessage(iframeRef)
   const device = DEVICE_CONFIG[deviceMode]
   const studioUrl = `${canvasUrl}?studio=true`
-
   // Protocol Check
   const isLocal = localUrl.includes('localhost') || localUrl.includes('127.0.0.1')
   const isSecure = localUrl.startsWith('https')
-
   useEffect(() => { setLocalUrl(canvasUrl) }, [canvasUrl])
-
   useEffect(() => {
     const iframe = iframeRef.current
     if (!iframe) return
@@ -254,13 +229,11 @@ export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
     iframe.addEventListener('load', onLoad)
     return () => iframe.removeEventListener('load', onLoad)
   }, [pingIframe, iframeRef])
-
   const reload = () => {
     if (!iframeRef.current) return
     setIsLoading(true)
     iframeRef.current.src = studioUrl
   }
-
   const selectPage = useCallback((path: string) => {
     try {
       const url = new URL(canvasUrl)
@@ -275,7 +248,6 @@ export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
     setIsLoading(true)
     setShowPageMenu(false)
   }, [canvasUrl, setCanvasUrl])
-
   const handleUrlSubmit = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') { 
       let url = localUrl
@@ -287,25 +259,21 @@ export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
       setIsLoading(true)
     }
   }
-
   const handleDragOver = (e: React.DragEvent) => {
     if (e.dataTransfer.types.includes('text/html-block')) { e.preventDefault(); setIsDragOver(true) }
   }
-
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
     setIsDragOver(false)
     const html = e.dataTransfer.getData('text/html-block')
     if (html) sendMessage({ type: 'INJECT_BLOCK', data: { html } })
   }
-
   return (
     <div className="flex flex-col h-full bg-black">
       {/* ─── Premium Header ─── */}
       <div className="flex items-center justify-between px-6 py-3 bg-black border-t border-b border-white/5 relative z-50">
         <div className="absolute inset-x-0 top-0 h-px bg-slate-800/40" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-slate-800/40" />
-        
         {/* ─── Left Section: Browser Controls ─── */}
         <div className="flex items-center gap-2 flex-shrink-0">
           {/* Navigation Arrows */}
@@ -334,7 +302,6 @@ export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
               <RefreshCw size={14} />
             </button>
           </div>
-
           {/* Device Controls */}
           <div className="flex items-center gap-1 bg-white/5 rounded-xl p-0.5 border border-white/5">
             {(Object.entries(DEVICE_CONFIG) as [keyof typeof DEVICE_CONFIG, typeof DEVICE_CONFIG[keyof typeof DEVICE_CONFIG]][]).map(([key, cfg]) => {
@@ -351,7 +318,6 @@ export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
               )
             })}
           </div>
-
           {/* Page Navigator */}
           <button
             ref={pageMenuBtnRef}
@@ -365,11 +331,9 @@ export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
             <ChevronDown size={10} className={`transition-transform ${showPageMenu ? 'rotate-180' : ''}`} />
           </button>
         </div>
-
         {/* ─── Advanced Address Bar ─── */}
         <div className={`flex-1 mx-8 max-w-2xl transition-all duration-500 ${urlBarFocused ? 'max-w-3xl' : ''}`}>
           <div className={`flex items-center gap-3 bg-black/60 rounded-[24px] px-4 py-2 border border-slate-800/40 shadow-2xl transition-all duration-300 ${urlBarFocused ? 'border-indigo-500/50 shadow-[0_0_30px_rgba(79,70,229,0.2)]' : 'hover:border-slate-700/60'}`}>
-            
             {/* Site Favicon & Security */}
             <div className="flex items-center gap-2 pr-3 border-r border-white/5">
               <div className="w-6 h-6 bg-white/5 rounded-lg flex items-center justify-center">
@@ -379,7 +343,6 @@ export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
                 {isSecure ? <ShieldCheck size={14} /> : <Shield size={14} />}
               </div>
             </div>
-
             {/* URL Input */}
             <div className="flex-1 flex items-center gap-1 overflow-hidden">
               <span className="text-slate-600 text-[10px] font-bold select-none uppercase tracking-tighter">
@@ -396,14 +359,12 @@ export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
                 className="bg-transparent text-[12px] text-gray-200 w-full font-mono placeholder-gray-800 outline-none border-none selection:bg-indigo-500/30"
               />
             </div>
-
             {/* Shortcuts & Actions */}
             <div className="flex items-center gap-2 border-l border-white/5 pl-3">
               <div className="hidden lg:flex items-center gap-1.5 mr-2">
                 <span className="px-1.5 py-0.5 bg-slate-800/40 rounded text-[8px] text-gray-500 font-black border border-slate-700/20">⌘S</span>
                 <span className="px-1.5 py-0.5 bg-slate-800/40 rounded text-[8px] text-gray-500 font-black border border-slate-700/20">⌘Z</span>
               </div>
-
               <button 
                 ref={historyBtnRef}
                 onClick={() => setShowHistory(v => !v)}
@@ -418,7 +379,6 @@ export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
             </div>
           </div>
         </div>
-
         {/* Zoom & Utility */}
         <div className="flex items-center gap-1 bg-black/60 rounded-2xl p-1 border border-white/5">
           <button onClick={() => setZoom(z => Math.max(50, z - 10))} className="p-1.5 text-gray-500 hover:text-white transition-colors"><ZoomOut size={14} /></button>
@@ -426,7 +386,6 @@ export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
           <button onClick={() => setZoom(z => Math.min(150, z + 10))} className="p-1.5 text-gray-500 hover:text-white transition-colors"><ZoomIn size={14} /></button>
         </div>
       </div>
-
       {/* Portals */}
       <PageNavigatorPortal
         anchorRef={pageMenuBtnRef}
@@ -441,7 +400,6 @@ export default function CanvasPreview({ iframeRef }: CanvasPreviewProps) {
         onSelect={(url) => { setCanvasUrl(url); setIsLoading(true) }}
         history={urlHistory}
       />
-
       {/* ─── Canvas Area ─── */}
       <div className="flex-1 relative overflow-hidden">
         <div

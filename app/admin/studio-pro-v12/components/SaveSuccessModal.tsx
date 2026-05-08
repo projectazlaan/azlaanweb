@@ -1,14 +1,11 @@
 'use client'
-
 import { useEffect, useState } from 'react'
 import { CheckCircle2, Sparkles, X, Layout, ArrowRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useStudioStore } from '../store'
-
 export default function SaveSuccessModal() {
   const { showSaveSuccess, setShowSaveSuccess, lastSaved } = useStudioStore()
   const [countdown, setCountdown] = useState(5)
-
   useEffect(() => {
     let timer: NodeJS.Timeout
     if (showSaveSuccess) {
@@ -25,7 +22,6 @@ export default function SaveSuccessModal() {
     }
     return () => clearInterval(timer)
   }, [showSaveSuccess, setShowSaveSuccess])
-
   return (
     <AnimatePresence>
       {showSaveSuccess && (
@@ -37,7 +33,6 @@ export default function SaveSuccessModal() {
             onClick={() => setShowSaveSuccess(false)}
             className="absolute inset-0 bg-black/60 backdrop-blur-md"
           />
-          
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -46,7 +41,6 @@ export default function SaveSuccessModal() {
           >
             {/* Header Gradient */}
             <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-green-500/10 to-transparent pointer-events-none" />
-
             <div className="p-10 flex flex-col items-center text-center">
               {/* Success Icon */}
               <div className="relative mb-6">
@@ -64,14 +58,12 @@ export default function SaveSuccessModal() {
                   className="absolute -inset-2 border-2 border-dashed border-green-500/20 rounded-full"
                 />
               </div>
-
               {/* Text Content */}
               <h2 className="text-2xl font-black text-white mb-2 tracking-tight">Design Synchronized</h2>
               <p className="text-gray-500 text-sm leading-relaxed mb-8">
                 Your changes have been pushed to the production environment successfully. 
                 Everything is up to date and secure.
               </p>
-
               {/* Meta Info */}
               <div className="w-full grid grid-cols-2 gap-4 mb-8">
                 <div className="bg-white/5 border border-white/5 rounded-2xl p-4 flex flex-col items-center">
@@ -87,7 +79,6 @@ export default function SaveSuccessModal() {
                   </span>
                 </div>
               </div>
-
               {/* Action Button */}
               <button
                 onClick={() => setShowSaveSuccess(false)}
@@ -96,13 +87,11 @@ export default function SaveSuccessModal() {
                 Continue Editing
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
-
               {/* Auto Close Info */}
               <div className="mt-6 flex items-center gap-2 text-[10px] font-bold text-gray-700 uppercase tracking-widest">
                 Closing in {countdown}s
               </div>
             </div>
-
             {/* Close Button */}
             <button
               onClick={() => setShowSaveSuccess(false)}

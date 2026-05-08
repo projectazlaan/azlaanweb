@@ -1,9 +1,7 @@
 'use client'
-
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Plus, Trash2, Eye, MousePointer, Loader2, Check, X, ChevronDown } from 'lucide-react'
-
 interface StateStyle {
   transform: string
   opacity: number
@@ -12,19 +10,16 @@ interface StateStyle {
   boxShadow: string
   scale: number
 }
-
 interface ComponentState {
   id: string
   name: string
   type: 'hover' | 'active' | 'focus' | 'disabled' | 'loading'
   style: StateStyle
 }
-
 interface ComponentStates {
   default: StateStyle
   states: ComponentState[]
 }
-
 const defaultStyle: StateStyle = {
   transform: '',
   opacity: 1,
@@ -33,7 +28,6 @@ const defaultStyle: StateStyle = {
   boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
   scale: 1
 }
-
 const initialStates: ComponentState[] = [
   {
     id: 'hover',
@@ -66,7 +60,6 @@ const initialStates: ComponentState[] = [
     style: { ...defaultStyle, opacity: 0.8, backgroundColor: '#3b82f6' }
   }
 ]
-
 export default function StatefulEditor() {
   const [componentName, setComponentName] = useState('Primary Button')
   const [defaultStyleState, setDefaultStyleState] = useState<StateStyle>(defaultStyle)
@@ -77,22 +70,18 @@ export default function StatefulEditor() {
   const [clicked, setClicked] = useState(false)
   const [focused, setFocused] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
   const currentStyle = activeState === 'default' 
     ? defaultStyleState 
     : states.find(s => s.id === activeState)?.style || defaultStyleState
-
   const updateDefaultStyle = (updates: Partial<StateStyle>) => {
     setDefaultStyleState(prev => ({ ...prev, ...updates }))
   }
-
   const updateStateStyle = (stateId: string, updates: Partial<StateStyle>) => {
     setStates(states.map(s => s.id === stateId ? { 
       ...s, 
       style: { ...s.style, ...updates } 
     } : s))
   }
-
   const toggleState = (stateId: string, enabled: boolean) => {
     if (enabled) {
       setStates(states.filter(s => s.id !== stateId))
@@ -103,7 +92,6 @@ export default function StatefulEditor() {
       }
     }
   }
-
   const getPreviewState = () => {
     if (isLoading) return 'loading'
     if (clicked) return 'active'
@@ -111,12 +99,9 @@ export default function StatefulEditor() {
     if (focused) return 'focus'
     return 'default'
   }
-
   const renderPreview = () => {
     if (!previewMode) return null
-
     const previewStyle = states.find(s => s.id === getPreviewState())?.style || defaultStyleState
-
     return (
       <div className="h-40 bg-gray-800 rounded-lg flex items-center justify-center gap-8">
         <div className="flex flex-col items-center gap-2">
@@ -170,7 +155,6 @@ export default function StatefulEditor() {
       </div>
     )
   }
-
   return (
     <div className="bg-gray-900 rounded-xl p-4 text-white">
       <div className="flex items-center justify-between mb-4">
@@ -186,7 +170,6 @@ export default function StatefulEditor() {
           </button>
         </div>
       </div>
-
       <div className="mb-4">
         <label className="text-xs text-gray-400 mb-1 block">Component Name</label>
         <input
@@ -196,7 +179,6 @@ export default function StatefulEditor() {
           className="w-full bg-gray-800 rounded-lg px-3 py-2 text-sm border border-gray-700"
         />
       </div>
-
       <div className="flex gap-2 mb-4">
         {['default', ...states.map(s => s.id)].map(state => (
           <button
@@ -212,9 +194,7 @@ export default function StatefulEditor() {
           </button>
         ))}
       </div>
-
       {previewMode && renderPreview()}
-
       {activeState !== 'default' && (
         <div className="flex items-center gap-2 mb-3 p-2 bg-gray-800 rounded-lg">
           <input
@@ -226,12 +206,10 @@ export default function StatefulEditor() {
           <span className="text-sm">Enable {activeState} state</span>
         </div>
       )}
-
       <div className="space-y-3">
         <div className="text-xs text-gray-400 mb-2">
           {activeState === 'default' ? 'Default Style' : `${activeState.charAt(0).toUpperCase() + activeState.slice(1)} State Style`}
         </div>
-
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="text-xs text-gray-500 mb-1 block">Background</label>
@@ -262,7 +240,6 @@ export default function StatefulEditor() {
               />
             </div>
           </div>
-
           <div>
             <label className="text-xs text-gray-500 mb-1 block">Border Color</label>
             <div className="flex gap-2">
@@ -292,7 +269,6 @@ export default function StatefulEditor() {
               />
             </div>
           </div>
-
           <div>
             <label className="text-xs text-gray-500 mb-1 block">Scale</label>
             <input
@@ -309,7 +285,6 @@ export default function StatefulEditor() {
               className="w-full bg-gray-800 rounded px-2 py-1.5 text-xs border border-gray-700"
             />
           </div>
-
           <div>
             <label className="text-xs text-gray-500 mb-1 block">Opacity</label>
             <input
@@ -329,7 +304,6 @@ export default function StatefulEditor() {
             />
           </div>
         </div>
-
         <div>
           <label className="text-xs text-gray-500 mb-1 block">Box Shadow</label>
           <input
@@ -346,7 +320,6 @@ export default function StatefulEditor() {
             placeholder="0 4px 6px rgba(0,0,0,0.1)"
           />
         </div>
-
         <div>
           <label className="text-xs text-gray-500 mb-1 block">Transform</label>
           <input
@@ -364,7 +337,6 @@ export default function StatefulEditor() {
           />
         </div>
       </div>
-
       <div className="mt-4 pt-3 border-t border-gray-700">
         <div className="text-xs text-gray-400 mb-2">All States Overview</div>
         <div className="flex gap-2 flex-wrap">

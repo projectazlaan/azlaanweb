@@ -1,8 +1,6 @@
 'use client'
-
 import { useEffect, useState } from 'react'
 import { ShoppingCart, Filter } from 'lucide-react'
-
 interface Order {
   id: string
   customerName: string
@@ -14,7 +12,6 @@ interface Order {
   status: string
   createdAt: string
 }
-
 const statusColors: Record<string, string> = {
   pending: 'bg-yellow-100 text-yellow-700',
   processing: 'bg-blue-100 text-blue-700',
@@ -22,14 +19,11 @@ const statusColors: Record<string, string> = {
   delivered: 'bg-green-100 text-green-700',
   cancelled: 'bg-red-100 text-red-700',
 }
-
 export default function AdminOrders() {
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const [statusFilter, setStatusFilter] = useState('all')
-
   useEffect(() => { fetchOrders() }, [])
-
   const fetchOrders = async () => {
     try {
       const res = await fetch('/api/admin/orders')
@@ -43,7 +37,6 @@ export default function AdminOrders() {
       setLoading(false)
     }
   }
-
   const updateStatus = async (id: string, newStatus: string) => {
     try {
       const res = await fetch(`/api/admin/orders/${id}`, {
@@ -56,11 +49,8 @@ export default function AdminOrders() {
       console.error('Failed to update:', error)
     }
   }
-
   const filtered = statusFilter === 'all' ? orders : orders.filter(o => o.status === statusFilter)
-
   const statusOptions = ['all', 'pending', 'processing', 'shipped', 'delivered', 'cancelled']
-
   return (
     <div>
       <div className="mb-6">
@@ -69,7 +59,6 @@ export default function AdminOrders() {
         </h1>
         <p className="text-text-muted text-sm mt-1">{orders.length} total orders</p>
       </div>
-
       <div className="mb-6">
         <div className="flex gap-2 flex-wrap">
           {statusOptions.map(opt => (
@@ -83,7 +72,6 @@ export default function AdminOrders() {
           ))}
         </div>
       </div>
-
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         {loading ? (
           <div className="p-8 text-center text-text-muted">Loading...</div>

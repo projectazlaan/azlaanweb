@@ -4,7 +4,6 @@ import { getCategoryBySlug, getProductsByCategory, getAllCategories } from '@/li
 import CategoryContent from './CategoryContent';
 import categoriesData from '@/data/categories.json';
 import productsData from '@/data/products.json';
-
 // ─── Static Params for Blazing-Fast SSG ───────────────────────
 export async function generateStaticParams() {
   try {
@@ -15,11 +14,9 @@ export async function generateStaticParams() {
   } catch (e) {
     console.error('SSG Static Params Fallback to JSON');
   }
-  
   // Fallback to local JSON
   return (categoriesData as any[]).map((cat) => ({ categorySlug: cat.slug }));
 }
-
 // ─── Dynamic SEO Metadata ──────────────────────────────────────
 export async function generateMetadata({
   params,
@@ -27,18 +24,14 @@ export async function generateMetadata({
   params: Promise<{ categorySlug: string }>;
 }): Promise<Metadata> {
   const { categorySlug } = await params;
-  
   let category: any = null;
   try {
     category = await getCategoryBySlug(categorySlug);
   } catch (e) {}
-
   if (!category) {
     category = (categoriesData as any[]).find(c => c.slug === categorySlug);
   }
-
   if (!category) return { title: 'Category Not Found' };
-
   return {
     title: `${category.name} Collection | Azlaan`,
     description: category.description,
@@ -49,7 +42,6 @@ export async function generateMetadata({
     },
   };
 }
-
 // ─── Page Component (Server Component) ────────────────────────
 export default async function CategoryPage({
   params,
@@ -57,10 +49,8 @@ export default async function CategoryPage({
   params: Promise<{ categorySlug: string }>;
 }) {
   const { categorySlug } = await params;
-  
   let category: any = null;
   let products: any[] = [];
-
   try {
     category = await getCategoryBySlug(categorySlug);
     if (category) {
@@ -69,14 +59,11 @@ export default async function CategoryPage({
   } catch (e) {
     console.error('Database connection failed, falling back to JSON');
   }
-
   // Robust Fallback to JSON
   if (!category) {
     category = (categoriesData as any[]).find(c => c.slug === categorySlug);
     if (!category) notFound();
-    
     products = (productsData as any[]).filter(p => p.categorySlug === categorySlug);
   }
-
   return <CategoryContent category={category} initialProducts={products} />;
 }

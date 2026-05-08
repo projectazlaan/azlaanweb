@@ -1,14 +1,11 @@
 'use client';
-
 import { LayoutGrid, List, ShoppingBag } from 'lucide-react';
 import { useCategoryStore } from '@/store/categoryStore';
 import { useCartStore } from '@/store/cartStore';
 import Link from 'next/link';
-
 export default function ViewToggle() {
   const { viewMode, setViewMode } = useCategoryStore();
   const { itemsCount } = useCartStore();
-
   return (
     <div className="flex items-center border border-black/10 rounded-full p-1 bg-white/50 backdrop-blur-sm gap-1">
       {/* View Toggle Group */}
@@ -19,7 +16,6 @@ export default function ViewToggle() {
             viewMode === 'grid' ? 'left-0.5' : 'left-[34px]'
           }`}
         />
-        
         <button
           onClick={() => setViewMode('grid')}
           className={`relative z-10 w-7 h-7 flex items-center justify-center rounded-full transition-colors ${
@@ -29,7 +25,6 @@ export default function ViewToggle() {
         >
           <LayoutGrid className="w-3.5 h-3.5" />
         </button>
-        
         <button
           onClick={() => setViewMode('list')}
           className={`relative z-10 w-7 h-7 flex items-center justify-center rounded-full transition-colors ${
@@ -40,10 +35,8 @@ export default function ViewToggle() {
           <List className="w-3.5 h-3.5" />
         </button>
       </div>
-
       {/* Cart Separator */}
       <div className="w-[1px] h-4 bg-black/5 mx-0.5" />
-
       {/* Cart Icon inside the same pill */}
       <Link
         href="/cart"

@@ -1,5 +1,4 @@
 import Link from 'next/link';
-
 export default function Footer({ isBangla = false }: { isBangla?: boolean }) {
   return (
     <footer className="bg-white border-t border-black/[0.03] text-black py-10 md:py-12 px-4 md:px-6">
@@ -15,7 +14,6 @@ export default function Footer({ isBangla = false }: { isBangla?: boolean }) {
               © 2026 Azlaan Premium.
             </p>
           </div>
-
           {/* Company */}
           <div className="flex flex-col gap-4">
             <h4 className="font-black text-[9px] md:text-xs uppercase tracking-widest text-black">Company</h4>
@@ -25,7 +23,6 @@ export default function Footer({ isBangla = false }: { isBangla?: boolean }) {
               <li><Link href="#" className="hover:text-black transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
-
           {/* Service */}
           <div className="flex flex-col gap-4">
             <h4 className="font-black text-[9px] md:text-xs uppercase tracking-widest text-black">Service</h4>
@@ -35,7 +32,6 @@ export default function Footer({ isBangla = false }: { isBangla?: boolean }) {
               <li><Link href="#" className="hover:text-black transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
-
           {/* Follow */}
           <div className="flex flex-col gap-4">
             <h4 className="font-black text-[9px] md:text-xs uppercase tracking-widest text-black">Follow</h4>

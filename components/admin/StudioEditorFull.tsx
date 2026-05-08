@@ -1,9 +1,7 @@
 'use client';
-
 import { useEffect, useRef } from 'react';
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
-
 import gjsPresetWebpage from 'grapesjs-preset-webpage';
 import gjsBlocksBasic from 'grapesjs-blocks-basic';
 import gjsForms from 'grapesjs-plugin-forms';
@@ -11,22 +9,17 @@ import gjsCustomCode from 'grapesjs-custom-code';
 // @ts-ignore
 import gjsTouch from 'grapesjs-touch';
 import gjsPostcss from 'grapesjs-parser-postcss';
-
 const LIVE_SITE_URL = 'http://localhost:3001';
-
 export default function StudioEditorFull() {
   const editorRef = useRef<HTMLDivElement>(null);
   const editorInstanceRef = useRef<any>(null);
-
   useEffect(() => {
     if (!editorRef.current || editorInstanceRef.current) return;
-
     const editor = grapesjs.init({
       container: editorRef.current!,
       height: '100vh',
       width: 'auto',
       storageManager: false,
-
       // ✅ KEY: Load the live site directly into the canvas iframe
       canvas: {
         styles: [],
@@ -52,14 +45,12 @@ export default function StudioEditorFull() {
           </html>
         `,
       },
-
       // Load components from the live site
       components: `<iframe 
         id="live-site-frame"
         src="${LIVE_SITE_URL}"
         style="width:100%; height:100vh; border:none; display:block;"
       ></iframe>`,
-
       plugins: [
         gjsPresetWebpage,
         gjsBlocksBasic,
@@ -77,9 +68,7 @@ export default function StudioEditorFull() {
         [gjsPostcss as any]: {},
       },
     });
-
     editorInstanceRef.current = editor;
-
     // Auto-save
     editor.on('storage:store', () => {
       const dataToSave = {
@@ -92,7 +81,6 @@ export default function StudioEditorFull() {
         body: JSON.stringify(dataToSave),
       });
     });
-
     return () => {
       if (editorInstanceRef.current) {
         editorInstanceRef.current.destroy();
@@ -100,7 +88,6 @@ export default function StudioEditorFull() {
       }
     };
   }, []);
-
   return (
     <div className="w-full h-screen bg-[#1a1a1a] overflow-hidden">
       <div ref={editorRef} />

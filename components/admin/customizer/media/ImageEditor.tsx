@@ -1,20 +1,16 @@
 'use client'
-
 import { useState, useCallback, useRef } from 'react'
 import Cropper from 'react-easy-crop'
 import { 
   Crop, RotateCcw, RotateCw, FlipHorizontal, FlipVertical, 
   Sun, Contrast, Droplets, Palette, Download, Check, X, Undo
 } from 'lucide-react'
-
 interface ImageEditorProps {
   imageSrc: string
   onSave: (editedImage: string) => void
   onCancel: () => void
 }
-
 type FilterType = 'brightness' | 'contrast' | 'saturation' | 'grayscale' | 'sepia' | 'blur'
-
 interface FilterSettings {
   brightness: number
   contrast: number
@@ -23,7 +19,6 @@ interface FilterSettings {
   sepia: number
   blur: number
 }
-
 const defaultFilters: FilterSettings = {
   brightness: 100,
   contrast: 100,
@@ -32,7 +27,6 @@ const defaultFilters: FilterSettings = {
   sepia: 0,
   blur: 0
 }
-
 export function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorProps) {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
@@ -43,21 +37,17 @@ export function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorProps) {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
   const [history, setHistory] = useState<FilterSettings[]>([])
   const canvasRef = useRef<HTMLCanvasElement>(null)
-
   const onCropComplete = useCallback((croppedArea: { x: number; y: number }, croppedAreaPixelsParam: { x: number; y: number; width: number; height: number }) => {
     setCroppedAreaPixels(croppedAreaPixelsParam)
   }, [])
-
   const updateFilter = (filter: FilterType, value: number) => {
     setHistory(prev => [...prev, filters])
     setFilters(prev => ({ ...prev, [filter]: value }))
   }
-
   const resetFilters = () => {
     setHistory(prev => [...prev, filters])
     setFilters(defaultFilters)
   }
-
   const undo = () => {
     if (history.length > 0) {
       const previous = history[history.length - 1]
@@ -65,7 +55,6 @@ export function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorProps) {
       setHistory(prev => prev.slice(0, -1))
     }
   }
-
   const getFilterStyle = () => ({
     filter: `
       brightness(${filters.brightness}%) 
@@ -76,32 +65,25 @@ export function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorProps) {
       blur(${filters.blur}px)
     `
   })
-
   const createCroppedImage = async () => {
     if (!croppedAreaPixels) return
-
     const image = new Image()
     image.src = imageSrc
     await new Promise(resolve => { image.onload = resolve })
-
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
     if (!ctx) return
-
     const rotRad = (rotation * Math.PI) / 180
     const { width: bBoxWidth, height: bBoxHeight } = rotateSize(
       image.width,
       image.height,
       rotation
     )
-
     canvas.width = bBoxWidth
     canvas.height = bBoxHeight
-
     ctx.translate(bBoxWidth / 2, bBoxHeight / 2)
     ctx.rotate(rotRad)
     ctx.translate(-image.width / 2, -image.height / 2)
-
     ctx.filter = `
       brightness(${filters.brightness}%) 
       contrast(${filters.contrast}%) 
@@ -110,7 +92,6 @@ export function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorProps) {
       sepia(${filters.sepia}%) 
       blur(${filters.blur}px)
     `
-
     ctx.drawImage(
       image,
       croppedAreaPixels.x,
@@ -122,11 +103,9 @@ export function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorProps) {
       croppedAreaPixels.width,
       croppedAreaPixels.height
     )
-
     const base64 = canvas.toDataURL('image/jpeg', 0.9)
     onSave(base64)
   }
-
   const rotateSize = (width: number, height: number, rotation: number) => {
     const rotRad = (rotation * Math.PI) / 180
     return {
@@ -134,12 +113,10 @@ export function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorProps) {
       height: Math.abs(Math.sin(rotRad) * width) + Math.abs(Math.cos(rotRad) * height)
     }
   }
-
   const rotateLeft = () => setRotation(prev => prev - 90)
   const rotateRight = () => setRotation(prev => prev + 90)
   const flipH = () => setRotation(prev => prev + 180)
   const flipV = () => setRotation(prev => prev + 180)
-
   return (
     <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
       <div className="bg-gray-900 rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden border border-gray-700 shadow-2xl flex flex-col">
@@ -172,7 +149,6 @@ export function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorProps) {
             <X size={20} className="text-gray-400" />
           </button>
         </div>
-
         <div className="flex-1 relative bg-gray-950">
           <div className="absolute inset-4">
             <Cropper
@@ -191,7 +167,6 @@ export function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorProps) {
             />
           </div>
         </div>
-
         <div className="p-4 border-t border-gray-800">
           {mode === 'crop' && (
             <div className="space-y-4">
@@ -229,7 +204,6 @@ export function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorProps) {
               </div>
             </div>
           )}
-
           {mode === 'filters' && (
             <div className="space-y-4">
               <div className="flex gap-2 mb-3">
@@ -302,7 +276,6 @@ export function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorProps) {
             </div>
           )}
         </div>
-
         <div className="flex justify-end gap-3 p-4 border-t border-gray-800">
           <button
             onClick={onCancel}
@@ -322,7 +295,6 @@ export function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorProps) {
     </div>
   )
 }
-
 function FilterSlider({ 
   icon, 
   label, 

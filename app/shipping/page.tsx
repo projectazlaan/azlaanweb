@@ -1,5 +1,4 @@
 import Link from 'next/link';
-
 export default function ShippingPage() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-24 min-h-screen">

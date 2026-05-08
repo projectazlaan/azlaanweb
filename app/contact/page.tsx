@@ -1,9 +1,7 @@
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
-
 export default async function ContactPage({ searchParams }: { searchParams: Promise<{ lang?: string }> }) {
   const resolvedSearchParams = await searchParams;
   const isBangla = resolvedSearchParams?.lang === 'bn';
-
   return (
     <main className="min-h-screen pt-24 pb-12">
       <section className="relative h-48 sm:h-64 md:h-80 bg-primary">
@@ -18,7 +16,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           </div>
         </div>
       </section>
-
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <div className="space-y-4 md:space-y-6">
@@ -36,7 +33,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
                 </div>
               </div>
             </div>
-
             <div className="bg-white p-5 md:p-6 rounded-2xl">
               <div className="flex items-start gap-3 md:gap-4">
                 <div className="p-2 md:p-3 bg-secondary/10 rounded-lg">
@@ -48,7 +44,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
                 </div>
               </div>
             </div>
-
             <div className="bg-white p-5 md:p-6 rounded-2xl">
               <div className="flex items-start gap-3 md:gap-4">
                 <div className="p-2 md:p-3 bg-secondary/10 rounded-lg">
@@ -60,7 +55,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
                 </div>
               </div>
             </div>
-
             <div className="bg-white p-5 md:p-6 rounded-2xl">
               <div className="flex items-start gap-3 md:gap-4">
                 <div className="p-2 md:p-3 bg-secondary/10 rounded-lg">
@@ -78,7 +72,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
               </div>
             </div>
           </div>
-
           <div className="bg-white p-5 md:p-8 rounded-2xl">
             <h2 className="font-serif text-xl md:text-2xl font-bold mb-4 md:mb-6 text-primary">
               {isBangla ? 'মেসেজ পাঠান' : 'Send Message'}

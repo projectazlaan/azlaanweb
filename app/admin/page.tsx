@@ -1,23 +1,17 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
-
 export default function AdminPortal() {
   const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
     setMounted(true);
   }, []);
-
   if (!mounted) {
     return <div style={{ backgroundColor: '#050505', minHeight: '100vh' }}></div>;
   }
-
   // Helper to handle navigation manually if needed
   const navigate = (url: string) => {
     window.location.href = url;
   };
-
   return (
     <div style={{ 
       backgroundColor: '#050505', 
@@ -40,7 +34,6 @@ export default function AdminPortal() {
           Secure Access Point
         </p>
       </div>
-
       <div style={{ 
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
@@ -82,7 +75,6 @@ export default function AdminPortal() {
             LAUNCH DASHBOARD →
           </div>
         </div>
-
         {/* Studio Card */}
         <div 
           onClick={() => navigate('/admin/studio-pro-v12')}
@@ -115,7 +107,6 @@ export default function AdminPortal() {
             LAUNCH STUDIO PRO →
           </div>
         </div>
-
         {/* Super Easy Dashboard Card */}
         <div 
           onClick={() => navigate('/admin/super-easy-dashboard')}
@@ -149,7 +140,6 @@ export default function AdminPortal() {
           </div>
         </div>
       </div>
-      
       <div style={{ marginTop: '100px', color: '#222', fontSize: '11px', fontWeight: 'bold', letterSpacing: '6px' }}>
         AZLAAN SYSTEM ARCHITECTURE
       </div>

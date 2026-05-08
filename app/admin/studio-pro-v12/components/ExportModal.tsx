@@ -1,5 +1,4 @@
 'use client'
-
 import { useState } from 'react'
 import {
   X, Download, FileJson, FileCode, Loader2,
@@ -7,14 +6,11 @@ import {
 } from 'lucide-react'
 import { useStudioStore } from '../store'
 import toast from 'react-hot-toast'
-
 interface ExportModalProps {
   isOpen: boolean
   onClose: () => void
 }
-
 type ExportFormat = 'json' | 'html'
-
 const FORMAT_OPTIONS = [
   {
     id: 'json' as ExportFormat,
@@ -33,13 +29,11 @@ const FORMAT_OPTIONS = [
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-400',
   },
 ]
-
 export default function ExportModal({ isOpen, onClose }: ExportModalProps) {
   const [selectedFormat, setSelectedFormat] = useState<ExportFormat>('json')
   const [isExporting, setIsExporting] = useState(false)
   const [exported, setExported] = useState(false)
   const settings = useStudioStore(s => s.settings)
-
   const handleExport = async () => {
     setIsExporting(true)
     try {
@@ -48,20 +42,16 @@ export default function ExportModal({ isOpen, onClose }: ExportModalProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ format: selectedFormat, settings }),
       })
-
       if (!res.ok) throw new Error('Export failed')
-
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
       const ext = selectedFormat === 'json' ? 'json' : 'html'
       const filename = `studio-pro-v12-export-${Date.now()}.${ext}`
-
       const a = document.createElement('a')
       a.href = url
       a.download = filename
       a.click()
       URL.revokeObjectURL(url)
-
       setExported(true)
       toast.success(`Exported as ${filename}`, { icon: '📦' })
       setTimeout(() => setExported(false), 3000)
@@ -71,13 +61,10 @@ export default function ExportModal({ isOpen, onClose }: ExportModalProps) {
       setIsExporting(false)
     }
   }
-
   if (!isOpen) return null
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-
       <div className="relative w-full max-w-lg bg-[#111] rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
@@ -97,13 +84,11 @@ export default function ExportModal({ isOpen, onClose }: ExportModalProps) {
             <X size={18} />
           </button>
         </div>
-
         {/* Format Options */}
         <div className="p-6 space-y-3">
           <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">
             Choose Export Format
           </p>
-
           {FORMAT_OPTIONS.map(opt => {
             const Icon = opt.icon
             return (
@@ -141,7 +126,6 @@ export default function ExportModal({ isOpen, onClose }: ExportModalProps) {
             )
           })}
         </div>
-
         {/* Summary */}
         <div className="mx-6 mb-6 p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2">
           <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Export Summary</p>
@@ -162,7 +146,6 @@ export default function ExportModal({ isOpen, onClose }: ExportModalProps) {
             <div className="text-indigo-400 font-bold uppercase">{selectedFormat}</div>
           </div>
         </div>
-
         {/* Action */}
         <div className="px-6 pb-6">
           <button

@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -26,7 +25,6 @@ import {
   Settings2
 } from 'lucide-react';
 import { Reorder } from 'framer-motion';
-
 interface EditableElement {
   id: string;
   type: 'text' | 'image' | 'button' | 'product' | 'section';
@@ -37,7 +35,6 @@ interface EditableElement {
   section: string;
   key: string;
 }
-
 interface PageSection {
   id: string;
   section_type: string;
@@ -46,7 +43,6 @@ interface PageSection {
   section_order: number;
   content: any;
 }
-
 export default function LiveEditorPage() {
   const [currentPage, setCurrentPage] = useState('home');
   const [device, setDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
@@ -58,7 +54,6 @@ export default function LiveEditorPage() {
   const [savedToast, setSavedToast] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-
   const pages = [
     { id: 'home', label: 'Homepage', labelBn: 'হোমপেজ' },
     { id: 'men', label: 'Men', labelBn: 'পুরুষ' },
@@ -66,13 +61,11 @@ export default function LiveEditorPage() {
     { id: 'kids', label: 'Kids', labelBn: 'বাচ্চা' },
     { id: 'product', label: 'Product Page', labelBn: 'প্রোডাক্ট ডিটেইল' },
   ];
-
   const deviceWidths = {
     desktop: '100%',
     tablet: '768px',
     mobile: '375px'
   };
-
   // Fetch sections for current page
   const fetchSections = useCallback(async () => {
     try {
@@ -83,11 +76,9 @@ export default function LiveEditorPage() {
       console.error('Failed to fetch sections');
     }
   }, [currentPage]);
-
   useEffect(() => {
     fetchSections();
   }, [fetchSections]);
-
   // Handle click on editable element inside iframe
   const handleIframeMessage = useCallback((event: MessageEvent) => {
     if (event.data.type === 'ELEMENT_SELECTED') {
@@ -96,16 +87,13 @@ export default function LiveEditorPage() {
       setEditValueBn(event.data.element.contentBn || '');
     }
   }, []);
-
   useEffect(() => {
     window.addEventListener('message', handleIframeMessage);
     return () => window.removeEventListener('message', handleIframeMessage);
   }, [handleIframeMessage]);
-
   const saveEdit = async () => {
     if (!selectedElement) return;
     setIsSaving(true);
-    
     try {
       await fetch('/api/admin/editable-content', {
         method: 'POST',
@@ -116,15 +104,12 @@ export default function LiveEditorPage() {
           contentBn: editValueBn,
         }),
       });
-
       // Show success toast
       setSavedToast(true);
       setTimeout(() => setSavedToast(false), 2000);
-
       // Reload iframe to reflect changes
       const iframe = document.querySelector('iframe');
       if (iframe) iframe.src = iframe.src;
-      
       setSelectedElement(null);
     } catch (err) {
       console.error('Save failed');
@@ -132,20 +117,16 @@ export default function LiveEditorPage() {
       setIsSaving(false);
     }
   };
-
   const toggleSectionStatus = async (sectionId: string, currentStatus: boolean) => {
     setSections(prev => prev.map(s => s.id === sectionId ? { ...s, is_active: !currentStatus } : s));
-    
     await fetch('/api/admin/page-sections', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: sectionId, isActive: !currentStatus }),
     });
   };
-
   const reorderSections = async (newOrder: PageSection[]) => {
     setSections(newOrder);
-    
     await fetch('/api/admin/page-sections/reorder', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -155,7 +136,6 @@ export default function LiveEditorPage() {
       }),
     });
   };
-
   const addSection = async (type: string) => {
     const newSection = {
       page: currentPage,
@@ -165,27 +145,22 @@ export default function LiveEditorPage() {
       order: sections.length,
       data: {}
     };
-
     const res = await fetch('/api/admin/page-sections', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newSection),
     });
-    
     const data = await res.json();
     if (data.section) {
       setSections([...sections, data.section]);
       setShowSectionPanel(false);
     }
   };
-
   const deleteSection = async (id: string) => {
     if (!confirm('Are you sure you want to delete this section?')) return;
-    
     await fetch(`/api/admin/page-sections?id=${id}`, { method: 'DELETE' });
     setSections(sections.filter(s => s.id !== id));
   };
-
   return (
     <div className="h-[calc(100vh-140px)] flex gap-8">
       {/* Left Sidebar: Controls */}
@@ -217,7 +192,6 @@ export default function LiveEditorPage() {
             ))}
           </div>
         </div>
-
         {/* Section Manager Card */}
         <div className="bg-white rounded-[2.5rem] p-6 border border-gray-100 shadow-sm flex-1 overflow-hidden flex flex-col">
           <div className="flex items-center justify-between mb-6 px-2">
@@ -231,7 +205,6 @@ export default function LiveEditorPage() {
               <Plus size={20} />
             </motion.button>
           </div>
-
           <AnimatePresence>
             {showSectionPanel && (
               <motion.div
@@ -254,7 +227,6 @@ export default function LiveEditorPage() {
               </motion.div>
             )}
           </AnimatePresence>
-
           <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
             <Reorder.Group axis="y" values={sections} onReorder={reorderSections} className="space-y-3">
               {sections.map((section) => (
@@ -309,7 +281,6 @@ export default function LiveEditorPage() {
           </div>
         </div>
       </div>
-
       {/* Main Area: Iframe Preview */}
       <div className="flex-1 bg-gray-100 rounded-[2.5rem] border border-gray-200 overflow-hidden flex flex-col relative shadow-inner">
         {/* Top Toolbar */}
@@ -333,7 +304,6 @@ export default function LiveEditorPage() {
               </motion.button>
             ))}
           </div>
-
           <div className="flex items-center gap-4">
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -352,7 +322,6 @@ export default function LiveEditorPage() {
             </div>
           </div>
         </div>
-
         {/* Canvas Area */}
         <div className="flex-1 overflow-auto p-12 flex justify-center bg-gray-50/50">
           <motion.div
@@ -366,7 +335,6 @@ export default function LiveEditorPage() {
               className={`w-full h-full border-0 ${previewMode ? 'pointer-events-auto' : 'pointer-events-auto'}`}
               style={{ minHeight: '800px' }}
             />
-            
             {/* Editor Guide Overlay */}
             {!previewMode && (
               <div className="absolute inset-0 pointer-events-none border-4 border-dashed border-purple-200 rounded-3xl flex items-center justify-center">
@@ -379,7 +347,6 @@ export default function LiveEditorPage() {
           </motion.div>
         </div>
       </div>
-
       {/* Right Sidebar: Edit Element (Contextual) */}
       <AnimatePresence>
         {selectedElement && (
@@ -410,7 +377,6 @@ export default function LiveEditorPage() {
                 <X size={20} />
               </motion.button>
             </div>
-
             <div className="space-y-6 flex-1 overflow-y-auto pr-2 custom-scrollbar">
               {/* Content Edit */}
               <div className="space-y-4">
@@ -424,7 +390,6 @@ export default function LiveEditorPage() {
                     placeholder="Enter English text..."
                   />
                 </div>
-
                 <div>
                   <label className="text-xs uppercase tracking-widest text-gray-400 font-black mb-3 block px-1">বাংলা কন্টেন্ট (Bengali)</label>
                   <textarea
@@ -436,7 +401,6 @@ export default function LiveEditorPage() {
                   />
                 </div>
               </div>
-
               {selectedElement.type === 'image' && (
                 <div className="space-y-4">
                   <label className="text-xs uppercase tracking-widest text-gray-400 font-black mb-1 block px-1">Image Asset</label>
@@ -447,7 +411,6 @@ export default function LiveEditorPage() {
                   </div>
                 </div>
               )}
-
               <div className="bg-gray-50 rounded-3xl p-6">
                  <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-4">Quick Styles</p>
                  <div className="grid grid-cols-2 gap-2">
@@ -458,7 +421,6 @@ export default function LiveEditorPage() {
                  </div>
               </div>
             </div>
-
             {/* Actions */}
             <div className="pt-8 space-y-3 mt-auto">
               <motion.button
@@ -471,7 +433,6 @@ export default function LiveEditorPage() {
                 {isSaving ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <Save size={20} />}
                 {isSaving ? 'Saving Changes...' : 'Save Changes'}
               </motion.button>
-              
               <div className="flex gap-3">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
@@ -492,7 +453,6 @@ export default function LiveEditorPage() {
           </motion.div>
         )}
       </AnimatePresence>
-
       {/* Toast Notification */}
       <AnimatePresence>
         {savedToast && (

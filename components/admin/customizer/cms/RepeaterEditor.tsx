@@ -1,9 +1,7 @@
 'use client'
-
 import { useState } from 'react'
 import { Repeat, Plus, Trash2, MoveUp, MoveDown, Save, Eye } from 'lucide-react'
 import { getCollections, getCollectionItems, renderRepeater, type RepeaterOptions } from '@/lib/cms'
-
 export function RepeaterEditor() {
   const [collections, setCollections] = useState(getCollections())
   const [selectedCollection, setSelectedCollection] = useState('')
@@ -11,32 +9,26 @@ export function RepeaterEditor() {
   const [template, setTemplate] = useState('<div class="p-4 bg-gray-800 rounded-lg"><h3 class="text-white">{{title}}</h3><p class="text-gray-400">{{description}}</p></div>')
   const [containerId, setContainerId] = useState('repeater-container')
   const [result, setResult] = useState<{ success: boolean; renderedItems: number; error?: string } | null>(null)
-
   const loadItems = (slug: string) => {
     setSelectedCollection(slug)
     setItems(getCollectionItems(slug))
   }
-
   const handleRender = () => {
     if (!containerId || !template || items.length === 0) return
-
     const options: RepeaterOptions = {
       template,
       data: items,
       containerId
     }
-
     const res = renderRepeater(options)
     setResult(res)
   }
-
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold text-white">Repeater / Loop Logic</h2>
         <p className="text-sm text-gray-400 mt-1">Create dynamic lists from data collections</p>
       </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
@@ -54,14 +46,12 @@ export function RepeaterEditor() {
                 <option key={c.id} value={c.slug}>{c.name} ({c.items.length} items)</option>
               ))}
             </select>
-
             {items.length > 0 && (
               <div className="mt-3 text-sm text-gray-400">
                 {items.length} items available for repeating
               </div>
             )}
           </div>
-
           <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
             <h3 className="text-sm font-medium text-white mb-3">HTML Template</h3>
             <p className="text-xs text-gray-400 mb-2">Use {'{{fieldName}}'} to insert data fields</p>
@@ -76,7 +66,6 @@ export function RepeaterEditor() {
               Available fields: {collections.find(c => c.slug === selectedCollection)?.fields.map(f => f.name).join(', ') || 'none'}
             </div>
           </div>
-
           <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
             <h3 className="text-sm font-medium text-white mb-3">Container Settings</h3>
             <div className="space-y-3">
@@ -101,7 +90,6 @@ export function RepeaterEditor() {
             </div>
           </div>
         </div>
-
         <div className="space-y-4">
           <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
             <h3 className="text-sm font-medium text-white mb-3">Preview / Output</h3>
@@ -117,7 +105,6 @@ export function RepeaterEditor() {
               )}
             </div>
           </div>
-
           {result && (
             <div className={`p-4 rounded-lg border ${result.success ? 'bg-green-900/30 border-green-700' : 'bg-red-900/30 border-red-700'}`}>
               <div className="flex items-center gap-2 mb-2">
@@ -129,7 +116,6 @@ export function RepeaterEditor() {
               </div>
             </div>
           )}
-
           {items.length > 0 && (
             <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
               <h3 className="text-sm font-medium text-white mb-3">Data Preview</h3>

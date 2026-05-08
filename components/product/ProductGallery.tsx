@@ -2,30 +2,24 @@ import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Maximize2, X, Share2, Download } from 'lucide-react';
-
 interface ProductGalleryProps {
   images: string[];
   name: string;
 }
-
 export default function ProductGallery({ images, name }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const lastTap = useRef<number>(0);
-
   const nextImage = () => setActiveIndex((prev) => (prev + 1) % images.length);
   const prevImage = () => setActiveIndex((prev) => (prev - 1 + images.length) % images.length);
-
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
-
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
     const x = ((e.pageX - window.scrollX - left) / width) * 100;
     const y = ((e.pageY - window.scrollY - top) / height) * 100;
     setZoomPos({ x, y });
   };
-
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
     const touch = e.touches[0];
@@ -33,7 +27,6 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
     const y = ((touch.pageY - window.scrollY - top) / height) * 100;
     setZoomPos({ x, y });
   };
-
   // Handle Double Click/Tap
   const handleDoubleClick = (e: React.MouseEvent | React.TouchEvent) => {
     const now = Date.now();
@@ -42,7 +35,6 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
     }
     lastTap.current = now;
   };
-
   return (
     <div className="flex flex-col xl:flex-row gap-6">
       {/* ── Desktop Sidebar Thumbnails ── */}
@@ -61,7 +53,6 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
           </button>
         ))}
       </div>
-
       {/* ── Main Interactive Image ── */}
       <div 
         className="relative flex-1 aspect-[3/4] rounded-[2rem] md:rounded-[3rem] overflow-hidden bg-gray-50 order-1 xl:order-2 group shadow-2xl cursor-zoom-in"
@@ -97,12 +88,10 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                 fill
                 priority
                 className="object-cover select-none"
-
               />
             </motion.div>
           </motion.div>
         </AnimatePresence>
-
         {/* Floating Navigation Controls */}
         <div className="absolute inset-0 pointer-events-none flex items-center justify-between px-6">
           <button
@@ -118,7 +107,6 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
             <ChevronRight className="w-6 h-6" />
           </button>
         </div>
-
         {/* Enhanced Fullscreen Button */}
         <button
           onClick={() => setIsFullscreen(true)}
@@ -126,13 +114,11 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
         >
           <Maximize2 className="w-6 h-6 group-hover/fs:scale-125 transition-transform" />
         </button>
-
         {/* Image Index Indicator */}
         <div className="absolute top-8 right-8 px-4 py-2 rounded-full bg-black/10 backdrop-blur-md text-[10px] font-black uppercase tracking-widest text-black/40">
           {activeIndex + 1} / {images.length}
         </div>
       </div>
-
       {/* ── Mobile/Tablet Bottom Thumbnails ── */}
       <div className="flex xl:hidden gap-3 overflow-x-auto no-scrollbar py-4 px-2 order-3 scroll-smooth">
         {images.map((img, idx) => (
@@ -149,7 +135,6 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
           </button>
         ))}
       </div>
-
       {/* ── Ultra Modern Fullscreen Viewer ── */}
       <AnimatePresence>
         {isFullscreen && (
@@ -194,7 +179,6 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                 </button>
               </div>
             </div>
-
             {/* Viewer Stage */}
             <div className="flex-1 relative flex items-center justify-center overflow-hidden touch-none">
               <AnimatePresence mode="wait" initial={false}>
@@ -218,12 +202,10 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                       alt={name}
                       fill
                       className="object-contain select-none pointer-events-none"
-
                     />
                   </div>
                 </motion.div>
               </AnimatePresence>
-
               {/* Viewer Navigation (Desktop) */}
               <div className="hidden lg:flex absolute inset-0 pointer-events-none items-center justify-between px-6 nav-container">
                 <button
@@ -240,7 +222,6 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                 </button>
               </div>
             </div>
-
             {/* Viewer Footer (Compact Circular Thumbnails) */}
             <div className="p-4 md:p-6 flex flex-col items-center gap-4 relative z-10 bg-gradient-to-t from-black to-transparent cursor-default nav-container">
               <div className="flex items-center justify-center gap-4 overflow-x-auto no-scrollbar max-w-full px-4 py-3">
@@ -260,12 +241,10 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                       alt={`${name} ${idx}`} 
                       fill 
                       className="object-cover object-top" 
-
                     />
                   </button>
                 ))}
               </div>
-
               <p className="text-white/20 text-[9px] font-black uppercase tracking-[0.4em]">
                 {activeIndex + 1} / {images.length}
               </p>

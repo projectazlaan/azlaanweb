@@ -1,16 +1,12 @@
 'use client';
-
 import { useCategoryStore } from '@/store/categoryStore';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
 }
-
 export default function Pagination({ currentPage, totalPages }: PaginationProps) {
   const { setCurrentPage } = useCategoryStore();
-
   return (
     <div className="flex items-center justify-center gap-2">
       {/* Prev */}
@@ -21,7 +17,6 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
-
       {/* Page Numbers */}
       {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
         <button
@@ -36,7 +31,6 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
           {page}
         </button>
       ))}
-
       {/* Next */}
       <button
         onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}

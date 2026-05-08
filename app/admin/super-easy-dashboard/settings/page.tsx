@@ -1,9 +1,7 @@
 'use client';
-
 import { motion } from 'framer-motion';
 import { Save, Link, Smartphone, Globe, Mail, Lock } from 'lucide-react';
 import { useState } from 'react';
-
 export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
   const [form, setForm] = useState({
@@ -20,14 +18,11 @@ export default function SettingsPage() {
     premierPrice: '1000',
     loyaltyRate: '10',
   });
-
   const handleChange = (key: string, val: string) => setForm(f => ({ ...f, [key]: val }));
-
   const save = () => {
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };
-
   const SECTIONS = [
     {
       title: '🏠 Brand Info',
@@ -60,10 +55,8 @@ export default function SettingsPage() {
       ],
     },
   ];
-
   return (
     <div className="space-y-8 pb-20">
-
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100">
         <div>
@@ -74,7 +67,6 @@ export default function SettingsPage() {
           <Save className="w-5 h-5" /> {saved ? '✅ Saved!' : 'Save Changes'}
         </button>
       </div>
-
       {/* Setting Groups */}
       {SECTIONS.map((section, si) => (
         <motion.div
@@ -102,7 +94,6 @@ export default function SettingsPage() {
           </div>
         </motion.div>
       ))}
-
       {/* Danger Zone */}
       <motion.div
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}

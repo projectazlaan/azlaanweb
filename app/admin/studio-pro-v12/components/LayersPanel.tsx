@@ -1,5 +1,4 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import {
   Eye, EyeOff, Trash2, Copy, GripVertical,
@@ -7,7 +6,6 @@ import {
 } from 'lucide-react'
 import { useStudioStore } from '../store'
 import { usePostMessage } from '../hooks/usePostMessage'
-
 interface LayerItem {
   key: string
   label: string
@@ -16,11 +14,9 @@ interface LayerItem {
   visible: boolean
   children?: LayerItem[]
 }
-
 interface LayersPanelProps {
   iframeRef: React.RefObject<HTMLIFrameElement | null>
 }
-
 function LayerRow({
   item,
   depth = 0,
@@ -43,12 +39,10 @@ function LayerRow({
   const isSelected = selectedKey === item.key
   const [showActions, setShowActions] = useState(false)
   const [visible, setVisible] = useState(item.visible)
-
   const TYPE_ICONS: Record<string, string> = {
     section: '⬜', div: '▭', heading: 'H', text: 'T',
     image: '🖼', button: '⬡', unknown: '◻',
   }
-
   return (
     <div>
       <div
@@ -70,7 +64,6 @@ function LayerRow({
         <span className="text-[11px] text-gray-300 flex-1 truncate capitalize leading-none">
           {item.label}
         </span>
-
         {/* Actions — shown on hover */}
         <div className={`flex items-center gap-0.5 transition-opacity ${showActions || isSelected ? 'opacity-100' : 'opacity-0'}`}>
           <button
@@ -96,7 +89,6 @@ function LayerRow({
           </button>
         </div>
       </div>
-
       {/* Children */}
       {item.children?.map(child => (
         <LayerRow
@@ -114,21 +106,18 @@ function LayerRow({
     </div>
   )
 }
-
 export default function LayersPanel({ iframeRef }: LayersPanelProps) {
   const [layers, setLayers] = useState<LayerItem[]>([])
   const [isScanning, setIsScanning] = useState(false)
   const selectedElement = useStudioStore(s => s.selectedElement)
   const setSelectedElement = useStudioStore(s => s.setSelectedElement)
   const { sendMessage, highlightElement, deleteElement, duplicateElement } = usePostMessage(iframeRef)
-
   // Scan iframe for customizable elements
   const scanLayers = () => {
     setIsScanning(true)
     sendMessage({ type: 'SCAN_ELEMENTS' })
     // Response arrives via postMessage as ELEMENTS_SCANNED
   }
-
   // Listen for scan results via CustomEvent (dispatched by root useMessageListener)
   useEffect(() => {
     const handler = (e: Event) => {
@@ -139,16 +128,13 @@ export default function LayersPanel({ iframeRef }: LayersPanelProps) {
     window.addEventListener('studio:elements-scanned', handler)
     return () => window.removeEventListener('studio:elements-scanned', handler)
   }, [])
-
   const handleSelect = (key: string, type: string, tagName: string) => {
     // Scroll element into view in iframe, which will trigger SELECT_COMPONENT back to us
     sendMessage({ type: 'SCROLL_TO_ELEMENT', elementKey: key })
   }
-
   const handleToggleVisibility = (key: string, visible: boolean) => {
     sendMessage({ type: 'TOGGLE_VISIBILITY', elementKey: key, data: { visible } })
   }
-
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between px-3 py-2 border-b border-white/5 flex-shrink-0">
@@ -161,7 +147,6 @@ export default function LayersPanel({ iframeRef }: LayersPanelProps) {
           {isScanning ? 'Scanning…' : '↻ Refresh'}
         </button>
       </div>
-
       <div className="flex-1 overflow-y-auto py-1">
         {layers.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-32 gap-2 text-center px-4">

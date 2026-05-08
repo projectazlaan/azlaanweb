@@ -1,7 +1,5 @@
 'use client'
-
 import { useEffect, useRef, useState, useCallback } from 'react'
-
 export interface IframeSandboxConfig {
   src: string
   title?: string
@@ -14,7 +12,6 @@ export interface IframeSandboxConfig {
   onLoad?: () => void
   onError?: (error: Error) => void
 }
-
 export interface CSPPolicy {
   'default-src'?: string[]
   'script-src'?: string[]
@@ -29,7 +26,6 @@ export interface CSPPolicy {
   'form-action'?: string[]
   'frame-ancestors'?: string[]
 }
-
 export interface SecurityHeaders {
   'Content-Security-Policy'?: string
   'X-Content-Type-Options'?: string
@@ -38,21 +34,16 @@ export interface SecurityHeaders {
   'Permissions-Policy'?: string
   'Strict-Transport-Security'?: string
 }
-
 const DEFAULT_SANDBOX = 'allow-scripts allow-same-origin'
-
 export function generateCSPHeader(policy: CSPPolicy): string {
   const directives: string[] = []
-
   Object.entries(policy).forEach(([directive, values]) => {
     if (values && values.length > 0) {
       directives.push(`${directive} ${values.join(' ')}`)
     }
   })
-
   return directives.join('; ')
 }
-
 export function createCSPPolicy(config: {
   defaultSrc?: string[]
   self?: boolean
@@ -60,7 +51,6 @@ export function createCSPPolicy(config: {
   readonly?: boolean
 }): CSPPolicy {
   const { defaultSrc = ["'self'"], nonce, readonly = false } = config
-
   const policy: CSPPolicy = {
     'default-src': [...defaultSrc],
     'script-src': readonly 
@@ -77,15 +67,12 @@ export function createCSPPolicy(config: {
     'base-uri': defaultSrc,
     'form-action': defaultSrc
   }
-
   if (nonce) {
     if (policy['script-src']) policy['script-src'].push(`'nonce-${nonce}'`)
     if (policy['style-src']) policy['style-src'].push(`'nonce-${nonce}'`)
   }
-
   return policy
 }
-
 export function generateSecurityHeaders(config?: {
   csp?: CSPPolicy
   nosniff?: boolean
@@ -94,34 +81,26 @@ export function generateSecurityHeaders(config?: {
   readonly?: boolean
 }): SecurityHeaders {
   const headers: SecurityHeaders = {}
-
   if (config?.csp) {
     headers['Content-Security-Policy'] = generateCSPHeader(config.csp)
   }
-
   if (config?.nosniff !== false) {
     headers['X-Content-Type-Options'] = 'nosniff'
   }
-
   if (config?.noframe !== false) {
     headers['X-Frame-Options'] = 'SAMEORIGIN'
   }
-
   if (config?.referrer) {
     headers['Referrer-Policy'] = config.referrer
   } else {
     headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
   }
-
   if (config?.readonly) {
     headers['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
   }
-
   headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-
   return headers
 }
-
 export function useSandboxedIframe(config: IframeSandboxConfig) {
   const {
     src,
@@ -135,22 +114,18 @@ export function useSandboxedIframe(config: IframeSandboxConfig) {
     onLoad,
     onError
   } = config
-
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
-
   const handleLoad = useCallback(() => {
     setIsLoaded(true)
     setHasError(false)
     onLoad?.()
   }, [onLoad])
-
   const handleError = useCallback(() => {
     setHasError(true)
     onError?.(new Error('Failed to load iframe content'))
   }, [onError])
-
   const iframeProps = {
     ref: iframeRef,
     src,
@@ -164,7 +139,6 @@ export function useSandboxedIframe(config: IframeSandboxConfig) {
     onLoad: handleLoad,
     onError: handleError
   }
-
   return {
     iframeProps,
     isLoaded,
@@ -172,7 +146,6 @@ export function useSandboxedIframe(config: IframeSandboxConfig) {
     iframeRef
   }
 }
-
 export function createSecureIframe(
   container: HTMLElement,
   src: string,
@@ -191,9 +164,7 @@ export function createSecureIframe(
     title = 'Sandboxed Content',
     onLoad
   } = options
-
   const iframe = document.createElement('iframe')
-  
   iframe.src = src
   if (width) iframe.width = width.toString()
   if (height) iframe.height = height.toString()
@@ -208,26 +179,20 @@ export function createSecureIframe(
     width: ${width || '100%'};
     height: ${height || '100%'};
   `
-  
   if (onLoad) {
     iframe.addEventListener('load', onLoad)
   }
-  
   container.appendChild(iframe)
   return iframe
 }
-
 export function validateOrigin(origin: string, allowedOrigins: string[]): boolean {
   return allowedOrigins.includes('*') || allowedOrigins.includes(origin)
 }
-
 export function getCSPMetaTag(policy: CSPPolicy): string {
   return generateCSPHeader(policy)
 }
-
 export function SecurityHeadersComponent({ policy }: { policy: CSPPolicy }) {
   const cspString = generateCSPHeader(policy)
-  
   return (
     <meta
       httpEquiv="Content-Security-Policy"
@@ -235,7 +200,6 @@ export function SecurityHeadersComponent({ policy }: { policy: CSPPolicy }) {
     />
   )
 }
-
 export function SandboxedIframe({
   src,
   title = 'Sandboxed Content',
@@ -249,16 +213,13 @@ export function SandboxedIframe({
   onError
 }: IframeSandboxConfig) {
   const [isLoaded, setIsLoaded] = useState(false)
-
   const handleLoad = () => {
     setIsLoaded(true)
     onLoad?.()
   }
-
   const handleError = () => {
     onError?.(new Error('Failed to load iframe content'))
   }
-
   return (
     <iframe
       src={src}
@@ -274,10 +235,8 @@ export function SandboxedIframe({
     />
   )
 }
-
 export function createIframeBridge(iframe: HTMLIFrameElement) {
   const targetOrigin = new URL(iframe.src).origin
-
   return {
     postMessage: (type: string, payload: unknown) => {
       if (iframe.contentWindow) {
@@ -290,7 +249,6 @@ export function createIframeBridge(iframe: HTMLIFrameElement) {
     }
   }
 }
-
 export const DEFAULT_CSP_POLICY: CSPPolicy = {
   'default-src': ["'self'"],
   'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
@@ -304,7 +262,6 @@ export const DEFAULT_CSP_POLICY: CSPPolicy = {
   'base-uri': ["'self'"],
   'form-action': ["'self'"]
 }
-
 export const STRICT_CSP_POLICY: CSPPolicy = {
   'default-src': ["'none'"],
   'script-src': ["'nonce-{nonce}'", "'self'"],
@@ -318,7 +275,6 @@ export const STRICT_CSP_POLICY: CSPPolicy = {
   'base-uri': ["'self'"],
   'form-action': ["'self'"]
 }
-
 export const PERMISSIVE_CSP_POLICY: CSPPolicy = {
   "default-src": ["'self'", "https:"],
   "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https:"],

@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -18,7 +17,6 @@ import {
 } from 'lucide-react';
 import { useSidebar } from '@/context/SidebarContext';
 import categoriesData from '@/data/categories.json';
-
 /* ── Types ───────────────────────────────────────────────────── */
 const categories = (categoriesData as unknown) as Array<{
   name: string;
@@ -26,17 +24,14 @@ const categories = (categoriesData as unknown) as Array<{
   subcategories: string[];
   subSubCategories?: Record<string, string[]>;
 }>;
-
 function toSlug(str: string) {
   return str.toLowerCase().replace(/ /g, '-');
 }
-
 const categoryIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   men: Shirt,
   women: User2,
   kids: Baby,
 };
-
 const staticLinks = [
   { href: '/',        label: 'Home',     icon: Home },
   { href: '/shop',    label: 'Shop All', icon: ShoppingBag },
@@ -44,9 +39,6 @@ const staticLinks = [
   { href: '/about',   label: 'About',    icon: User2 },
   { href: '/contact', label: 'Contact',  icon: Phone },
 ];
-
-
-
 /* ── Category Accordion Item ─────────────────────────────────── */
 function CategoryAccordion({
   cat,
@@ -65,9 +57,7 @@ function CategoryAccordion({
       ? cat.subcategories.find((s) => pathname.includes(toSlug(s))) ?? null
       : null
   );
-
   const Icon = categoryIcons[cat.slug] ?? Shirt;
-
   return (
     <div>
       {/* Category trigger */}
@@ -102,7 +92,6 @@ function CategoryAccordion({
           className={`w-4 h-4 text-[#1D1D1F]/30 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
         />
       </button>
-
       {/* Subcategories */}
       <div
         className={`overflow-hidden transition-all duration-300 ease-in-out ${
@@ -123,7 +112,6 @@ function CategoryAccordion({
             All {cat.name}
             <ArrowRight className="w-3 h-3 opacity-50" />
           </Link>
-
           {/* Subcategories */}
           {cat.subcategories
             .filter((s) => s !== 'All')
@@ -133,7 +121,6 @@ function CategoryAccordion({
               const subSubs = cat.subSubCategories?.[sub]?.filter((ss) => ss !== 'All') ?? [];
               const isSubActive = pathname.startsWith(subUrl);
               const hasChildren = subSubs.length > 0;
-
               return (
                 <div key={sub}>
                   <div className="flex items-center gap-1">
@@ -158,7 +145,6 @@ function CategoryAccordion({
                       }`} />
                       {sub}
                     </Link>
-
                     {hasChildren && (
                       <button
                         onClick={(e) => {
@@ -175,7 +161,6 @@ function CategoryAccordion({
                       </button>
                     )}
                   </div>
-
                   {/* Sub-subcategories */}
                   {hasChildren && (
                     <div
@@ -213,19 +198,16 @@ function CategoryAccordion({
             })}
         </div>
       </div>
-
       {/* Divider between categories */}
       <div className="mx-3 mt-1 mb-1 border-b border-[#D2D2D7]/50" />
     </div>
   );
 }
-
 /* ── Main SidebarDrawer ──────────────────────────────────────── */
 export default function SidebarDrawer() {
   const { isOpen, closeSidebar } = useSidebar();
   const drawerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeSidebar();
@@ -241,7 +223,6 @@ export default function SidebarDrawer() {
       document.body.style.overflow = '';
     };
   }, [isOpen, closeSidebar]);
-
   return (
     <>
       {/* Backdrop */}
@@ -252,7 +233,6 @@ export default function SidebarDrawer() {
         }`}
         aria-hidden="true"
       />
-
       {/* Panel */}
       <aside
         ref={drawerRef}
@@ -281,15 +261,12 @@ export default function SidebarDrawer() {
             <X className="w-4 h-4 text-[#1D1D1F]" />
           </button>
         </div>
-
         {/* Scrollable body */}
         <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-0">
-
           {/* Collections label */}
           <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#6E6E73] px-3 pt-1 pb-3">
             Collections
           </p>
-
           {categories.map((cat) => (
             <CategoryAccordion
               key={cat.slug}
@@ -298,12 +275,10 @@ export default function SidebarDrawer() {
               onNavigate={closeSidebar}
             />
           ))}
-
           {/* Quick Links label */}
           <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#6E6E73] px-3 pt-4 pb-2">
             Quick Links
           </p>
-
           {staticLinks.map(({ href, label, icon: Icon }) => {
             const isActive = pathname === href;
             return (
@@ -329,7 +304,6 @@ export default function SidebarDrawer() {
             );
           })}
         </nav>
-
         {/* Footer */}
         <div className="px-5 py-4 border-t border-[#D2D2D7]/60 shrink-0">
           <p className="text-[10px] text-[#6E6E73]">© 2026 Azlaan. All rights reserved.</p>

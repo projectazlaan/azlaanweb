@@ -1,9 +1,7 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import { ShoppingCart, Plus, Trash2, DollarSign, ImageIcon, Package, CreditCard, CheckCircle, X } from 'lucide-react'
 import { registerProduct, getProducts, addToCart, removeFromCart, getCart, getCartTotal, configureStripe, processStripePayment, type Product, type CartItem } from '@/lib/cms'
-
 export function EcommerceBridge() {
   const [products, setProducts] = useState<Product[]>(() => getProducts())
   const [cart, setCart] = useState<CartItem[]>(() => getCart())
@@ -17,41 +15,33 @@ export function EcommerceBridge() {
     sku: '',
     inventory: 0
   })
-
   useEffect(() => {
     setProducts(getProducts())
     setCart(getCart())
   }, [])
-
   const handleAddProduct = () => {
     if (!newProduct.name || newProduct.price <= 0) return
-
     registerProduct(newProduct)
     setProducts(getProducts())
     setNewProduct({ name: '', price: 0, description: '', image: '', sku: '', inventory: 0 })
     setShowProductModal(false)
   }
-
   const handleAddToCart = (productId: string) => {
     addToCart(productId)
     setCart(getCart())
   }
-
   const handleRemoveFromCart = (productId: string) => {
     removeFromCart(productId)
     setCart(getCart())
   }
-
   const handleConfigureStripe = () => {
     if (!stripeKey) return
     configureStripe({ publishableKey: stripeKey })
     alert('Stripe configured!')
   }
-
   const handleCheckout = async () => {
     const total = getCartTotal()
     if (total <= 0) return
-
     const result = await processStripePayment(total)
     if (result.success) {
       alert(`Payment successful! Transaction ID: ${result.transactionId}`)
@@ -59,7 +49,6 @@ export function EcommerceBridge() {
       alert(`Payment failed: ${result.error}`)
     }
   }
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -78,7 +67,6 @@ export function EcommerceBridge() {
           Add Product
         </button>
       </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-4">
           <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
@@ -120,7 +108,6 @@ export function EcommerceBridge() {
             </div>
           </div>
         </div>
-
         <div className="space-y-4">
           <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
             <h3 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
@@ -159,7 +146,6 @@ export function EcommerceBridge() {
               </div>
             )}
           </div>
-
           <div className="p-4 bg-gray-800/50 rounded-xl border border-gray-700">
             <h3 className="text-sm font-medium text-white mb-3">Stripe Configuration</h3>
             <input
@@ -178,7 +164,6 @@ export function EcommerceBridge() {
           </div>
         </div>
       </div>
-
       {showProductModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-gray-900 rounded-2xl w-full max-w-md border border-gray-700">

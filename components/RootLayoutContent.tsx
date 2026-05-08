@@ -1,5 +1,4 @@
 'use client';
-
 import { usePathname } from 'next/navigation';
 import CustomizerBridge from "@/components/CustomizerBridge";
 import { SidebarProvider } from "@/context/SidebarContext";
@@ -9,11 +8,9 @@ import Footer from "@/components/Footer";
 import { Toaster } from 'react-hot-toast';
 import VisualEditorBridge from "@/components/VisualEditorBridge";
 import { Suspense } from 'react';
-
 export default function RootLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith('/admin');
-
   if (isAdmin) {
     return (
       <>
@@ -38,7 +35,6 @@ export default function RootLayoutContent({ children }: { children: React.ReactN
       </>
     );
   }
-
   return (
     <>
       <Toaster
@@ -60,7 +56,6 @@ export default function RootLayoutContent({ children }: { children: React.ReactN
       <Suspense fallback={null}>
         <VisualEditorBridge />
       </Suspense>
-
       {/* ── Global Sidebar & Navigation ── */}
       <SidebarProvider>
         <SidebarDrawer />

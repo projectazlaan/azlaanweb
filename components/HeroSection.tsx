@@ -1,10 +1,8 @@
 'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect, useCallback } from 'react'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
-
 interface HeroContent {
   id: string
   title: string
@@ -16,7 +14,6 @@ interface HeroContent {
   cta2Text: string
   cta2Link: string
 }
-
 const DEFAULT_SLIDES = [
   {
     id: 'slide-1',
@@ -63,20 +60,17 @@ const DEFAULT_SLIDES = [
     cta2Link: '/about'
   }
 ]
-
 export default function HeroSection({ initialHero }: { initialHero?: HeroContent }) {
   // Initialize with DEFAULT_SLIDES so the UI renders instantly
   const [slides, setSlides] = useState<HeroContent[]>(DEFAULT_SLIDES)
   // currentSlide is the index in the EXTENDED slides array [last, ...original, first]
   const [currentSlide, setCurrentSlide] = useState(1)
   const [isTransitioning, setIsTransitioning] = useState(false)
-
   useEffect(() => {
     if (!initialHero) {
       fetchHero()
     }
   }, [initialHero])
-
   const fetchHero = async () => {
     try {
       const res = await fetch('/api/hero')
@@ -88,30 +82,25 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
       console.error('Failed to fetch hero:', error)
     }
   }
-
   // Extended slides for infinite loop: [last, ...original, first]
   const extendedSlides = [
     slides[slides.length - 1],
     ...slides,
     slides[0]
   ]
-
   const nextSlide = useCallback(() => {
     if (isTransitioning) return
     setIsTransitioning(true)
     setCurrentSlide((prev) => prev + 1)
   }, [isTransitioning])
-
   const prevSlide = useCallback(() => {
     if (isTransitioning) return
     setIsTransitioning(true)
     setCurrentSlide((prev) => prev - 1)
   }, [isTransitioning])
-
   // Handle teleportation and transition state reset
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
-
     if (currentSlide === extendedSlides.length - 1) {
       timer = setTimeout(() => {
         setIsTransitioning(false)
@@ -128,18 +117,14 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
         setIsTransitioning(false)
       }, 1200)
     }
-    
     return () => clearTimeout(timer)
   }, [currentSlide, extendedSlides.length])
-
   useEffect(() => {
     if (slides.length <= 1) return
     const timer = setInterval(nextSlide, 6000)
     return () => clearInterval(timer)
   }, [slides.length, nextSlide])
-
   if (slides.length === 0) return null
-
   return (
     <section 
       data-customizable 
@@ -156,7 +141,6 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
           const isRealActive = (currentSlide === index) || 
                               (currentSlide === extendedSlides.length - 1 && index === 1) ||
                               (currentSlide === 0 && index === extendedSlides.length - 2);
-          
           return (
             <div
               key={`${slide.id}-${index}`}
@@ -174,7 +158,6 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 pointer-events-none" />
               </div>
-              
               <div className="absolute inset-0 flex flex-col justify-end pb-12 md:pb-16 pointer-events-none">
                 <div className="relative z-20 px-6 md:px-8 w-full max-w-[90rem] mx-auto text-left pointer-events-auto">
                   <div className="max-w-2xl">
@@ -193,7 +176,6 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
                     >
                       {slide.description}
                     </p>
-
                     <div className={`flex flex-wrap items-center justify-start gap-3 md:gap-4 transition-all duration-700 delay-1000 transform ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                       <Link
                         href={slide.cta1Link || '#'}
@@ -218,7 +200,6 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
           )
         })}
       </div>
-
       {/* Navigation Arrows */}
       {slides.length > 1 && (
         <>
@@ -238,7 +219,6 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
           </button>
         </>
       )}
-
       {/* Navigation Dots */}
       {slides.length > 1 && (
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3">

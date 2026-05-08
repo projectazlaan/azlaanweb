@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useState, useEffect, useRef } from 'react'
 import { 
   Layers, 
@@ -24,7 +23,6 @@ import {
   FileImage,
   Search
 } from 'lucide-react'
-
 export default function ModernVisualBuilder() {
   const [selectedComponent, setSelectedComponent] = useState<any>(null)
   const [device, setDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop')
@@ -33,7 +31,6 @@ export default function ModernVisualBuilder() {
   const [openCategories, setOpenCategories] = useState<string[]>(['site-components', 'basic'])
   const [searchQuery, setSearchQuery] = useState('')
   const iframeRef = useRef<HTMLIFrameElement>(null)
-
   const mediaAssets = [
     { id: 1, url: '/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp', name: 'Summer Collection' },
     { id: 2, url: '/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp', name: 'Premium Denim' },
@@ -42,7 +39,6 @@ export default function ModernVisualBuilder() {
     { id: 5, url: '/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp', name: 'Winter Wear' },
     { id: 6, url: '/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp', name: 'Store Front' },
   ]
-
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       const { type, key, metadata } = event.data
@@ -57,47 +53,39 @@ export default function ModernVisualBuilder() {
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
   }, [])
-
   const toggleCategory = (cat: string) => {
     setOpenCategories(prev => 
       prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]
     )
   }
-
   const updateIframeContent = (key: string, value: string) => {
     if (iframeRef.current?.contentWindow) {
       iframeRef.current.contentWindow.postMessage({ type: 'UPDATE_CONTENT', key, value }, '*')
     }
   }
-
   const runCommand = (cmd: string) => {
     if (iframeRef.current?.contentWindow) {
       iframeRef.current.contentWindow.postMessage({ type: 'RUN_COMMAND', command: cmd }, '*')
     }
   }
-
   const selectImage = (url: string) => {
     if (iframeRef.current?.contentWindow) {
       iframeRef.current.contentWindow.postMessage({ type: 'UPDATE_IMAGE', url }, '*')
     }
     setShowMediaHub(false)
   }
-
   return (
     <div className="flex h-screen bg-[#f0f2f5] text-[#444] font-sans overflow-hidden fixed inset-0 z-[9999] select-none">
-      
       {/* LEFT SIDEBAR */}
       <div className="w-[280px] bg-white/80 backdrop-blur-xl border-r border-black/5 flex flex-col shrink-0 shadow-xl">
         <div className="h-16 border-b border-black/5 flex items-center px-6 bg-gradient-to-r from-[#e0f2ff] to-[#f0eaff]">
           <div className="w-8 h-8 bg-[#0071E3] rounded-xl flex items-center justify-center mr-3 shadow-lg font-black text-xs text-white">A</div>
           <h2 className="text-[11px] font-black uppercase tracking-[0.2em] text-[#0071E3]">Studio Space</h2>
         </div>
-
         <div className="flex h-12 border-b border-black/5 bg-white/30">
           <button onClick={() => { setActiveTab('blocks'); setShowMediaHub(false); }} className={`flex-1 flex items-center justify-center transition-all ${activeTab === 'blocks' && !showMediaHub ? 'text-[#0071E3] bg-white border-b-2 border-[#0071E3]' : 'text-black/20 hover:text-black/40'}`}><Plus size={18} /></button>
           <button onClick={() => { setActiveTab('layers'); setShowMediaHub(false); }} className={`flex-1 flex items-center justify-center transition-all ${activeTab === 'layers' ? 'text-[#0071E3] bg-white border-b-2 border-[#0071E3]' : 'text-black/20 hover:text-black/40'}`}><Layers size={18} /></button>
         </div>
-
         <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
           {activeTab === 'blocks' && (
             <div className="flex flex-col space-y-1">
@@ -117,7 +105,6 @@ export default function ModernVisualBuilder() {
                   </div>
                 )}
               </div>
-
               <div className="bg-[#fffcf8] rounded-2xl border border-orange-50/50 overflow-hidden">
                 <button onClick={() => toggleCategory('basic')} className="w-full flex items-center justify-between px-5 py-4 hover:bg-orange-100/30 transition-all">
                   <span className="text-[10px] font-black uppercase tracking-widest text-orange-400">Basic Blocks</span>
@@ -140,7 +127,6 @@ export default function ModernVisualBuilder() {
           )}
         </div>
       </div>
-
       {/* CENTER WORKSPACE */}
       <div className="flex-1 flex flex-col bg-white/40 relative">
         {/* TOP TOOLBAR */}
@@ -152,7 +138,6 @@ export default function ModernVisualBuilder() {
                 <button onClick={() => setDevice('mobile')} className={`p-2.5 rounded-xl transition-all ${device === 'mobile' ? 'bg-white text-[#0071E3] shadow-md' : 'text-black/20 hover:text-black/40'}`}><Smartphone size={16} /></button>
              </div>
           </div>
-
           <div className="flex items-center gap-2 text-black/20">
              <button onClick={() => runCommand('preview')} className="p-3 hover:text-[#0071E3] hover:bg-blue-50 rounded-2xl transition-all"><Eye size={20} /></button>
              <button onClick={() => runCommand('fullscreen')} className="p-3 hover:text-[#0071E3] hover:bg-blue-50 rounded-2xl transition-all"><Maximize size={20} /></button>
@@ -166,7 +151,6 @@ export default function ModernVisualBuilder() {
              </button>
           </div>
         </header>
-
         {/* CANVAS */}
         <div className="flex-1 flex justify-center items-start overflow-auto custom-scrollbar p-10 bg-[#f8f9fb]">
           <div style={{ width: device === 'desktop' ? '100%' : device === 'tablet' ? '768px' : '375px', height: '100%', minHeight: '100%' }} className="bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-3xl overflow-hidden relative transition-all duration-500 ease-in-out border-[8px] border-white">
@@ -174,14 +158,12 @@ export default function ModernVisualBuilder() {
           </div>
         </div>
       </div>
-
       {/* RIGHT SIDEBAR */}
       <div className="w-[320px] bg-white/80 backdrop-blur-xl border-l border-white/50 flex flex-col shrink-0 shadow-xl">
         <div className="h-16 border-b border-black/5 flex px-2 bg-gradient-to-r from-[#fff5f5] to-[#fff0f8]">
            <button onClick={() => { setActiveTab('styles'); setShowMediaHub(false); }} className={`flex-1 flex items-center justify-center gap-3 text-[9px] font-black uppercase tracking-[0.2em] transition-all ${activeTab === 'styles' && !showMediaHub ? 'text-pink-500 bg-white shadow-sm border-b-2 border-pink-500' : 'text-black/10 hover:text-black/30'}`}><Settings2 size={18} /> Style Studio</button>
            <button onClick={() => setShowMediaHub(true)} className={`flex-1 flex items-center justify-center gap-3 text-[9px] font-black uppercase tracking-[0.2em] transition-all ${showMediaHub ? 'text-[#0071E3] bg-white shadow-sm border-b-2 border-[#0071E3]' : 'text-black/10 hover:text-black/30'}`}><FileImage size={18} /> Media Hub</button>
         </div>
-
         <div className="flex-1 overflow-y-auto custom-scrollbar">
           {selectedComponent && !showMediaHub ? (
             <div className="flex flex-col animate-in fade-in zoom-in-95 duration-500">
@@ -204,7 +186,6 @@ export default function ModernVisualBuilder() {
           )}
         </div>
       </div>
-
       {/* MEDIA HUB OVERLAY */}
       {showMediaHub && (
         <div className="fixed inset-0 z-[10001] bg-white flex flex-col animate-in fade-in zoom-in-95 duration-300">
@@ -221,7 +202,6 @@ export default function ModernVisualBuilder() {
           </div>
         </div>
       )}
-
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.05); border-radius: 10px; }

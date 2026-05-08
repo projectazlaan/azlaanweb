@@ -1,8 +1,6 @@
 'use client'
-
 import { useEffect, useState } from 'react'
 import { Settings } from 'lucide-react'
-
 export default function AdminSettings() {
   const [form, setForm] = useState({
     siteName: 'Azlaan',
@@ -18,9 +16,7 @@ export default function AdminSettings() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
-
   useEffect(() => { fetchSettings() }, [])
-
   const fetchSettings = async () => {
     try {
       const res = await fetch('/api/admin/settings')
@@ -44,19 +40,16 @@ export default function AdminSettings() {
       setLoading(false)
     }
   }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true)
     setSaved(false)
-
     try {
       const res = await fetch('/api/admin/settings', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
-
       if (res.ok) {
         setSaved(true)
         setTimeout(() => setSaved(false), 3000)
@@ -67,9 +60,7 @@ export default function AdminSettings() {
       setSaving(false)
     }
   }
-
   if (loading) return <div className="text-text-muted">Loading...</div>
-
   return (
     <div>
       <div className="mb-6">
@@ -78,14 +69,12 @@ export default function AdminSettings() {
         </h1>
         <p className="text-text-muted text-sm mt-1">Manage your site configuration</p>
       </div>
-
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-2xl shadow-sm max-w-2xl">
         {saved && (
           <div className="bg-green-50 text-green-700 p-3 rounded-xl text-sm mb-6">
             Settings saved successfully!
           </div>
         )}
-
         <div className="space-y-5">
           <div>
             <h2 className="font-semibold text-primary mb-3 text-sm">Site Information</h2>
@@ -110,7 +99,6 @@ export default function AdminSettings() {
               </div>
             </div>
           </div>
-
           <div>
             <h2 className="font-semibold text-primary mb-3 text-sm">Contact Information</h2>
             <div className="grid grid-cols-2 gap-4">
@@ -142,7 +130,6 @@ export default function AdminSettings() {
               />
             </div>
           </div>
-
           <div>
             <h2 className="font-semibold text-primary mb-3 text-sm">Social Links</h2>
             <div className="grid grid-cols-2 gap-4">
@@ -168,7 +155,6 @@ export default function AdminSettings() {
               </div>
             </div>
           </div>
-
           <div>
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -181,7 +167,6 @@ export default function AdminSettings() {
             </label>
           </div>
         </div>
-
         <button
           type="submit"
           disabled={saving}

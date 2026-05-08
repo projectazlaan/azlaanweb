@@ -1,9 +1,7 @@
 'use client'
-
 import { useEffect, useState } from 'react'
 import { Plus, Trash2, Star, Pencil } from 'lucide-react'
 import Link from 'next/link'
-
 interface Testimonial {
   id: string
   name: string
@@ -16,7 +14,6 @@ interface Testimonial {
   rating: number
   createdAt: string
 }
-
 export default function AdminTestimonials() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [loading, setLoading] = useState(true)
@@ -32,11 +29,9 @@ export default function AdminTestimonials() {
     rating: 5,
   })
   const [saving, setSaving] = useState(false)
-
   useEffect(() => {
     fetchTestimonials()
   }, [])
-
   const fetchTestimonials = async () => {
     try {
       const res = await fetch('/api/admin/testimonials')
@@ -50,23 +45,19 @@ export default function AdminTestimonials() {
       setLoading(false)
     }
   }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true)
-
     try {
       const url = editingId
         ? `/api/admin/testimonials/${editingId}`
         : '/api/admin/testimonials'
       const method = editingId ? 'PUT' : 'POST'
-
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
-
       if (res.ok) {
         setShowForm(false)
         setEditingId(null)
@@ -79,7 +70,6 @@ export default function AdminTestimonials() {
       setSaving(false)
     }
   }
-
   const handleEdit = (t: Testimonial) => {
     setForm({
       name: t.name,
@@ -93,7 +83,6 @@ export default function AdminTestimonials() {
     setEditingId(t.id)
     setShowForm(true)
   }
-
   const handleDelete = async (id: string, name: string) => {
     if (!confirm(`Delete testimonial from "${name}"?`)) return
     try {
@@ -103,7 +92,6 @@ export default function AdminTestimonials() {
       console.error('Failed to delete:', error)
     }
   }
-
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -120,7 +108,6 @@ export default function AdminTestimonials() {
           <Plus size={18} /> Add Testimonial
         </button>
       </div>
-
       {showForm && (
         <div className="bg-white p-6 rounded-2xl shadow-sm mb-6 max-w-2xl">
           <h2 className="font-semibold text-primary mb-4">{editingId ? 'Edit' : 'Add'} Testimonial</h2>
@@ -172,7 +159,6 @@ export default function AdminTestimonials() {
           </form>
         </div>
       )}
-
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         {loading ? <div className="p-8 text-center text-text-muted">Loading...</div> : testimonials.length === 0 ? (
           <div className="p-8 text-center text-text-muted">No testimonials yet</div>
@@ -211,7 +197,6 @@ export default function AdminTestimonials() {
     </div>
   )
 }
-
 function MessageSquareIcon({ size, ...props }: { size: number; [key: string]: any }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}>

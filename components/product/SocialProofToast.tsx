@@ -1,28 +1,21 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, X } from 'lucide-react';
-
 interface Purchase {
   name: string;
   timeAgo: string;
 }
-
 interface SocialProofToastProps {
   purchases: Purchase[];
 }
-
 export default function SocialProofToast({ purchases }: SocialProofToastProps) {
   const [index, setIndex] = useState(0);
   const [show, setShow] = useState(false);
-
   useEffect(() => {
     if (purchases.length === 0) return;
-
     // Show after 5 seconds, then cycle every 10 seconds
     const initialDelay = setTimeout(() => setShow(true), 5000);
-
     const cycle = setInterval(() => {
       setShow(false);
       setTimeout(() => {
@@ -30,15 +23,12 @@ export default function SocialProofToast({ purchases }: SocialProofToastProps) {
         setShow(true);
       }, 500);
     }, 15000);
-
     return () => {
       clearTimeout(initialDelay);
       clearInterval(cycle);
     };
   }, [purchases]);
-
   if (purchases.length === 0) return null;
-
   return (
     <AnimatePresence>
       {show && (

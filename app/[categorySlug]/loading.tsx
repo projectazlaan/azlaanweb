@@ -3,7 +3,6 @@ export default function CategoryLoading() {
     <main className="min-h-screen bg-white">
       {/* Hero Skeleton */}
       <div className="relative h-[40vh] md:h-[55vh] bg-gray-200 animate-pulse" />
-
       {/* Filter Bar Skeleton */}
       <div className="sticky top-16 z-30 bg-white border-b border-black/5 px-6 py-4">
         <div className="flex gap-3">
@@ -12,7 +11,6 @@ export default function CategoryLoading() {
           ))}
         </div>
       </div>
-
       {/* Product Grid Skeleton */}
       <div className="max-w-[1600px] mx-auto px-4 md:px-6 py-8 md:py-16">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-1 gap-y-12">
