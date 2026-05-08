@@ -270,11 +270,12 @@ export default function ReelsPanel() {
   // Dynamic parsing for newly lazy-loaded iframes
   useEffect(() => {
     if ((window as any).FB) {
-      setTimeout(() => {
-        try { (window as any).FB.XFBML.parse(); } catch(e) {}
-      }, 100);
+      // Trigger parse immediately for the active index when it changes or loads
+      try { 
+        (window as any).FB.XFBML.parse(); 
+      } catch(e) {}
     }
-  }, [loadedIframes]);
+  }, [loadedIframes, activeIndex]);
   // Main Carousel Playback Control
   useEffect(() => {
     if (isFullScreen) {
@@ -480,15 +481,22 @@ export default function ReelsPanel() {
                 <motion.div
                   key={`${link}-${idx}`}
                   data-index={idx}
-                  className="reel-slide min-w-[70vw] md:min-w-[280px] w-[70vw] md:w-[280px] aspect-[9/16] flex-shrink-0 snap-center relative transition-all duration-[400ms] group"
+                  className="reel-slide min-w-[70vw] md:min-w-[280px] w-[70vw] md:w-[280px] aspect-[9/16] flex-shrink-0 snap-center snap-stop-always relative transition-all duration-[400ms] group"
                   onMouseMove={triggerControls}
                   onTouchStart={triggerControls}
                   animate={{
                     scale:   isActive ? 1    : 0.85,
-                    opacity: isActive ? 1    : 0.8,
-                    filter:  isActive ? 'blur(0px)' : 'blur(0.5px)',
-                    y:       isActive ? 0    : 10,
+                    opacity: isActive ? 1    : 0.6,
+                    filter:  isActive ? 'blur(0px)' : 'blur(2px)',
+                    y:       isActive ? 0    : 5,
                   }}
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 260, 
+                    damping: 20,
+                    mass: 0.5
+                  }}
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   <div 
                     className="w-full h-full rounded-2xl md:rounded-3xl overflow-hidden bg-black shadow-2xl relative border border-gray-800"
@@ -507,11 +515,11 @@ export default function ReelsPanel() {
                         <Maximize2 className="w-5 h-5" />
                       </button>
                     )}
-                    {/* Facebook Video Plugin (XFBML) */}
-                    {loadedIframes[idx] && (
+                    {/* Facebook Video Plugin (XFBML) - ONLY LOAD IF ACTIVE FOR PERFORMANCE */}
+                    {isActive && loadedIframes[idx] && (
                       <div 
                         id={`fb-player-${idx}`}
-                        className={`fb-video absolute inset-0 w-full h-full transition-opacity duration-500 ${!isActive ? 'pointer-events-none opacity-80' : 'opacity-100'}`}
+                        className="fb-video absolute inset-0 w-full h-full opacity-100"
                         data-href={link}
                         data-width="500"
                         data-allowfullscreen="true"
@@ -718,7 +726,7 @@ export default function ReelsPanel() {
                 return (
                   <div 
                     key={`modal-${idx}`}
-                    className="h-full w-full snap-start relative flex items-center justify-center bg-black"
+                    className="h-full w-full snap-start snap-stop-always relative flex items-center justify-center bg-black"
                   >
                     <div 
                       className="w-full h-full md:max-w-[500px] md:h-[90vh] md:rounded-3xl overflow-hidden relative bg-black shadow-2xl group"
@@ -728,7 +736,7 @@ export default function ReelsPanel() {
                         backgroundPosition: 'center'
                       }}
                     >
-                      {loadedIframes[idx] && (
+                      {idx === fullScreenIndex && loadedIframes[idx] && (
                         <div 
                           id={`fb-player-modal-${idx}`}
                           className="fb-video absolute inset-0 w-full h-full"
