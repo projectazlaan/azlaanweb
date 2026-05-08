@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect, useCallback } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 interface HeroContent {
   id: string
@@ -124,6 +125,10 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
     const timer = setInterval(nextSlide, 6000)
     return () => clearInterval(timer)
   }, [slides.length, nextSlide])
+  const { scrollY } = useScroll();
+  const contentY = useTransform(scrollY, [0, 1000], [0, -1000]);
+  const contentOpacity = useTransform(scrollY, [650, 900], [1, 0]);
+
   if (slides.length === 0) return null
   return (
     <section 
@@ -158,7 +163,17 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 pointer-events-none" />
               </div>
-              <div className="absolute inset-0 flex flex-col justify-end pb-12 md:pb-16 pointer-events-none">
+              
+              {/* Content Container with Scroll Parallax and Top Masking */}
+              <motion.div 
+                style={{ 
+                  y: contentY,
+                  opacity: contentOpacity,
+                  WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)',
+                  maskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)'
+                }}
+                className="absolute inset-0 flex flex-col justify-end pb-12 md:pb-16 pointer-events-none"
+              >
                 <div className="relative z-20 px-6 md:px-8 w-full max-w-[90rem] mx-auto text-left pointer-events-auto">
                   <div className="max-w-2xl">
                     <span 
@@ -179,11 +194,16 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
                     <div className={`flex flex-wrap items-center justify-start gap-3 md:gap-4 transition-all duration-700 delay-1000 transform ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                       <Link
                         href={slide.cta1Link || '#'}
-                        className="group flex items-center justify-center gap-2 bg-white/20 backdrop-blur-md border border-white/40 text-white hover:bg-white hover:text-black px-6 py-3 md:px-7 md:py-3 rounded-full font-semibold text-[11px] md:text-xs transition-all duration-300 shadow-lg"
+                        className="group relative flex items-center gap-3 px-8 py-2.5 rounded-full border border-white/20 hover:border-white/40 bg-white transition-all duration-700 overflow-hidden shadow-sm"
                       >
-                        <span>{slide.cta1Text || 'Shop Now'}</span>
-                        <ArrowRight className="w-3.5 h-3.5 opacity-90 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                        <span className="text-[9px] md:text-[11px] font-bold uppercase tracking-[0.3em] text-black/80 group-hover:text-black transition-colors">
+                          {slide.cta1Text || 'Shop Now'}
+                        </span>
+                        <div className="w-8 md:w-12 h-[0.5px] bg-black/30 group-hover:bg-black group-hover:w-16 transition-all duration-700" />
+                        <ArrowRight className="w-4 h-4 text-black/60 group-hover:text-black group-hover:translate-x-1 transition-all duration-500" />
+                        <div className="absolute inset-0 bg-black/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                       </Link>
+
                       {(slide.cta2Text) && (
                         <Link
                           href={slide.cta2Link || '#'}
@@ -195,33 +215,48 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           )
         })}
       </div>
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows (Parallax Enabled with Top Masking) */}
       {slides.length > 1 && (
-        <>
+        <motion.div 
+          style={{ 
+            y: contentY, 
+            opacity: contentOpacity,
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)',
+            maskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)'
+          }}
+        >
           <button 
             onClick={(e) => { e.stopPropagation(); prevSlide(); }}
-            className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-[70] flex items-center justify-center text-white bg-black/20 hover:bg-black/50 border border-white/10 backdrop-blur-sm rounded-full transition-all cursor-pointer w-10 h-10 md:w-14 md:h-14 group"
+            className="hidden md:flex absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-[70] items-center justify-center text-white bg-black/20 hover:bg-black/50 border border-white/10 backdrop-blur-sm rounded-full transition-all cursor-pointer w-10 h-10 md:w-14 md:h-14 group"
             aria-label="Previous slide"
           >
             <ChevronLeft className="w-5 h-5 md:w-7 md:h-7 opacity-70 group-hover:opacity-100 transition-opacity group-hover:-translate-x-0.5" strokeWidth={2} />
           </button>
           <button 
             onClick={(e) => { e.stopPropagation(); nextSlide(); }}
-            className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-[70] flex items-center justify-center text-white bg-black/20 hover:bg-black/50 border border-white/10 backdrop-blur-sm rounded-full transition-all cursor-pointer w-10 h-10 md:w-14 md:h-14 group"
+            className="hidden md:flex absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-[70] items-center justify-center text-white bg-black/20 hover:bg-black/50 border border-white/10 backdrop-blur-sm rounded-full transition-all cursor-pointer w-10 h-10 md:w-14 md:h-14 group"
             aria-label="Next slide"
           >
             <ChevronRight className="w-5 h-5 md:w-7 md:h-7 opacity-70 group-hover:opacity-100 transition-opacity group-hover:translate-x-0.5" strokeWidth={2} />
           </button>
-        </>
+        </motion.div>
       )}
-      {/* Navigation Dots */}
+      {/* Navigation Dots (Parallax Enabled with Top Masking) */}
       {slides.length > 1 && (
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+        <motion.div 
+          style={{ 
+            y: contentY, 
+            opacity: contentOpacity,
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)',
+            maskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)'
+          }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3"
+        >
           {slides.map((_, index) => {
             // Real index for dots mapping (currentSlide is 1-indexed in the extended array)
             const dotActiveIndex = currentSlide === 0 ? slides.length - 1 : 
@@ -236,7 +271,7 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
               />
             )
           })}
-        </div>
+        </motion.div>
       )}
     </section>
   )

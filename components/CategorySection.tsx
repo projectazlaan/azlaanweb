@@ -3,12 +3,12 @@ import Image from 'next/image';
 const categories = [
   {
     name: 'Men',
-    image: '/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp',
+    image: '/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp',
     href: '/men',
   },
   {
     name: 'Women',
-    image: '/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp',
+    image: '/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp',
     href: '/women',
   },
   {
@@ -35,7 +35,7 @@ export default function CategorySection() {
               src={categories[0].image}
               alt="Men"
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-1000"
+              className="object-cover object-bottom group-hover:scale-105 transition-transform duration-1000"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90" />
             <div className="absolute bottom-6 left-6 text-left">

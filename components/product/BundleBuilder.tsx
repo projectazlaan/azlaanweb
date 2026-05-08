@@ -121,11 +121,16 @@ export default function BundleBuilder({ mainProduct }: BundleBuilderProps) {
           </div>
           <button
             onClick={handleAddBundle}
-            className="w-full bg-primary text-white py-4 rounded-xl font-black uppercase tracking-[0.2em] text-xs flex items-center justify-center gap-3 hover:bg-black transition-colors active:scale-95"
+            className="group relative w-full flex items-center justify-center gap-4 px-8 py-4 rounded-full border border-black/10 hover:border-black/30 bg-white transition-all duration-700 overflow-hidden shadow-sm mt-2"
           >
-            <ShoppingBag className="w-4 h-4" />
-            Add Bundle to Cart
+            <ShoppingBag className="w-4 h-4 text-black/60 group-hover:text-black transition-colors" />
+            <span className="text-[10px] md:text-[12px] font-bold uppercase tracking-[0.3em] text-black/80 group-hover:text-black transition-colors">
+              Add Bundle to Cart
+            </span>
+            <div className="hidden md:block w-8 md:w-12 h-[0.5px] bg-black/30 group-hover:bg-black group-hover:w-20 transition-all duration-700" />
+            <div className="absolute inset-0 bg-black/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
           </button>
+
           <p className="text-center text-[10px] text-gray-400 mt-4 uppercase font-medium tracking-widest">
             {selectedIds.length} items selected in this set
           </p>

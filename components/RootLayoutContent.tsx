@@ -60,7 +60,7 @@ export default function RootLayoutContent({ children }: { children: React.ReactN
       <SidebarProvider>
         <SidebarDrawer />
         <Navbar />
-        <main className="flex-1 pt-[72px] md:pt-[80px]">
+        <main className={`flex-1 ${pathname === '/' ? 'pt-0' : 'pt-[72px] md:pt-[80px]'}`}>
           {children}
         </main>
         <Footer />

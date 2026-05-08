@@ -82,37 +82,39 @@ export default function Testimonials() {
   // Create infinite scroll array
   const infiniteTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials]
   return (
-    <section className="py-24 overflow-hidden bg-white relative">
-      {/* Decorative Blur Backgrounds */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#0071E3]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gray-100 rounded-full blur-[120px] pointer-events-none" />
+    <section className="py-2 md:py-4 overflow-hidden bg-white">
       <div className="w-full">
-        {/* Header - Minimal & Premium */}
-        <div className="text-center mb-16 md:mb-24 px-4">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col items-center justify-center leading-[0.85] md:leading-[0.8]"
-          >
-            <span className="font-serif italic text-2xl md:text-3xl text-gray-400 font-light tracking-wider pr-8 md:pr-12 -mb-1 md:-mb-2 z-10">
-              Customer
-            </span>
-            <span className="font-sans text-4xl md:text-6xl font-bold tracking-tighter text-primary uppercase drop-shadow-sm">
-              Voices & Reviews
-            </span>
-          </motion.h2>
-          <p className="text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase text-gray-400 mt-[10px]">
-            Real Stories From Our Valued Clients
-          </p>
+        {/* Header - Compact & Premium with Advanced Typography */}
+        <div className="text-center mb-2 md:mb-4 px-4 relative">
+          <div className="inline-flex flex-col items-center">
+            <div className="flex items-center gap-2 mb-1">
+              <div className="h-[1px] w-4 bg-gray-200" />
+              <span className="text-[7px] md:text-[8px] font-black uppercase tracking-[0.4em] text-gray-300">Curated Feedback</span>
+              <div className="h-[1px] w-4 bg-gray-200" />
+            </div>
+            <h2 className="flex flex-col items-center justify-center leading-none">
+              <span className="font-serif italic text-base md:text-lg text-gray-400 font-light tracking-wider pr-4 md:pr-6 -mb-0.5">
+                Authentic
+              </span>
+              <span className="font-sans text-2xl md:text-3xl font-bold tracking-tighter text-primary uppercase">
+                Customer Voices
+              </span>
+            </h2>
+            <div className="mt-1 flex items-center gap-1.5 opacity-30">
+              <span className="text-[6px] md:text-[7px] font-bold uppercase tracking-widest">Global Excellence</span>
+              <div className="w-1 h-1 rounded-full bg-primary" />
+              <span className="text-[6px] md:text-[7px] font-bold uppercase tracking-widest">Premium Quality</span>
+            </div>
+          </div>
         </div>
+
         {/* Scrolling Row */}
         <div className="flex overflow-hidden relative">
           <motion.div 
-            className="flex gap-6 md:gap-10 pr-10"
-            animate={{ x: [0, -3000] }}
+            className="flex gap-4 md:gap-6 pr-6 pb-6 pt-1"
+            animate={{ x: [0, -2000] }}
             transition={{ 
-              duration: 50, 
+              duration: 40, 
               repeat: Infinity, 
               ease: "linear" 
             }}
@@ -120,61 +122,46 @@ export default function Testimonials() {
             {infiniteTestimonials.map((t, idx) => (
               <div 
                 key={`${t.id}-${idx}`}
-                className="w-[320px] md:w-[500px] shrink-0"
+                className="w-[280px] md:w-[350px] shrink-0"
               >
-                <div className="h-full bg-white border border-black/[0.03] p-8 md:p-12 rounded-[2.5rem] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(0,113,227,0.1)] transition-all duration-700 group flex flex-col justify-between">
-                  <div>
-                    {/* Header: Profile & Quote */}
-                    <div className="flex items-start justify-between mb-8">
-                      <div className="flex items-center gap-4">
-                        <div className="relative w-14 h-14 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-[#0071E3]/20 group-hover:border-[#0071E3] transition-colors duration-500 shadow-xl">
-                          <Image
-                            src={t.image}
-                            alt={t.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h4 className="font-black text-primary text-sm md:text-lg uppercase tracking-tight leading-none mb-1">
-                            {t.name}
-                          </h4>
-                          <p className="text-[#0071E3] text-[9px] md:text-[11px] font-bold uppercase tracking-widest opacity-60">
-                            {t.location}
-                          </p>
-                        </div>
-                      </div>
-                      <Quote className="w-8 h-8 md:w-12 md:h-12 text-black opacity-5" />
+                <div className="bg-white border border-black/[0.05] p-5 md:p-6 rounded-3xl shadow-sm hover:shadow-md transition-all duration-500 group">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border border-black/5">
+                      <Image
+                        src={t.image}
+                        alt={t.name}
+                        fill
+                        className="object-cover"
+                      />
                     </div>
-                    {/* Stars */}
-                    <div className="flex gap-1 mb-6">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                      ))}
-                    </div>
-                    {/* Dual Language Review */}
-                    <div className="space-y-4">
-                      <p className="text-black text-sm md:text-lg font-medium leading-relaxed tracking-tight italic">
-                        &ldquo;{t.review}&rdquo;
-                      </p>
-                      <div className="h-[1px] w-12 bg-black/5" />
-                      <p className="text-gray-400 text-xs md:text-base font-semibold leading-relaxed tracking-tight">
-                        &ldquo;{t.reviewBn}&rdquo;
+                    <div>
+                      <h4 className="font-bold text-primary text-[11px] md:text-sm uppercase tracking-tight leading-none">
+                        {t.name}
+                      </h4>
+                      <p className="text-gray-400 text-[9px] md:text-[10px] font-medium uppercase tracking-widest mt-1">
+                        {t.location}
                       </p>
                     </div>
                   </div>
-                  {/* Customer Footer Info */}
-                  <div className="mt-10 pt-6 border-t border-black/5 flex items-center justify-between">
-                    <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-gray-300">
-                      Verified Purchase
-                    </span>
-                    <div className="flex -space-x-2">
-                      {[1,2,3].map(i => (
-                        <div key={i} className="w-6 h-6 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-[8px] font-bold">
-                          +
-                        </div>
-                      ))}
-                    </div>
+
+                  <div className="flex gap-0.5 mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400 shrink-0" />
+                    ))}
+                  </div>
+
+                  <div className="space-y-2">
+                    <p className="text-black text-[12px] md:text-[13px] font-medium leading-relaxed tracking-tight italic">
+                      &ldquo;{t.review}&rdquo;
+                    </p>
+                    <p className="text-gray-400 text-[10px] md:text-[11px] font-medium leading-relaxed tracking-tight">
+                      &ldquo;{t.reviewBn}&rdquo;
+                    </p>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-black/5 flex items-center justify-between text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-gray-300">
+                    <span>Verified Purchase</span>
+                    <Quote className="w-3 h-3 opacity-10" />
                   </div>
                 </div>
               </div>

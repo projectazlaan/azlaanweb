@@ -34,6 +34,8 @@ export const metadata: Metadata = {
     ],
   },
 };
+import Script from "next/script";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,6 +44,20 @@ export default function RootLayout({
   return (
     <html lang="en" className={`scroll-smooth ${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
       <body className="min-h-screen flex flex-col antialiased font-sans">
+        <Script id="scroll-restoration-handler" strategy="afterInteractive">
+          {`
+            if (typeof window !== 'undefined') {
+              window.history.scrollRestoration = 'manual';
+              window.addEventListener('beforeunload', () => {
+                sessionStorage.setItem('scrollPos', window.scrollY.toString());
+              });
+              const pos = sessionStorage.getItem('scrollPos');
+              if (pos) {
+                window.scrollTo(0, parseInt(pos));
+              }
+            }
+          `}
+        </Script>
         <RootLayoutContent>
           {children}
         </RootLayoutContent>

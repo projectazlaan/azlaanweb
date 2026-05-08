@@ -4,13 +4,13 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "unpkg.com" },
+      { protocol: "https", hostname: "azlaan.com.bd" },
     ],
   },
   turbopack: {
     rules: {},
   },
   serverExternalPackages: ['better-sqlite3'],
-  optimizeFonts: false,
 };
 
 export default nextConfig;

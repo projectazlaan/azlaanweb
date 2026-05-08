@@ -38,37 +38,33 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-black/[0.05]"
       onMouseLeave={handleMouseLeave}
     >
-      <div className="max-w-7xl mx-auto flex items-center px-4 py-3 md:px-6 md:py-4 relative">
-        {/* ── Left side (Mobile Profile & Cart) ── */}
-        <div className="md:hidden flex items-center gap-1 -ml-2">
-          <Link
-            href="/account"
+      <div className="max-w-7xl mx-auto flex items-center px-4 py-3 md:px-6 md:py-5 relative">
+        {/* ── Left side (Mobile Menu) ── */}
+        <div className="md:hidden flex items-center -ml-2">
+          <button
+            onClick={openSidebar}
             className="p-2 rounded-full hover:bg-black/[0.04] transition-all group"
+            aria-label="Open menu"
           >
-            <User className="w-5 h-5 text-[#1D1D1F] group-hover:scale-110 transition-transform" />
-          </Link>
-          <Link
-            href="/cart"
-            className="p-2 rounded-full hover:bg-black/[0.04] transition-all relative group"
-          >
-            <ShoppingBag className="w-5 h-5 text-[#1D1D1F] group-hover:scale-110 transition-transform" />
-            {itemsCount > 0 && (
-              <span className="absolute top-1 right-1 bg-[#0071E3] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                {itemsCount}
-              </span>
-            )}
-          </Link>
+            <Menu className="w-6 h-6 text-[#1D1D1F] group-hover:rotate-90 transition-transform duration-300" />
+          </button>
         </div>
         {/* ── Brand Logo (Centered on Mobile) ── */}
         <Link 
           href="/" 
-          className="font-serif text-xl md:text-2xl font-bold text-[#1D1D1F] tracking-tight hover:opacity-70 transition-opacity
-            absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"
+          className="absolute left-1/2 -translate-x-1/2 md:relative md:left-auto md:translate-x-0 w-[100px] h-[35px] md:w-[130px] md:h-[45px] hover:opacity-80 transition-opacity mix-blend-multiply"
         >
-          Azlaan
+          <Image
+            src="/media-pro/azlaan-logo-trimmed.png"
+            alt="Azlaan Logo"
+            fill
+            className="object-contain contrast-[1.5] grayscale"
+            priority
+            quality={100}
+          />
         </Link>
         {/* ── Desktop Navigation Triggers ── */}
-        <div className="hidden md:flex flex-1 items-center justify-center gap-10 lg:gap-12">
+        <div className="hidden md:flex flex-1 items-center justify-center gap-10 lg:gap-14">
           {categories.map((cat) => {
             const isActive = pathname.startsWith(`/${cat.slug}`);
             const isHovered = openMenu === cat.slug;
@@ -80,11 +76,11 @@ export default function Navbar() {
               >
                 <Link
                   href={`/${cat.slug}`}
-                  className={`flex items-center gap-1.5 text-[13px] font-semibold tracking-wide uppercase transition-all duration-300
-                    ${isActive || isHovered ? 'text-[#0071E3]' : 'text-[#1D1D1F]/70 hover:text-[#1D1D1F]'}`}
+                  className={`flex items-center gap-2 text-[14px] font-bold tracking-widest uppercase transition-all duration-300
+                    ${isActive || isHovered ? 'text-[#0071E3]' : 'text-[#1D1D1F]/80 hover:text-[#1D1D1F]'}`}
                 >
                   {cat.name}
-                  <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isHovered ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isHovered ? 'rotate-180' : ''}`} />
                 </Link>
                 {/* Active Indicator Line */}
                 {(isActive || isHovered) && (
@@ -101,8 +97,8 @@ export default function Navbar() {
           <div className="relative py-2">
             <Link
               href="/visuals"
-              className={`flex items-center gap-1.5 text-[13px] font-semibold tracking-wide uppercase transition-all duration-300
-                ${pathname.startsWith('/visuals') ? 'text-[#0071E3]' : 'text-[#1D1D1F]/70 hover:text-[#1D1D1F]'}`}
+              className={`flex items-center gap-2 text-[14px] font-bold tracking-widest uppercase transition-all duration-300
+                ${pathname.startsWith('/visuals') ? 'text-[#0071E3]' : 'text-[#1D1D1F]/80 hover:text-[#1D1D1F]'}`}
             >
               Watch & Buy
             </Link>
@@ -116,40 +112,34 @@ export default function Navbar() {
           </div>
           <Link 
             href="/contact" 
-            className={`text-[13px] font-semibold tracking-wide uppercase transition-colors
-              ${pathname === '/contact' ? 'text-[#0071E3]' : 'text-[#1D1D1F]/70 hover:text-[#1D1D1F]'}`}
+            className={`text-[14px] font-bold tracking-widest uppercase transition-colors
+              ${pathname === '/contact' ? 'text-[#0071E3]' : 'text-[#1D1D1F]/80 hover:text-[#1D1D1F]'}`}
           >
             Contact
           </Link>
         </div>
         {/* ── Right side (Desktop: Icons | Mobile: Menu) ── */}
-        <div className="flex items-center justify-end gap-1 md:gap-5 ml-auto">
+        <div className="flex items-center justify-end gap-1 md:gap-6 ml-auto">
           {/* Desktop Only Icons */}
           <Link
             href="/account"
             className="hidden md:flex p-2 rounded-full hover:bg-black/[0.04] transition-all group"
             title="Account"
           >
-            <User className="w-5 h-5 text-[#1D1D1F] group-hover:scale-110 transition-transform" />
+            <User className="w-6 h-6 text-[#1D1D1F] group-hover:scale-110 transition-transform" />
           </Link>
           <Link
             href="/cart"
-            className="hidden md:flex p-2 rounded-full hover:bg-black/[0.04] transition-all relative group"
+            className="p-2 rounded-full hover:bg-black/[0.04] transition-all relative group"
           >
-            <ShoppingBag className="w-5 h-5 text-[#1D1D1F] group-hover:scale-110 transition-transform" />
+            <ShoppingBag className="w-6 h-6 text-[#1D1D1F] group-hover:scale-110 transition-transform" />
             {itemsCount > 0 && (
-              <span className="absolute top-1 right-1 bg-[#0071E3] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+              <span className="absolute top-1 right-1 bg-[#0071E3] text-white text-[10px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center">
                 {itemsCount}
               </span>
             )}
           </Link>
-          {/* Mobile Menu Trigger */}
-          <button
-            onClick={openSidebar}
-            className="md:hidden p-2 -mr-2 rounded-full hover:bg-black/[0.04] transition-all group"
-          >
-            <Menu className="w-5 h-5 text-[#1D1D1F] group-hover:rotate-180 transition-transform duration-500" />
-          </button>
+          {/* Mobile Menu Trigger removed from here (now on left) */}
         </div>
       </div>
       {/* ── Mega Menu Dropdown (Edge-to-Edge) ── */}

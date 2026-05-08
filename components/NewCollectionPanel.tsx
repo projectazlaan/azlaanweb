@@ -162,11 +162,16 @@ export default function NewCollectionPanel() {
                           <h3 className="text-white text-xl md:text-2xl font-bold mb-3 tracking-tight">{item.title}</h3>
                           <Link 
                             href="/shop"
-                            className="flex items-center gap-2 text-white/90 hover:text-white text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] transition-all group/btn w-fit"
+                            className="group relative flex items-center gap-3 px-8 py-2.5 rounded-full border border-white/20 hover:border-white/40 bg-white transition-all duration-700 overflow-hidden shadow-sm w-fit"
                           >
-                            <span>Explore Collection</span>
-                            <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform" />
+                            <span className="text-[9px] md:text-[11px] font-bold uppercase tracking-[0.3em] text-black/80 group-hover:text-black transition-colors">
+                              Explore Collection
+                            </span>
+                            <div className="w-8 md:w-12 h-[0.5px] bg-black/30 group-hover:bg-black group-hover:w-16 transition-all duration-700" />
+                            <ArrowRight className="w-4 h-4 text-black/60 group-hover:text-black group-hover:translate-x-1 transition-all duration-500" />
+                            <div className="absolute inset-0 bg-black/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                           </Link>
+
                         </div>
                       </motion.div>
                     </div>

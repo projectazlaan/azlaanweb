@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Heart, Eye, Star } from 'lucide-react';
 import { Product, ViewMode } from '@/types';
 import { toast } from 'react-hot-toast';
@@ -27,17 +27,30 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
   const [activeImage, setActiveImage] = useState(0);
   const [rating, setRating] = useState(4.5);
   const [isRatingMode, setIsRatingMode] = useState(false);
+  const cardRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    if (!isRatingMode) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
+        setIsRatingMode(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isRatingMode]);
   const displayImage = (product.images && product.images[activeImage]) || product.image || '';
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
   // Render static stars
-  const renderStars = (val: number, size = 10) => {
+  const renderStars = (val: number) => {
     return (
-      <div className="flex gap-0.5">
+      <div className="flex items-center gap-[1px] w-full max-w-[50px] md:max-w-[70px]">
         {[1, 2, 3, 4, 5].map((s) => (
           <Star
             key={s}
-            className={`w-${size / 4} h-${size / 4}`}
-            style={{ width: size, height: size }}
+            className="w-[18%] h-auto aspect-square shrink-0"
             fill={s <= val ? "#fbbf24" : "transparent"}
             stroke={s <= val ? "#fbbf24" : "#d1d5db"}
           />
@@ -85,6 +98,7 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
   // Grid View
   return (
     <Link 
+      ref={cardRef}
       href={`/product/${product.slug}`} 
       className="group flex flex-col bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-500 border border-black/5"
     >
@@ -171,14 +185,18 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
         {/* Interactive Rating Overlay */}
         {isRatingMode && (
           <div 
-            className="absolute inset-0 bg-black/40 backdrop-blur-md z-20 flex flex-col items-center justify-center gap-4 animate-in fade-in zoom-in duration-300"
+            className="absolute inset-0 bg-black/60 backdrop-blur-md z-20 flex flex-col items-center justify-center gap-3 p-4 animate-in fade-in zoom-in duration-300 cursor-default"
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               setIsRatingMode(false);
             }}
           >
-            <span className="text-white text-[10px] font-black uppercase tracking-widest">Rate this product</span>
-            <div className="flex gap-2 p-4 bg-white/10 rounded-2xl border border-white/20">
+            <span className="text-white text-[9px] md:text-[10px] font-black uppercase tracking-widest text-center">Rate this product</span>
+            <div 
+              className="flex items-center justify-center gap-[2%] w-full max-w-[200px] p-4 bg-white/10 rounded-2xl border border-white/20"
+              onClick={(e) => e.stopPropagation()}
+            >
               {[1, 2, 3, 4, 5].map((s) => (
                 <button
                   key={s}
@@ -188,10 +206,10 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
                     setRating(s);
                     setIsRatingMode(false);
                   }}
-                  className="hover:scale-125 transition-transform"
+                  className="w-[18%] aspect-square hover:scale-125 transition-transform flex items-center justify-center"
                 >
                   <Star 
-                    className="w-8 h-8 md:w-10 md:h-10" 
+                    className="w-full h-full" 
                     fill={s <= (rating || 0) ? "#fbbf24" : "transparent"} 
                     stroke={s <= (rating || 0) ? "#fbbf24" : "white"} 
                   />
@@ -200,6 +218,7 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
             </div>
           </div>
         )}
+
       </div>
       {/* Product Info Container */}
       <div className="bg-white p-2 md:p-3 flex flex-col gap-1 relative">
@@ -214,8 +233,7 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
               ? (product.category || product.categorySlug) 
               : product.subcategory}
           </p>
-          <div className="w-[1px] h-2 bg-gray-100" />
-          <div className="scale-[0.65] md:scale-[0.8] origin-left flex items-center">
+          <div className="flex-1 flex items-center min-w-0">
             {renderStars(rating)}
           </div>
         </div>
@@ -257,10 +275,15 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
                 },
               });
             }}
-            className="shrink-0 bg-transparent border border-black/20 text-black hover:border-black px-2 md:px-3 py-1 rounded-full text-[8px] md:text-[10px] font-bold uppercase tracking-tight transition-all active:scale-95"
+            className="group relative shrink-0 flex items-center gap-2 px-4 py-1.5 rounded-full border border-black/10 hover:border-black/30 bg-white transition-all duration-500 overflow-hidden shadow-sm"
           >
-            Add
+            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-black/70 group-hover:text-black transition-colors">
+              Add
+            </span>
+            <div className="w-4 h-[0.5px] bg-black/20 group-hover:bg-black group-hover:w-6 transition-all duration-500" />
+            <div className="absolute inset-0 bg-black/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           </button>
+
         </div>
       </div>
     </Link>
