@@ -443,7 +443,7 @@ export default function ReelsPanel() {
           >
             <div className="h-[1px] w-4 md:w-8 bg-gray-400" />
             <span className="text-[10px] md:text-xs font-bold tracking-[0.3em] md:tracking[0.4em] uppercase text-gray-600">
-              Azlaan Visuals
+              Watch & Buy
             </span>
             <div className="h-[1px] w-4 md:w-8 bg-gray-400" />
           </motion.div>
@@ -613,36 +613,37 @@ export default function ReelsPanel() {
         {/* ── Cinematic Audio/Video Wave Portal ── */}
         <div className="flex justify-center mt-6 md:mt-2 pb-6">
           <Link 
-            href="/videos" 
-            className="group relative h-[30px] w-[80px] rounded-full bg-black/80 backdrop-blur-md border border-white/20 flex items-center justify-center gap-1.5 overflow-hidden hover:w-[120px] hover:bg-black transition-all duration-500 cursor-pointer shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]"
-            title="Explore Azlaan Cinema"
+            href="/visuals" 
+            className="group relative h-[36px] w-[140px] rounded-full bg-white border border-black/10 flex items-center justify-center gap-2 overflow-hidden hover:w-[165px] transition-all duration-500 cursor-pointer shadow-lg hover:shadow-xl"
+            title="Explore Watch & Buy"
           >
-            {/* Play Icon that slides in on hover */}
-            <div className="w-0 opacity-0 group-hover:w-4 group-hover:opacity-100 transition-all duration-500 flex justify-center overflow-hidden z-10">
-              <Play className="w-3 h-3 fill-white text-white ml-[1px]" />
+            {/* Play Icon - Always Visible */}
+            <div className="w-4 opacity-100 flex justify-center overflow-hidden z-10">
+              <Play className="w-3.5 h-3.5 fill-black text-black ml-[1px]" />
             </div>
-            {/* Animated Audio Wave / Media Indicator */}
-            <div className="flex items-center gap-[3px] h-3 z-10">
-              <motion.div 
-                animate={{ height: ['4px', '12px', '4px'] }}
-                transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
-                className="w-1 bg-white rounded-full"
-              />
-              <motion.div 
-                animate={{ height: ['8px', '4px', '8px'] }}
-                transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
-                className="w-1 bg-white rounded-full"
-              />
-              <motion.div 
-                animate={{ height: ['4px', '12px', '4px'] }}
-                transition={{ duration: 0.8, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-                className="w-1 bg-white rounded-full"
-              />
-              <motion.div 
-                animate={{ height: ['10px', '4px', '10px'] }}
-                transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut', delay: 0.1 }}
-                className="w-1 bg-white rounded-full"
-              />
+            {/* See More Text with Wave Animation */}
+            <div className="flex items-center justify-center h-full px-1 z-10 overflow-hidden">
+              <motion.span 
+                className="text-[10px] font-extrabold text-black tracking-widest uppercase flex gap-[1px]"
+              >
+                {['S','E','E',' ','M','O','R','E'].map((char, i) => (
+                  <motion.span
+                    key={i}
+                    animate={{ 
+                      y: [0, -4, 0],
+                      opacity: [0.7, 1, 0.7]
+                    }}
+                    transition={{ 
+                      duration: 1.5, 
+                      repeat: Infinity, 
+                      delay: i * 0.1,
+                      ease: "easeInOut" 
+                    }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </motion.span>
+                ))}
+              </motion.span>
             </div>
             {/* Subtle Cinematic Glow Orb */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40px] h-[40px] bg-[#0071E3]/30 blur-[15px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />

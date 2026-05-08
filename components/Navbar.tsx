@@ -97,16 +97,16 @@ export default function Navbar() {
               </div>
             );
           })}
-          {/* Static Link for Azlaan Cinema */}
+          {/* Static Link for Watch & Buy */}
           <div className="relative py-2">
             <Link
-              href="/videos"
+              href="/visuals"
               className={`flex items-center gap-1.5 text-[13px] font-semibold tracking-wide uppercase transition-all duration-300
-                ${pathname.startsWith('/videos') ? 'text-[#0071E3]' : 'text-[#1D1D1F]/70 hover:text-[#1D1D1F]'}`}
+                ${pathname.startsWith('/visuals') ? 'text-[#0071E3]' : 'text-[#1D1D1F]/70 hover:text-[#1D1D1F]'}`}
             >
-              Cinema
+              Watch & Buy
             </Link>
-            {pathname.startsWith('/videos') && (
+            {pathname.startsWith('/visuals') && (
               <motion.div 
                 layoutId="nav-active"
                 className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#0071E3] rounded-full"
