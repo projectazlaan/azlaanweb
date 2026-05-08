@@ -1,85 +1,119 @@
-import { createClient } from '@supabase/supabase-js';
-import fs from 'fs';
-import path from 'path';
+-- ============================================================
+-- Azlaan Super Easy Dashboard — Supabase DB Setup Script
+-- Run this ONCE in your Supabase SQL Editor
+-- ============================================================
 
-// Manually parse .env.local
-const envFile = fs.readFileSync('.env.local', 'utf8');
-const env = Object.fromEntries(
-  envFile.split('\n')
-    .filter(line => line.includes('='))
-    .map(line => line.split('=').map(part => part.trim()))
+-- 1. Products Table
+CREATE TABLE IF NOT EXISTS products (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name         TEXT NOT NULL,
+  price        NUMERIC NOT NULL DEFAULT 0,
+  category     TEXT NOT NULL DEFAULT 'Men',
+  stock_count  INTEGER NOT NULL DEFAULT 0,
+  in_stock     BOOLEAN NOT NULL DEFAULT true,
+  description  TEXT,
+  image_url    TEXT,
+  tag          TEXT,
+  sizes        TEXT[] DEFAULT ARRAY['S','M','L','XL'],
+  created_at   TIMESTAMPTZ DEFAULT now(),
+  updated_at   TIMESTAMPTZ DEFAULT now()
 );
 
-const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceKey = env.SUPABASE_SERVICE_ROLE_KEY;
+-- 2. Reels Table
+CREATE TABLE IF NOT EXISTS reels (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title      TEXT NOT NULL,
+  link       TEXT NOT NULL,
+  platform   TEXT DEFAULT 'YouTube',
+  views      TEXT DEFAULT '0',
+  trending   BOOLEAN DEFAULT false,
+  sort_order INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
 
-if (!supabaseUrl || !supabaseServiceKey) {
-  console.error('❌ Error: Missing Supabase credentials in .env.local (Ensure SUPABASE_SERVICE_ROLE_KEY is present)');
-  process.exit(1);
-}
+-- 3. Orders Table
+CREATE TABLE IF NOT EXISTS orders (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  customer_name TEXT NOT NULL,
+  phone       TEXT,
+  address     TEXT,
+  items       JSONB,
+  total       NUMERIC NOT NULL DEFAULT 0,
+  status      TEXT NOT NULL DEFAULT 'pending',
+  created_at  TIMESTAMPTZ DEFAULT now(),
+  updated_at  TIMESTAMPTZ DEFAULT now()
+);
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+-- 4. VIP Members / Users Table
+CREATE TABLE IF NOT EXISTS vip_members (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name         TEXT NOT NULL,
+  email        TEXT UNIQUE NOT NULL,
+  tier         TEXT DEFAULT 'Silver',
+  points       INTEGER DEFAULT 0,
+  total_spent  NUMERIC DEFAULT 0,
+  is_premier   BOOLEAN DEFAULT false,
+  avatar_color TEXT DEFAULT 'bg-blue-500',
+  joined_at    TIMESTAMPTZ DEFAULT now()
+);
 
-async function migrate() {
-  try {
-    console.log('🚀 Starting Migration...');
+-- 5. Site Config Table
+CREATE TABLE IF NOT EXISTS site_config (
+  key   TEXT PRIMARY KEY,
+  value TEXT
+);
 
-    // 1. Read Categories
-    const categoriesData = JSON.parse(fs.readFileSync('./data/categories.json', 'utf8'));
-    console.log(`📦 Found ${categoriesData.length} categories. Uploading...`);
-    
-    const formattedCategories = categoriesData.map(c => ({
-      name: c.name,
-      slug: c.slug,
-      description: c.description,
-      subcategories: c.subcategories,
-      filters: c.filters,
-      search_keywords: c.searchKeywords,
-      hero_image: c.heroImage,
-      sub_sub_categories: c.subSubCategories
-    }));
+-- Insert default config values
+INSERT INTO site_config (key, value) VALUES
+  ('hero_title',        'Define Your Style'),
+  ('hero_subtitle',     'Premium Bangladeshi Ethnics. Crafted For the Modern World.'),
+  ('newsletter_title',  'Register & Get Free Delivery.'),
+  ('newsletter_sub',    'Join the Azlaan Inner Circle today and enjoy complimentary shipping on your first order.'),
+  ('delivery_charge',   '100'),
+  ('free_delivery_min', '2000'),
+  ('premier_price',     '1000'),
+  ('loyalty_rate',      '10'),
+  ('show_reels',        'true'),
+  ('show_vip_panel',    'true'),
+  ('show_banner',       'true'),
+  ('flash_sale_active', 'false'),
+  ('flash_sale_pct',    '20'),
+  ('flash_sale_ends',   '')
+ON CONFLICT (key) DO NOTHING;
 
-    const { error: catError } = await supabase.from('categories').upsert(formattedCategories, { onConflict: 'slug' });
-    if (catError) throw catError;
-    console.log('✅ Categories migrated successfully!');
+-- 6. Promo Codes Table
+CREATE TABLE IF NOT EXISTS promo_codes (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  code        TEXT UNIQUE NOT NULL,
+  discount    NUMERIC NOT NULL DEFAULT 10,
+  uses        INTEGER DEFAULT 0,
+  max_uses    INTEGER DEFAULT 100,
+  active      BOOLEAN DEFAULT true,
+  created_at  TIMESTAMPTZ DEFAULT now()
+);
 
-    // 2. Read Products
-    const productsData = JSON.parse(fs.readFileSync('./data/products.json', 'utf8'));
-    console.log(`🏷️ Found ${productsData.length} products. Uploading...`);
+-- 7. Gift Cards Table
+CREATE TABLE IF NOT EXISTS gift_cards (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  code        TEXT UNIQUE NOT NULL,
+  amount      NUMERIC NOT NULL,
+  balance     NUMERIC NOT NULL,
+  recipient   TEXT,
+  sent_to     TEXT,
+  redeemed    BOOLEAN DEFAULT false,
+  created_at  TIMESTAMPTZ DEFAULT now()
+);
 
-    const formattedProducts = productsData.map(p => ({
-      id: p.id,
-      name: p.name,
-      slug: p.slug,
-      price: p.price,
-      original_price: p.originalPrice,
-      images: p.images,
-      category_slug: p.categorySlug,
-      subcategory: p.subcategory,
-      rating: p.rating,
-      review_count: p.reviewCount,
-      badge: p.badge,
-      sizes: p.sizes,
-      colors: p.colors,
-      fabric: p.fabric,
-      fit: p.fit,
-      occasion: p.occasion,
-      is_in_stock: p.isInStock,
-      stock_count: p.stockCount,
-      viewers_count: p.viewersCount,
-      recent_purchases: p.recentPurchases,
-      recommended_with: p.recommendedWith,
-      complete_the_look: p.completeTheLook
-    }));
+-- 8. Loyalty Transactions Table
+CREATE TABLE IF NOT EXISTS loyalty_transactions (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  member_id  UUID REFERENCES vip_members(id) ON DELETE CASCADE,
+  points     INTEGER NOT NULL,
+  reason     TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
 
-    const { error: prodError } = await supabase.from('products').upsert(formattedProducts, { onConflict: 'id' });
-    if (prodError) throw prodError;
-    console.log('✅ Products migrated successfully!');
-
-    console.log('\n✨ All data has been successfully moved to Supabase!');
-  } catch (err) {
-    console.error('❌ Migration failed:', err.message);
-  }
-}
-
-migrate();
+-- ============================================================
+-- Storage Bucket (run in Supabase Dashboard > Storage)
+-- Create a bucket named: product-images  (Public = ON)
+-- ============================================================

@@ -83,7 +83,7 @@ const DUMMY_TESTIMONIALS: Testimonial[] = [
 
 export default function Testimonials() {
   const [testimonials] = useState<Testimonial[]>(DUMMY_TESTIMONIALS)
-  
+
   // Create infinite scroll array
   const infiniteTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials]
 
@@ -131,7 +131,7 @@ export default function Testimonials() {
                 className="w-[320px] md:w-[500px] shrink-0"
               >
                 <div className="h-full bg-white border border-black/[0.03] p-8 md:p-12 rounded-[2.5rem] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(0,113,227,0.1)] transition-all duration-700 group flex flex-col justify-between">
-                  
+
                   <div>
                     {/* Header: Profile & Quote */}
                     <div className="flex items-start justify-between mb-8">
@@ -142,7 +142,7 @@ export default function Testimonials() {
                             alt={t.name}
                             fill
                             className="object-cover"
-                            unoptimized
+
                           />
                         </div>
                         <div>

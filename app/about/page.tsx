@@ -29,7 +29,7 @@ export default async function AboutPage({ searchParams }: { searchParams: Promis
                   alt="Craftsmanship"
                   fill
                   className="object-cover"
-                  unoptimized
+
                 />
               </div>
             </div>

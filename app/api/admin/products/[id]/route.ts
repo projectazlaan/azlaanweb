@@ -1,66 +1,38 @@
-import { NextResponse } from 'next/server'
-import { getDb } from '@/lib/db'
-import type { NextRequest } from 'next/server'
+import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'nodejs'
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
-export async function GET(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  try {
-    const { id } = await params
-    const db = getDb()
-    const stmt = db.prepare('SELECT * FROM products WHERE id = ?')
-    const product = stmt.get(id)
-    if (!product) {
-      return NextResponse.json({ error: 'Product not found' }, { status: 404 })
-    }
-    return NextResponse.json(product)
-  } catch {
-    return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 })
-  }
+type Params = { params: Promise<{ id: string }> };
+
+// PUT — update a product (name, price, stock toggle etc.)
+export async function PUT(req: NextRequest, { params }: Params) {
+  const { id } = await params;
+  const body = await req.json();
+
+  const { data, error } = await supabase
+    .from('products')
+    .update(body)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json(data);
 }
 
-export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  try {
-    const { id } = await params
-    const body = await request.json()
-    const { name, nameBn, price, image, category, categoryBn, description, descriptionBn, inStock } = body
+// DELETE — remove a product
+export async function DELETE(_req: NextRequest, { params }: Params) {
+  const { id } = await params;
 
-    const db = getDb()
-    const now = new Date().toISOString()
-    const priceNum = price !== undefined ? (typeof price === 'string' ? parseInt(price.replace(/[^\d]/g, '')) : price) : undefined
-    const priceDisplay = priceNum !== undefined ? `৳${priceNum.toLocaleString('en-IN')}` : undefined
+  const { error } = await supabase
+    .from('products')
+    .delete()
+    .eq('id', id);
 
-    const stmt = db.prepare(`
-      UPDATE products
-      SET name = COALESCE(?, name),
-          nameBn = COALESCE(?, nameBn),
-          price = COALESCE(?, price),
-          priceDisplay = COALESCE(?, priceDisplay),
-          image = COALESCE(?, image),
-          category = COALESCE(?, category),
-          categoryBn = COALESCE(?, categoryBn),
-          description = COALESCE(?, description),
-          descriptionBn = COALESCE(?, descriptionBn),
-          inStock = COALESCE(?, inStock),
-          updatedAt = ?
-      WHERE id = ?
-    `)
-    stmt.run(name || null, nameBn || null, priceNum || null, priceDisplay || null, image || null, category || null, categoryBn || null, description || null, descriptionBn || null, inStock !== undefined ? (inStock ? 1 : 0) : null, now, id)
-
-    return NextResponse.json({ success: true })
-  } catch {
-    return NextResponse.json({ error: 'Failed to update product' }, { status: 500 })
-  }
-}
-
-export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  try {
-    const { id } = await params
-    const db = getDb()
-    const stmt = db.prepare('DELETE FROM products WHERE id = ?')
-    stmt.run(id)
-    return NextResponse.json({ success: true })
-  } catch {
-    return NextResponse.json({ error: 'Failed to delete product' }, { status: 500 })
-  }
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json({ success: true });
 }

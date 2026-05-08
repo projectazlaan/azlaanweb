@@ -34,7 +34,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
-      
+
       {/* Modal Content */}
       <div className="relative bg-white w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-xl shadow-2xl flex flex-col md:flex-row z-10 animate-in fade-in zoom-in-95 duration-300">
         <button 
@@ -51,7 +51,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
               src={(product.images && product.images[activeImage]) || product.image || ''}
               alt={product.name || 'Product Image'}
               fill
-              unoptimized
+
               className="object-cover"
             />
             {product.badge && (
@@ -60,7 +60,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
               </span>
             )}
           </div>
-          
+
           {product.images && product.images.length > 1 && (
             <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
               {product.images.map((img, idx) => (
@@ -71,7 +71,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
                     activeImage === idx ? 'border-black' : 'border-transparent opacity-60 hover:opacity-100'
                   }`}
                 >
-                  <Image src={img || ''} alt="" fill unoptimized className="object-cover" />
+                  <Image src={img || ''} alt="" fill className="object-cover" />
                 </button>
               ))}
             </div>
@@ -86,7 +86,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
           <h2 className="text-2xl md:text-3xl font-sans font-extrabold tracking-tight mb-2 uppercase">
             {product.name}
           </h2>
-          
+
           <div className="flex items-center gap-3 mb-6">
             <span className="text-xl font-bold text-black">{product.priceDisplay}</span>
             {product.originalPrice && product.originalPrice > product.price && (

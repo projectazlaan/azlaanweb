@@ -1,5 +1,7 @@
 import { Product, Category } from '@/types';
 import { supabase } from './supabase';
+import { unstable_cache as nextCache } from 'next/cache';
+import { cache as reactCache } from 'react';
 
 // ─── Mapping Helpers ──────────────────────────────────────────
 
@@ -41,102 +43,144 @@ function mapProduct(row: any): Product {
 
 // ─── Category Helpers ─────────────────────────────────────────
 
-export async function getAllCategories(): Promise<Category[]> {
-  const { data, error } = await supabase
-    .from('categories')
-    .select('*')
-    .order('name');
-  
-  if (error) {
-    console.error('Error fetching categories:', error);
-    return [];
-  }
-  return (data || []).map(mapCategory);
-}
+export const getAllCategories = reactCache(async (): Promise<Category[]> => {
+  return nextCache(
+    async () => {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .order('name');
+      
+      if (error) {
+        console.error('Error fetching categories:', error);
+        return [];
+      }
+      return (data || []).map(mapCategory);
+    },
+    ['all-categories'],
+    { revalidate: 3600, tags: ['categories'] }
+  )();
+});
 
-export async function getCategoryBySlug(slug: string): Promise<Category | null> {
-  const { data, error } = await supabase
-    .from('categories')
-    .select('*')
-    .eq('slug', slug)
-    .maybeSingle();
-  
-  if (error || !data) {
-    if (error) console.error('Error fetching category:', error);
-    return null;
-  }
-  return mapCategory(data);
-}
+export const getCategoryBySlug = reactCache(async (slug: string): Promise<Category | null> => {
+  return nextCache(
+    async () => {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .eq('slug', slug)
+        .maybeSingle();
+      
+      if (error || !data) {
+        if (error) console.error('Error fetching category:', error);
+        return null;
+      }
+      return mapCategory(data);
+    },
+    [`category-${slug}`],
+    { revalidate: 3600, tags: ['categories', `category-${slug}`] }
+  )();
+});
 
 // ─── Product Helpers ──────────────────────────────────────────
 
-export async function getAllProducts(): Promise<Product[]> {
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .order('created_at', { ascending: false });
-  
-  if (error) {
-    console.error('Error fetching products:', error);
-    return [];
-  }
-  return (data || []).map(mapProduct);
-}
+export const getAllProducts = reactCache(async (): Promise<Product[]> => {
+  return nextCache(
+    async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching products:', error);
+        return [];
+      }
+      return (data || []).map(mapProduct);
+    },
+    ['all-products'],
+    { revalidate: 3600, tags: ['products'] }
+  )();
+});
 
-export async function getProductsByCategory(categorySlug: string): Promise<Product[]> {
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .eq('category_slug', categorySlug.toLowerCase())
-    .order('created_at', { ascending: false });
-  
-  if (error) {
-    console.error('Error fetching products by category:', error);
-    return [];
-  }
-  return (data || []).map(mapProduct);
-}
+export const getProductsByCategory = reactCache(async (categorySlug: string): Promise<Product[]> => {
+  return nextCache(
+    async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('category_slug', categorySlug.toLowerCase())
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching products by category:', error);
+        return [];
+      }
+      return (data || []).map(mapProduct);
+    },
+    [`products-category-${categorySlug}`],
+    { revalidate: 3600, tags: ['products', `category-${categorySlug}`] }
+  )();
+});
 
-export async function getProductById(id: string): Promise<Product | null> {
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .eq('id', id)
-    .maybeSingle();
-  
-  if (error || !data) {
-    if (error) console.error('Error fetching product by ID:', error);
-    return null;
-  }
-  return mapProduct(data);
-}
+export const getProductById = reactCache(async (id: string): Promise<Product | null> => {
+  return nextCache(
+    async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('id', id)
+        .maybeSingle();
+      
+      if (error || !data) {
+        if (error) console.error('Error fetching product by ID:', error);
+        return null;
+      }
+      return mapProduct(data);
+    },
+    [`product-id-${id}`],
+    { revalidate: 3600, tags: ['products', `product-${id}`] }
+  )();
+});
 
-export async function getProductBySlug(slug: string): Promise<Product | null> {
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .or(`slug.eq."${slug}",id.eq."${slug}"`)
-    .maybeSingle();
-  
-  if (error || !data) {
-    if (error) console.error('Error fetching product by slug:', error);
-    return null;
-  }
-  return mapProduct(data);
-}
+export const getProductBySlug = reactCache(async (slug: string): Promise<Product | null> => {
+  return nextCache(
+    async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .or(`slug.eq."${slug}",id.eq."${slug}"`)
+        .maybeSingle();
+      
+      if (error || !data) {
+        if (error) console.error('Error fetching product by slug:', error);
+        return null;
+      }
+      return mapProduct(data);
+    },
+    [`product-slug-${slug}`],
+    { revalidate: 3600, tags: ['products', `product-slug-${slug}`] }
+  )();
+});
 
-export async function getRecommendedProducts(productId: string): Promise<Product[]> {
-  const product = await getProductById(productId);
-  if (!product || !product.recommendedWith || product.recommendedWith.length === 0) return [];
-  
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .in('id', product.recommendedWith);
-  
-  if (error) {
-    console.error('Error fetching recommended products:', error);
-    return [];
-  }
-  return (data || []).map(mapProduct);
-}
+export const getRecommendedProducts = reactCache(async (productId: string): Promise<Product[]> => {
+  return nextCache(
+    async () => {
+      const product = await getProductById(productId);
+      if (!product || !product.recommendedWith || product.recommendedWith.length === 0) return [];
+      
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .in('id', product.recommendedWith);
+      
+      if (error) {
+        console.error('Error fetching recommended products:', error);
+        return [];
+      }
+      return (data || []).map(mapProduct);
+    },
+    [`recommended-${productId}`],
+    { revalidate: 3600, tags: ['products', `recommended-${productId}`] }
+  )();
+});

@@ -1,15 +1,18 @@
-import { NextResponse } from 'next/server'
-import { getDb } from '@/lib/db'
+import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'nodejs'
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
+// GET — all orders
 export async function GET() {
-  try {
-    const db = getDb()
-    const stmt = db.prepare('SELECT * FROM orders ORDER BY createdAt DESC')
-    const orders = stmt.all()
-    return NextResponse.json(orders)
-  } catch {
-    return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 })
-  }
+  const { data, error } = await supabase
+    .from('orders')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json(data ?? []);
 }

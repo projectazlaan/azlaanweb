@@ -282,8 +282,9 @@ export default function CategoryContent({
           alt={displayTitle}
           fill
           priority
-          unoptimized
+          quality={90}
           className="object-cover opacity-60 scale-105 transition-transform duration-[10000ms] hover:scale-100"
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
         

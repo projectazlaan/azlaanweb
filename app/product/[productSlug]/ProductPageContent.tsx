@@ -108,7 +108,7 @@ export default function ProductPageContent({ product, recommended }: ProductPage
             <div className="max-w-[1400px] mx-auto flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-lg overflow-hidden border border-black/5 relative">
-                  <Image src={(product.images && product.images[0]) || ''} alt={product.name} fill className="object-cover" unoptimized />
+                  <Image src={(product.images && product.images[0]) || ''} alt={product.name} fill className="object-cover" />
                 </div>
                 <div>
                   <h3 className="text-xs font-black uppercase tracking-widest text-primary">{product.name}</h3>
@@ -157,7 +157,7 @@ export default function ProductPageContent({ product, recommended }: ProductPage
 
       <section className="max-w-[1400px] mx-auto px-4 pt-8 md:pt-12 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-24">
-          
+
           {/* Left: Product Gallery (Col-7) */}
           <div className="lg:col-span-7">
             <motion.div 
@@ -167,7 +167,7 @@ export default function ProductPageContent({ product, recommended }: ProductPage
               className="relative"
             >
               <ProductGallery images={product.images} name={product.name} />
-              
+
             </motion.div>
           </div>
 
@@ -213,7 +213,7 @@ export default function ProductPageContent({ product, recommended }: ProductPage
               <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-primary leading-[0.85] mb-6">
                 {product.name}
               </h1>
-              
+
               <div className="flex items-baseline gap-4 mb-8">
                 <span className="text-4xl font-black text-[#1D1D1F]">
                   ৳{product.isSoldByLength ? product.price.toLocaleString() + ' / meter' : product.price.toLocaleString()}
@@ -321,7 +321,7 @@ export default function ProductPageContent({ product, recommended }: ProductPage
                   <Heart className={`w-6 h-6 ${isWished ? 'fill-current' : ''}`} />
                 </button>
               </div>
-              
+
               <button
                 onClick={handleBuyNow}
                 className="w-full bg-black text-white py-6 rounded-2xl font-black uppercase tracking-[0.3em] text-[12px] shadow-[0_20px_50px_rgba(0,0,0,0.2)] flex items-center justify-center gap-3 hover:bg-[#1D1D1F] transition-all hover:-translate-y-1 active:translate-y-0"

@@ -14,9 +14,23 @@ export default function AllProductsPanel() {
   useEffect(() => {
     // Directly use productsData for reliability
     import('@/data/products.json').then((data) => {
-      // 2 rows: 2 cols mobile (4), 4-6 cols desktop (8-12)
-      setProducts(data.default.slice(0, 12) as any[])
-      setLoading(false)
+      const allProducts = data.default as any[];
+      
+      const updateCount = () => {
+        const width = window.innerWidth;
+        let count = 4; // Mobile: 2 cols * 2 rows = 4
+        if (width >= 1280) count = 12; // xl: 6 cols * 2 rows = 12
+        else if (width >= 1024) count = 10; // lg: 5 cols * 2 rows = 10
+        else if (width >= 768) count = 8; // md: 4 cols * 2 rows = 8
+        
+        setProducts(allProducts.slice(0, count));
+      };
+
+      updateCount();
+      window.addEventListener('resize', updateCount);
+      setLoading(false);
+
+      return () => window.removeEventListener('resize', updateCount);
     })
   }, [])
 

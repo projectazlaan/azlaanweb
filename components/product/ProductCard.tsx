@@ -64,8 +64,8 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
             src={displayImage}
             alt={product.name}
             fill
-            unoptimized
             className="object-cover group-hover:scale-105 transition-transform duration-700"
+            sizes="(max-width: 768px) 100px, 150px"
           />
         </div>
         <div className="flex flex-col justify-center gap-1.5">
@@ -106,7 +106,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
           src={displayImage}
           alt={product.name}
           fill
-          unoptimized
           className="object-cover group-hover:scale-110 transition-transform duration-[1500ms] ease-out"
           sizes="(max-width: 768px) 50vw, 25vw"
         />

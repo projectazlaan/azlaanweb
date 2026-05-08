@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Play, 
@@ -56,10 +57,11 @@ export default function ReelsPanel() {
   const [commentsList, setCommentsList] = useState(MOCK_COMMENTS);
   const [newComment, setNewComment] = useState('');
 
-  // Load all reels by default to ensure 100% playability
-  const [loadedIframes, setLoadedIframes] = useState<Record<number, boolean>>(
-    REEL_LINKS.reduce((acc, _, idx) => ({ ...acc, [idx]: true }), {})
-  );
+  // Lazy Load Architecture: Only load the first two reels initially for super fast rendering
+  const [loadedIframes, setLoadedIframes] = useState<Record<number, boolean>>({
+    0: true,
+    1: true,
+  });
 
   const [isMuted, setIsMuted] = useState(true);
   const playerRefs = useRef<Record<number, any>>({});
@@ -303,6 +305,15 @@ export default function ReelsPanel() {
     }
   }, [isFullScreen, scrollTo]);
 
+  // Dynamic parsing for newly lazy-loaded iframes
+  useEffect(() => {
+    if ((window as any).FB) {
+      setTimeout(() => {
+        try { (window as any).FB.XFBML.parse(); } catch(e) {}
+      }, 100);
+    }
+  }, [loadedIframes]);
+
   // Main Carousel Playback Control
   useEffect(() => {
     if (isFullScreen) {
@@ -407,19 +418,16 @@ export default function ReelsPanel() {
 
     if (player) {
       if (!newMuted) {
-        // "Nuclear" Option: Multi-stage play resumption to fight FB's auto-pause
-        setIsPlaying(prev => ({ ...prev, [key]: true })); // UI Sync
-        try { player.play(); } catch(e) {} // Initial trigger
+        // SYNCHRONOUS UNMUTE: Must be in the direct call stack of the click event
+        // to bypass the browser's audio auto-play restrictions.
+        try {
+          player.unmute();
+          player.play();
+          setIsPlaying(prev => ({ ...prev, [key]: true }));
+        } catch(e) {}
         
-        setTimeout(() => {
-          try {
-            player.unmute();
-            player.play(); // Mid-trigger
-          } catch(e) {}
-        }, 30);
-        
-        // Post-triggers (very aggressive for first-time use)
-        [100, 250, 500, 800, 1200, 2000].forEach(ms => {
+        // Safety post-triggers (ensure playback stays active)
+        [100, 250, 500, 800].forEach(ms => {
           setTimeout(() => {
             try {
               if (player.getState && player.getState() !== 'playing') {
@@ -570,21 +578,23 @@ export default function ReelsPanel() {
                     )}
 
                     {/* Facebook Video Plugin (XFBML) */}
-                    <div 
-                      id={`fb-player-${idx}`}
-                      className={`fb-video absolute inset-0 w-full h-full transition-opacity duration-500 ${!isActive ? 'pointer-events-none opacity-80' : 'opacity-100'}`}
-                      data-href={link}
-                      data-width="500"
-                      data-allowfullscreen="true"
-                      data-autoplay="false"
-                      data-show-text="false"
-                      style={{ 
-                        background: 'transparent',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}
-                    />
+                    {loadedIframes[idx] && (
+                      <div 
+                        id={`fb-player-${idx}`}
+                        className={`fb-video absolute inset-0 w-full h-full transition-opacity duration-500 ${!isActive ? 'pointer-events-none opacity-80' : 'opacity-100'}`}
+                        data-href={link}
+                        data-width="500"
+                        data-allowfullscreen="true"
+                        data-autoplay="false"
+                        data-show-text="false"
+                        style={{ 
+                          background: 'transparent',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                      />
+                    )}
 
                     {/* Minimal Carousel Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
@@ -641,9 +651,9 @@ export default function ReelsPanel() {
                     <div className="absolute bottom-4 left-3 right-12 z-[60] pointer-events-none">
                       <div className="flex items-center gap-2 mb-1">
                         <img 
-                          src="https://azlaan.com.bd/wp-content/uploads/2023/10/Azlaan-Logo-Final-01-scaled.jpg" 
+                          src="/og-image.png" 
                           alt="Azlaan"
-                          className="w-6 h-6 rounded-full border border-white/50"
+                          className="w-6 h-6 rounded-full border border-white/50 object-cover bg-black"
                         />
                         <span className="text-white font-bold text-[10px] drop-shadow-md">Azlaan</span>
                       </div>
@@ -669,7 +679,7 @@ export default function ReelsPanel() {
         </div>
 
         {/* ── Dot Indicators ── */}
-        <div className="hidden md:flex justify-center items-center gap-2 mt-4">
+        <div className="hidden md:flex justify-center items-center gap-2 mt-4 mb-2">
           {REEL_LINKS.map((_, idx) => (
             <button
               key={idx}
@@ -677,6 +687,47 @@ export default function ReelsPanel() {
               className={`rounded-full transition-all duration-300 ${activeIndex === idx ? 'w-6 h-2 bg-black' : 'w-2 h-2 bg-black/20'}`}
             />
           ))}
+        </div>
+
+        {/* ── Cinematic Audio/Video Wave Portal ── */}
+        <div className="flex justify-center mt-6 md:mt-2 pb-6">
+          <Link 
+            href="/videos" 
+            className="group relative h-[30px] w-[80px] rounded-full bg-black/80 backdrop-blur-md border border-white/20 flex items-center justify-center gap-1.5 overflow-hidden hover:w-[120px] hover:bg-black transition-all duration-500 cursor-pointer shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]"
+            title="Explore Azlaan Cinema"
+          >
+            {/* Play Icon that slides in on hover */}
+            <div className="w-0 opacity-0 group-hover:w-4 group-hover:opacity-100 transition-all duration-500 flex justify-center overflow-hidden z-10">
+              <Play className="w-3 h-3 fill-white text-white ml-[1px]" />
+            </div>
+
+            {/* Animated Audio Wave / Media Indicator */}
+            <div className="flex items-center gap-[3px] h-3 z-10">
+              <motion.div 
+                animate={{ height: ['4px', '12px', '4px'] }}
+                transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
+                className="w-1 bg-white rounded-full"
+              />
+              <motion.div 
+                animate={{ height: ['8px', '4px', '8px'] }}
+                transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
+                className="w-1 bg-white rounded-full"
+              />
+              <motion.div 
+                animate={{ height: ['4px', '12px', '4px'] }}
+                transition={{ duration: 0.8, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+                className="w-1 bg-white rounded-full"
+              />
+              <motion.div 
+                animate={{ height: ['10px', '4px', '10px'] }}
+                transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut', delay: 0.1 }}
+                className="w-1 bg-white rounded-full"
+              />
+            </div>
+
+            {/* Subtle Cinematic Glow Orb */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40px] h-[40px] bg-[#0071E3]/30 blur-[15px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+          </Link>
         </div>
       </div>
 
@@ -723,6 +774,9 @@ export default function ReelsPanel() {
                     }
                   } catch (e) {}
                 }
+
+                scrollTo(fullScreenIndex);
+                setIsFullScreen(false);
               }}
               className="absolute top-6 right-6 z-[1100] bg-white/10 backdrop-blur-xl text-white p-3 rounded-full hover:bg-white/20 transition-all shadow-xl"
             >
@@ -761,16 +815,18 @@ export default function ReelsPanel() {
                         backgroundPosition: 'center'
                       }}
                     >
-                      <div 
-                        id={`fb-player-modal-${idx}`}
-                        className="fb-video absolute inset-0 w-full h-full"
-                        data-href={link}
-                        data-width="500"
-                        data-allowfullscreen="true"
-                        data-autoplay="false"
-                        data-show-text="false"
-                        style={{ background: 'transparent' }}
-                      />
+                      {loadedIframes[idx] && (
+                        <div 
+                          id={`fb-player-modal-${idx}`}
+                          className="fb-video absolute inset-0 w-full h-full"
+                          data-href={link}
+                          data-width="500"
+                          data-allowfullscreen="true"
+                          data-autoplay="false"
+                          data-show-text="false"
+                          style={{ background: 'transparent' }}
+                        />
+                      )}
 
                       {/* Modal Modern Minimal Controls */}
                       <AnimatePresence>
@@ -854,10 +910,6 @@ export default function ReelsPanel() {
                         </button>
                         <span className="text-white text-[10px] font-bold shadow-sm">Share</span>
                       </div>
-
-                      <button className="p-3 rounded-full bg-black/30 backdrop-blur-xl border border-white/10 text-white">
-                        <MoreVertical className="w-6 h-6" />
-                      </button>
                     </div>
 
                     {/* Modal Comment Panel (Slide Up) */}
@@ -945,9 +997,9 @@ export default function ReelsPanel() {
                     {/* User Info Overlay (Bottom Left) */}
                     <div className="absolute bottom-6 left-6 right-20 z-[1050] flex flex-col gap-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-lg">
+                        <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-lg bg-black flex items-center justify-center">
                           <img 
-                            src="https://azlaan.com.bd/wp-content/uploads/2023/10/Azlaan-Logo-Final-01-scaled.jpg" 
+                            src="/og-image.png" 
                             alt="Azlaan"
                             className="w-full h-full object-cover"
                           />

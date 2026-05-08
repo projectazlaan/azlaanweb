@@ -1,178 +1,116 @@
-'use client'
+'use client';
 
-import { useState, Suspense } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { ArrowLeft, Loader2, Eye, EyeOff, Lock, User, Terminal } from 'lucide-react'
-import Link from 'next/link'
+import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Eye, EyeOff, Lock, Loader2 } from 'lucide-react';
 
-function LoginForm() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const redirect = searchParams.get('redirect') || '/admin'
+export default function AdminLoginPage() {
+  const router = useRouter();
+  const params = useSearchParams();
+  const from   = params.get('from') ?? '/admin/super-easy-dashboard';
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [devLoading, setDevLoading] = useState(false)
+  const [password, setPassword] = useState('');
+  const [show, setShow]         = useState(false);
+  const [loading, setLoading]   = useState(false);
+  const [error, setError]       = useState('');
 
-  const handleSubmit = async (e?: React.FormEvent, devCredentials?: { u: string; p: string }) => {
-    if (e) e.preventDefault()
-    setError('')
-    
-    const isDev = !!devCredentials
-    if (isDev) setDevLoading(true)
-    else setLoading(true)
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
-    const u = devCredentials ? devCredentials.u : username
-    const p = devCredentials ? devCredentials.p : password
+    const res = await fetch('/api/admin/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password }),
+    });
 
-    try {
-      const res = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: u, password: p }),
-      })
+    const data = await res.json();
+    setLoading(false);
 
-      const data = await res.json()
-
-      if (res.ok) {
-        router.push(redirect)
-      } else {
-        setError(data.error || 'Login failed')
-      }
-    } catch {
-      setError('Network error. Please try again.')
-    } finally {
-      setLoading(false)
-      setDevLoading(false)
+    if (!res.ok) {
+      setError(data.error ?? 'Something went wrong.');
+      return;
     }
-  }
-
-  const handleDirectLogin = () => {
-    handleSubmit(undefined, { u: 'admin', p: 'admin123' })
-  }
+    router.replace(from);
+  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-section-bg px-4 relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/5 rounded-full blur-[120px]"></div>
-      <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]"></div>
+    <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
 
-      <div className="w-full max-w-md relative z-10">
-        <div className="bg-white/80 backdrop-blur-xl border border-white rounded-[32px] shadow-2xl p-10">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary text-white rounded-2xl shadow-xl mb-6">
-              <span className="font-serif text-3xl font-bold">A</span>
-            </div>
-            <h1 className="font-serif text-3xl font-bold text-primary tracking-tight">Azlaan Admin</h1>
-            <p className="text-text-muted text-sm mt-2 font-medium">Elevate your control center</p>
+        {/* Logo */}
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-black tracking-tighter text-black">
+            AZLAAN <span className="text-blue-600">ADMIN</span>
+          </h1>
+          <p className="text-gray-500 font-medium mt-2 text-sm tracking-wide">
+            Secure Access — Super Easy Dashboard
+          </p>
+        </div>
+
+        {/* Card */}
+        <div className="bg-white rounded-[2rem] p-10 shadow-[0_8px_40px_rgba(0,0,0,0.06)] border border-black/[0.03]">
+          
+          <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-8">
+            <Lock className="w-8 h-8 text-blue-600" />
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-1.5">
-              <label className="text-xs font-black text-text-muted uppercase tracking-widest ml-1">Username</label>
-              <div className="relative group">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted group-focus-within:text-secondary transition-colors">
-                  <User size={18} />
-                </div>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3.5 bg-section-bg border border-transparent rounded-2xl focus:bg-white focus:border-secondary/30 focus:outline-none focus:ring-4 focus:ring-secondary/5 transition-all text-sm font-medium"
-                  placeholder="admin"
-                  required
-                />
-              </div>
-            </div>
+          <h2 className="text-2xl font-black text-center text-gray-900 mb-2">Welcome back</h2>
+          <p className="text-gray-500 text-center text-sm font-medium mb-8">Enter your admin password to continue</p>
 
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between ml-1">
-                <label className="text-xs font-black text-text-muted uppercase tracking-widest">Password</label>
-                <Link href="#" className="text-[10px] font-bold text-secondary uppercase tracking-wider hover:underline">Forgot?</Link>
-              </div>
-              <div className="relative group">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted group-focus-within:text-secondary transition-colors">
-                  <Lock size={18} />
-                </div>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-12 py-3.5 bg-section-bg border border-transparent rounded-2xl focus:bg-white focus:border-secondary/30 focus:outline-none focus:ring-4 focus:ring-secondary/5 transition-all text-sm font-medium"
-                  placeholder="••••••••"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-primary transition-colors cursor-pointer"
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div className="relative">
+              <input
+                type={show ? 'text' : 'password'}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Admin password..."
+                required
+                className={`w-full border-2 rounded-2xl px-5 py-4 outline-none text-gray-900 font-medium pr-14 transition-all text-sm ${
+                  error
+                    ? 'border-red-300 bg-red-50 focus:border-red-400'
+                    : 'border-gray-200 bg-gray-50 focus:border-blue-400 focus:bg-white'
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setShow(!show)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors"
+              >
+                {show ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
             </div>
 
             {error && (
-              <div className="bg-red-50 text-red-600 text-xs font-bold py-3 px-4 rounded-xl text-center border border-red-100 animate-shake">
-                {error}
+              <div className="bg-red-50 border border-red-100 text-red-600 text-sm font-bold px-4 py-3 rounded-2xl text-center">
+                ❌ {error}
               </div>
             )}
 
             <button
               type="submit"
-              disabled={loading || devLoading}
-              className="w-full bg-primary text-white py-4 rounded-2xl font-bold text-sm shadow-lg shadow-primary/20 hover:bg-black hover:-translate-y-0.5 active:translate-y-0 transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+              disabled={loading || !password}
+              className="w-full bg-black hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-black py-4 rounded-2xl transition-all hover:scale-[1.02] active:scale-95 shadow-[0_4px_14px_rgba(0,0,0,0.2)] flex items-center justify-center gap-2"
             >
-              {loading ? <Loader2 className="animate-spin" size={18} /> : 'Sign In to Portal'}
+              {loading ? (
+                <><Loader2 className="w-5 h-5 animate-spin" /> Signing in...</>
+              ) : (
+                'Enter Dashboard →'
+              )}
             </button>
           </form>
 
-          {/* Dev Quick Login */}
-          <div className="mt-8 pt-8 border-t border-border-light/50">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-border-light/50"></span>
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-3 text-text-muted font-black tracking-widest text-[9px]">Development Only</span>
-              </div>
-            </div>
-            
-            <button
-              type="button"
-              onClick={handleDirectLogin}
-              disabled={loading || devLoading}
-              className="mt-4 w-full bg-emerald-50 text-emerald-700 border border-emerald-200 py-3 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-emerald-100 transition-all flex items-center justify-center gap-2 group cursor-pointer"
-            >
-              {devLoading ? (
-                <Loader2 className="animate-spin" size={14} />
-              ) : (
-                <>
-                  <Terminal size={14} className="group-hover:animate-pulse" />
-                  Direct Login (No Credentials)
-                </>
-              )}
-            </button>
-          </div>
+          <p className="text-center mt-6 text-xs text-gray-400 font-medium">
+            Not an admin?{' '}
+            <a href="/" className="text-blue-600 font-bold hover:underline">Go to site →</a>
+          </p>
         </div>
 
-        <p className="text-center mt-8">
-          <Link href="/" className="inline-flex items-center gap-2 text-xs font-bold text-text-muted hover:text-primary transition-colors">
-            <ArrowLeft size={14} /> Back to Website
-          </Link>
+        <p className="text-center text-xs text-gray-400 mt-6 font-medium">
+          AZLAAN System © {new Date().getFullYear()}
         </p>
       </div>
     </div>
-  )
-}
-
-export default function AdminLogin() {
-  return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-section-bg"><Loader2 className="animate-spin text-secondary" size={32} /></div>}>
-      <LoginForm />
-    </Suspense>
-  )
+  );
 }

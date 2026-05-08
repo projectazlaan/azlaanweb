@@ -140,7 +140,7 @@ export default function CheckoutPage() {
               <div className="space-y-3 mb-4">
                 <div className="flex gap-3">
                   <div className="relative w-12 h-12 flex-shrink-0 rounded overflow-hidden">
-                    <Image src="/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp" alt="Product" fill className="object-cover" unoptimized />
+                    <Image src="/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp" alt="Product" fill className="object-cover" />
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-semibold line-clamp-1 text-primary">Premium Cotton Panjabi</p>

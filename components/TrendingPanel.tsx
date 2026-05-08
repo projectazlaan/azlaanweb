@@ -95,7 +95,7 @@ export default function TrendingPanel() {
         setIsTransitioning(false)
       }, 1200)
     }
-    
+
     return () => clearTimeout(timer)
   }, [currentSlide, extendedSlides.length])
 
@@ -119,7 +119,7 @@ export default function TrendingPanel() {
           const isRealActive = (currentSlide === index) || 
                               (currentSlide === extendedSlides.length - 1 && index === 1) ||
                               (currentSlide === 0 && index === extendedSlides.length - 2);
-          
+
           return (
             <div
               key={`${slide.id}-${index}`}
@@ -130,13 +130,13 @@ export default function TrendingPanel() {
                   src={slide.bgImage}
                   alt={slide.title}
                   fill
-                  unoptimized
+
                   className={`object-cover transition-transform duration-[10000ms] ease-out ${isRealActive ? 'scale-105' : 'scale-100'} z-0`}
                   sizes="100vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 pointer-events-none" />
               </div>
-              
+
               <div className="absolute inset-0 flex flex-col justify-end pb-12 md:pb-20 pointer-events-none">
                 <div className="relative z-20 px-6 md:px-12 w-full max-w-[90rem] mx-auto text-left pointer-events-auto">
                   <div className="max-w-2xl">

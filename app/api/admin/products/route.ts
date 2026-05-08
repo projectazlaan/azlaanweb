@@ -1,44 +1,37 @@
-import { NextResponse } from 'next/server'
-import { getDb } from '@/lib/db'
-import { nanoid } from 'nanoid'
-import type { NextRequest } from 'next/server'
+import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'nodejs'
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
+// GET — list all products
 export async function GET() {
-  try {
-    const db = getDb()
-    const stmt = db.prepare('SELECT * FROM products ORDER BY createdAt DESC')
-    const products = stmt.all()
-    return NextResponse.json(products)
-  } catch {
-    return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 })
-  }
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json(data);
 }
 
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json()
-    const { name, nameBn, price, image, category, categoryBn, description, descriptionBn } = body
+// POST — create new product
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { name, price, category, stock_count, in_stock, description, image_url, tag, sizes } = body;
 
-    if (!name || !price || !image || !category) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
-    }
-
-    const db = getDb()
-    const id = nanoid()
-    const now = new Date().toISOString()
-    const priceNum = typeof price === 'string' ? parseInt(price.replace(/[^\d]/g, '')) : price
-    const priceDisplay = `৳${priceNum.toLocaleString('en-IN')}`
-
-    const stmt = db.prepare(`
-      INSERT INTO products (id, name, nameBn, price, priceDisplay, image, category, categoryBn, description, descriptionBn, inStock, createdAt, updatedAt)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?)
-    `)
-    stmt.run(id, name, nameBn || name, priceNum, priceDisplay, image, category, categoryBn || category, description || null, descriptionBn || null, now, now)
-
-    return NextResponse.json({ success: true, id })
-  } catch {
-    return NextResponse.json({ error: 'Failed to create product' }, { status: 500 })
+  if (!name || !price) {
+    return NextResponse.json({ error: 'Name and price are required.' }, { status: 400 });
   }
+
+  const { data, error } = await supabase
+    .from('products')
+    .insert([{ name, price, category, stock_count, in_stock: in_stock ?? true, description, image_url, tag, sizes }])
+    .select()
+    .single();
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json(data, { status: 201 });
 }

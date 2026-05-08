@@ -29,10 +29,10 @@ export default function BundleBuilder({ mainProduct }: BundleBuilderProps) {
       const items = await Promise.all(
         mainProduct.completeTheLook.items.map(item => getProductById(item.productId))
       );
-      
+
       const validItems = items.filter((item): item is Product => item !== null);
       setBundleItems(validItems);
-      
+
       // Auto-select mandatory/suggested items
       setSelectedIds([mainProduct.id, ...validItems.map(item => item.id)]);
       setLoading(false);
@@ -61,7 +61,7 @@ export default function BundleBuilder({ mainProduct }: BundleBuilderProps) {
     selectedProducts.forEach(product => {
       addItem(product, 1, product.sizes?.[0], product.colors?.[0]?.name);
     });
-    
+
     trackEvent('add_to_cart_bundle', {
       main_product_id: mainProduct.id,
       bundle_size: selectedProducts.length,
@@ -92,7 +92,7 @@ export default function BundleBuilder({ mainProduct }: BundleBuilderProps) {
         <div className="flex items-center gap-4">
           <div className="relative group">
             <div className="relative w-24 h-32 md:w-32 md:h-44 rounded-xl overflow-hidden border-2 border-primary shadow-lg">
-              <Image src={(mainProduct.images && mainProduct.images[0]) || ''} alt={mainProduct.name || 'Product'} fill className="object-cover" unoptimized />
+              <Image src={(mainProduct.images && mainProduct.images[0]) || ''} alt={mainProduct.name || 'Product'} fill className="object-cover" />
             </div>
             <div className="absolute -top-2 -right-2 bg-primary text-white p-1 rounded-full">
               <Check className="w-3 h-3" />
@@ -111,7 +111,7 @@ export default function BundleBuilder({ mainProduct }: BundleBuilderProps) {
                 }`}
                 style={{ zIndex: 10 - idx }}
               >
-                <Image src={(item.images && item.images[0]) || ''} alt={item.name || 'Product'} fill className="object-cover" unoptimized />
+                <Image src={(item.images && item.images[0]) || ''} alt={item.name || 'Product'} fill className="object-cover" />
                 {selectedIds.includes(item.id) && (
                   <div className="absolute top-2 right-2 bg-primary text-white p-1 rounded-full z-30">
                     <Check className="w-3 h-3" />
@@ -146,7 +146,7 @@ export default function BundleBuilder({ mainProduct }: BundleBuilderProps) {
             <ShoppingBag className="w-4 h-4" />
             Add Bundle to Cart
           </button>
-          
+
           <p className="text-center text-[10px] text-gray-400 mt-4 uppercase font-medium tracking-widest">
             {selectedIds.length} items selected in this set
           </p>

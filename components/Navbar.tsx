@@ -111,6 +111,24 @@ export default function Navbar() {
             );
           })}
           
+          {/* Static Link for Azlaan Cinema */}
+          <div className="relative py-2">
+            <Link
+              href="/videos"
+              className={`flex items-center gap-1.5 text-[13px] font-semibold tracking-wide uppercase transition-all duration-300
+                ${pathname.startsWith('/videos') ? 'text-[#0071E3]' : 'text-[#1D1D1F]/70 hover:text-[#1D1D1F]'}`}
+            >
+              Cinema
+            </Link>
+            {pathname.startsWith('/videos') && (
+              <motion.div 
+                layoutId="nav-active"
+                className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#0071E3] rounded-full"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+          </div>
+
           <Link 
             href="/contact" 
             className={`text-[13px] font-semibold tracking-wide uppercase transition-colors
@@ -176,7 +194,7 @@ export default function Navbar() {
                       alt={activeCategory.name}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      unoptimized
+                      quality={80}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-5">
                       <p className="text-white text-xs font-bold tracking-widest uppercase">Explore {activeCategory.name}</p>

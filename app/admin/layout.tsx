@@ -51,12 +51,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const isStudioPage = pathname === '/admin/studio'
   const isStudioProPage = pathname === '/admin/studio-pro-v12'
   const isPortalPage = pathname === '/admin'
+  const isSuperEasyPage = pathname.startsWith('/admin/super-easy-dashboard')
 
   if (isLoginPage) {
     return <div className="min-h-screen bg-section-bg">{children}</div>
   }
 
-  if (isCustomizerPage || isStudioPage || isStudioProPage || isPortalPage) {
+  if (isCustomizerPage || isStudioPage || isStudioProPage || isPortalPage || isSuperEasyPage) {
     return <div className="min-h-screen bg-transparent">{children}</div>
   }
 

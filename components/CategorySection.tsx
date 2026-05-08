@@ -28,7 +28,7 @@ export default function CategorySection() {
     >
       <div className="max-w-full mx-auto">
         <div className="grid grid-cols-2 gap-1 md:gap-2 p-1 md:p-2 bg-white">
-          
+
           {/* Left Column - Men (1 large image) */}
           <Link
             href="/men"
@@ -38,7 +38,7 @@ export default function CategorySection() {
               src={categories[0].image}
               alt="Men"
               fill
-              unoptimized
+
               className="object-cover group-hover:scale-105 transition-transform duration-1000"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90" />
@@ -50,7 +50,7 @@ export default function CategorySection() {
 
           {/* Right Column - Women & Kids (Stacked vertically) */}
           <div className="col-span-1 flex flex-col gap-1 md:gap-2 h-full">
-            
+
             {/* Women - Top */}
             <Link
               href="/women"
@@ -60,7 +60,7 @@ export default function CategorySection() {
                 src={categories[1].image}
                 alt="Women"
                 fill
-                unoptimized
+
                 className="object-cover group-hover:scale-105 transition-transform duration-1000"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90" />
@@ -76,7 +76,7 @@ export default function CategorySection() {
                 src="/media-pro/Cover/651731213_122121294069151981_7046002980511560260_n.webp"
                 alt="Kids Coming Soon"
                 fill
-                unoptimized
+
                 className="object-cover opacity-40 blur-xl group-hover:scale-110 transition-transform duration-[2000ms]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20" />

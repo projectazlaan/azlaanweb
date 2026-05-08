@@ -25,7 +25,7 @@ export default function NewCollectionPanel() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(1); // Start from 1 because of clones
   const [isTransitioning, setIsTransitioning] = useState(false);
-  
+
   // Clone logic: [Last, 1, 2, ..., Last, 1]
   const extendedImages = [
     COLLECTION_IMAGES[COLLECTION_IMAGES.length - 1],
@@ -52,23 +52,23 @@ export default function NewCollectionPanel() {
       timer = setTimeout(() => {
         setIsTransitioning(false);
         setCurrent(1);
-      }, 600);
+      }, 3000); // Changed to match slow motion duration
     } else if (current === 0) {
       timer = setTimeout(() => {
         setIsTransitioning(false);
         setCurrent(extendedImages.length - 2);
-      }, 600);
+      }, 3000); // Changed to match slow motion duration
     } else {
       timer = setTimeout(() => {
         setIsTransitioning(false);
-      }, 600);
+      }, 3000); // Changed to match slow motion duration
     }
     return () => clearTimeout(timer);
   }, [current, extendedImages.length]);
 
-  // Auto-slide every 4 seconds
+  // Auto-slide every 6 seconds to allow for slow motion
   useEffect(() => {
-    const timer = setInterval(next, 4000);
+    const timer = setInterval(next, 6000);
     return () => clearInterval(timer);
   }, [next]);
 
@@ -144,12 +144,12 @@ export default function NewCollectionPanel() {
           <div className="flex items-center justify-center">
             <div className="w-[70vw] md:w-[420px] aspect-[3/4] relative">
               <div 
-                className={`flex h-full w-full ${isTransitioning ? 'transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.32,1)]' : ''}`}
+                className={`flex h-full w-full ${isTransitioning ? 'transition-transform duration-[3000ms] ease-[cubic-bezier(0.25,1,0.32,1)]' : ''}`}
                 style={{ transform: `translateX(-${current * 100}%)` }}
               >
                 {extendedImages.map((item, idx) => {
                   const isMain = current === idx || (current === extendedImages.length - 1 && idx === 1) || (current === 0 && idx === extendedImages.length - 2);
-                  
+
                   return (
                     <div
                       key={`${item.url}-${idx}`}
@@ -168,14 +168,14 @@ export default function NewCollectionPanel() {
                           src={item.url}
                           alt={item.title}
                           fill
-                          unoptimized
+
                           className="object-cover transition-transform duration-1000 group-hover:scale-110"
                           sizes="(max-width: 768px) 70vw, 420px"
                         />
-                        
+
                         {/* Overlay */}
                         <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-700 ${isMain ? 'opacity-100' : 'opacity-0'}`} />
-                        
+
                         {/* Content */}
                         <div className={`absolute inset-0 p-6 md:p-10 flex flex-col justify-end transition-all duration-700 delay-100 transform ${isMain ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'}`}>
                           <h3 className="text-white text-xl md:text-2xl font-bold mb-3 tracking-tight">{item.title}</h3>

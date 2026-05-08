@@ -57,7 +57,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                 : 'opacity-50 hover:opacity-100'
             }`}
           >
-            <Image src={img || ''} alt={`${name} ${idx}`} fill className="object-cover transition-transform duration-700 group-hover:scale-110" unoptimized />
+            <Image src={img || ''} alt={`${name} ${idx}`} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
           </button>
         ))}
       </div>
@@ -97,7 +97,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                 fill
                 priority
                 className="object-cover select-none"
-                unoptimized
+
               />
             </motion.div>
           </motion.div>
@@ -145,7 +145,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                 : 'opacity-50'
             }`}
           >
-            <Image src={img || ''} alt={`${name} ${idx}`} fill className="object-cover" unoptimized />
+            <Image src={img || ''} alt={`${name} ${idx}`} fill className="object-cover" />
           </button>
         ))}
       </div>
@@ -218,7 +218,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                       alt={name}
                       fill
                       className="object-contain select-none pointer-events-none"
-                      unoptimized
+
                     />
                   </div>
                 </motion.div>
@@ -260,12 +260,12 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                       alt={`${name} ${idx}`} 
                       fill 
                       className="object-cover object-top" 
-                      unoptimized 
+
                     />
                   </button>
                 ))}
               </div>
-              
+
               <p className="text-white/20 text-[9px] font-black uppercase tracking-[0.4em]">
                 {activeIndex + 1} / {images.length}
               </p>

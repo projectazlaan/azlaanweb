@@ -12,7 +12,7 @@ export default function BrandStory({ isBangla = false }: { isBangla?: boolean })
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
-              unoptimized
+
             />
           </div>
         </div>
