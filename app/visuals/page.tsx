@@ -57,9 +57,15 @@ interface FeaturedProduct {
   name: string;
   name_bn?: string;
   price: number;
-  image_url: string;
+  images: string[];
+  image_url?: string; // fallback for safety
   category: string;
+  categorySlug: string;
   slug: string;
+  rating: number;
+  reviewCount: number;
+  isInStock: boolean;
+  stockCount: number;
 }
 
 // ============================================
@@ -87,7 +93,19 @@ const GENUINE_VIDEOS: Video[] = [
     tags: ['premium', 'panjabi', 'new'],
     is_trending: true,
     featured_products: [
-      { id: 'p1', name: 'Premium Silk Panjabi', price: 4590, image_url: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=300&h=400&fit=crop', category: 'men', slug: 'premium-silk-panjabi' }
+      { 
+        id: 'p1', 
+        name: 'Premium Silk Panjabi', 
+        price: 4590, 
+        images: ['https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=300&h=400&fit=crop'], 
+        category: 'men', 
+        categorySlug: 'men',
+        slug: 'premium-silk-panjabi',
+        rating: 5,
+        reviewCount: 12,
+        isInStock: true,
+        stockCount: 50
+      }
     ]
   },
   {
@@ -105,7 +123,19 @@ const GENUINE_VIDEOS: Video[] = [
     tags: ['bts', 'eid', 'making'],
     is_trending: false,
     featured_products: [
-      { id: 'p3', name: 'Signature Cotton Kurta', price: 2890, image_url: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=300&h=400&fit=crop', category: 'men', slug: 'signature-cotton-kurta' }
+      { 
+        id: 'p3', 
+        name: 'Signature Cotton Kurta', 
+        price: 2890, 
+        images: ['https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=300&h=400&fit=crop'], 
+        category: 'men', 
+        categorySlug: 'men',
+        slug: 'signature-cotton-kurta',
+        rating: 4.8,
+        reviewCount: 45,
+        isInStock: true,
+        stockCount: 100
+      }
     ]
   },
   {
@@ -123,7 +153,19 @@ const GENUINE_VIDEOS: Video[] = [
     tags: ['summer', 'casual', 'street'],
     is_trending: true,
     featured_products: [
-      { id: 'p4', name: 'Urban Street Tee', price: 890, image_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&h=400&fit=crop', category: 'men', slug: 'urban-street-tee' }
+      { 
+        id: 'p4', 
+        name: 'Urban Street Tee', 
+        price: 890, 
+        images: ['https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&h=400&fit=crop'], 
+        category: 'men', 
+        categorySlug: 'men',
+        slug: 'urban-street-tee',
+        rating: 4.5,
+        reviewCount: 89,
+        isInStock: true,
+        stockCount: 200
+      }
     ]
   },
   {
@@ -141,7 +183,19 @@ const GENUINE_VIDEOS: Video[] = [
     tags: ['runway', 'global', 'premium'],
     is_trending: true,
     featured_products: [
-      { id: 'p6', name: 'Premium Linen Suit', price: 12990, image_url: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&h=400&fit=crop', category: 'men', slug: 'premium-linen-suit' }
+      { 
+        id: 'p6', 
+        name: 'Premium Linen Suit', 
+        price: 12990, 
+        images: ['https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&h=400&fit=crop'], 
+        category: 'men', 
+        categorySlug: 'men',
+        slug: 'premium-linen-suit',
+        rating: 5,
+        reviewCount: 5,
+        isInStock: true,
+        stockCount: 10
+      }
     ]
   },
   {
@@ -159,7 +213,19 @@ const GENUINE_VIDEOS: Video[] = [
     tags: ['monochrome', 'classic'],
     is_trending: false,
     featured_products: [
-      { id: 'p7', name: 'Monochrome Panjabi Set', price: 5490, image_url: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=300&h=400&fit=crop', category: 'men', slug: 'monochrome-panjabi-set' }
+      { 
+        id: 'p7', 
+        name: 'Monochrome Panjabi Set', 
+        price: 5490, 
+        images: ['https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=300&h=400&fit=crop'], 
+        category: 'men', 
+        categorySlug: 'men',
+        slug: 'monochrome-panjabi-set',
+        rating: 4.9,
+        reviewCount: 22,
+        isInStock: true,
+        stockCount: 30
+      }
     ]
   },
   {
@@ -228,15 +294,7 @@ function VideoCard({ video, index, onClick }: { video: Video; index: number; onC
     if (firstProduct) {
       try {
         const addItem = useCartStore.getState().addItem;
-        addItem({
-          id: firstProduct.id,
-          name: firstProduct.name,
-          price: firstProduct.price,
-          quantity: 1,
-          image: firstProduct.image_url,
-          size: 'M', // default dummy
-          color: 'Standard' // default dummy
-        });
+        addItem(firstProduct as any, 1, 'M', 'Standard');
         toast.success(`Added ${firstProduct.name} to cart`);
       } catch (err) {
         toast.success('Added to cart'); // fallback
@@ -362,15 +420,7 @@ function VideoModal({ video, allVideos, onClose, onNavigate }: {
     e?.stopPropagation();
     try {
       const addItem = useCartStore.getState().addItem;
-      addItem({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        quantity: 1,
-        image: product.image_url,
-        size: 'M',
-        color: 'Standard'
-      });
+      addItem(product as any, 1, 'M', 'Standard');
       toast.success(`Added ${product.name} to cart`);
     } catch (err) {
       toast.success('Added to cart');
@@ -532,7 +582,7 @@ function VideoModal({ video, allVideos, onClose, onNavigate }: {
               }}
             >
               <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-white/10 shadow-lg">
-                 <img src={firstProduct.image_url} alt={firstProduct.name} className="w-full h-full object-cover" />
+                <img src={firstProduct.images[0]} alt={firstProduct.name} className="w-full h-full object-cover" />
               </div>
               <div className="flex-1 min-w-0">
                 <h4 className="text-white font-bold text-[14px] truncate">{firstProduct.name}</h4>
@@ -587,7 +637,7 @@ function VideoModal({ video, allVideos, onClose, onNavigate }: {
                   <div key={product.id} className="group p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-all border border-white/5">
                     <div className="flex gap-4">
                       <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0 border border-white/5">
-                        <img src={product.image_url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        <img src={product.images[0]} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="text-white font-bold truncate">{product.name}</h4>
