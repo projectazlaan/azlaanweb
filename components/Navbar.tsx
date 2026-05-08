@@ -38,7 +38,7 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-black/[0.05]"
       onMouseLeave={handleMouseLeave}
     >
-      <div className="max-w-7xl mx-auto flex items-center px-4 py-2 md:px-6 md:py-5 relative">
+      <div className="max-w-7xl mx-auto flex items-center px-4 py-2 md:px-6 md:py-3 relative">
         {/* ── Left side (Mobile Menu) ── */}
         <div className="md:hidden flex items-center -ml-2">
           <button
@@ -52,7 +52,7 @@ export default function Navbar() {
         {/* ── Brand Logo (Centered on Mobile) ── */}
         <Link 
           href="/" 
-          className="absolute left-1/2 -translate-x-1/2 md:relative md:left-auto md:translate-x-0 w-[90px] h-[30px] md:w-[130px] md:h-[45px] hover:opacity-80 transition-opacity mix-blend-multiply"
+          className="absolute left-1/2 -translate-x-1/2 md:relative md:left-auto md:translate-x-0 md:-ml-10 w-[90px] h-[30px] md:w-[130px] md:h-[45px] hover:opacity-80 transition-opacity mix-blend-multiply"
         >
           <Image
             src="/media-pro/azlaan-logo-trimmed.png"
@@ -76,11 +76,11 @@ export default function Navbar() {
               >
                 <Link
                   href={`/${cat.slug}`}
-                  className={`flex items-center gap-2 text-[14px] font-bold tracking-widest uppercase transition-all duration-300
-                    ${isActive || isHovered ? 'text-[#0071E3]' : 'text-[#1D1D1F]/80 hover:text-[#1D1D1F]'}`}
+                  className={`flex items-center gap-2 text-[11px] font-bold tracking-[0.3em] uppercase transition-all duration-300
+                    ${isActive || isHovered ? 'text-[#0071E3]' : 'text-[#1D1D1F]/60 hover:text-[#1D1D1F]'}`}
                 >
                   {cat.name}
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isHovered ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isHovered ? 'rotate-180' : ''}`} />
                 </Link>
                 {/* Active Indicator Line */}
                 {(isActive || isHovered) && (
@@ -97,8 +97,8 @@ export default function Navbar() {
           <div className="relative py-2">
             <Link
               href="/visuals"
-              className={`flex items-center gap-2 text-[14px] font-bold tracking-widest uppercase transition-all duration-300
-                ${pathname.startsWith('/visuals') ? 'text-[#0071E3]' : 'text-[#1D1D1F]/80 hover:text-[#1D1D1F]'}`}
+              className={`flex items-center gap-2 text-[11px] font-bold tracking-[0.3em] uppercase transition-all duration-300
+                ${pathname.startsWith('/visuals') ? 'text-[#0071E3]' : 'text-[#1D1D1F]/60 hover:text-[#1D1D1F]'}`}
             >
               Watch & Buy
             </Link>
@@ -112,8 +112,8 @@ export default function Navbar() {
           </div>
           <Link 
             href="/contact" 
-            className={`text-[14px] font-bold tracking-widest uppercase transition-colors
-              ${pathname === '/contact' ? 'text-[#0071E3]' : 'text-[#1D1D1F]/80 hover:text-[#1D1D1F]'}`}
+            className={`text-[11px] font-bold tracking-[0.3em] uppercase transition-colors
+              ${pathname === '/contact' ? 'text-[#0071E3]' : 'text-[#1D1D1F]/60 hover:text-[#1D1D1F]'}`}
           >
             Contact
           </Link>
