@@ -44,7 +44,7 @@ export default function VisualEditorBridge() {
             type: editableElement.tagName === 'IMG' ? 'image' : 'text',
             content: content,
             section: editableElement.closest('section')?.id || 'General',
-            key: editableElement.getAttribute('data-editable-key') || editableElement.innerText.slice(0, 20)
+            key: (editableElement as HTMLElement).getAttribute('data-editable-key') || (editableElement as HTMLElement).innerText.slice(0, 20)
           }
         }, '*');
       }

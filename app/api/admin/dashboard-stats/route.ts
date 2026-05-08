@@ -11,7 +11,7 @@ export async function GET() {
     // Get total sales from orders table
     const { data: orders, error: ordersError } = await supabase
       .from('orders')
-      .select('total, status');
+      .select('total, status, phone');
 
     if (ordersError) throw ordersError;
 

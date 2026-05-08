@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 const ADMIN_COOKIE = process.env.ADMIN_COOKIE_NAME ?? 'azlaan_admin_session';
 const PROTECTED_PREFIX = '/admin/super-easy-dashboard';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Only protect super-easy-dashboard routes
