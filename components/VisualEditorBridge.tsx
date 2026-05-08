@@ -1,9 +1,11 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-export default function VisualEditorBridge() {
+
+function BridgeInner() {
   const searchParams = useSearchParams();
   const isEditorMode = searchParams.get('editor') === 'true';
+
   useEffect(() => {
     if (!isEditorMode) return;
     const handleElementClick = (e: MouseEvent) => {
@@ -103,5 +105,14 @@ export default function VisualEditorBridge() {
       document.body.removeAttribute('data-editor-mode');
     };
   }, [isEditorMode]);
+
   return null;
+}
+
+export default function VisualEditorBridge() {
+  return (
+    <Suspense fallback={null}>
+      <BridgeInner />
+    </Suspense>
+  );
 }

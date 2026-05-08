@@ -10,6 +10,7 @@ const nextConfig = {
     rules: {},
   },
   serverExternalPackages: ['better-sqlite3'],
+  optimizeFonts: false,
 };
 
 export default nextConfig;
