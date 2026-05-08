@@ -38,21 +38,21 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-black/[0.05]"
       onMouseLeave={handleMouseLeave}
     >
-      <div className="max-w-7xl mx-auto flex items-center px-4 py-3 md:px-6 md:py-5 relative">
+      <div className="max-w-7xl mx-auto flex items-center px-4 py-2 md:px-6 md:py-5 relative">
         {/* ── Left side (Mobile Menu) ── */}
         <div className="md:hidden flex items-center -ml-2">
           <button
             onClick={openSidebar}
-            className="p-2 rounded-full hover:bg-black/[0.04] transition-all group"
+            className="p-1.5 rounded-full hover:bg-black/[0.04] transition-all group"
             aria-label="Open menu"
           >
-            <Menu className="w-6 h-6 text-[#1D1D1F] group-hover:rotate-90 transition-transform duration-300" />
+            <Menu className="w-5 h-5 text-[#1D1D1F] group-hover:rotate-90 transition-transform duration-300" />
           </button>
         </div>
         {/* ── Brand Logo (Centered on Mobile) ── */}
         <Link 
           href="/" 
-          className="absolute left-1/2 -translate-x-1/2 md:relative md:left-auto md:translate-x-0 w-[100px] h-[35px] md:w-[130px] md:h-[45px] hover:opacity-80 transition-opacity mix-blend-multiply"
+          className="absolute left-1/2 -translate-x-1/2 md:relative md:left-auto md:translate-x-0 w-[90px] h-[28px] md:w-[130px] md:h-[45px] hover:opacity-80 transition-opacity mix-blend-multiply"
         >
           <Image
             src="/media-pro/azlaan-logo-trimmed.png"

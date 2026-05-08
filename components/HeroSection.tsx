@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect, useCallback } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 interface HeroContent {
   id: string
@@ -126,8 +126,16 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
     return () => clearInterval(timer)
   }, [slides.length, nextSlide])
   const { scrollY } = useScroll();
-  const contentY = useTransform(scrollY, [0, 1000], [0, -1000]);
-  const contentOpacity = useTransform(scrollY, [650, 900], [1, 0]);
+  
+  // Create a smoother parallax value using useSpring
+  const rawContentY = useTransform(scrollY, [0, 800], [0, -200]);
+  const contentY = useSpring(rawContentY, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  const contentOpacity = useTransform(scrollY, [400, 700], [1, 0]);
 
   if (slides.length === 0) return null
   return (
@@ -164,52 +172,50 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 pointer-events-none" />
               </div>
               
-              {/* Content Container with Scroll Parallax and Top Masking */}
+              {/* Content Container with Scroll Parallax - Optimized for Smoothness */}
               <motion.div 
                 style={{ 
                   y: contentY,
                   opacity: contentOpacity,
-                  WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)',
-                  maskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)'
+                  willChange: 'transform, opacity'
                 }}
-                className="absolute inset-0 flex flex-col justify-end pb-12 md:pb-16 pointer-events-none"
+                className="absolute inset-0 flex flex-col justify-end pb-12 md:pb-24 pointer-events-none"
               >
                 <div className="relative z-20 px-6 md:px-8 w-full max-w-[90rem] mx-auto text-left pointer-events-auto">
                   <div className="max-w-2xl">
                     <span 
-                      className={`inline-block text-[9px] md:text-[11px] font-semibold tracking-[0.2em] uppercase text-white mb-3 md:mb-4 transition-all duration-700 delay-300 transform drop-shadow-md ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
+                      className={`inline-block text-[10px] md:text-[11px] font-bold text-white/60 mb-3 md:mb-4 tracking-[0.3em] uppercase transition-all duration-1000 delay-300 ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
                     >
                       {slide.subtitle || 'Premium Quality'}
                     </span>
                     <h1 
-                      className={`font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 md:mb-5 text-white leading-[1.05] md:leading-[1.05] transition-all duration-700 delay-500 transform drop-shadow-lg ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
+                      className={`font-sans text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 text-white leading-[1.05] transition-all duration-1000 delay-500 ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
                     >
                       {slide.title}
                     </h1>
                     <p 
-                      className={`text-[13px] sm:text-sm md:text-sm lg:text-base mb-6 md:mb-8 text-white/95 font-medium transition-all duration-700 delay-700 transform drop-shadow-md ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'} max-w-lg line-clamp-3 md:line-clamp-none`}
+                      className={`text-[14px] sm:text-base md:text-lg mb-8 md:mb-10 text-white/80 font-medium transition-all duration-1000 delay-700 ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} max-w-xl leading-relaxed`}
                     >
                       {slide.description}
                     </p>
-                    <div className={`flex flex-wrap items-center justify-start gap-3 md:gap-4 transition-all duration-700 delay-1000 transform ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+                    <div className={`flex flex-wrap items-center justify-start gap-4 transition-all duration-1000 delay-1000 ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
                       <Link
                         href={slide.cta1Link || '#'}
-                        className="group relative flex items-center gap-3 px-8 py-2.5 rounded-full border border-white/20 hover:border-white/40 bg-white transition-all duration-700 overflow-hidden shadow-sm"
+                        className="group relative flex items-center gap-4 px-10 py-4 rounded-full bg-white text-black transition-all duration-500 hover:scale-105 active:scale-95 shadow-xl"
                       >
-                        <span className="text-[9px] md:text-[11px] font-bold uppercase tracking-[0.3em] text-black/80 group-hover:text-black transition-colors">
-                          {slide.cta1Text || 'Shop Now'}
+                        <span className="text-[11px] font-black uppercase tracking-[0.2em]">
+                          {slide.cta1Text || 'Explore'}
                         </span>
-                        <div className="w-8 md:w-12 h-[0.5px] bg-black/30 group-hover:bg-black group-hover:w-16 transition-all duration-700" />
-                        <ArrowRight className="w-4 h-4 text-black/60 group-hover:text-black group-hover:translate-x-1 transition-all duration-500" />
-                        <div className="absolute inset-0 bg-black/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
 
                       {(slide.cta2Text) && (
                         <Link
                           href={slide.cta2Link || '#'}
-                          className="group flex items-center justify-center text-white hover:text-gray-200 px-6 py-3 md:py-3 font-semibold text-[11px] md:text-xs w-full sm:w-auto transition-colors drop-shadow-md"
+                          className="group px-8 py-4 text-white font-bold text-[11px] uppercase tracking-[0.2em] transition-all hover:text-primary relative overflow-hidden"
                         >
-                          <span className="relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-white after:transition-all hover:after:w-full pb-0.5">{slide.cta2Text}</span>
+                          <span className="relative z-10">{slide.cta2Text}</span>
+                          <div className="absolute bottom-3 left-8 right-8 h-[1px] bg-white/20 group-hover:bg-primary transition-colors" />
                         </Link>
                       )}
                     </div>
@@ -220,31 +226,24 @@ export default function HeroSection({ initialHero }: { initialHero?: HeroContent
           )
         })}
       </div>
-      {/* Navigation Arrows (Parallax Enabled with Top Masking) */}
+      {/* Navigation Arrows */}
       {slides.length > 1 && (
-        <motion.div 
-          style={{ 
-            y: contentY, 
-            opacity: contentOpacity,
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)',
-            maskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)'
-          }}
-        >
+        <div className="contents">
           <button 
             onClick={(e) => { e.stopPropagation(); prevSlide(); }}
-            className="hidden md:flex absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-[70] items-center justify-center text-white bg-black/20 hover:bg-black/50 border border-white/10 backdrop-blur-sm rounded-full transition-all cursor-pointer w-10 h-10 md:w-14 md:h-14 group"
+            className="hidden md:flex absolute left-8 top-1/2 -translate-y-1/2 z-[70] items-center justify-center text-white bg-black/10 hover:bg-black/40 border border-white/5 backdrop-blur-md rounded-full transition-all w-16 h-16 group active:scale-90"
             aria-label="Previous slide"
           >
-            <ChevronLeft className="w-5 h-5 md:w-7 md:h-7 opacity-70 group-hover:opacity-100 transition-opacity group-hover:-translate-x-0.5" strokeWidth={2} />
+            <ChevronLeft className="w-8 h-8 opacity-50 group-hover:opacity-100 transition-opacity" />
           </button>
           <button 
             onClick={(e) => { e.stopPropagation(); nextSlide(); }}
-            className="hidden md:flex absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-[70] items-center justify-center text-white bg-black/20 hover:bg-black/50 border border-white/10 backdrop-blur-sm rounded-full transition-all cursor-pointer w-10 h-10 md:w-14 md:h-14 group"
+            className="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 z-[70] items-center justify-center text-white bg-black/10 hover:bg-black/40 border border-white/5 backdrop-blur-md rounded-full transition-all w-16 h-16 group active:scale-90"
             aria-label="Next slide"
           >
-            <ChevronRight className="w-5 h-5 md:w-7 md:h-7 opacity-70 group-hover:opacity-100 transition-opacity group-hover:translate-x-0.5" strokeWidth={2} />
+            <ChevronRight className="w-8 h-8 opacity-50 group-hover:opacity-100 transition-opacity" />
           </button>
-        </motion.div>
+        </div>
       )}
       {/* Navigation Dots (Parallax Enabled with Top Masking) */}
       {slides.length > 1 && (
