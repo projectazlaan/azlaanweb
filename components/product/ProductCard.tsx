@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
-import { Heart, Eye, Star } from 'lucide-react';
+import { Heart, Eye, Star, Plus } from 'lucide-react';
 import { Product, ViewMode } from '@/types';
 import { toast } from 'react-hot-toast';
 import { useCartStore } from '@/store/cartStore';
@@ -25,22 +25,7 @@ const BADGE_LABELS: Record<string, string> = {
 export default function ProductCard({ product, viewMode, onQuickView }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
-  const [rating, setRating] = useState(4.5);
-  const [isRatingMode, setIsRatingMode] = useState(false);
-  const cardRef = useRef<HTMLAnchorElement>(null);
-
-  useEffect(() => {
-    if (!isRatingMode) return;
-
-    const handleClickOutside = (event: MouseEvent) => {
-      if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
-        setIsRatingMode(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isRatingMode]);
+  const rating = product.rating || 4.5;
   const displayImage = (product.images && product.images[activeImage]) || product.image || '';
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
   // Render static stars
@@ -98,7 +83,6 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
   // Grid View
   return (
     <Link 
-      ref={cardRef}
       href={`/product/${product.slug}`} 
       className="group flex flex-col bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-500 border border-black/5"
     >
@@ -142,114 +126,76 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
             </span>
           </div>
         )}
-        {/* Wishlist, Quick View & Rating Buttons */}
-        <div className="absolute top-3 inset-x-3 flex justify-between opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
-          {/* Rating Trigger (Left) */}
+        {/* Wishlist & Quick View Buttons */}
+        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
           <button
             onClick={(e) => {
               e.preventDefault();
-              setIsRatingMode(!isRatingMode);
+              setIsWishlisted(!isWishlisted);
             }}
-            className={`p-2 rounded-full backdrop-blur-sm shadow-lg hover:scale-110 transition-transform ${isRatingMode ? 'bg-amber-500 text-white' : 'bg-white/80 text-black'}`}
-            aria-label="Rate product"
+            className="p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-lg hover:scale-110 transition-transform"
+            aria-label="Add to wishlist"
           >
-            <Star className={`w-3.5 h-3.5 ${isRatingMode ? 'fill-white' : ''}`} />
+            <Heart
+              className={`w-3.5 h-3.5 transition-colors ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-black'}`}
+            />
           </button>
-          <div className="flex flex-col gap-2">
+          {onQuickView && (
             <button
               onClick={(e) => {
                 e.preventDefault();
-                setIsWishlisted(!isWishlisted);
+                onQuickView();
               }}
               className="p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-lg hover:scale-110 transition-transform"
-              aria-label="Add to wishlist"
+              aria-label="Quick view"
             >
-              <Heart
-                className={`w-3.5 h-3.5 transition-colors ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-black'}`}
-              />
+              <Eye className="w-3.5 h-3.5 text-black" />
             </button>
-            {onQuickView && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  onQuickView();
-                }}
-                className="p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-lg hover:scale-110 transition-transform"
-                aria-label="Quick view"
-              >
-                <Eye className="w-3.5 h-3.5 text-black" />
-              </button>
-            )}
-          </div>
+          )}
         </div>
-        {/* Interactive Rating Overlay */}
-        {isRatingMode && (
-          <div 
-            className="absolute inset-0 bg-black/60 backdrop-blur-md z-20 flex flex-col items-center justify-center gap-3 p-4 animate-in fade-in zoom-in duration-300 cursor-default"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setIsRatingMode(false);
-            }}
-          >
-            <span className="text-white text-[9px] md:text-[10px] font-black uppercase tracking-widest text-center">Rate this product</span>
-            <div 
-              className="flex items-center justify-center gap-[2%] w-full max-w-[200px] p-4 bg-white/10 rounded-2xl border border-white/20"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {[1, 2, 3, 4, 5].map((s) => (
-                <button
-                  key={s}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setRating(s);
-                    setIsRatingMode(false);
-                  }}
-                  className="w-[18%] aspect-square hover:scale-125 transition-transform flex items-center justify-center"
-                >
-                  <Star 
-                    className="w-full h-full" 
-                    fill={s <= (rating || 0) ? "#fbbf24" : "transparent"} 
-                    stroke={s <= (rating || 0) ? "#fbbf24" : "white"} 
-                  />
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+
+        {/* Rating Stars — bottom-right inside image */}
+        <div className="absolute bottom-2.5 right-2.5 z-10 flex items-center gap-[2px] px-2 py-1 rounded-full bg-black/40 backdrop-blur-sm">
+          {[1,2,3,4,5].map((s) => (
+            <Star
+              key={s}
+              className="w-2.5 h-2.5"
+              fill={s <= rating ? '#fbbf24' : 'transparent'}
+              stroke={s <= rating ? '#fbbf24' : 'rgba(255,255,255,0.4)'}
+            />
+          ))}
+        </div>
 
       </div>
-      {/* Product Info Container */}
-      <div className="bg-white p-2 md:p-3 flex flex-col gap-1 relative">
-        {/* Product Name (Black - Better Fit) */}
-        <h3 className="text-black text-[11px] md:text-[14px] font-bold tracking-tight leading-[1.2] line-clamp-1">
+      {/* Product Info Container — Optimized for zero overflow & super-premium luxury layout */}
+      <div className="bg-white px-2 pt-1.5 pb-2 flex flex-col gap-1.5 relative">
+        {/* Product Name */}
+        <h3 className="text-black text-[13.5px] md:text-[17px] font-semibold tracking-tight leading-[1.2] line-clamp-1">
           {product.name}
         </h3>
-        {/* Category Name & Rating Display (More Compact) */}
-        <div className="flex items-center gap-1.5">
-          <p className="text-gray-400 text-[8px] md:text-[9px] font-bold tracking-wide uppercase">
-            {(!product.subcategory || product.subcategory === 'All') 
-              ? (product.category || product.categorySlug) 
-              : product.subcategory}
-          </p>
-          <div className="flex-1 flex items-center min-w-0">
-            {renderStars(rating)}
-          </div>
-        </div>
-        <div className="flex items-center justify-between mt-0.5 md:mt-1">
+
+        {/* Lightweight Category Tag */}
+        <span className="text-neutral-400 text-[8.5px] md:text-[10px] font-medium tracking-widest uppercase leading-none">
+          {(!product.subcategory || product.subcategory === 'All') 
+            ? (product.category || product.categorySlug) 
+            : product.subcategory}
+        </span>
+
+        {/* Unified Price & Action Row */}
+        <div className="flex items-center justify-between gap-1">
           {/* Price Section */}
-          <div className="flex flex-col">
-            <span className="text-black font-black text-[13px] md:text-[16px] tracking-tight leading-none">
+          <div className="flex items-baseline gap-1.5 min-w-0">
+            <span className="text-black font-semibold text-[15px] md:text-[19px] tracking-tight leading-none shrink-0">
               ৳{product.price.toLocaleString()}
             </span>
             {hasDiscount && (
-              <span className="text-gray-300 text-[8px] md:text-[9px] line-through font-medium">
+              <span className="text-gray-400 text-[10.5px] md:text-[12px] line-through font-medium leading-none truncate">
                 ৳{product.originalPrice?.toLocaleString()}
               </span>
             )}
           </div>
-          {/* Add to Cart Button (Slimmer Fit) */}
+
+          {/* Super Advance +Add Button */}
           <button 
             onClick={(e) => {
               e.preventDefault();
@@ -275,15 +221,13 @@ export default function ProductCard({ product, viewMode, onQuickView }: ProductC
                 },
               });
             }}
-            className="group relative shrink-0 flex items-center gap-2 px-4 py-1.5 rounded-full border border-black/10 hover:border-black/30 bg-white transition-all duration-500 overflow-hidden shadow-sm"
+            className="group relative shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full border border-black/10 hover:border-black bg-white hover:bg-black transition-all duration-300 shadow-sm active:scale-95"
           >
-            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-black/70 group-hover:text-black transition-colors">
+            <Plus className="w-2.5 h-2.5 text-black/60 group-hover:text-white transition-colors" strokeWidth={3} />
+            <span className="text-[8px] font-black uppercase tracking-wider text-black/70 group-hover:text-white transition-colors">
               Add
             </span>
-            <div className="w-4 h-[0.5px] bg-black/20 group-hover:bg-black group-hover:w-6 transition-all duration-500" />
-            <div className="absolute inset-0 bg-black/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           </button>
-
         </div>
       </div>
     </Link>

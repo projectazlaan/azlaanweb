@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import HeroSection from '@/components/HeroSection';
+import HomeHeroSection from '@/components/HomeHeroSection';
 import CategoryNav from '@/components/CategoryNav';
 import StudioRenderer from '@/components/StudioRenderer';
 import { getDb } from '@/lib/db';
@@ -11,6 +11,7 @@ const BrandStory = dynamic(() => import('@/components/BrandStory'));
 const Testimonials = dynamic(() => import('@/components/Testimonials'));
 const Newsletter = dynamic(() => import('@/components/Newsletter'));
 const NewCollection = dynamic(() => import('@/components/NewCollection'));
+const PromoBanner = dynamic(() => import('@/components/PromoBanner'));
 
 export default async function HomePage() {
   // Fetch data on the server for maximum speed
@@ -18,6 +19,7 @@ export default async function HomePage() {
   const db = getDb();
   const products = db.prepare('SELECT * FROM products LIMIT 50').all();
   const heroData = db.prepare('SELECT * FROM hero').get();
+  const settings = db.prepare('SELECT * FROM settings').get() as any;
   return (
     <div className="min-h-screen relative">
       {/* Studio Pro V12 — apply saved styles to live site */}
@@ -26,7 +28,7 @@ export default async function HomePage() {
       {/* Sticky Hero Section */}
       <div className="sticky top-0 h-screen z-0 overflow-hidden">
         <div data-customizer-key="HeroSection" className="h-full">
-          <HeroSection initialHero={heroData} />
+          <HomeHeroSection initialHero={heroData} />
         </div>
       </div>
 
@@ -38,12 +40,16 @@ export default async function HomePage() {
           <NewCollection />
         </div>
 
+        <div data-customizer-key="PromoBanner">
+          <PromoBanner settings={settings?.promoBanner} />
+        </div>
+
         {/* Watch & Buy Section */}
-        <div data-customizer-key="WatchAndBuy" className="bg-white">
+        <div id="watch-and-buy" data-customizer-key="WatchAndBuy" className="bg-white">
           <ReelsPanel />
         </div>
 
-        <div className="space-y-8 md:space-y-12 pb-20">
+        <div className="space-y-8 md:space-y-12">
           <div data-customizer-key="FeaturedProducts">
             <FeaturedProducts initialProducts={products} />
           </div>

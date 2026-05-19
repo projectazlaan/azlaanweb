@@ -5,6 +5,7 @@ import { SidebarProvider } from "@/context/SidebarContext";
 import SidebarDrawer from "@/components/SidebarDrawer";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import { Toaster } from 'react-hot-toast';
 import VisualEditorBridge from "@/components/VisualEditorBridge";
 import { Suspense } from 'react';
@@ -60,10 +61,19 @@ export default function RootLayoutContent({ children }: { children: React.ReactN
       <SidebarProvider>
         <SidebarDrawer />
         <Navbar />
-        <main className={`flex-1 ${pathname === '/' ? 'pt-0' : 'pt-[72px] md:pt-[80px]'}`}>
+        <main className={`flex-1 ${
+          pathname === '/' 
+            ? 'pt-0' 
+            : pathname.startsWith('/product/') 
+              ? 'pt-[54px] lg:pt-[80px]' 
+              : 'pt-[72px] md:pt-[80px]'
+        }`}>
           {children}
         </main>
-        <Footer />
+        <div className="pb-20 lg:pb-0">
+          <Footer />
+        </div>
+        <MobileBottomNav />
       </SidebarProvider>
     </>
   );

@@ -110,7 +110,7 @@ export default function SidebarDrawer() {
           <Link
             href="/"
             onClick={closeSidebar}
-            className="relative w-[110px] h-[35px] hover:opacity-80 transition-opacity mix-blend-multiply"
+            className="relative w-[110px] h-[35px] mix-blend-multiply"
           >
             <Image
               src="/media-pro/azlaan-logo-trimmed.png"
@@ -340,7 +340,9 @@ export default function SidebarDrawer() {
             </p>
             <div className="grid grid-cols-2 gap-2">
               <Link
-                href="https://wa.me/yournumber"
+                href="https://wa.me/8801700000000"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex flex-col items-center gap-1.5 p-3 bg-white rounded-2xl hover:bg-black/[0.02] transition-colors group border border-black/5"
               >
                 <div className="w-7 h-7 rounded-full bg-black/[0.03] flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -366,9 +368,9 @@ export default function SidebarDrawer() {
               <div className="relative z-10">
                 <p className="text-[8px] font-black uppercase tracking-widest text-black/40 mb-0.5">Limited Offer</p>
                 <h4 className="text-[12px] font-bold leading-tight mb-2">Join Member & Get 15% Off</h4>
-                <button className="text-[8px] font-black uppercase tracking-widest bg-black text-white px-2.5 py-1 rounded-full flex items-center gap-1 hover:scale-105 transition-transform">
+                <Link href="/account" onClick={closeSidebar} className="text-[8px] font-black uppercase tracking-widest bg-black text-white px-2.5 py-1 rounded-full flex items-center gap-1 hover:scale-105 transition-transform">
                   Join Now <ArrowRight className="w-2.5 h-2.5" />
-                </button>
+                </Link>
               </div>
               <div className="absolute -right-4 -bottom-4 w-20 h-20 bg-black/[0.02] rounded-full blur-xl group-hover:scale-150 transition-transform duration-1000" />
             </div>

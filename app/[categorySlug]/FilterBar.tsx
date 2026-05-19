@@ -71,19 +71,39 @@ export const Icons = {
     </svg>
   )
 };
+import { useState, useEffect } from 'react';
+
 export default function FilterBar({ category, variant = 'full', items, activeItem, onItemSelect }: FilterBarProps) {
   const { filters, setFilter, activeSection } = useCategoryStore();
   const router = useRouter();
   const params = useParams();
   const displayItems = items || category.subcategories;
+  
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
-    <div className={`w-full transition-all duration-500 ${variant === 'compact' ? 'py-0.5' : 'py-3 md:py-4'}`}>
-      <div className={`
-        flex items-center w-full px-1 md:px-8
-        ${variant === 'full' ? 'justify-between' : 'justify-center gap-1 md:gap-8'}
-      `}>
+    <div className={`w-full transition-all duration-500 ${variant === 'compact' ? 'py-1' : 'py-3 md:py-4'}`}>
+      <div 
+        className="flex flex-nowrap items-center gap-2 md:gap-3.5 w-full px-2 overflow-x-auto scrollbar-none"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
         {displayItems.map((item) => {
           const isActive = activeItem ? activeItem === item : (variant === 'compact' ? activeSection === item : filters.subcategory === item);
+          
+          // Smart single-word display mapping
+          const smartLabel = item === 'Classic Kurtas' ? 'Kurta' : 
+                            item === 'Formal Shirts' ? 'Shirt' : 
+                            item === 'Chino Pants' ? 'Pants' : 
+                            item === 'Casual Edit' ? 'Casual' : 
+                            (item === 'Luxury Pret' && isMobile) ? 'Pret' :
+                            item;
+
           return (
             <button
               key={item}
@@ -120,22 +140,19 @@ export default function FilterBar({ category, variant = 'full', items, activeIte
                 }
               }}
               className={`
-                group relative flex flex-col items-center justify-center transition-all duration-500 ease-in-out flex-1 py-1 md:py-2
+                group relative px-4 md:px-5 py-1.5 md:py-2 rounded-full transition-all duration-500 ease-in-out shrink-0
+                ${isActive ? 'bg-black shadow-lg shadow-black/20' : 'hover:bg-black/[0.04]'}
               `}
             >
               <h3 className={`
-                font-sans font-bold uppercase transition-all duration-500 text-center whitespace-nowrap
+                font-sans font-black uppercase transition-all duration-500 text-center whitespace-nowrap
                 ${variant === 'full' 
-                  ? 'text-[7px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em]' 
-                  : 'text-[7px] md:text-[9px] tracking-[0.05em] md:tracking-[0.1em] font-black'}
-                ${isActive ? 'text-black' : 'text-black/50 group-hover:text-black/80'}
+                  ? 'text-[8.5px] md:text-[10px] tracking-[0.15em] md:tracking-[0.3em]' 
+                  : 'text-[9.5px] sm:text-[10px] md:text-[10.5px] tracking-[0.15em] md:tracking-[0.25em]'}
+                ${isActive ? 'text-white' : 'text-black/40 group-hover:text-black/80'}
               `}>
-                {item}
+                {smartLabel}
               </h3>
-              <div className={`
-                absolute bottom-0 transition-all duration-500 bg-black rounded-full h-[1.5px] w-4
-                ${isActive ? 'opacity-100 translate-y-1' : 'opacity-0 scale-x-0'}
-              `} />
             </button>
           );
         })}

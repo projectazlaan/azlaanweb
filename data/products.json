@@ -15,20 +15,43 @@
     "rating": 4.9,
     "reviewCount": 128,
     "badge": "Bestseller",
-    "sizes": ["S", "M", "L", "XL", "XXL"],
-    "colors": [{ "name": "Deep Maroon", "value": "#800000" }],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "colors": [
+      {
+        "name": "Deep Maroon",
+        "value": "#800000"
+      }
+    ],
     "fabric": "Premium Pima Cotton",
     "fit": "Tailored Fit",
     "occasion": "Eid",
     "isInStock": true,
     "stockCount": 12,
     "viewersCount": 42,
-    "recentPurchases": [{ "name": "Rahat from Dhaka", "timeAgo": "5 mins ago" }],
-    "recommendedWith": ["p4", "p6"],
+    "recentPurchases": [
+      {
+        "name": "Rahat from Dhaka",
+        "timeAgo": "5 mins ago"
+      }
+    ],
+    "recommendedWith": [
+      "p4",
+      "p6"
+    ],
     "completeTheLook": {
       "title": "Signature Heritage Look",
       "items": [
-        { "productId": "p4", "type": "Bottom", "discount": 10 }
+        {
+          "productId": "p4",
+          "type": "Bottom",
+          "discount": 10
+        }
       ]
     }
   },
@@ -46,8 +69,17 @@
     "subcategory": "Classic Kurtas",
     "rating": 4.8,
     "reviewCount": 95,
-    "sizes": ["M", "L", "XL"],
-    "colors": [{ "name": "Slate Grey", "value": "#708090" }],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Slate Grey",
+        "value": "#708090"
+      }
+    ],
     "fabric": "Slub Cotton",
     "fit": "Regular Fit",
     "isInStock": true,
@@ -68,8 +100,18 @@
     "subcategory": "Formal Shirts",
     "rating": 4.7,
     "reviewCount": 112,
-    "sizes": ["M", "L", "XL", "XXL"],
-    "colors": [{ "name": "Azure Blue", "value": "#007FFF" }],
+    "sizes": [
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "colors": [
+      {
+        "name": "Azure Blue",
+        "value": "#007FFF"
+      }
+    ],
     "fabric": "Egyptian Cotton",
     "fit": "Slim Fit",
     "isInStock": true,
@@ -90,8 +132,18 @@
     "subcategory": "Chino Pants",
     "rating": 4.6,
     "reviewCount": 84,
-    "sizes": ["30", "32", "34", "36"],
-    "colors": [{ "name": "Sand Beige", "value": "#F5F5DC" }],
+    "sizes": [
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      {
+        "name": "Sand Beige",
+        "value": "#F5F5DC"
+      }
+    ],
     "fabric": "Stretch Twill",
     "fit": "Slim Fit",
     "isInStock": true,
@@ -110,11 +162,21 @@
     ],
     "categorySlug": "men",
     "subcategory": "Panjabi",
-    "rating": 5.0,
+    "rating": 5,
     "reviewCount": 42,
     "badge": "Limited Edition",
-    "sizes": ["S", "M", "L", "XL"],
-    "colors": [{ "name": "Jet Black", "value": "#000000" }],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Jet Black",
+        "value": "#000000"
+      }
+    ],
     "fabric": "Jacquard Silk",
     "fit": "Tailored Fit",
     "isInStock": true,
@@ -135,8 +197,17 @@
     "subcategory": "Classic Kurtas",
     "rating": 4.7,
     "reviewCount": 38,
-    "sizes": ["M", "L", "XL"],
-    "colors": [{ "name": "Olive Green", "value": "#808000" }],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Olive Green",
+        "value": "#808000"
+      }
+    ],
     "fabric": "Linen Blend",
     "fit": "Regular Fit",
     "isInStock": true,
@@ -154,11 +225,18 @@
     ],
     "categorySlug": "women",
     "subcategory": "Saree",
-    "rating": 5.0,
+    "rating": 5,
     "reviewCount": 42,
     "badge": "Handcrafted",
-    "sizes": ["Free Size"],
-    "colors": [{ "name": "Emerald", "value": "#50C878" }],
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Emerald",
+        "value": "#50C878"
+      }
+    ],
     "fabric": "Pure Silk",
     "isInStock": true,
     "stockCount": 3
@@ -177,8 +255,17 @@
     "subcategory": "Luxury Pret",
     "rating": 4.9,
     "reviewCount": 56,
-    "sizes": ["S", "M", "L"],
-    "colors": [{ "name": "Pastel Pink", "value": "#FFD1DC" }],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Pastel Pink",
+        "value": "#FFD1DC"
+      }
+    ],
     "fabric": "Organza",
     "isInStock": true,
     "stockCount": 10
@@ -195,11 +282,18 @@
     ],
     "categorySlug": "women",
     "subcategory": "Bridal",
-    "rating": 5.0,
+    "rating": 5,
     "reviewCount": 12,
     "badge": "Signature",
-    "sizes": ["Custom Fit"],
-    "colors": [{ "name": "Royal Gold", "value": "#D4AF37" }],
+    "sizes": [
+      "Custom Fit"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      }
+    ],
     "fabric": "Premium Silk",
     "isInStock": true,
     "stockCount": 2
@@ -218,8 +312,18 @@
     "subcategory": "Boys Panjabi",
     "rating": 4.9,
     "reviewCount": 42,
-    "sizes": ["4Y", "6Y", "8Y", "10Y"],
-    "colors": [{ "name": "White", "value": "#FFFFFF" }],
+    "sizes": [
+      "4Y",
+      "6Y",
+      "8Y",
+      "10Y"
+    ],
+    "colors": [
+      {
+        "name": "White",
+        "value": "#FFFFFF"
+      }
+    ],
     "fabric": "Soft Cotton",
     "isInStock": true,
     "stockCount": 25
@@ -238,8 +342,17 @@
     "subcategory": "Formal Shirts",
     "rating": 4.8,
     "reviewCount": 74,
-    "sizes": ["M", "L", "XL"],
-    "colors": [{ "name": "Pure White", "value": "#FFFFFF" }],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Pure White",
+        "value": "#FFFFFF"
+      }
+    ],
     "fabric": "Giza Cotton",
     "isInStock": true,
     "stockCount": 15
@@ -258,8 +371,17 @@
     "subcategory": "Casual Edit",
     "rating": 4.7,
     "reviewCount": 56,
-    "sizes": ["M", "L", "XL"],
-    "colors": [{ "name": "Deep Blue", "value": "#000080" }],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Deep Blue",
+        "value": "#000080"
+      }
+    ],
     "fabric": "Cotton Jersey",
     "fit": "Regular Fit",
     "isInStock": true,
@@ -274,8 +396,8 @@
       "/media-pro/men/Design%201/651882421_122120769999151981_8209666213684742551_n.webp"
     ],
     "categorySlug": "men",
-    "subcategory": "Wedding Edition",
-    "rating": 5.0,
+    "subcategory": "Panjabi",
+    "rating": 5,
     "reviewCount": 22,
     "isInStock": true
   },
@@ -289,7 +411,7 @@
       "/media-pro/women/Design 2/671858259_122125885173151981_8012706557340946160_n.webp"
     ],
     "categorySlug": "women",
-    "subcategory": "Festive Collection",
+    "subcategory": "Luxury Pret",
     "rating": 4.9,
     "reviewCount": 24,
     "isInStock": true
@@ -318,7 +440,7 @@
     ],
     "categorySlug": "women",
     "subcategory": "Signature Series",
-    "rating": 5.0,
+    "rating": 5,
     "reviewCount": 31,
     "isInStock": true
   },
@@ -331,7 +453,7 @@
       "/media-pro/women/Design 2/672681309_122125885053151981_339987484088257108_n.webp"
     ],
     "categorySlug": "women",
-    "subcategory": "Ready to Wear",
+    "subcategory": "Luxury Pret",
     "rating": 4.7,
     "reviewCount": 89,
     "isInStock": true
@@ -345,8 +467,8 @@
       "/media-pro/women/Design%201/673949386_122125962357151981_1889495426070156223_n.webp"
     ],
     "categorySlug": "women",
-    "subcategory": "Bridal Couture",
-    "rating": 5.0,
+    "subcategory": "Bridal",
+    "rating": 5,
     "reviewCount": 18,
     "isInStock": true
   },
@@ -359,7 +481,7 @@
       "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp"
     ],
     "categorySlug": "women",
-    "subcategory": "Exclusive",
+    "subcategory": "Luxury Pret",
     "rating": 4.9,
     "reviewCount": 47,
     "isInStock": true
@@ -373,8 +495,8 @@
       "/media-pro/men/Design 2/649486384_122120775759151981_5241916048356926520_n.webp"
     ],
     "categorySlug": "men",
-    "subcategory": "Premium Panjabi",
-    "rating": 5.0,
+    "subcategory": "Panjabi",
+    "rating": 5,
     "reviewCount": 15,
     "isInStock": true
   },
@@ -416,7 +538,7 @@
     ],
     "categorySlug": "women",
     "subcategory": "Saree",
-    "rating": 5.0,
+    "rating": 5,
     "reviewCount": 12,
     "isInStock": true
   },
@@ -443,9 +565,4283 @@
       "/media-pro/women/Design 2/671858259_122125885173151981_8012706557340946160_n.webp"
     ],
     "categorySlug": "women",
-    "subcategory": "Festive Collection",
+    "subcategory": "Luxury Pret",
     "rating": 4.8,
     "reviewCount": 35,
     "isInStock": true
+  },
+  {
+    "id": "p26",
+    "name": "Elegance Crimson Saree",
+    "slug": "elegance-crimson-saree",
+    "price": 16500,
+    "originalPrice": 19500,
+    "images": [
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Saree",
+    "rating": 4.9,
+    "reviewCount": 24,
+    "isInStock": true
+  },
+  {
+    "id": "p27",
+    "name": "Royal Indigo Saree",
+    "slug": "royal-indigo-saree",
+    "price": 19800,
+    "originalPrice": 24000,
+    "images": [
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Saree",
+    "rating": 4.8,
+    "reviewCount": 32,
+    "isInStock": true
+  },
+  {
+    "id": "p28",
+    "name": "Ivory Organza Saree",
+    "slug": "ivory-organza-saree",
+    "price": 14500,
+    "originalPrice": 17000,
+    "images": [
+      "/media-pro/women/Design 2/671639040_122125885023151981_7657790961365514375_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Saree",
+    "rating": 4.7,
+    "reviewCount": 18,
+    "isInStock": true
+  },
+  {
+    "id": "p29",
+    "name": "Golden Zari Silk Saree",
+    "slug": "golden-zari-silk-saree",
+    "price": 22000,
+    "originalPrice": 26000,
+    "images": [
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Saree",
+    "rating": 5,
+    "reviewCount": 15,
+    "isInStock": true
+  },
+  {
+    "id": "p30",
+    "name": "Classic Midnight Pret",
+    "slug": "classic-midnight-pret",
+    "price": 8200,
+    "originalPrice": 9800,
+    "images": [
+      "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Luxury Pret",
+    "rating": 4.9,
+    "reviewCount": 41,
+    "isInStock": true
+  },
+  {
+    "id": "p31",
+    "name": "Pastel Peony Pret",
+    "slug": "pastel-peony-pret",
+    "price": 7200,
+    "originalPrice": 8500,
+    "images": [
+      "/media-pro/women/Design 2/672681309_122125885053151981_339987484088257108_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Luxury Pret",
+    "rating": 4.6,
+    "reviewCount": 27,
+    "isInStock": true
+  },
+  {
+    "id": "p32",
+    "name": "Sapphire Silk Pret",
+    "slug": "sapphire-silk-pret",
+    "price": 9400,
+    "originalPrice": 11000,
+    "images": [
+      "/media-pro/women/Design 3/671853622_122125960077151981_4116438312044612288_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Luxury Pret",
+    "rating": 4.8,
+    "reviewCount": 35,
+    "isInStock": true
+  },
+  {
+    "id": "p33",
+    "name": "Rosewood Velvet Kamiz",
+    "slug": "rosewood-velvet-kamiz",
+    "price": 8900,
+    "originalPrice": 10500,
+    "images": [
+      "/media-pro/women/Design 2/671858259_122125885173151981_8012706557340946160_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Luxury Pret",
+    "rating": 4.7,
+    "reviewCount": 19,
+    "isInStock": true
+  },
+  {
+    "id": "p34",
+    "name": "Premium Unstitched Silk",
+    "slug": "premium-unstitched-silk",
+    "price": 6800,
+    "originalPrice": 8000,
+    "images": [
+      "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Unstitched",
+    "rating": 4.9,
+    "reviewCount": 45,
+    "isInStock": true
+  },
+  {
+    "id": "p35",
+    "name": "Regal Brocade Unstitched",
+    "slug": "regal-brocade-unstitched",
+    "price": 7500,
+    "originalPrice": 9000,
+    "images": [
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Unstitched",
+    "rating": 4.8,
+    "reviewCount": 29,
+    "isInStock": true
+  },
+  {
+    "id": "p36",
+    "name": "Classic Jacquard Lawn",
+    "slug": "classic-jacquard-lawn",
+    "price": 5800,
+    "originalPrice": 6500,
+    "images": [
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Unstitched",
+    "rating": 4.7,
+    "reviewCount": 51,
+    "isInStock": true
+  },
+  {
+    "id": "p37",
+    "name": "Hand-Embroidered Organza",
+    "slug": "hand-embroidered-organza",
+    "price": 8500,
+    "originalPrice": 10000,
+    "images": [
+      "/media-pro/women/Design 2/671639040_122125885023151981_7657790961365514375_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Unstitched",
+    "rating": 4.9,
+    "reviewCount": 38,
+    "isInStock": true
+  },
+  {
+    "id": "p38",
+    "name": "Pastel Meadow Linen",
+    "slug": "pastel-meadow-linen",
+    "price": 4900,
+    "originalPrice": 5800,
+    "images": [
+      "/media-pro/women/Design 2/672681309_122125885053151981_339987484088257108_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Unstitched",
+    "rating": 4.6,
+    "reviewCount": 62,
+    "isInStock": true
+  },
+  {
+    "id": "p39",
+    "name": "Royal Velvet Lehengha",
+    "slug": "royal-velvet-lehengha",
+    "price": 38000,
+    "originalPrice": 44000,
+    "images": [
+      "/media-pro/women/Design 3/671853622_122125960077151981_4116438312044612288_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Bridal",
+    "rating": 5,
+    "reviewCount": 8,
+    "isInStock": true
+  },
+  {
+    "id": "p40",
+    "name": "Crimson Heritage Gharara",
+    "slug": "crimson-heritage-gharara",
+    "price": 35000,
+    "originalPrice": 42000,
+    "images": [
+      "/media-pro/women/Design 3/670896434_122125960101151981_3029998908890020858_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Bridal",
+    "rating": 4.9,
+    "reviewCount": 14,
+    "isInStock": true
+  },
+  {
+    "id": "p41",
+    "name": "Pastel Peach Bridal Set",
+    "slug": "pastel-peach-bridal-set",
+    "price": 42000,
+    "originalPrice": 48000,
+    "images": [
+      "/media-pro/women/Design 2/671858259_122125885173151981_8012706557340946160_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Bridal",
+    "rating": 5,
+    "reviewCount": 11,
+    "isInStock": true
+  },
+  {
+    "id": "p42",
+    "name": "Ethereal Ivory Anarkali",
+    "slug": "ethereal-ivory-anarkali",
+    "price": 31000,
+    "originalPrice": 36000,
+    "images": [
+      "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Bridal",
+    "rating": 4.8,
+    "reviewCount": 15,
+    "isInStock": true
+  },
+  {
+    "id": "p43",
+    "name": "Golden Shimmer Bridal",
+    "slug": "golden-shimmer-bridal",
+    "price": 48000,
+    "originalPrice": 55000,
+    "images": [
+      "/media-pro/women/Design 3/670896434_122125960101151981_3029998908890020858_n.webp"
+    ],
+    "categorySlug": "women",
+    "subcategory": "Bridal",
+    "rating": 5,
+    "reviewCount": 9,
+    "isInStock": true
+  },
+  {
+    "id": "p-gen-men-panjabi-1779138917402-0",
+    "name": "Maharaja Heritage Panjabi",
+    "slug": "maharaja-heritage-panjabi-7402",
+    "price": 3000,
+    "originalPrice": 3750,
+    "images": [
+      "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+      "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Panjabi",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 59,
+    "isInStock": true,
+    "stockCount": 21,
+    "viewersCount": 71,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-panjabi-1779138917402-1",
+    "name": "Viceroy Brocade Silk Panjabi",
+    "slug": "viceroy-brocade-silk-panjabi-7402",
+    "price": 4000,
+    "originalPrice": 5000,
+    "images": [
+      "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp",
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Panjabi",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 74,
+    "isInStock": true,
+    "stockCount": 34,
+    "viewersCount": 74,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-panjabi-1779138917402-2",
+    "name": "Royal Gold Zari Panjabi",
+    "slug": "royal-gold-zari-panjabi-7402",
+    "price": 3500,
+    "originalPrice": 4375,
+    "images": [
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+      "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Panjabi",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 56,
+    "isInStock": true,
+    "stockCount": 10,
+    "viewersCount": 21,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-panjabi-1779138917402-3",
+    "name": "Giza Cotton Elegance Panjabi",
+    "slug": "giza-cotton-elegance-panjabi-7402",
+    "price": 4000,
+    "originalPrice": 5000,
+    "images": [
+      "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp",
+      "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp"
+    ],
+    "image": "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Panjabi",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 43,
+    "isInStock": true,
+    "stockCount": 38,
+    "viewersCount": 40,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-panjabi-1779138917402-4",
+    "name": "Mughal Oudh Fine Silk Panjabi",
+    "slug": "mughal-oudh-fine-silk-panjabi-7402",
+    "price": 4500,
+    "originalPrice": 5625,
+    "images": [
+      "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp",
+      "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp"
+    ],
+    "image": "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Panjabi",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 93,
+    "isInStock": true,
+    "stockCount": 35,
+    "viewersCount": 35,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-panjabi-1779138917402-5",
+    "name": "Imperial Ivory Wash & Wear Panjabi",
+    "slug": "imperial-ivory-wash-wear-panjabi-7402",
+    "price": 3000,
+    "originalPrice": 3750,
+    "images": [
+      "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp",
+      "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp"
+    ],
+    "image": "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Panjabi",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 69,
+    "isInStock": true,
+    "stockCount": 29,
+    "viewersCount": 45,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-classic-kurtas-1779138917402-0",
+    "name": "Ivory Herringbone Linen Kurta",
+    "slug": "ivory-herringbone-linen-kurta-7402",
+    "price": 4000,
+    "originalPrice": 5000,
+    "images": [
+      "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+      "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Classic Kurtas",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 92,
+    "isInStock": true,
+    "stockCount": 30,
+    "viewersCount": 53,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-classic-kurtas-1779138917402-1",
+    "name": "Slate Minimalist Slub Kurta",
+    "slug": "slate-minimalist-slub-kurta-7402",
+    "price": 4500,
+    "originalPrice": 5625,
+    "images": [
+      "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp",
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Classic Kurtas",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 58,
+    "isInStock": true,
+    "stockCount": 16,
+    "viewersCount": 45,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-classic-kurtas-1779138917402-2",
+    "name": "Charcoal Luxe Summer Kurta",
+    "slug": "charcoal-luxe-summer-kurta-7402",
+    "price": 3500,
+    "originalPrice": 4375,
+    "images": [
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+      "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Classic Kurtas",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 45,
+    "isInStock": true,
+    "stockCount": 36,
+    "viewersCount": 67,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-classic-kurtas-1779138917402-3",
+    "name": "Terracotta Cotton Slub Kurta",
+    "slug": "terracotta-cotton-slub-kurta-7402",
+    "price": 5000,
+    "originalPrice": 6250,
+    "images": [
+      "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp",
+      "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp"
+    ],
+    "image": "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Classic Kurtas",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 32,
+    "isInStock": true,
+    "stockCount": 37,
+    "viewersCount": 39,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-classic-kurtas-1779138917402-4",
+    "name": "Indigo Breeze Linen Kurta",
+    "slug": "indigo-breeze-linen-kurta-7402",
+    "price": 3500,
+    "originalPrice": 4375,
+    "images": [
+      "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp",
+      "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp"
+    ],
+    "image": "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Classic Kurtas",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 20,
+    "isInStock": true,
+    "stockCount": 25,
+    "viewersCount": 34,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-classic-kurtas-1779138917402-5",
+    "name": "Oatmeal Melange Premium Kurta",
+    "slug": "oatmeal-melange-premium-kurta-7402",
+    "price": 4000,
+    "originalPrice": 5000,
+    "images": [
+      "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp",
+      "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp"
+    ],
+    "image": "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Classic Kurtas",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 94,
+    "isInStock": true,
+    "stockCount": 16,
+    "viewersCount": 51,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-classic-kurtas-1779138917402-6",
+    "name": "Midnight Silk Blend Kurta",
+    "slug": "midnight-silk-blend-kurta-7402",
+    "price": 4000,
+    "originalPrice": 5000,
+    "images": [
+      "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp",
+      "/media-pro/men/Design 4/649658069_122120816709151981_7050745970883469671_n.webp"
+    ],
+    "image": "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Classic Kurtas",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 37,
+    "isInStock": true,
+    "stockCount": 35,
+    "viewersCount": 74,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-formal-shirts-1779138917402-0",
+    "name": "Giza 87 Double-Ply Dress Shirt",
+    "slug": "giza-87-double-ply-dress-shirt-7402",
+    "price": 4000,
+    "originalPrice": 5000,
+    "images": [
+      "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+      "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Formal Shirts",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 76,
+    "isInStock": true,
+    "stockCount": 21,
+    "viewersCount": 40,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-formal-shirts-1779138917402-1",
+    "name": "Mayfair Satin Twill Tuxedo Shirt",
+    "slug": "mayfair-satin-twill-tuxedo-shirt-7402",
+    "price": 4000,
+    "originalPrice": 5000,
+    "images": [
+      "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp",
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Formal Shirts",
+    "subSubCategory": "All",
+    "rating": 4.5,
+    "reviewCount": 36,
+    "isInStock": true,
+    "stockCount": 12,
+    "viewersCount": 35,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-formal-shirts-1779138917402-2",
+    "name": "Italian Oxford Ice Blue Shirt",
+    "slug": "italian-oxford-ice-blue-shirt-7402",
+    "price": 4500,
+    "originalPrice": 5625,
+    "images": [
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+      "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Formal Shirts",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 63,
+    "isInStock": true,
+    "stockCount": 39,
+    "viewersCount": 34,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-formal-shirts-1779138917402-3",
+    "name": "Imperial Royal Micro-Check Shirt",
+    "slug": "imperial-royal-micro-check-shirt-7402",
+    "price": 5000,
+    "originalPrice": 6250,
+    "images": [
+      "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp",
+      "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp"
+    ],
+    "image": "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Formal Shirts",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 44,
+    "isInStock": true,
+    "stockCount": 18,
+    "viewersCount": 63,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-formal-shirts-1779138917402-4",
+    "name": "Sartorial Herringbone White Shirt",
+    "slug": "sartorial-herringbone-white-shirt-7402",
+    "price": 4000,
+    "originalPrice": 5000,
+    "images": [
+      "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp",
+      "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp"
+    ],
+    "image": "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Formal Shirts",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 15,
+    "isInStock": true,
+    "stockCount": 24,
+    "viewersCount": 37,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-formal-shirts-1779138917402-5",
+    "name": "Belgian Linen Summer Formal Shirt",
+    "slug": "belgian-linen-summer-formal-shirt-7402",
+    "price": 4000,
+    "originalPrice": 5000,
+    "images": [
+      "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp",
+      "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp"
+    ],
+    "image": "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Formal Shirts",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 58,
+    "isInStock": true,
+    "stockCount": 38,
+    "viewersCount": 55,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-formal-shirts-1779138917402-6",
+    "name": "Midnight Satin Dinner Shirt",
+    "slug": "midnight-satin-dinner-shirt-7402",
+    "price": 3500,
+    "originalPrice": 4375,
+    "images": [
+      "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp",
+      "/media-pro/men/Design 4/649658069_122120816709151981_7050745970883469671_n.webp"
+    ],
+    "image": "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Formal Shirts",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 33,
+    "isInStock": true,
+    "stockCount": 36,
+    "viewersCount": 64,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-formal-shirts-1779138917402-7",
+    "name": "Signature Navy Twill Shirt",
+    "slug": "signature-navy-twill-shirt-7402",
+    "price": 5000,
+    "originalPrice": 6250,
+    "images": [
+      "/media-pro/men/Design 4/649658069_122120816709151981_7050745970883469671_n.webp",
+      "/media-pro/men/Design 4/650135481_122120816691151981_3237423457649921454_n.webp"
+    ],
+    "image": "/media-pro/men/Design 4/649658069_122120816709151981_7050745970883469671_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Formal Shirts",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 42,
+    "isInStock": true,
+    "stockCount": 39,
+    "viewersCount": 49,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-chino-pants-1779138917402-0",
+    "name": "Chelsea Khaki Cotton Chinos",
+    "slug": "chelsea-khaki-cotton-chinos-7402",
+    "price": 5000,
+    "originalPrice": 6250,
+    "images": [
+      "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+      "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Chino Pants",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 72,
+    "isInStock": true,
+    "stockCount": 12,
+    "viewersCount": 56,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-chino-pants-1779138917402-1",
+    "name": "Soho Midnight Navy Chinos",
+    "slug": "soho-midnight-navy-chinos-7402",
+    "price": 5000,
+    "originalPrice": 6250,
+    "images": [
+      "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp",
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Chino Pants",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 94,
+    "isInStock": true,
+    "stockCount": 13,
+    "viewersCount": 38,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-chino-pants-1779138917402-2",
+    "name": "Mayfair Sand Stretch Chinos",
+    "slug": "mayfair-sand-stretch-chinos-7402",
+    "price": 3500,
+    "originalPrice": 4375,
+    "images": [
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+      "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Chino Pants",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 57,
+    "isInStock": true,
+    "stockCount": 24,
+    "viewersCount": 56,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-chino-pants-1779138917402-3",
+    "name": "Greenwich Forest Olive Chinos",
+    "slug": "greenwich-forest-olive-chinos-7402",
+    "price": 3500,
+    "originalPrice": 4375,
+    "images": [
+      "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp",
+      "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp"
+    ],
+    "image": "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Chino Pants",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 26,
+    "isInStock": true,
+    "stockCount": 31,
+    "viewersCount": 79,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-chino-pants-1779138917402-4",
+    "name": "Tribeca Stone Grey Chinos",
+    "slug": "tribeca-stone-grey-chinos-7402",
+    "price": 3500,
+    "originalPrice": 4375,
+    "images": [
+      "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp",
+      "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp"
+    ],
+    "image": "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Chino Pants",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 65,
+    "isInStock": true,
+    "stockCount": 26,
+    "viewersCount": 54,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-chino-pants-1779138917402-5",
+    "name": "Bespoke Charcoal Twill Chinos",
+    "slug": "bespoke-charcoal-twill-chinos-7402",
+    "price": 3500,
+    "originalPrice": 4375,
+    "images": [
+      "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp",
+      "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp"
+    ],
+    "image": "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Chino Pants",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 81,
+    "isInStock": true,
+    "stockCount": 32,
+    "viewersCount": 50,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-chino-pants-1779138917402-6",
+    "name": "Richmond Tan Slim Fit Chinos",
+    "slug": "richmond-tan-slim-fit-chinos-7402",
+    "price": 3000,
+    "originalPrice": 3750,
+    "images": [
+      "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp",
+      "/media-pro/men/Design 4/649658069_122120816709151981_7050745970883469671_n.webp"
+    ],
+    "image": "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Chino Pants",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 42,
+    "isInStock": true,
+    "stockCount": 18,
+    "viewersCount": 39,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-chino-pants-1779138917402-7",
+    "name": "Hampstead Burgundy Brushed Chinos",
+    "slug": "hampstead-burgundy-brushed-chinos-7402",
+    "price": 3000,
+    "originalPrice": 3750,
+    "images": [
+      "/media-pro/men/Design 4/649658069_122120816709151981_7050745970883469671_n.webp",
+      "/media-pro/men/Design 4/650135481_122120816691151981_3237423457649921454_n.webp"
+    ],
+    "image": "/media-pro/men/Design 4/649658069_122120816709151981_7050745970883469671_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Chino Pants",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 41,
+    "isInStock": true,
+    "stockCount": 36,
+    "viewersCount": 60,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-casual-edit-1779138917402-0",
+    "name": "Linen Breeze Casual Shirt",
+    "slug": "linen-breeze-casual-shirt-7402",
+    "price": 3500,
+    "originalPrice": 4375,
+    "images": [
+      "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+      "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Casual Edit",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 78,
+    "isInStock": true,
+    "stockCount": 16,
+    "viewersCount": 45,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-casual-edit-1779138917402-1",
+    "name": "Classic Knit Mercerized Polo",
+    "slug": "classic-knit-mercerized-polo-7402",
+    "price": 5000,
+    "originalPrice": 6250,
+    "images": [
+      "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp",
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/651882421_122120769999151981_8209666213684742551_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Casual Edit",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 29,
+    "isInStock": true,
+    "stockCount": 20,
+    "viewersCount": 20,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-casual-edit-1779138917402-2",
+    "name": "Sartorial Chambray Summer Shirt",
+    "slug": "sartorial-chambray-summer-shirt-7402",
+    "price": 4000,
+    "originalPrice": 5000,
+    "images": [
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+      "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Casual Edit",
+    "subSubCategory": "All",
+    "rating": 4.5,
+    "reviewCount": 36,
+    "isInStock": true,
+    "stockCount": 22,
+    "viewersCount": 46,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-casual-edit-1779138917402-3",
+    "name": "Indigo Wash Cotton Over-shirt",
+    "slug": "indigo-wash-cotton-over-shirt-7402",
+    "price": 5000,
+    "originalPrice": 6250,
+    "images": [
+      "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp",
+      "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp"
+    ],
+    "image": "/media-pro/men/Design 2/651189502_122120775753151981_1115542629474834714_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Casual Edit",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 49,
+    "isInStock": true,
+    "stockCount": 26,
+    "viewersCount": 20,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-casual-edit-1779138917402-4",
+    "name": "Off-White Slub Woven Tee",
+    "slug": "off-white-slub-woven-tee-7402",
+    "price": 5000,
+    "originalPrice": 6250,
+    "images": [
+      "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp",
+      "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp"
+    ],
+    "image": "/media-pro/men/Design 2/649776456_122120775735151981_894663234632234790_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Casual Edit",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 82,
+    "isInStock": true,
+    "stockCount": 25,
+    "viewersCount": 66,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-casual-edit-1779138917402-5",
+    "name": "Crimson Linen Blend Polo",
+    "slug": "crimson-linen-blend-polo-7402",
+    "price": 3500,
+    "originalPrice": 4375,
+    "images": [
+      "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp",
+      "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp"
+    ],
+    "image": "/media-pro/men/Design 3/653700998_122121217251151981_4193321662627524387_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Casual Edit",
+    "subSubCategory": "All",
+    "rating": 5,
+    "reviewCount": 76,
+    "isInStock": true,
+    "stockCount": 27,
+    "viewersCount": 68,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-casual-edit-1779138917402-6",
+    "name": "Pima Knit Casual Crewneck",
+    "slug": "pima-knit-casual-crewneck-7402",
+    "price": 4500,
+    "originalPrice": 5625,
+    "images": [
+      "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp",
+      "/media-pro/men/Design 4/649658069_122120816709151981_7050745970883469671_n.webp"
+    ],
+    "image": "/media-pro/men/Design 3/650030190_122121217221151981_4107622559203671909_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Casual Edit",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 72,
+    "isInStock": true,
+    "stockCount": 11,
+    "viewersCount": 60,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-casual-edit-1779138917402-7",
+    "name": "Sage Summer Utility Shirt",
+    "slug": "sage-summer-utility-shirt-7402",
+    "price": 4500,
+    "originalPrice": 5625,
+    "images": [
+      "/media-pro/men/Design 4/649658069_122120816709151981_7050745970883469671_n.webp",
+      "/media-pro/men/Design 4/650135481_122120816691151981_3237423457649921454_n.webp"
+    ],
+    "image": "/media-pro/men/Design 4/649658069_122120816709151981_7050745970883469671_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Casual Edit",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 24,
+    "isInStock": true,
+    "stockCount": 21,
+    "viewersCount": 55,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-men-casual-edit-1779138917402-8",
+    "name": "Midnight Indigo Denim Shirt",
+    "slug": "midnight-indigo-denim-shirt-7402",
+    "price": 3500,
+    "originalPrice": 4375,
+    "images": [
+      "/media-pro/men/Design 4/650135481_122120816691151981_3237423457649921454_n.webp",
+      "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp"
+    ],
+    "image": "/media-pro/men/Design 4/650135481_122120816691151981_3237423457649921454_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Casual Edit",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 56,
+    "isInStock": true,
+    "stockCount": 31,
+    "viewersCount": 54,
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-gen-women-unstitched-1779138917403-0",
+    "name": "Sovereign Linen 3-Piece Yardage",
+    "slug": "sovereign-linen-3-piece-yardage-7403",
+    "price": 6000,
+    "originalPrice": 7500,
+    "images": [
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Unstitched",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 79,
+    "isInStock": true,
+    "stockCount": 22,
+    "viewersCount": 31,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-unstitched-1779138917403-1",
+    "name": "Lustrous Mulberry Silk Suite",
+    "slug": "lustrous-mulberry-silk-suite-7403",
+    "price": 8000,
+    "originalPrice": 10000,
+    "images": [
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+      "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Unstitched",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 31,
+    "isInStock": true,
+    "stockCount": 30,
+    "viewersCount": 29,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-unstitched-1779138917403-2",
+    "name": "Egyptian Lawn Fine Printed Set",
+    "slug": "egyptian-lawn-fine-printed-set-7403",
+    "price": 6000,
+    "originalPrice": 7500,
+    "images": [
+      "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp",
+      "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Unstitched",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 70,
+    "isInStock": true,
+    "stockCount": 27,
+    "viewersCount": 44,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-unstitched-1779138917403-3",
+    "name": "Real Gold Brocade Unstitched Set",
+    "slug": "real-gold-brocade-unstitched-set-7403",
+    "price": 8000,
+    "originalPrice": 10000,
+    "images": [
+      "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp",
+      "/media-pro/women/Design 2/672681309_122125885053151981_339987484088257108_n.webp"
+    ],
+    "image": "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Unstitched",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 82,
+    "isInStock": true,
+    "stockCount": 10,
+    "viewersCount": 50,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-saree-1779138917403-0",
+    "name": "Varanasi Golden Zari Saree",
+    "slug": "varanasi-golden-zari-saree-7403",
+    "price": 14000,
+    "originalPrice": 17500,
+    "images": [
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Saree",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 24,
+    "isInStock": true,
+    "stockCount": 28,
+    "viewersCount": 30,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-saree-1779138917403-1",
+    "name": "Kanchipuram Heritage Silk Saree",
+    "slug": "kanchipuram-heritage-silk-saree-7403",
+    "price": 14000,
+    "originalPrice": 17500,
+    "images": [
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+      "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Saree",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 80,
+    "isInStock": true,
+    "stockCount": 31,
+    "viewersCount": 50,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-saree-1779138917403-2",
+    "name": "Banarasi Royal Brocade Saree",
+    "slug": "banarasi-royal-brocade-saree-7403",
+    "price": 18000,
+    "originalPrice": 22500,
+    "images": [
+      "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp",
+      "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Saree",
+    "subSubCategory": "All",
+    "rating": 4.5,
+    "reviewCount": 35,
+    "isInStock": true,
+    "stockCount": 10,
+    "viewersCount": 35,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-saree-1779138917403-3",
+    "name": "Chanderi Pastel Summer Saree",
+    "slug": "chanderi-pastel-summer-saree-7403",
+    "price": 18000,
+    "originalPrice": 22500,
+    "images": [
+      "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp",
+      "/media-pro/women/Design 2/672681309_122125885053151981_339987484088257108_n.webp"
+    ],
+    "image": "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Saree",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 91,
+    "isInStock": true,
+    "stockCount": 18,
+    "viewersCount": 60,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-bridal-1779138917403-0",
+    "name": "Empress Velvet Zardozi Lehenga",
+    "slug": "empress-velvet-zardozi-lehenga-7403",
+    "price": 42000,
+    "originalPrice": 52500,
+    "images": [
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Bridal",
+    "subSubCategory": "All",
+    "rating": 4.5,
+    "reviewCount": 67,
+    "isInStock": true,
+    "stockCount": 35,
+    "viewersCount": 48,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-bridal-1779138917403-1",
+    "name": "Noor Jehan Gharara Ensemble",
+    "slug": "noor-jehan-gharara-ensemble-7403",
+    "price": 39000,
+    "originalPrice": 48750,
+    "images": [
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+      "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Bridal",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 15,
+    "isInStock": true,
+    "stockCount": 38,
+    "viewersCount": 55,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-bridal-1779138917403-2",
+    "name": "Shehnai Royal Silk Lehenga",
+    "slug": "shehnai-royal-silk-lehenga-7403",
+    "price": 45000,
+    "originalPrice": 56250,
+    "images": [
+      "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp",
+      "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Bridal",
+    "subSubCategory": "All",
+    "rating": 5,
+    "reviewCount": 32,
+    "isInStock": true,
+    "stockCount": 22,
+    "viewersCount": 79,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-signature-series-1779138917403-0",
+    "name": "Atelier Heritage Artisan Silk Kaftan",
+    "slug": "atelier-heritage-artisan-silk-kaftan-7403",
+    "price": 7000,
+    "originalPrice": 8750,
+    "images": [
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Signature Series",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 85,
+    "isInStock": true,
+    "stockCount": 37,
+    "viewersCount": 61,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-signature-series-1779138917403-1",
+    "name": "Royale Heritage Silk Kurta Set",
+    "slug": "royale-heritage-silk-kurta-set-7403",
+    "price": 7000,
+    "originalPrice": 8750,
+    "images": [
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+      "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Signature Series",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 88,
+    "isInStock": true,
+    "stockCount": 18,
+    "viewersCount": 63,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-signature-series-1779138917403-2",
+    "name": "Limited Edition Pearl Organza Tunic",
+    "slug": "limited-edition-pearl-organza-tunic-7403",
+    "price": 5000,
+    "originalPrice": 6250,
+    "images": [
+      "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp",
+      "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673949386_122125962357151981_1889495426070156223_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Signature Series",
+    "subSubCategory": "All",
+    "rating": 5,
+    "reviewCount": 88,
+    "isInStock": true,
+    "stockCount": 10,
+    "viewersCount": 34,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-signature-series-1779138917403-3",
+    "name": "Varanasi Handwoven Silk Kimono",
+    "slug": "varanasi-handwoven-silk-kimono-7403",
+    "price": 8000,
+    "originalPrice": 10000,
+    "images": [
+      "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp",
+      "/media-pro/women/Design 2/672681309_122125885053151981_339987484088257108_n.webp"
+    ],
+    "image": "/media-pro/women/Design 2/672121181_122125885095151981_7790861692313383598_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Signature Series",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 46,
+    "isInStock": true,
+    "stockCount": 27,
+    "viewersCount": 23,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-signature-series-1779138917403-4",
+    "name": "Midnight Brocade Special Collection",
+    "slug": "midnight-brocade-special-collection-7403",
+    "price": 6000,
+    "originalPrice": 7500,
+    "images": [
+      "/media-pro/women/Design 2/672681309_122125885053151981_339987484088257108_n.webp",
+      "/media-pro/women/Design 2/671639040_122125885023151981_7657790961365514375_n.webp"
+    ],
+    "image": "/media-pro/women/Design 2/672681309_122125885053151981_339987484088257108_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Signature Series",
+    "subSubCategory": "All",
+    "rating": 5,
+    "reviewCount": 18,
+    "isInStock": true,
+    "stockCount": 24,
+    "viewersCount": 63,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-signature-series-1779138917403-5",
+    "name": "Sartorial Gold Leaf Tunic",
+    "slug": "sartorial-gold-leaf-tunic-7403",
+    "price": 6000,
+    "originalPrice": 7500,
+    "images": [
+      "/media-pro/women/Design 2/671639040_122125885023151981_7657790961365514375_n.webp",
+      "/media-pro/women/Design 2/671858259_122125885173151981_8012706557340946160_n.webp"
+    ],
+    "image": "/media-pro/women/Design 2/671639040_122125885023151981_7657790961365514375_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Signature Series",
+    "subSubCategory": "All",
+    "rating": 5,
+    "reviewCount": 31,
+    "isInStock": true,
+    "stockCount": 38,
+    "viewersCount": 28,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-signature-series-1779138917403-6",
+    "name": "Imperial Crimson Velvet Kaftan",
+    "slug": "imperial-crimson-velvet-kaftan-7403",
+    "price": 8000,
+    "originalPrice": 10000,
+    "images": [
+      "/media-pro/women/Design 2/671858259_122125885173151981_8012706557340946160_n.webp",
+      "/media-pro/women/Design 3/670896434_122125960101151981_3029998908890020858_n.webp"
+    ],
+    "image": "/media-pro/women/Design 2/671858259_122125885173151981_8012706557340946160_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Signature Series",
+    "subSubCategory": "All",
+    "rating": 5,
+    "reviewCount": 65,
+    "isInStock": true,
+    "stockCount": 26,
+    "viewersCount": 62,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-signature-series-1779138917403-7",
+    "name": "Royal Ivory Organza Masterpiece",
+    "slug": "royal-ivory-organza-masterpiece-7403",
+    "price": 6000,
+    "originalPrice": 7500,
+    "images": [
+      "/media-pro/women/Design 3/670896434_122125960101151981_3029998908890020858_n.webp",
+      "/media-pro/women/Design 3/671853622_122125960077151981_4116438312044612288_n.webp"
+    ],
+    "image": "/media-pro/women/Design 3/670896434_122125960101151981_3029998908890020858_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Signature Series",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 61,
+    "isInStock": true,
+    "stockCount": 23,
+    "viewersCount": 68,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-women-signature-series-1779138917403-8",
+    "name": "Premium Silk Dupatta Capsule",
+    "slug": "premium-silk-dupatta-capsule-7403",
+    "price": 5000,
+    "originalPrice": 6250,
+    "images": [
+      "/media-pro/women/Design 3/671853622_122125960077151981_4116438312044612288_n.webp",
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp"
+    ],
+    "image": "/media-pro/women/Design 3/671853622_122125960077151981_4116438312044612288_n.webp",
+    "categorySlug": "women",
+    "subcategory": "Signature Series",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 75,
+    "isInStock": true,
+    "stockCount": 27,
+    "viewersCount": 61,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Couture Textile",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-premium-silk-1779138917403-0",
+    "name": "Pure Mulberry Raw Silk Yardage",
+    "slug": "pure-mulberry-raw-silk-yardage-7403",
+    "price": 2100,
+    "originalPrice": 2625,
+    "images": [
+      "/media-pro/cover/cover 2.jpg",
+      "/media-pro/cover/cover 1.jpg"
+    ],
+    "image": "/media-pro/cover/cover 2.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Premium Silk",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 91,
+    "isInStock": true,
+    "stockCount": 35,
+    "viewersCount": 38,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-premium-silk-1779138917403-1",
+    "name": "Lustrous Satin Silk Fabric",
+    "slug": "lustrous-satin-silk-fabric-7403",
+    "price": 1800,
+    "originalPrice": 2250,
+    "images": [
+      "/media-pro/cover/cover 1.jpg",
+      "/media-pro/cover/cover 3.jpg"
+    ],
+    "image": "/media-pro/cover/cover 1.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Premium Silk",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 58,
+    "isInStock": true,
+    "stockCount": 20,
+    "viewersCount": 77,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-premium-silk-1779138917403-2",
+    "name": "Atelier Silk Crepe de Chine",
+    "slug": "atelier-silk-crepe-de-chine-7403",
+    "price": 1500,
+    "originalPrice": 1875,
+    "images": [
+      "/media-pro/cover/cover 3.jpg",
+      "/media-pro/cover/cover 4.jpg"
+    ],
+    "image": "/media-pro/cover/cover 3.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Premium Silk",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 38,
+    "isInStock": true,
+    "stockCount": 25,
+    "viewersCount": 32,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-premium-silk-1779138917403-3",
+    "name": "Embroidered Brocade Silk Yardage",
+    "slug": "embroidered-brocade-silk-yardage-7403",
+    "price": 1500,
+    "originalPrice": 1875,
+    "images": [
+      "/media-pro/cover/cover 4.jpg",
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp"
+    ],
+    "image": "/media-pro/cover/cover 4.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Premium Silk",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 93,
+    "isInStock": true,
+    "stockCount": 30,
+    "viewersCount": 49,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-premium-silk-1779138917403-4",
+    "name": "Heavyweight Habotai Silk Fabric",
+    "slug": "heavyweight-habotai-silk-fabric-7403",
+    "price": 1500,
+    "originalPrice": 1875,
+    "images": [
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Premium Silk",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 67,
+    "isInStock": true,
+    "stockCount": 39,
+    "viewersCount": 27,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-premium-silk-1779138917403-5",
+    "name": "Gold Threaded Silk Brocade",
+    "slug": "gold-threaded-silk-brocade-7403",
+    "price": 1800,
+    "originalPrice": 2250,
+    "images": [
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Premium Silk",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 39,
+    "isInStock": true,
+    "stockCount": 10,
+    "viewersCount": 40,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-premium-silk-1779138917403-6",
+    "name": "Printed Chiffon Silk Fabric",
+    "slug": "printed-chiffon-silk-fabric-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+      "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Premium Silk",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 29,
+    "isInStock": true,
+    "stockCount": 36,
+    "viewersCount": 64,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-premium-silk-1779138917403-7",
+    "name": "Soft Tussar Silk Yardage",
+    "slug": "soft-tussar-silk-yardage-7403",
+    "price": 1500,
+    "originalPrice": 1875,
+    "images": [
+      "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp",
+      "/media-pro/cover/cover 2.jpg"
+    ],
+    "image": "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Premium Silk",
+    "subSubCategory": "All",
+    "rating": 5,
+    "reviewCount": 21,
+    "isInStock": true,
+    "stockCount": 10,
+    "viewersCount": 20,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-premium-silk-1779138917403-8",
+    "name": "Royal Satin Crepe Yardage",
+    "slug": "royal-satin-crepe-yardage-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/cover/cover 2.jpg",
+      "/media-pro/cover/cover 1.jpg"
+    ],
+    "image": "/media-pro/cover/cover 2.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Premium Silk",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 81,
+    "isInStock": true,
+    "stockCount": 24,
+    "viewersCount": 27,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-premium-silk-1779138917403-9",
+    "name": "Pure Mulberry Raw Silk Yardage",
+    "slug": "pure-mulberry-raw-silk-yardage-7403",
+    "price": 1500,
+    "originalPrice": 1875,
+    "images": [
+      "/media-pro/cover/cover 1.jpg",
+      "/media-pro/cover/cover 3.jpg"
+    ],
+    "image": "/media-pro/cover/cover 1.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Premium Silk",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 70,
+    "isInStock": true,
+    "stockCount": 21,
+    "viewersCount": 58,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-luxury-cotton-1779138917403-0",
+    "name": "Super 120s Egyptian Cotton Weave",
+    "slug": "super-120s-egyptian-cotton-weave-7403",
+    "price": 1500,
+    "originalPrice": 1875,
+    "images": [
+      "/media-pro/cover/cover 2.jpg",
+      "/media-pro/cover/cover 1.jpg"
+    ],
+    "image": "/media-pro/cover/cover 2.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Luxury Cotton",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 33,
+    "isInStock": true,
+    "stockCount": 27,
+    "viewersCount": 31,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-luxury-cotton-1779138917403-1",
+    "name": "Italian Pima Twill Cotton Fabric",
+    "slug": "italian-pima-twill-cotton-fabric-7403",
+    "price": 2100,
+    "originalPrice": 2625,
+    "images": [
+      "/media-pro/cover/cover 1.jpg",
+      "/media-pro/cover/cover 3.jpg"
+    ],
+    "image": "/media-pro/cover/cover 1.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Luxury Cotton",
+    "subSubCategory": "All",
+    "rating": 4.5,
+    "reviewCount": 55,
+    "isInStock": true,
+    "stockCount": 22,
+    "viewersCount": 71,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-luxury-cotton-1779138917403-2",
+    "name": "Supima Fine Weave Shirting",
+    "slug": "supima-fine-weave-shirting-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/cover/cover 3.jpg",
+      "/media-pro/cover/cover 4.jpg"
+    ],
+    "image": "/media-pro/cover/cover 3.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Luxury Cotton",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 88,
+    "isInStock": true,
+    "stockCount": 22,
+    "viewersCount": 29,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-luxury-cotton-1779138917403-3",
+    "name": "Giza Satin Finish Premium Cotton",
+    "slug": "giza-satin-finish-premium-cotton-7403",
+    "price": 2100,
+    "originalPrice": 2625,
+    "images": [
+      "/media-pro/cover/cover 4.jpg",
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp"
+    ],
+    "image": "/media-pro/cover/cover 4.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Luxury Cotton",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 31,
+    "isInStock": true,
+    "stockCount": 26,
+    "viewersCount": 74,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-luxury-cotton-1779138917403-4",
+    "name": "Textured Slub Weave Cotton Yardage",
+    "slug": "textured-slub-weave-cotton-yardage-7403",
+    "price": 2100,
+    "originalPrice": 2625,
+    "images": [
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Luxury Cotton",
+    "subSubCategory": "All",
+    "rating": 5,
+    "reviewCount": 69,
+    "isInStock": true,
+    "stockCount": 13,
+    "viewersCount": 47,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-luxury-cotton-1779138917403-5",
+    "name": "Irish Summer Poplin Fabric",
+    "slug": "irish-summer-poplin-fabric-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Luxury Cotton",
+    "subSubCategory": "All",
+    "rating": 4.5,
+    "reviewCount": 56,
+    "isInStock": true,
+    "stockCount": 33,
+    "viewersCount": 65,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-luxury-cotton-1779138917403-6",
+    "name": "Double Mercerized Voile Cotton",
+    "slug": "double-mercerized-voile-cotton-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+      "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Luxury Cotton",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 85,
+    "isInStock": true,
+    "stockCount": 33,
+    "viewersCount": 37,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-luxury-cotton-1779138917403-7",
+    "name": "Organic Khadi Weave Fabric",
+    "slug": "organic-khadi-weave-fabric-7403",
+    "price": 1800,
+    "originalPrice": 2250,
+    "images": [
+      "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp",
+      "/media-pro/cover/cover 2.jpg"
+    ],
+    "image": "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Luxury Cotton",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 62,
+    "isInStock": true,
+    "stockCount": 39,
+    "viewersCount": 73,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-luxury-cotton-1779138917403-8",
+    "name": "Sea Island Luxury Cotton Twill",
+    "slug": "sea-island-luxury-cotton-twill-7403",
+    "price": 1800,
+    "originalPrice": 2250,
+    "images": [
+      "/media-pro/cover/cover 2.jpg",
+      "/media-pro/cover/cover 1.jpg"
+    ],
+    "image": "/media-pro/cover/cover 2.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Luxury Cotton",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 77,
+    "isInStock": true,
+    "stockCount": 29,
+    "viewersCount": 52,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-luxury-cotton-1779138917403-9",
+    "name": "Super 120s Egyptian Cotton Weave",
+    "slug": "super-120s-egyptian-cotton-weave-7403",
+    "price": 2400,
+    "originalPrice": 3000,
+    "images": [
+      "/media-pro/cover/cover 1.jpg",
+      "/media-pro/cover/cover 3.jpg"
+    ],
+    "image": "/media-pro/cover/cover 1.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Luxury Cotton",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 87,
+    "isInStock": true,
+    "stockCount": 14,
+    "viewersCount": 34,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-imported-linen-1779138917403-0",
+    "name": "Irish Heavyweight Sartorial Linen",
+    "slug": "irish-heavyweight-sartorial-linen-7403",
+    "price": 1800,
+    "originalPrice": 2250,
+    "images": [
+      "/media-pro/cover/cover 2.jpg",
+      "/media-pro/cover/cover 1.jpg"
+    ],
+    "image": "/media-pro/cover/cover 2.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Imported Linen",
+    "subSubCategory": "All",
+    "rating": 5,
+    "reviewCount": 70,
+    "isInStock": true,
+    "stockCount": 27,
+    "viewersCount": 22,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-imported-linen-1779138917403-1",
+    "name": "Belgian Summer Slub Linen Yardage",
+    "slug": "belgian-summer-slub-linen-yardage-7403",
+    "price": 2400,
+    "originalPrice": 3000,
+    "images": [
+      "/media-pro/cover/cover 1.jpg",
+      "/media-pro/cover/cover 3.jpg"
+    ],
+    "image": "/media-pro/cover/cover 1.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Imported Linen",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 39,
+    "isInStock": true,
+    "stockCount": 20,
+    "viewersCount": 55,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-imported-linen-1779138917403-2",
+    "name": "Washed Pastel French Linen",
+    "slug": "washed-pastel-french-linen-7403",
+    "price": 2100,
+    "originalPrice": 2625,
+    "images": [
+      "/media-pro/cover/cover 3.jpg",
+      "/media-pro/cover/cover 4.jpg"
+    ],
+    "image": "/media-pro/cover/cover 3.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Imported Linen",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 83,
+    "isInStock": true,
+    "stockCount": 33,
+    "viewersCount": 58,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-imported-linen-1779138917403-3",
+    "name": "Textured Oatmeal Flax Linen",
+    "slug": "textured-oatmeal-flax-linen-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/cover/cover 4.jpg",
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp"
+    ],
+    "image": "/media-pro/cover/cover 4.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Imported Linen",
+    "subSubCategory": "All",
+    "rating": 5,
+    "reviewCount": 48,
+    "isInStock": true,
+    "stockCount": 24,
+    "viewersCount": 35,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-imported-linen-1779138917403-4",
+    "name": "Indigo Dyed Heavyweight Linen",
+    "slug": "indigo-dyed-heavyweight-linen-7403",
+    "price": 2100,
+    "originalPrice": 2625,
+    "images": [
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Imported Linen",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 67,
+    "isInStock": true,
+    "stockCount": 26,
+    "viewersCount": 20,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-imported-linen-1779138917403-5",
+    "name": "Premium Linen Cotton Blend Fabric",
+    "slug": "premium-linen-cotton-blend-fabric-7403",
+    "price": 2400,
+    "originalPrice": 3000,
+    "images": [
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Imported Linen",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 40,
+    "isInStock": true,
+    "stockCount": 18,
+    "viewersCount": 49,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-imported-linen-1779138917403-6",
+    "name": "Atelier Fine Weave White Linen",
+    "slug": "atelier-fine-weave-white-linen-7403",
+    "price": 2400,
+    "originalPrice": 3000,
+    "images": [
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+      "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Imported Linen",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 57,
+    "isInStock": true,
+    "stockCount": 35,
+    "viewersCount": 73,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-imported-linen-1779138917403-7",
+    "name": "Emerald Green Dress Linen",
+    "slug": "emerald-green-dress-linen-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp",
+      "/media-pro/cover/cover 2.jpg"
+    ],
+    "image": "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Imported Linen",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 44,
+    "isInStock": true,
+    "stockCount": 18,
+    "viewersCount": 73,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-imported-linen-1779138917403-8",
+    "name": "Royal Burgundy Suit Linen",
+    "slug": "royal-burgundy-suit-linen-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/cover/cover 2.jpg",
+      "/media-pro/cover/cover 1.jpg"
+    ],
+    "image": "/media-pro/cover/cover 2.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Imported Linen",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 50,
+    "isInStock": true,
+    "stockCount": 18,
+    "viewersCount": 73,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-imported-linen-1779138917403-9",
+    "name": "Irish Heavyweight Sartorial Linen",
+    "slug": "irish-heavyweight-sartorial-linen-7403",
+    "price": 1800,
+    "originalPrice": 2250,
+    "images": [
+      "/media-pro/cover/cover 1.jpg",
+      "/media-pro/cover/cover 3.jpg"
+    ],
+    "image": "/media-pro/cover/cover 1.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Imported Linen",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 29,
+    "isInStock": true,
+    "stockCount": 20,
+    "viewersCount": 43,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-designer-wool-1779138917403-0",
+    "name": "Merino Cashmere Premium Blend Wool",
+    "slug": "merino-cashmere-premium-blend-wool-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/cover/cover 2.jpg",
+      "/media-pro/cover/cover 1.jpg"
+    ],
+    "image": "/media-pro/cover/cover 2.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Designer Wool",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 87,
+    "isInStock": true,
+    "stockCount": 21,
+    "viewersCount": 50,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-designer-wool-1779138917403-1",
+    "name": "English Herringbone Tweed Fabric",
+    "slug": "english-herringbone-tweed-fabric-7403",
+    "price": 1500,
+    "originalPrice": 1875,
+    "images": [
+      "/media-pro/cover/cover 1.jpg",
+      "/media-pro/cover/cover 3.jpg"
+    ],
+    "image": "/media-pro/cover/cover 1.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Designer Wool",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 70,
+    "isInStock": true,
+    "stockCount": 30,
+    "viewersCount": 35,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-designer-wool-1779138917403-2",
+    "name": "Atelier Super 140s Worsted Wool",
+    "slug": "atelier-super-140s-worsted-wool-7403",
+    "price": 2400,
+    "originalPrice": 3000,
+    "images": [
+      "/media-pro/cover/cover 3.jpg",
+      "/media-pro/cover/cover 4.jpg"
+    ],
+    "image": "/media-pro/cover/cover 3.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Designer Wool",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 32,
+    "isInStock": true,
+    "stockCount": 32,
+    "viewersCount": 41,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-designer-wool-1779138917403-3",
+    "name": "Royal Cashmere Overcoating Wool",
+    "slug": "royal-cashmere-overcoating-wool-7403",
+    "price": 2400,
+    "originalPrice": 3000,
+    "images": [
+      "/media-pro/cover/cover 4.jpg",
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp"
+    ],
+    "image": "/media-pro/cover/cover 4.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Designer Wool",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 53,
+    "isInStock": true,
+    "stockCount": 36,
+    "viewersCount": 55,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-designer-wool-1779138917403-4",
+    "name": "Midnight Navy Wool Flannel Yardage",
+    "slug": "midnight-navy-wool-flannel-yardage-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Designer Wool",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 58,
+    "isInStock": true,
+    "stockCount": 17,
+    "viewersCount": 58,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-designer-wool-1779138917403-5",
+    "name": "Textured Alpaca Wool Blend",
+    "slug": "textured-alpaca-wool-blend-7403",
+    "price": 2100,
+    "originalPrice": 2625,
+    "images": [
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Designer Wool",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 75,
+    "isInStock": true,
+    "stockCount": 35,
+    "viewersCount": 44,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-designer-wool-1779138917403-6",
+    "name": "Classic Grey Glen Plaid Wool",
+    "slug": "classic-grey-glen-plaid-wool-7403",
+    "price": 2400,
+    "originalPrice": 3000,
+    "images": [
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+      "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Designer Wool",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 79,
+    "isInStock": true,
+    "stockCount": 30,
+    "viewersCount": 22,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-designer-wool-1779138917403-7",
+    "name": "Camel Hair Luxury Coat Fabric",
+    "slug": "camel-hair-luxury-coat-fabric-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp",
+      "/media-pro/cover/cover 2.jpg"
+    ],
+    "image": "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Designer Wool",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 18,
+    "isInStock": true,
+    "stockCount": 23,
+    "viewersCount": 70,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-designer-wool-1779138917403-8",
+    "name": "Worsted Wool Silk Blend Fabric",
+    "slug": "worsted-wool-silk-blend-fabric-7403",
+    "price": 2100,
+    "originalPrice": 2625,
+    "images": [
+      "/media-pro/cover/cover 2.jpg",
+      "/media-pro/cover/cover 1.jpg"
+    ],
+    "image": "/media-pro/cover/cover 2.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Designer Wool",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 57,
+    "isInStock": true,
+    "stockCount": 38,
+    "viewersCount": 76,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-designer-wool-1779138917403-9",
+    "name": "Merino Cashmere Premium Blend Wool",
+    "slug": "merino-cashmere-premium-blend-wool-7403",
+    "price": 2100,
+    "originalPrice": 2625,
+    "images": [
+      "/media-pro/cover/cover 1.jpg",
+      "/media-pro/cover/cover 3.jpg"
+    ],
+    "image": "/media-pro/cover/cover 1.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Designer Wool",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 75,
+    "isInStock": true,
+    "stockCount": 33,
+    "viewersCount": 28,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-traditional-weaves-1779138917403-0",
+    "name": "Handwoven Fine Jamdani Yardage",
+    "slug": "handwoven-fine-jamdani-yardage-7403",
+    "price": 2400,
+    "originalPrice": 3000,
+    "images": [
+      "/media-pro/cover/cover 2.jpg",
+      "/media-pro/cover/cover 1.jpg"
+    ],
+    "image": "/media-pro/cover/cover 2.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Traditional Weaves",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 63,
+    "isInStock": true,
+    "stockCount": 20,
+    "viewersCount": 44,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-traditional-weaves-1779138917403-1",
+    "name": "Tangail Fine Cotton Brocade Weave",
+    "slug": "tangail-fine-cotton-brocade-weave-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/cover/cover 1.jpg",
+      "/media-pro/cover/cover 3.jpg"
+    ],
+    "image": "/media-pro/cover/cover 1.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Traditional Weaves",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 73,
+    "isInStock": true,
+    "stockCount": 19,
+    "viewersCount": 39,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-traditional-weaves-1779138917403-2",
+    "name": "Traditional Silver Zari Yardage",
+    "slug": "traditional-silver-zari-yardage-7403",
+    "price": 2100,
+    "originalPrice": 2625,
+    "images": [
+      "/media-pro/cover/cover 3.jpg",
+      "/media-pro/cover/cover 4.jpg"
+    ],
+    "image": "/media-pro/cover/cover 3.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Traditional Weaves",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 77,
+    "isInStock": true,
+    "stockCount": 31,
+    "viewersCount": 73,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-traditional-weaves-1779138917403-3",
+    "name": "Bespoke Khadi Handspun Weave",
+    "slug": "bespoke-khadi-handspun-weave-7403",
+    "price": 2100,
+    "originalPrice": 2625,
+    "images": [
+      "/media-pro/cover/cover 4.jpg",
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp"
+    ],
+    "image": "/media-pro/cover/cover 4.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Traditional Weaves",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 74,
+    "isInStock": true,
+    "stockCount": 13,
+    "viewersCount": 32,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-traditional-weaves-1779138917403-4",
+    "name": "Benarasi Katan Silk Yardage",
+    "slug": "benarasi-katan-silk-yardage-7403",
+    "price": 1800,
+    "originalPrice": 2250,
+    "images": [
+      "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Traditional Weaves",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 80,
+    "isInStock": true,
+    "stockCount": 28,
+    "viewersCount": 44,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-traditional-weaves-1779138917403-5",
+    "name": "Handprinted Indigo Ajrakh Fabric",
+    "slug": "handprinted-indigo-ajrakh-fabric-7403",
+    "price": 1500,
+    "originalPrice": 1875,
+    "images": [
+      "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp"
+    ],
+    "image": "/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Traditional Weaves",
+    "subSubCategory": "All",
+    "rating": 4.9,
+    "reviewCount": 65,
+    "isInStock": true,
+    "stockCount": 39,
+    "viewersCount": 52,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-traditional-weaves-1779138917403-6",
+    "name": "Artisanal Ikat Cotton Weave",
+    "slug": "artisanal-ikat-cotton-weave-7403",
+    "price": 2700,
+    "originalPrice": 3375,
+    "images": [
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+      "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Traditional Weaves",
+    "subSubCategory": "All",
+    "rating": 4.8,
+    "reviewCount": 74,
+    "isInStock": true,
+    "stockCount": 36,
+    "viewersCount": 59,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-traditional-weaves-1779138917403-7",
+    "name": "Varanasi Silk Georgette Brocade",
+    "slug": "varanasi-silk-georgette-brocade-7403",
+    "price": 2400,
+    "originalPrice": 3000,
+    "images": [
+      "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp",
+      "/media-pro/cover/cover 2.jpg"
+    ],
+    "image": "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp",
+    "categorySlug": "fabric",
+    "subcategory": "Traditional Weaves",
+    "subSubCategory": "All",
+    "rating": 4.6,
+    "reviewCount": 93,
+    "isInStock": true,
+    "stockCount": 23,
+    "viewersCount": 43,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-traditional-weaves-1779138917403-8",
+    "name": "Classic Block Print Cotton Fabric",
+    "slug": "classic-block-print-cotton-fabric-7403",
+    "price": 1500,
+    "originalPrice": 1875,
+    "images": [
+      "/media-pro/cover/cover 2.jpg",
+      "/media-pro/cover/cover 1.jpg"
+    ],
+    "image": "/media-pro/cover/cover 2.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Traditional Weaves",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 76,
+    "isInStock": true,
+    "stockCount": 39,
+    "viewersCount": 31,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-gen-fabric-traditional-weaves-1779138917403-9",
+    "name": "Handwoven Fine Jamdani Yardage",
+    "slug": "handwoven-fine-jamdani-yardage-7403",
+    "price": 2100,
+    "originalPrice": 2625,
+    "images": [
+      "/media-pro/cover/cover 1.jpg",
+      "/media-pro/cover/cover 3.jpg"
+    ],
+    "image": "/media-pro/cover/cover 1.jpg",
+    "categorySlug": "fabric",
+    "subcategory": "Traditional Weaves",
+    "subSubCategory": "All",
+    "rating": 4.7,
+    "reviewCount": 83,
+    "isInStock": true,
+    "stockCount": 29,
+    "viewersCount": 64,
+    "sizes": [
+      "Free Size"
+    ],
+    "colors": [
+      {
+        "name": "Royal Gold",
+        "value": "#D4AF37"
+      },
+      {
+        "name": "Classic Navy",
+        "value": "#000080"
+      }
+    ],
+    "fabric": "Premium Thread",
+    "fit": "Graceful Silhouette"
+  },
+  {
+    "id": "p-panjabi-extra-1",
+    "name": "Maharaja Crimson Silk Panjabi",
+    "slug": "maharaja-crimson-silk-panjabi",
+    "price": 4500,
+    "originalPrice": 6000,
+    "images": [
+      "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Panjabi",
+    "rating": 4.8,
+    "reviewCount": 35,
+    "isInStock": true,
+    "stockCount": 15,
+    "viewersCount": 24,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": [
+      {
+        "name": "Crimson Red",
+        "value": "#DC143C"
+      }
+    ],
+    "fabric": "Premium Silk",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-panjabi-extra-2",
+    "name": "Royal Emerald Brocade Panjabi",
+    "slug": "royal-emerald-brocade-panjabi",
+    "price": 5200,
+    "originalPrice": 6800,
+    "images": [
+      "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp"
+    ],
+    "image": "/media-pro/men/Design 5/650905571_122120824035151981_4320891712881698677_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Panjabi",
+    "rating": 4.9,
+    "reviewCount": 28,
+    "isInStock": true,
+    "stockCount": 10,
+    "viewersCount": 18,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": [
+      {
+        "name": "Emerald Green",
+        "value": "#50C878"
+      }
+    ],
+    "fabric": "Brocade Silk",
+    "fit": "Tailored Fit"
+  },
+  {
+    "id": "p-panjabi-extra-3",
+    "name": "Vintage Ivory Cotton Panjabi",
+    "slug": "vintage-ivory-cotton-panjabi",
+    "price": 3200,
+    "originalPrice": 4200,
+    "images": [
+      "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp"
+    ],
+    "image": "/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Panjabi",
+    "rating": 4.7,
+    "reviewCount": 54,
+    "isInStock": true,
+    "stockCount": 25,
+    "viewersCount": 33,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": [
+      {
+        "name": "Ivory White",
+        "value": "#FFFFF0"
+      }
+    ],
+    "fabric": "Fine Pima Cotton",
+    "fit": "Regular Fit"
+  },
+  {
+    "id": "p-panjabi-extra-4",
+    "name": "Midnight Indigo Jacquard Panjabi",
+    "slug": "midnight-indigo-jacquard-panjabi",
+    "price": 5800,
+    "originalPrice": 7500,
+    "images": [
+      "/media-pro/men/Design 5/650488805_122120824017151981_3969776055903278431_n.webp"
+    ],
+    "image": "/media-pro/men/Design 5/650488805_122120824017151981_3969776055903278431_n.webp",
+    "categorySlug": "men",
+    "subcategory": "Panjabi",
+    "rating": 4.9,
+    "reviewCount": 61,
+    "isInStock": true,
+    "stockCount": 8,
+    "viewersCount": 47,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": [
+      {
+        "name": "Indigo Blue",
+        "value": "#4B0082"
+      }
+    ],
+    "fabric": "Jacquard Silk",
+    "fit": "Tailored Fit"
   }
 ]

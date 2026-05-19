@@ -30,10 +30,11 @@ const CATEGORY_METADATA: Record<string, { tagline: string, subcategories: string
 const CategoryRow = ({ title, products, direction }: { title: string, products: Product[], direction: 'left' | 'right' }) => {
   const router = useRouter()
   const scrollRef = useRef<HTMLDivElement>(null)
+  const innerRef = useRef<HTMLDivElement>(null)
   const [isPaused, setIsPaused] = useState(false)
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(true)
-  const speed = direction === 'left' ? 0.5 : -0.5
+  const speed = direction === 'left' ? 0.15 : -0.15
   const animationFrameRef = useRef<number | null>(null)
 
   // Duplicate products if list is short to ensure a rich bento grid
@@ -71,18 +72,35 @@ const CategoryRow = ({ title, products, direction }: { title: string, products: 
     scrollContainer.addEventListener('touchstart', handleInteraction, { passive: true })
     scrollContainer.addEventListener('mousedown', handleInteraction, { passive: true })
     
+    let exactScroll = scrollContainer.scrollLeft
+
     const animate = () => {
       if (!isPaused && scrollContainer) {
-        scrollContainer.scrollLeft += speed
+        if (Math.abs(exactScroll - scrollContainer.scrollLeft) > 1) {
+          exactScroll = scrollContainer.scrollLeft
+        }
+        
+        exactScroll += speed
+        const intScroll = direction === 'left' ? Math.floor(exactScroll) : Math.ceil(exactScroll)
+        const fraction = exactScroll - intScroll
+
+        scrollContainer.scrollLeft = intScroll
+        if (innerRef.current) {
+          innerRef.current.style.transform = `translate3d(${-fraction}px, 0, 0)`
+        }
         
         const { scrollLeft, scrollWidth, clientWidth } = scrollContainer
         const segmentWidth = scrollWidth / 3
 
         if (direction === 'left' && scrollLeft >= segmentWidth * 2) {
           scrollContainer.scrollLeft = segmentWidth
+          exactScroll = segmentWidth
         } else if (direction === 'right' && scrollLeft <= segmentWidth) {
           scrollContainer.scrollLeft = segmentWidth * 2 - clientWidth
+          exactScroll = segmentWidth * 2 - clientWidth
         }
+      } else if (innerRef.current) {
+        innerRef.current.style.transform = `translate3d(0px, 0, 0)`
       }
       animationFrameRef.current = requestAnimationFrame(animate)
     }
@@ -243,9 +261,10 @@ const CategoryRow = ({ title, products, direction }: { title: string, products: 
           onTouchStart={() => setIsPaused(true)}
           onTouchMove={() => setIsPaused(true)}
           onTouchEnd={() => setIsPaused(false)}
-          className="flex overflow-x-auto gap-3 md:gap-5 pb-8 pt-0.5 px-4 md:px-0 scrollbar-hide items-stretch will-change-scroll"
+          className="overflow-x-auto pb-8 pt-0.5 px-4 md:px-0 scrollbar-hide will-change-scroll"
         >
-          {[...blocks, ...blocks, ...blocks].map((block, bIdx) => {
+          <div ref={innerRef} className="flex gap-3 md:gap-5 items-stretch will-change-transform w-max">
+            {[...blocks, ...blocks, ...blocks].map((block, bIdx) => {
             const hClass = "h-[520px] md:h-[560px]";
             if (block.type === 'single') {
               return (
@@ -275,6 +294,7 @@ const CategoryRow = ({ title, products, direction }: { title: string, products: 
             }
             return null;
           })}
+          </div>
         </div>
       </div>
     </div>

@@ -65,7 +65,7 @@ export default function CategorySection() {
             {/* Kids - Bottom */}
             <div className="flex-1 group relative overflow-hidden bg-black transition-all duration-700 rounded-lg md:rounded-2xl">
               <Image
-                src="/media-pro/Cover/651731213_122121294069151981_7046002980511560260_n.webp"
+                src="/media-pro/cover/cover 3.jpg"
                 alt="Kids Coming Soon"
                 fill
                 className="object-cover opacity-40 blur-xl group-hover:scale-110 transition-transform duration-[2000ms]"

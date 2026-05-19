@@ -22,7 +22,7 @@ export async function GET() {
       description: settings?.heroSubheadline || hero?.description || "Bangladeshi Premium Clothing",
       cta1Text: settings?.heroButtonText || hero?.cta1Text || "Shop Now",
       bgImage: hero?.bgImage?.includes('unsplash') || !hero?.bgImage 
-        ? '/media-pro/Cover/616795496_122112085989151981_2801687860027277426_n.webp' 
+        ? '/media-pro/cover/cover 1.jpg' 
         : hero.bgImage
     }
 

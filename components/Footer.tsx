@@ -30,7 +30,7 @@ export default function Footer({ isBangla = false }: { isBangla?: boolean }) {
             <ul className="flex flex-col gap-2.5 text-[10px] md:text-xs text-gray-600">
               <li><Link href="/about" className="hover:text-black transition-colors">About Us</Link></li>
               <li><Link href="/contact" className="hover:text-black transition-colors">Contact</Link></li>
-              <li><Link href="#" className="hover:text-black transition-colors">Terms of Service</Link></li>
+              <li><Link href="/terms" className="hover:text-black transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
           {/* Service */}
@@ -39,7 +39,7 @@ export default function Footer({ isBangla = false }: { isBangla?: boolean }) {
             <ul className="flex flex-col gap-2.5 text-[10px] md:text-xs text-gray-600">
               <li><Link href="/shipping" className="hover:text-black transition-colors">Shipping</Link></li>
               <li><Link href="/returns" className="hover:text-black transition-colors">Returns</Link></li>
-              <li><Link href="#" className="hover:text-black transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/privacy" className="hover:text-black transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
           {/* Follow */}

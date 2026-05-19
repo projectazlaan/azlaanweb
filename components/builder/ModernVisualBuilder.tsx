@@ -37,7 +37,7 @@ export default function ModernVisualBuilder() {
     { id: 3, url: '/media-pro/men/Design 1/650656536_122120770035151981_5282848327082156297_n.webp', name: 'Luxury Suits' },
     { id: 4, url: '/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp', name: 'Female Fashion' },
     { id: 5, url: '/media-pro/women/Design 1/674438935_122125962423151981_7895183005361462477_n.webp', name: 'Winter Wear' },
-    { id: 6, url: '/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp', name: 'Store Front' },
+    { id: 6, url: '/media-pro/cover/cover 1.jpg', name: 'Store Front' },
   ]
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {

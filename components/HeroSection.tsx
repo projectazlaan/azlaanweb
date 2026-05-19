@@ -1,278 +1,243 @@
-'use client'
-import Link from 'next/link'
-import Image from 'next/image'
-import { useState, useEffect, useCallback } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
-interface HeroContent {
-  id: string
-  title: string
-  subtitle: string
-  description: string
-  bgImage: string
-  cta1Text: string
-  cta1Link: string
-  cta2Text: string
-  cta2Link: string
-}
-const DEFAULT_SLIDES = [
-  {
-    id: 'slide-1',
-    title: 'Handcrafted Elegance',
-    subtitle: 'Azlaan Premium Quality',
-    description: 'Discover ethically made, artisan-crafted products that blend tradition with contemporary style.',
-    bgImage: '/media-pro/cover/cover 1.jpg',
-    cta1Text: 'Explore Now',
-    cta1Link: '/shop',
-    cta2Text: 'Learn More',
-    cta2Link: '/about'
-  },
-  {
-    id: 'slide-2',
-    title: 'Winter Warmth',
-    subtitle: 'Stay Cozy, Look Sharp',
-    description: 'Premium woolens and modern silhouettes for the cold season.',
-    bgImage: '/media-pro/cover/cover 2.jpg',
-    cta1Text: 'Shop Winter',
-    cta1Link: '/men',
-    cta2Text: 'View Lookbook',
-    cta2Link: '/about'
-  },
-  {
-    id: 'slide-3',
-    title: 'New Arrivals',
-    subtitle: 'Fresh Designs Just For You',
-    description: 'Explore our latest collection of handcrafted fashion and lifestyle products.',
-    bgImage: '/media-pro/cover/cover 3.jpg',
-    cta1Text: 'Discover',
-    cta1Link: '/women',
-    cta2Text: 'Our Story',
-    cta2Link: '/about'
-  },
-  {
-    id: 'slide-4',
-    title: 'Timeless Style',
-    subtitle: 'Luxury Redefined',
-    description: 'Artisanal craftsmanship meeting modern silhouettes for the contemporary wardrobe.',
-    bgImage: '/media-pro/cover/cover 4.jpg',
-    cta1Text: 'Shop All',
-    cta1Link: '/shop',
-    cta2Text: 'Lookbook',
-    cta2Link: '/about'
-  }
-]
-export default function HeroSection({ initialHero }: { initialHero?: HeroContent }) {
-  // Initialize with DEFAULT_SLIDES so the UI renders instantly
-  const [slides, setSlides] = useState<HeroContent[]>(DEFAULT_SLIDES)
-  // currentSlide is the index in the EXTENDED slides array [last, ...original, first]
-  const [currentSlide, setCurrentSlide] = useState(1)
-  const [isTransitioning, setIsTransitioning] = useState(false)
-  useEffect(() => {
-    if (!initialHero) {
-      fetchHero()
-    }
-  }, [initialHero])
-  const fetchHero = async () => {
-    try {
-      const res = await fetch('/api/hero')
-      if (res.ok) {
-        const data = await res.json()
-        setSlides([{ ...data, id: 'slide-0' }, ...DEFAULT_SLIDES])
-      }
-    } catch (error) {
-      console.error('Failed to fetch hero:', error)
-    }
-  }
-  // Extended slides for infinite loop: [last, ...original, first]
-  const extendedSlides = [
-    slides[slides.length - 1],
-    ...slides,
-    slides[0]
-  ]
-  const nextSlide = useCallback(() => {
-    if (isTransitioning) return
-    setIsTransitioning(true)
-    setCurrentSlide((prev) => prev + 1)
-  }, [isTransitioning])
-  const prevSlide = useCallback(() => {
-    if (isTransitioning) return
-    setIsTransitioning(true)
-    setCurrentSlide((prev) => prev - 1)
-  }, [isTransitioning])
-  // Handle teleportation and transition state reset
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    if (currentSlide === extendedSlides.length - 1) {
-      timer = setTimeout(() => {
-        setIsTransitioning(false)
-        setCurrentSlide(1)
-      }, 1200)
-    } else if (currentSlide === 0) {
-      timer = setTimeout(() => {
-        setIsTransitioning(false)
-        setCurrentSlide(extendedSlides.length - 2)
-      }, 1200)
-    } else {
-      // Normal transition, reset after duration
-      timer = setTimeout(() => {
-        setIsTransitioning(false)
-      }, 1200)
-    }
-    return () => clearTimeout(timer)
-  }, [currentSlide, extendedSlides.length])
-  useEffect(() => {
-    if (slides.length <= 1) return
-    const timer = setInterval(nextSlide, 6000)
-    return () => clearInterval(timer)
-  }, [slides.length, nextSlide])
-  const { scrollY } = useScroll();
-  const contentY = useTransform(scrollY, [0, 1000], [0, -1000]);
-  const contentOpacity = useTransform(scrollY, [650, 900], [1, 0]);
+'use client';
+import React, { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-  if (slides.length === 0) return null
+interface Slide {
+  id: string;
+  name: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  bgImage: string;
+  slug: string;
+}
+
+interface HeroSectionProps {
+  initialHero?: any;
+  customSlides?: Slide[];
+  onHeroClick?: (slide: Slide) => void;
+}
+
+export default function HeroSection({ initialHero, customSlides, onHeroClick }: HeroSectionProps) {
+  // Map initialHero to slides structure if customSlides isn't provided
+  const slides = customSlides || (initialHero ? [{
+    id: 'hero-1',
+    name: initialHero.title || 'Azlaan',
+    title: initialHero.title || 'Luxury Collection',
+    subtitle: initialHero.subtitle || 'Established 2024',
+    description: initialHero.description || 'Experience the pinnacle of artisanal craftsmanship.',
+    bgImage: initialHero.bgImage || initialHero.bg_image || initialHero.image || '/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp',
+    slug: 'all'
+  }] : []);
+
+  const extendedSlides = slides.length > 1 ? [slides[slides.length - 1], ...slides, slides[0]] : slides;
+  
+  const [currentSlide, setCurrentSlide] = useState(slides.length > 1 ? 1 : 0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobileView(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const nextSlide = useCallback(() => {
+    if (isTransitioning || slides.length <= 1) return;
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => prev + 1);
+  }, [isTransitioning, slides.length]);
+
+  const prevSlide = useCallback(() => {
+    if (isTransitioning || slides.length <= 1) return;
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => prev - 1);
+  }, [isTransitioning, slides.length]);
+
+  const goToSlide = (index: number) => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide(index + 1);
+  };
+
+  // Handle Teleportation for Infinite Loop
+  useEffect(() => {
+    if (currentSlide === extendedSlides.length - 1) {
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentSlide(1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else if (currentSlide === 0) {
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentSlide(extendedSlides.length - 2);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else {
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [currentSlide, extendedSlides.length]);
+
+  useEffect(() => {
+    if (slides.length <= 1) return;
+    const timer = setInterval(nextSlide, 6000);
+    return () => clearInterval(timer);
+  }, [nextSlide, slides.length]);
+
+  if (!slides || slides.length === 0) return null;
+
+  // Active Index for Thumbnails (1-indexed based on extended array)
+  const activeIndex = currentSlide === 0 ? slides.length - 1 : 
+                     currentSlide === extendedSlides.length - 1 ? 0 : 
+                     currentSlide - 1;
+
   return (
-    <section 
-      data-customizable 
-      data-custom-key="heroSection"
-      className="relative h-screen min-h-[100dvh] flex items-center justify-center overflow-hidden group"
-    >
-      {/* Slides Wrapper for Horizontal Sliding */}
-      <div 
-        className={`absolute inset-0 flex ${isTransitioning ? 'transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]' : ''}`}
+    <section className="relative h-[80vh] md:h-[85vh] w-full overflow-hidden bg-black">
+      {/* 1. Main Hero Image (Horizontal Infinite Slider) */}
+      <motion.div 
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.2}
+        onDragEnd={(e, { offset, velocity }) => {
+          const swipe = offset.x;
+          if (swipe < -50) nextSlide();
+          else if (swipe > 50) prevSlide();
+        }}
+        className={`absolute inset-0 z-0 flex ${isTransitioning ? 'transition-transform duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)]' : ''}`}
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
         {extendedSlides.map((slide, index) => {
-          // A slide is "active" if it's the current real slide or its clone
           const isRealActive = (currentSlide === index) || 
                               (currentSlide === extendedSlides.length - 1 && index === 1) ||
                               (currentSlide === 0 && index === extendedSlides.length - 2);
+
           return (
-            <div
-              key={`${slide.id}-${index}`}
-              className="relative w-full h-full min-h-screen flex-shrink-0"
-            >
-              <div className="absolute inset-0 z-0">
-                <Image
-                  src={slide.bgImage}
-                  alt={slide.title}
-                  fill
-                  priority={index === 1}
-                  quality={90}
-                  className={`object-cover transition-transform duration-[10000ms] ease-out ${isRealActive ? 'scale-105' : 'scale-100'} z-0`}
-                  sizes="100vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 pointer-events-none" />
-              </div>
+            <div key={`${slide.id}-${index}`} className="relative w-full h-full flex-shrink-0">
+              {/* Clickable Area for Routing */}
+              <div 
+                className="absolute inset-0 z-10 cursor-pointer pointer-events-auto"
+                onClick={() => onHeroClick?.(slide)}
+              />
               
-              {/* Content Container with Scroll Parallax and Top Masking */}
-              <motion.div 
-                style={{ 
-                  y: contentY,
-                  opacity: contentOpacity,
-                  WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)',
-                  maskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)'
-                }}
-                className="absolute inset-0 flex flex-col justify-end pb-12 md:pb-16 pointer-events-none"
-              >
-                <div className="relative z-20 px-6 md:px-8 w-full max-w-[90rem] mx-auto text-left pointer-events-auto">
-                  <div className="max-w-2xl">
-                    <span 
-                      className={`inline-block text-[9px] md:text-[11px] font-semibold tracking-[0.2em] uppercase text-white mb-3 md:mb-4 transition-all duration-700 delay-300 transform drop-shadow-md ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
-                    >
-                      {slide.subtitle || 'Premium Quality'}
+              <Image
+                src={slide.bgImage}
+                alt={slide.title}
+                fill
+                priority={index === 1}
+                quality={100}
+                unoptimized={true}
+                className={`object-cover ${slide.name === 'Panjabi' ? 'object-[50%_50%]' : 'object-[50%_15%]'}`}
+              />
+              <div className="absolute inset-0 bg-black/40" />
+              
+              {/* 2. Main Typography Block */}
+              <div className="relative z-20 h-full flex flex-col justify-center px-8 md:px-24 max-w-[1600px] mx-auto pointer-events-none pb-32 md:pb-48">
+                <div className="max-w-3xl">
+                  <motion.div
+                    initial={false}
+                    animate={isRealActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+                    transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1], delay: isRealActive ? 0.3 : 0 }}
+                  >
+                    <span className="inline-block text-[9px] md:text-[10px] font-black tracking-[0.5em] uppercase text-white/50 mb-6 border-l-2 border-white/30 pl-4">
+                      {slide.subtitle}
                     </span>
-                    <h1 
-                      className={`font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 md:mb-5 text-white leading-[1.05] md:leading-[1.05] transition-all duration-700 delay-500 transform drop-shadow-lg ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
-                    >
-                      {slide.title}
+                    <h1 className="text-5xl md:text-[7rem] font-sans font-black text-white leading-[0.85] tracking-tighter mb-6 uppercase">
+                      {slide.title.split(' ')[0]}
+                      <span className="block text-[0.45em] font-serif font-light tracking-tight normal-case italic opacity-90 mt-[-10px] md:mt-[-20px]">
+                        {slide.title.split(' ').slice(1).join(' ')}
+                      </span>
                     </h1>
-                    <p 
-                      className={`text-[13px] sm:text-sm md:text-sm lg:text-base mb-6 md:mb-8 text-white/95 font-medium transition-all duration-700 delay-700 transform drop-shadow-md ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'} max-w-lg line-clamp-3 md:line-clamp-none`}
-                    >
+                    <p className="text-[12px] md:text-base text-white/50 font-medium max-w-md leading-relaxed">
                       {slide.description}
                     </p>
-                    <div className={`flex flex-wrap items-center justify-start gap-3 md:gap-4 transition-all duration-700 delay-1000 transform ${isRealActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
-                      <Link
-                        href={slide.cta1Link || '#'}
-                        className="group relative flex items-center gap-3 px-8 py-2.5 rounded-full border border-white/20 hover:border-white/40 bg-white transition-all duration-700 overflow-hidden shadow-sm"
-                      >
-                        <span className="text-[9px] md:text-[11px] font-bold uppercase tracking-[0.3em] text-black/80 group-hover:text-black transition-colors">
-                          {slide.cta1Text || 'Shop Now'}
-                        </span>
-                        <div className="w-8 md:w-12 h-[0.5px] bg-black/30 group-hover:bg-black group-hover:w-16 transition-all duration-700" />
-                        <ArrowRight className="w-4 h-4 text-black/60 group-hover:text-black group-hover:translate-x-1 transition-all duration-500" />
-                        <div className="absolute inset-0 bg-black/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-                      </Link>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </motion.div>
 
-                      {(slide.cta2Text) && (
-                        <Link
-                          href={slide.cta2Link || '#'}
-                          className="group flex items-center justify-center text-white hover:text-gray-200 px-6 py-3 md:py-3 font-semibold text-[11px] md:text-xs w-full sm:w-auto transition-colors drop-shadow-md"
-                        >
-                          <span className="relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-white after:transition-all hover:after:w-full pb-0.5">{slide.cta2Text}</span>
-                        </Link>
-                      )}
+      {/* PC Minimal Arrows */}
+      <div className="hidden md:flex absolute inset-y-0 left-4 items-center z-40">
+        <button 
+          onClick={(e) => { e.stopPropagation(); prevSlide(); }}
+          className="p-3 text-white/30 hover:text-white transition-colors duration-300"
+        >
+          <ChevronLeft size={48} strokeWidth={1} />
+        </button>
+      </div>
+      <div className="hidden md:flex absolute inset-y-0 right-4 items-center z-40">
+        <button 
+          onClick={(e) => { e.stopPropagation(); nextSlide(); }}
+          className="p-3 text-white/30 hover:text-white transition-colors duration-300"
+        >
+          <ChevronRight size={48} strokeWidth={1} />
+        </button>
+      </div>
+
+      {/* 3. Interactive Thumbnail Cards (Bottom Strip) */}
+      <div className="absolute bottom-10 left-0 w-full z-20 pointer-events-auto">
+        <div className="px-8 md:px-24 max-w-[1600px] mx-auto overflow-visible">
+          <div className="flex gap-4 md:gap-6 items-end">
+            {slides.map((slide, index) => {
+              const isActive = activeIndex === index;
+              return (
+                <motion.button
+                  key={slide.id}
+                  onClick={() => goToSlide(index)}
+                  animate={{
+                    width: isActive ? (isMobileView ? 160 : 300) : (isMobileView ? 80 : 120),
+                    opacity: isActive ? 1 : 0.4,
+                  }}
+                  transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                  className={`relative h-24 md:h-44 rounded-2xl overflow-hidden shrink-0 group transition-all duration-500 ${isActive ? 'ring-1 ring-white/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)]' : 'hover:opacity-100'}`}
+                >
+                  <Image
+                    src={slide.bgImage}
+                    alt={slide.name}
+                    fill
+                    className={`object-cover object-[50%_15%] transition-transform duration-1000 ${isActive ? 'scale-110' : 'group-hover:scale-105'}`}
+                  />
+                  
+                  {/* Cinematic Overlay - Restored for Visibility */}
+                  <div className={`absolute inset-0 bg-gradient-to-t ${isActive ? 'from-black/90 via-black/30' : 'from-black/60'} to-transparent transition-opacity duration-700`} />
+
+                  {/* Thumbnail Content Layer */}
+                  <div className="absolute inset-0 p-3 md:p-5 flex flex-col justify-between z-10">
+                    {/* Top: Catalog Index */}
+                    <div className="flex justify-end">
+                      <span className={`text-[8px] md:text-[10px] font-sans font-light text-white/40 tracking-widest transition-opacity duration-700 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                    </div>
+
+                    {/* Bottom: Main Info */}
+                    <div className="text-left">
+                      <p className="text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] text-white/40 mb-1">
+                        {slide.subtitle.split(' ')[0]}
+                      </p>
+                      <h4 className="text-[11px] md:text-2xl font-black uppercase tracking-tight text-white leading-none drop-shadow-md">
+                        {slide.name}
+                      </h4>
+                      <p className={`text-[7px] md:text-[10px] font-serif italic text-white/50 mt-1 line-clamp-1 transition-opacity duration-700 ${isActive ? 'opacity-100' : 'opacity-40'}`}>
+                        {slide.description}
+                      </p>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            </div>
-          )
-        })}
+                </motion.button>
+              );
+            })}
+          </div>
+        </div>
       </div>
-      {/* Navigation Arrows (Parallax Enabled with Top Masking) */}
-      {slides.length > 1 && (
-        <motion.div 
-          style={{ 
-            y: contentY, 
-            opacity: contentOpacity,
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)',
-            maskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)'
-          }}
-        >
-          <button 
-            onClick={(e) => { e.stopPropagation(); prevSlide(); }}
-            className="hidden md:flex absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-[70] items-center justify-center text-white bg-black/20 hover:bg-black/50 border border-white/10 backdrop-blur-sm rounded-full transition-all cursor-pointer w-10 h-10 md:w-14 md:h-14 group"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="w-5 h-5 md:w-7 md:h-7 opacity-70 group-hover:opacity-100 transition-opacity group-hover:-translate-x-0.5" strokeWidth={2} />
-          </button>
-          <button 
-            onClick={(e) => { e.stopPropagation(); nextSlide(); }}
-            className="hidden md:flex absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-[70] items-center justify-center text-white bg-black/20 hover:bg-black/50 border border-white/10 backdrop-blur-sm rounded-full transition-all cursor-pointer w-10 h-10 md:w-14 md:h-14 group"
-            aria-label="Next slide"
-          >
-            <ChevronRight className="w-5 h-5 md:w-7 md:h-7 opacity-70 group-hover:opacity-100 transition-opacity group-hover:translate-x-0.5" strokeWidth={2} />
-          </button>
-        </motion.div>
-      )}
-      {/* Navigation Dots (Parallax Enabled with Top Masking) */}
-      {slides.length > 1 && (
-        <motion.div 
-          style={{ 
-            y: contentY, 
-            opacity: contentOpacity,
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)',
-            maskImage: 'linear-gradient(to bottom, transparent 0px, transparent 150px, black 300px, black 100%)'
-          }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3"
-        >
-          {slides.map((_, index) => {
-            // Real index for dots mapping (currentSlide is 1-indexed in the extended array)
-            const dotActiveIndex = currentSlide === 0 ? slides.length - 1 : 
-                                  currentSlide === extendedSlides.length - 1 ? 0 : 
-                                  currentSlide - 1;
-            return (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index + 1)}
-                className={`h-1.5 transition-all duration-500 rounded-full ${index === dotActiveIndex ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'}`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            )
-          })}
-        </motion.div>
-      )}
     </section>
-  )
+  );
 }

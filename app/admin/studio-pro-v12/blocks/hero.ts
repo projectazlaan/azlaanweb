@@ -42,7 +42,7 @@ export const HeroBlocks = [
       </div>
     </div>
     <div class="relative lg:col-span-5 lg:-mr-8 xl:col-span-6">
-      <img data-customizable data-custom-key="hero-2-img" class="aspect-[3/2] w-full bg-gray-800 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full rounded-l-3xl shadow-2xl" src="/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp" alt="Dashboard preview">
+      <img data-customizable data-custom-key="hero-2-img" class="aspect-[3/2] w-full bg-gray-800 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full rounded-l-3xl shadow-2xl" src="/media-pro/cover/cover 1.jpg" alt="Dashboard preview">
     </div>
   </div>
 </section>

@@ -66,7 +66,7 @@ export const FeatureBlocks = [
       <div data-customizable data-custom-key="features-2-box-1" class="lg:col-span-2 relative overflow-hidden rounded-3xl bg-gray-800 p-10 ring-1 ring-white/10">
         <h3 class="text-2xl font-bold text-white mb-4">Advanced Analytics</h3>
         <p class="text-gray-400 max-w-md">Get deep insights into your user behavior with our privacy-first analytics engine built directly into the core.</p>
-        <img src="/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp" alt="Analytics" class="absolute -bottom-24 -right-24 w-[400px] rounded-xl shadow-2xl opacity-50 blur-sm group-hover:blur-0 transition-all">
+        <img src="/media-pro/cover/cover 1.jpg" alt="Analytics" class="absolute -bottom-24 -right-24 w-[400px] rounded-xl shadow-2xl opacity-50 blur-sm group-hover:blur-0 transition-all">
       </div>
       <!-- Small Box 1 -->
       <div data-customizable data-custom-key="features-2-box-2" class="relative overflow-hidden rounded-3xl bg-indigo-600 p-10">
@@ -109,13 +109,13 @@ export const FeatureBlocks = [
         </ul>
       </div>
       <div class="mt-10 lg:mt-0">
-        <img data-customizable data-custom-key="features-3-img-1" src="/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp" alt="Speed" class="rounded-3xl shadow-2xl w-full object-cover aspect-video">
+        <img data-customizable data-custom-key="features-3-img-1" src="/media-pro/cover/cover 1.jpg" alt="Speed" class="rounded-3xl shadow-2xl w-full object-cover aspect-video">
       </div>
     </div>
     <!-- Row 2 -->
     <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center flex flex-col-reverse">
       <div class="mt-10 lg:mt-0">
-        <img data-customizable data-custom-key="features-3-img-2" src="/media-pro/Cover/667707081_122124567927151981_5917933416815199932_n.webp" alt="Collaboration" class="rounded-3xl shadow-2xl w-full object-cover aspect-video">
+        <img data-customizable data-custom-key="features-3-img-2" src="/media-pro/cover/cover 1.jpg" alt="Collaboration" class="rounded-3xl shadow-2xl w-full object-cover aspect-video">
       </div>
       <div>
         <h2 data-customizable data-custom-key="features-3-title-2" class="text-3xl font-black tracking-tight text-gray-900 sm:text-4xl mb-6">Work as a team</h2>

@@ -35,24 +35,29 @@ export default function Navbar() {
   const activeCategory = categories.find(c => c.slug === openMenu);
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-black/[0.05]"
+      className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-lg border-b border-black/[0.05]"
       onMouseLeave={handleMouseLeave}
     >
       <div className="max-w-7xl mx-auto flex items-center px-4 py-2 md:px-6 md:py-3 relative">
         {/* ── Left side (Mobile Menu) ── */}
         <div className="md:hidden flex items-center -ml-2">
-          <button
-            onClick={openSidebar}
-            className="p-2 rounded-full hover:bg-black/[0.04] transition-all group"
-            aria-label="Open menu"
+          <Link
+            href="/cart"
+            className="p-2 rounded-full hover:bg-black/[0.04] transition-all relative group"
+            title="Shopping Cart"
           >
-            <Menu className="w-6 h-6 text-[#1D1D1F] group-hover:rotate-90 transition-transform duration-300" />
-          </button>
+            <ShoppingBag className="w-6 h-6 text-[#1D1D1F] group-hover:scale-110 transition-transform" />
+            {itemsCount > 0 && (
+              <span className="absolute top-1 right-1 bg-[#0071E3] text-white text-[10px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center">
+                {itemsCount}
+              </span>
+            )}
+          </Link>
         </div>
         {/* ── Brand Logo (Centered on Mobile) ── */}
         <Link 
           href="/" 
-          className="absolute left-1/2 -translate-x-1/2 md:relative md:left-auto md:translate-x-0 md:-ml-10 w-[90px] h-[30px] md:w-[130px] md:h-[45px] hover:opacity-80 transition-opacity mix-blend-multiply"
+          className="absolute left-1/2 -translate-x-1/2 md:relative md:left-auto md:translate-x-0 md:-ml-10 w-[90px] h-[30px] md:w-[130px] md:h-[45px] mix-blend-multiply"
         >
           <Image
             src="/media-pro/azlaan-logo-trimmed.png"
@@ -118,19 +123,13 @@ export default function Navbar() {
             Contact
           </Link>
         </div>
-        {/* ── Right side (Desktop: Icons | Mobile: Menu) ── */}
-        <div className="flex items-center justify-end gap-1 md:gap-6 ml-auto">
-          {/* Desktop Only Icons */}
-          <Link
-            href="/account"
-            className="hidden md:flex p-2 rounded-full hover:bg-black/[0.04] transition-all group"
-            title="Account"
-          >
-            <User className="w-6 h-6 text-[#1D1D1F] group-hover:scale-110 transition-transform" />
-          </Link>
+        {/* ── Right side (Mobile & Desktop: Icons) ── */}
+        <div className="flex items-center justify-end gap-2 md:gap-6 ml-auto">
+          {/* Cart Icon First */}
           <Link
             href="/cart"
-            className="p-2 rounded-full hover:bg-black/[0.04] transition-all relative group"
+            className="hidden md:flex p-2 rounded-full hover:bg-black/[0.04] transition-all relative group"
+            title="Shopping Cart"
           >
             <ShoppingBag className="w-6 h-6 text-[#1D1D1F] group-hover:scale-110 transition-transform" />
             {itemsCount > 0 && (
@@ -139,7 +138,15 @@ export default function Navbar() {
               </span>
             )}
           </Link>
-          {/* Mobile Menu Trigger removed from here (now on left) */}
+          
+          {/* Account Profile Icon Second - Visible on all devices */}
+          <Link
+            href="/account"
+            className="p-2 rounded-full hover:bg-black/[0.04] transition-all group"
+            title="Account"
+          >
+            <User className="w-6 h-6 text-[#1D1D1F] group-hover:scale-110 transition-transform" />
+          </Link>
         </div>
       </div>
       {/* ── Mega Menu Dropdown (Edge-to-Edge) ── */}
