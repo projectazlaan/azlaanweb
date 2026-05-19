@@ -19,6 +19,16 @@ export const metadata: Metadata = {
     template: "%s | AZLAAN"
   },
   description: "Crafted with Pride in Bangladesh. Premium clothing for Men, Women & Kids.",
+  icons: {
+    icon: [
+      {
+        url: "/media-pro/azlaan-logo-trimmed.png",
+        href: "/media-pro/azlaan-logo-trimmed.png",
+      }
+    ],
+    shortcut: "/media-pro/azlaan-logo-trimmed.png",
+    apple: "/media-pro/azlaan-logo-trimmed.png",
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
