@@ -34,8 +34,8 @@ export default function NewCollection() {
   return (
     <section className="relative z-[100] pt-0 pb-0 bg-white px-4 md:px-8 lg:px-12">
       <div className="w-full">
-        {/* Header - Matching "Entire Collection" Style */}
-        <div className="flex flex-col items-center text-center mb-8 md:mb-12">
+        {/* Header */}
+        <div className="flex flex-col items-center text-center mb-6 md:mb-8 pt-5 md:pt-7">
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}

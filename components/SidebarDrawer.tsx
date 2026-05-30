@@ -15,7 +15,10 @@ import {
   ChevronRight,
   ChevronDown,
   ArrowRight,
+  Gift,
+  Sparkles,
 } from 'lucide-react';
+import { useCartStore } from '@/store/cartStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSidebar } from '@/context/SidebarContext';
 import categoriesData from '@/data/categories.json';
@@ -35,15 +38,16 @@ const categoryIcons: Record<string, React.ComponentType<{ className?: string }>>
   kids: Baby,
 };
 const staticLinks = [
-  { href: '/',        label: 'Home',     icon: Home },
-  { href: '/shop',    label: 'Shop All', icon: ShoppingBag },
-  { href: '/account', label: 'Account',  icon: User },
-  { href: '/about',   label: 'About',    icon: User2 },
-  { href: '/contact', label: 'Contact',  icon: Phone },
+  { href: '/',             label: 'Home',        icon: Home },
+  { href: '/shop',         label: 'Shop All',    icon: ShoppingBag },
+  { href: '/gift-cards',   label: 'Gift Cards',  icon: Gift },
+  { href: '/about',        label: 'About',       icon: User2 },
+  { href: '/contact',      label: 'Contact',     icon: Phone },
 ];
 /* ── Main SidebarDrawer ──────────────────────────────────────── */
 export default function SidebarDrawer() {
   const { isOpen, closeSidebar } = useSidebar();
+  const { giftCardBalance } = useCartStore();
   const drawerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const [activeTab, setActiveTab] = useState<string | null>(
@@ -312,7 +316,7 @@ export default function SidebarDrawer() {
             </div>
           </div>
 
-          {/* User Profile Section - MOVED HERE */}
+          {/* User Profile Section */}
           <div className="space-y-3">
             <p className="text-[9px] font-black uppercase tracking-[0.4em] text-[#6E6E73] pl-2">
               Account Management
@@ -330,6 +334,28 @@ export default function SidebarDrawer() {
                 <span className="text-[9px] text-[#6E6E73] uppercase tracking-widest font-black">View Details</span>
               </div>
               <ChevronRight className="w-3.5 h-3.5 ml-auto text-black/20 group-hover:text-black transition-all" />
+            </Link>
+
+            {/* Gift Card Balance Banner */}
+            <Link
+              href="/gift-cards"
+              onClick={closeSidebar}
+              className="flex items-center gap-3 p-3 bg-black rounded-2xl group hover:bg-black/90 transition-colors border border-black"
+            >
+              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
+                <Gift className="w-5 h-5" />
+              </div>
+              <div className="flex flex-col flex-1">
+                <span className="text-[13px] font-bold text-white">Gift Cards</span>
+                {giftCardBalance > 0 ? (
+                  <span className="text-[9px] text-emerald-400 uppercase tracking-widest font-black flex items-center gap-1">
+                    <Sparkles className="w-2.5 h-2.5" /> Balance: ৳{giftCardBalance.toLocaleString()}
+                  </span>
+                ) : (
+                  <span className="text-[9px] text-white/50 uppercase tracking-widest font-black">Up to 25% Free Credit</span>
+                )}
+              </div>
+              <ChevronRight className="w-3.5 h-3.5 text-white/30 group-hover:text-white transition-all" />
             </Link>
           </div>
 

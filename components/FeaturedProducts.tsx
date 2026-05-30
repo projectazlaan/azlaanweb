@@ -1,7 +1,7 @@
 'use client'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValueEvent } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -49,7 +49,7 @@ const CategoryBanner = ({ title }: { title: string }) => {
   const yContent = useTransform(scrollYProgress, [0, 1], ["8%", "-8%"]);
 
   return (
-    <div ref={bannerRef} className="relative w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] group bg-black h-[220px] sm:h-[260px] md:h-[280px] lg:h-[300px] mb-4 md:mb-6 shadow-2xl border border-white/5">
+    <div ref={bannerRef} className="relative w-full overflow-hidden group bg-black h-[210px] sm:h-[250px] md:h-[270px] lg:h-[290px] shadow-xl">
       {/* Background image with hover zoom & parallax */}
       <motion.div style={{ y: yImage }} className="absolute inset-0 w-full h-[130%] -top-[15%]">
         <Image
@@ -128,39 +128,32 @@ const CategoryBanner = ({ title }: { title: string }) => {
 const CategoryRow = ({ title, products, direction }: { title: string, products: Product[], direction: 'left' | 'right' }) => {
   const router = useRouter()
   const sectionRef = useRef<HTMLDivElement>(null)
-  const stripRef  = useRef<HTMLDivElement>(null)
+  const stripRef   = useRef<HTMLDivElement>(null)
 
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(true)
 
-  // Track vertical scroll progress
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
   })
 
-  // We track the previous progress to calculate deltas
-  // Initializing with .get() avoids jumps on first scroll event
+  // Track previous progress for delta calculation
   const prevProgress = useRef<number>(scrollYProgress.get())
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (stripRef.current) {
-      const delta = latest - prevProgress.current
-      prevProgress.current = latest
-      
-      const maxShift = stripRef.current.scrollWidth - stripRef.current.clientWidth
-      if (maxShift <= 0) return
-      
-      // Multiplier ensures the total scroll amount matches a proportion of the maxShift
-      // 0.4 means the carousel will slide 40% of its hidden width during the vertical scroll
-      const shift = delta * (maxShift * 0.4)
-      
-      if (direction === 'left') {
-        stripRef.current.scrollLeft += shift
-      } else {
-        stripRef.current.scrollLeft -= shift
-      }
-    }
+  // ── Scroll-locked: moves ONLY while user is scrolling ──
+  // No spring, no RAF — 1:1 with scroll position.
+  // Multiplier 0.03 → extremely slow drift without any trailing motion.
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    if (!stripRef.current) return
+    const delta    = latest - prevProgress.current
+    prevProgress.current = latest
+
+    const maxShift = stripRef.current.scrollWidth - stripRef.current.clientWidth
+    if (maxShift <= 0) return
+
+    const shift = delta * maxShift * 0.03
+    stripRef.current.scrollLeft += direction === 'left' ? shift : -shift
   })
 
   const checkScroll = () => {
@@ -174,10 +167,8 @@ const CategoryRow = ({ title, products, direction }: { title: string, products: 
   useEffect(() => {
     const ref = stripRef.current
     if (ref) {
-      ref.addEventListener('scroll', checkScroll)
+      ref.addEventListener('scroll', checkScroll, { passive: true })
       checkScroll()
-      
-      // Initial scroll set for right direction to start at the end
       if (direction === 'right') {
         const { scrollWidth, clientWidth } = ref
         ref.scrollLeft = scrollWidth - clientWidth
@@ -185,6 +176,7 @@ const CategoryRow = ({ title, products, direction }: { title: string, products: 
     }
     return () => ref?.removeEventListener('scroll', checkScroll)
   }, [direction, products])
+
 
   const scroll = (dir: 'left' | 'right') => {
     if (stripRef.current) {
@@ -263,13 +255,13 @@ const CategoryRow = ({ title, products, direction }: { title: string, products: 
   return (
     <div
       ref={sectionRef}
-      className="mb-6 md:mb-10 bg-white dark:bg-neutral-900/30 rounded-[2rem] border border-neutral-100 dark:border-neutral-800/80 p-3 sm:p-4 md:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.02)] mx-3 sm:mx-4 md:mx-6"
+      className="mb-4 md:mb-8 bg-white dark:bg-neutral-900/30 rounded-[2rem] border border-neutral-100 dark:border-neutral-800/80 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.02)] mx-2 sm:mx-3 md:mx-4"
     >
       {/* Super Advanced Banner */}
       <CategoryBanner title={title} />
 
       {/* Section header */}
-      <div className="flex items-center justify-between mt-8 mb-6 px-2">
+      <div className="flex items-center justify-between mt-5 mb-4 px-4 md:px-6">
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rounded-full shadow-[0_0_10px_currentColor]"
             style={{ backgroundColor: CATEGORY_METADATA[title]?.accentColor || '#000', color: CATEGORY_METADATA[title]?.accentColor || '#000' }} />
@@ -306,9 +298,10 @@ const CategoryRow = ({ title, products, direction }: { title: string, products: 
 
         <div
           ref={stripRef}
-          className="overflow-x-auto pb-4 pt-2 px-4 md:px-2 scrollbar-hide will-change-scroll snap-x snap-mandatory md:snap-none"
+          className="overflow-x-auto pb-4 pt-1 px-2 md:px-3 scrollbar-hide snap-x snap-mandatory md:snap-none"
+          style={{ willChange: 'scroll-position', WebkitOverflowScrolling: 'touch' }}
         >
-          <div className="flex gap-0.5 items-stretch w-max h-[500px] md:h-[600px]">
+          <div className="flex gap-0.5 items-stretch w-max h-[480px] md:h-[560px]">
             {[...blocks, ...blocks].map((block, bIdx) => {
               if (block.type === 'single') return (
                 <div key={bIdx} className="min-w-[85vw] md:min-w-[32vw] lg:min-w-[26vw] flex-shrink-0 h-full">

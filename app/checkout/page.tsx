@@ -1,13 +1,14 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Check, ChevronRight, Truck, ShieldCheck, RotateCcw,
   ArrowLeft, Sparkles, Phone, MapPin, User, Plus, Edit2,
-  Trash2, Home, Building2, Star, X,
+  Trash2, Home, Building2, Star, X, Gift, ShoppingBag,
 } from 'lucide-react';
+import { useCartStore } from '@/store/cartStore';
 
 /* ════════════════════════ TYPES ════════════════════════ */
 interface Address {
@@ -37,17 +38,47 @@ const SEED_ADDRESSES: Address[] = [
   },
 ];
 
-const ORDER_ITEMS = [
-  { id: 1, name: 'Premium Cotton Panjabi', size: 'L',  qty: 1, price: 8500,  image: '/media-pro/men/Design 1/649824908_122120770023151981_1372810042799937270_n.webp' },
-  { id: 2, name: 'Elegant Evening Dress',  size: 'M',  qty: 2, price: 9800,  image: '/media-pro/women/Design 1/673191812_122125962327151981_8385571386878315506_n.webp' },
-];
-const subtotal = ORDER_ITEMS.reduce((s, i) => s + i.price * i.qty, 0);
-const shipping  = 0;
-const total     = subtotal + shipping;
+// ORDER_ITEMS mock removed in favor of dynamic useCartStore items
 
 const CITIES = ['Dhaka', 'Chittagong', 'Sylhet', 'Rajshahi', 'Khulna', 'Barisal', 'Mymensingh', 'Rangpur'];
 
 const TYPE_ICONS: Record<string, React.ElementType> = { home: Home, office: Building2, other: MapPin };
+
+function GiftCardPayToggle() {
+  const { giftCardBalance, useGiftCard, toggleUseGiftCard, getGiftCardDiscount } = useCartStore();
+  if (giftCardBalance <= 0) return null;
+  const discount = getGiftCardDiscount();
+  return (
+    <div className={`mb-6 p-4 rounded-2xl border-2 transition-all ${
+      useGiftCard ? 'border-emerald-400 bg-emerald-50' : 'border-neutral-200 bg-neutral-50'
+    }`}>
+      <button onClick={toggleUseGiftCard} className="w-full flex items-center gap-3">
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+          useGiftCard ? 'bg-emerald-500 text-white' : 'bg-neutral-200 text-neutral-400'
+        }`}>
+          <Gift className="w-5 h-5" />
+        </div>
+        <div className="flex-1 text-left">
+          <p className="text-[13px] font-black text-neutral-900">Pay with Gift Card</p>
+          <p className={`text-[10px] font-bold ${ useGiftCard ? 'text-emerald-600' : 'text-neutral-400'}`}>
+            Balance: ৳{giftCardBalance.toLocaleString()} available
+          </p>
+        </div>
+        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+          useGiftCard ? 'bg-emerald-500 border-emerald-500' : 'border-neutral-300'
+        }`}>
+          {useGiftCard && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
+        </div>
+      </button>
+      {useGiftCard && (
+        <div className="mt-3 pt-3 border-t border-emerald-200 flex items-center justify-between">
+          <span className="text-[11px] font-black text-emerald-700 uppercase tracking-widest">Gift Card Discount</span>
+          <span className="text-sm font-black text-emerald-600">- ৳{discount.toLocaleString()}</span>
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ════════════════════════ ADDRESS FORM ════════════════════════ */
 function AddressForm({
@@ -234,23 +265,38 @@ function PayOpt({ id, active, onClick, children }: { id: string; active: boolean
 
 /* ════════════════════════ ORDER SUMMARY ════════════════════════ */
 function OrderSummary() {
+  const { items, getTotalPrice, getGiftCardDiscount, getFinalTotal, useGiftCard } = useCartStore();
+  const subtotal = getTotalPrice();
+  const discount = getGiftCardDiscount();
+  const total = getFinalTotal();
+
   return (
     <div className="bg-neutral-50 border border-neutral-100 rounded-2xl overflow-hidden">
       <div className="px-5 py-4 border-b border-neutral-100">
         <p className="text-[9px] font-black uppercase tracking-[0.2em] text-neutral-400">Your Order</p>
       </div>
-      <div className="px-5 py-4 space-y-3.5">
-        {ORDER_ITEMS.map(item => (
+      <div className="px-5 py-4 space-y-3.5 max-h-[350px] overflow-y-auto">
+        {items.map(item => (
           <div key={item.id} className="flex items-center gap-3">
             <div className="relative w-11 h-14 rounded-xl overflow-hidden bg-neutral-200 shrink-0">
-              <Image src={item.image} alt={item.name} fill className="object-cover" sizes="44px" />
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-black text-white text-[8px] font-black rounded-full flex items-center justify-center">{item.qty}</div>
+              {item.isGiftCard ? (
+                <div className="w-full h-full bg-gradient-to-br from-[#1D1D1F] to-[#2c2c2c] flex items-center justify-center">
+                  <Gift className="w-5 h-5 text-[#C9A84C]" />
+                </div>
+              ) : (
+                <Image src={item.image} alt={item.name} fill className="object-cover" sizes="44px" />
+              )}
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-black text-white text-[8px] font-black rounded-full flex items-center justify-center">{item.quantity}</div>
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[11px] font-bold text-neutral-900 truncate">{item.name}</p>
-              <p className="text-[9px] text-neutral-400 font-medium">Size {item.size}</p>
+              <p className="text-[9px] text-neutral-400 font-medium">
+                {item.isGiftCard 
+                  ? `Value: ৳${item.giftCardValue?.toLocaleString()}` 
+                  : `${item.color ? `${item.color} · ` : ''}Size ${item.size}`}
+              </p>
             </div>
-            <span className="text-[12px] font-black text-neutral-900">৳{(item.price * item.qty).toLocaleString()}</span>
+            <span className="text-[12px] font-black text-neutral-900">৳{(item.price * item.quantity).toLocaleString()}</span>
           </div>
         ))}
       </div>
@@ -259,6 +305,12 @@ function OrderSummary() {
           <span className="text-neutral-500">Subtotal</span>
           <span className="font-bold text-neutral-800">৳{subtotal.toLocaleString()}</span>
         </div>
+        {useGiftCard && discount > 0 && (
+          <div className="flex justify-between text-[11px] font-bold text-emerald-600">
+            <span>Gift Card Used</span>
+            <span>- ৳{discount.toLocaleString()}</span>
+          </div>
+        )}
         <div className="flex justify-between text-[11px]">
           <span className="text-neutral-500">Shipping</span>
           <span className="font-bold text-emerald-600 text-[9px] uppercase tracking-wider">Free</span>
@@ -284,6 +336,38 @@ function OrderSummary() {
 export default function CheckoutPage() {
   const [step, setStep] = useState(1);
   const [pay,  setPay]  = useState('bkash');
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const { items, getFinalTotal, getGiftCardDiscount, useGiftCard, purchaseGiftCard, clearCart } = useCartStore();
+
+  const total = getFinalTotal();
+  const discount = getGiftCardDiscount();
+
+  const handlePlaceOrder = () => {
+    // Credit purchased gift cards to user's balance
+    const giftCardsValue = items
+      .filter(item => item.isGiftCard)
+      .reduce((sum, item) => sum + (item.giftCardValue ?? 0) * item.quantity, 0);
+
+    // Deduct used gift card balance (if discount applied)
+    const appliedDiscount = useGiftCard ? discount : 0;
+
+    const netBalanceChange = giftCardsValue - appliedDiscount;
+    if (netBalanceChange !== 0) {
+      purchaseGiftCard(netBalanceChange);
+    }
+
+    // Reset checkout state and clear cart
+    if (useGiftCard) {
+      useCartStore.setState({ useGiftCard: false });
+    }
+    clearCart();
+    setStep(3);
+  };
 
   /* Address state */
   const [addresses, setAddresses]     = useState<Address[]>(SEED_ADDRESSES);
@@ -319,6 +403,34 @@ export default function CheckoutPage() {
   const setDefault = (id: string) => {
     setAddresses(prev => prev.map(a => ({ ...a, isDefault: a.id === id })));
   };
+
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (step < 3 && items.length === 0) {
+    return (
+      <main className="min-h-screen bg-white flex flex-col items-center justify-center gap-5 px-6 pb-36 lg:pb-0">
+        <div className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center">
+          <ShoppingBag className="w-7 h-7 text-neutral-400" />
+        </div>
+        <div className="text-center">
+          <h1 className="text-lg font-black text-neutral-900 mb-1">Your bag is empty</h1>
+          <p className="text-sm text-neutral-400">Add items to your bag before checking out.</p>
+        </div>
+        <Link href="/shop">
+          <motion.button whileTap={{ scale: 0.97 }}
+            className="bg-black text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest">
+            Shop Now
+          </motion.button>
+        </Link>
+      </main>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -477,6 +589,9 @@ export default function CheckoutPage() {
 
                   <h2 className="text-lg font-black text-neutral-900 mb-6">Payment Method</h2>
 
+                  {/* Gift Card Toggle */}
+                  <GiftCardPayToggle />
+
                   {/* Selected address recap */}
                   {(() => {
                     const addr = addresses.find(a => a.id === selectedId);
@@ -523,7 +638,7 @@ export default function CheckoutPage() {
                       className="flex-1 border-2 border-neutral-200 text-neutral-600 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest hover:border-black transition-colors flex items-center justify-center gap-1.5">
                       <ArrowLeft className="w-3.5 h-3.5" /> Back
                     </motion.button>
-                    <motion.button whileTap={{ scale: 0.98 }} onClick={() => setStep(3)}
+                    <motion.button whileTap={{ scale: 0.98 }} onClick={handlePlaceOrder}
                       className="flex-[2] bg-black text-white py-4 rounded-xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 group">
                       Place Order · ৳{total.toLocaleString()}
                       <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -606,7 +721,7 @@ export default function CheckoutPage() {
               <span className="text-[8px] font-black uppercase text-emerald-600 bg-emerald-50 px-2 py-1.5 rounded-full">Free Shipping</span>
             </div>
             <motion.button whileTap={{ scale: 0.98 }}
-              onClick={() => step === 1 ? setStep(2) : setStep(3)}
+              onClick={() => step === 1 ? setStep(2) : handlePlaceOrder()}
               disabled={step === 1 && !selectedId}
               className="w-full bg-black text-white py-3.5 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 mb-3 disabled:opacity-40">
               {step === 1 ? 'Continue to Payment' : `Place Order · ৳${total.toLocaleString()}`}

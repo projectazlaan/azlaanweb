@@ -13,6 +13,7 @@ const Testimonials = dynamic(() => import('@/components/Testimonials'));
 const Newsletter = dynamic(() => import('@/components/Newsletter'));
 const NewCollection = dynamic(() => import('@/components/NewCollection'));
 const PromoBanner = dynamic(() => import('@/components/PromoBanner'));
+const GiftCardBanner = dynamic(() => import('@/components/GiftCardBanner'));
 
 export default async function HomePage() {
   // Fetch data on the server for maximum speed
@@ -66,6 +67,7 @@ export default async function HomePage() {
           <ScrollReveal>
             <div data-customizer-key="Testimonials"><Testimonials /></div>
           </ScrollReveal>
+          <GiftCardBanner />
           <ScrollReveal>
             <div data-customizer-key="Newsletter"><Newsletter /></div>
           </ScrollReveal>

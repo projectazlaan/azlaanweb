@@ -154,15 +154,15 @@ export default function CategoryNav({ showAll = true }: { showAll?: boolean }) {
       */}
       {!showAll && (
         <div 
-          className="relative z-[100] bg-white py-3 flex justify-center items-center w-full -mt-[210px] md:-mt-[300px] shadow-[0_-10px_40px_rgba(0,0,0,0.08)] border-b border-black/[0.05]"
+          className="relative z-[100] bg-white pt-1 pb-2 flex justify-center items-center w-full -mt-[210px] md:-mt-[300px] shadow-[0_-8px_30px_rgba(0,0,0,0.06)] border-b border-black/[0.04]"
           style={{
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%)',
-            maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%)'
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 12%)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 12%)'
           }}
         >
           <Link 
             href="/all-categories" 
-            className="group relative flex items-center gap-3 px-8 py-2.5 rounded-full border border-black/20 hover:border-black/40 bg-white transition-all duration-700 overflow-hidden shadow-sm"
+            className="group relative flex items-center gap-3 px-8 py-2 rounded-full border border-black/20 hover:border-black/40 bg-white transition-all duration-700 overflow-hidden shadow-sm"
           >
             <span className="text-[9px] md:text-[11px] font-bold uppercase tracking-[0.3em] text-black/80 group-hover:text-black transition-colors">
               View All Category

@@ -5,8 +5,9 @@ import Image from 'next/image';
 import { motion, AnimatePresence, animate } from 'framer-motion';
 import {
   Minus, Plus, X, ArrowRight, Truck,
-  ShoppingBag, Star, Sparkles, ShieldCheck, RotateCcw,
+  ShoppingBag, Star, Sparkles, ShieldCheck, RotateCcw, Gift,
 } from 'lucide-react';
+import { useCartStore } from '@/store/cartStore';
 
 /* ── Animated counter ───────────────────────────── */
 function Counter({ value, prefix = '৳' }: { value: number; prefix?: string }) {
@@ -34,27 +35,21 @@ const SUGGESTED = [
 ];
 
 export default function CartPage() {
-  const [cart, setCart]       = useState(INIT_CART);
+  const { items, updateQuantity, removeItem, getTotalPrice } = useCartStore();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const setQty = (id: number, q: number) => {
-    if (q < 1) return;
-    setCart(c => c.map(i => i.id === id ? { ...i, qty: q } : i));
-  };
-  const remove = (id: number) => setCart(c => c.filter(i => i.id !== id));
-
-  const subtotal  = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const FREE      = 20000;
+  const subtotal  = getTotalPrice();
+  const FREE      = 5000;
   const pct       = Math.min((subtotal / FREE) * 100, 100);
   const remaining = Math.max(FREE - subtotal, 0);
-  const shipping  = remaining === 0 ? 0 : 120;
+  const shipping  = subtotal === 0 ? 0 : (remaining === 0 ? 0 : 120);
   const total     = subtotal + shipping;
 
   if (!mounted) return null;
 
   /* ── Empty ── */
-  if (cart.length === 0) return (
+  if (items.length === 0) return (
     <main className="min-h-screen bg-white flex flex-col items-center justify-center gap-5 px-6 pb-36 lg:pb-0">
       <div className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center">
         <ShoppingBag className="w-7 h-7 text-neutral-400" />
@@ -76,7 +71,7 @@ export default function CartPage() {
   const ItemsSection = (
     <div className="flex-1 min-w-0">
       <AnimatePresence>
-        {cart.map((item, i) => (
+        {items.map((item, i) => (
           <motion.div
             key={item.id}
             layout
@@ -86,38 +81,66 @@ export default function CartPage() {
             transition={{ delay: i * 0.05, type: 'spring', stiffness: 380, damping: 30 }}
             className="flex gap-3.5 py-4 border-b border-neutral-100 last:border-0 group"
           >
-            <Link href={`/product/${item.id}`}
-              className="relative w-[72px] h-[88px] sm:w-[84px] sm:h-[104px] shrink-0 bg-neutral-50 rounded-xl overflow-hidden">
-              <Image src={item.image} alt={item.name} fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="96px" />
-            </Link>
+            {item.isGiftCard ? (
+              /* ── Gift Card Item ── */
+              <div className="relative w-[72px] h-[88px] sm:w-[84px] sm:h-[104px] shrink-0 bg-gradient-to-br from-[#1D1D1F] to-[#2c2c2c] border border-[#C9A84C]/20 rounded-xl overflow-hidden flex flex-col justify-between p-2.5">
+                <div className="flex justify-between items-center">
+                  <Gift className="w-3.5 h-3.5 text-[#C9A84C]" />
+                  <span className="text-[6px] font-black uppercase tracking-widest text-white/40">Azlaan</span>
+                </div>
+                <div>
+                  <p className="text-[7px] font-black uppercase tracking-widest text-[#C9A84C]/60 mb-0.5">Value</p>
+                  <p className="text-xs sm:text-sm font-black text-[#C9A84C] leading-none">৳{item.giftCardValue?.toLocaleString()}</p>
+                </div>
+              </div>
+            ) : (
+              /* ── Regular Product Item ── */
+              <Link href={`/product/${item.productId}`}
+                className="relative w-[72px] h-[88px] sm:w-[84px] sm:h-[104px] shrink-0 bg-neutral-50 rounded-xl overflow-hidden">
+                <Image src={item.image} alt={item.name} fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="96px" />
+              </Link>
+            )}
 
             <div className="flex-1 flex flex-col min-w-0 py-0.5">
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <h3 className="font-bold text-[13px] text-neutral-900 leading-snug">{item.name}</h3>
-                  <p className="text-[10px] text-neutral-400 font-medium mt-0.5">{item.color} · Size {item.size}</p>
+                  {item.isGiftCard ? (
+                    <div className="flex items-center gap-1 mt-1">
+                      <Sparkles className="w-3 h-3 text-[#C9A84C]" />
+                      <p className="text-[10px] font-black text-[#C9A84C]">৳{item.giftCardValue?.toLocaleString()} credit added on checkout</p>
+                    </div>
+                  ) : (
+                    <p className="text-[10px] text-neutral-400 font-medium mt-0.5">{item.color} · Size {item.size}</p>
+                  )}
                 </div>
-                <motion.button whileTap={{ scale: 0.85 }} onClick={() => remove(item.id)}
+                <motion.button whileTap={{ scale: 0.85 }} onClick={() => removeItem(item.id)}
                   className="w-6 h-6 rounded-full hover:bg-red-50 hover:text-red-400 text-neutral-300 flex items-center justify-center transition-colors shrink-0">
                   <X className="w-3 h-3" />
                 </motion.button>
               </div>
 
               <div className="flex items-center justify-between mt-auto pt-3">
-                <div className="flex items-center bg-neutral-100 rounded-lg overflow-hidden">
-                  <motion.button whileTap={{ scale: 0.85 }} onClick={() => setQty(item.id, item.qty - 1)}
-                    className="w-7 h-7 flex items-center justify-center text-neutral-500 hover:bg-neutral-200 transition-colors">
-                    <Minus className="w-2.5 h-2.5" />
-                  </motion.button>
-                  <span className="w-6 text-center text-[12px] font-black">{item.qty}</span>
-                  <motion.button whileTap={{ scale: 0.85 }} onClick={() => setQty(item.id, item.qty + 1)}
-                    className="w-7 h-7 flex items-center justify-center text-neutral-500 hover:bg-neutral-200 transition-colors">
-                    <Plus className="w-2.5 h-2.5" />
-                  </motion.button>
-                </div>
+                {item.isGiftCard ? (
+                  <span className="text-[9px] font-black uppercase tracking-widest text-[#C9A84C] bg-[#C9A84C]/10 px-2 py-1 rounded-full">
+                    Save ৳{((item.giftCardValue ?? 0) - item.price).toLocaleString()}
+                  </span>
+                ) : (
+                  <div className="flex items-center bg-neutral-100 rounded-lg overflow-hidden">
+                    <motion.button whileTap={{ scale: 0.85 }} onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                      className="w-7 h-7 flex items-center justify-center text-neutral-500 hover:bg-neutral-200 transition-colors">
+                      <Minus className="w-2.5 h-2.5" />
+                    </motion.button>
+                    <span className="w-6 text-center text-[12px] font-black">{item.quantity}</span>
+                    <motion.button whileTap={{ scale: 0.85 }} onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      className="w-7 h-7 flex items-center justify-center text-neutral-500 hover:bg-neutral-200 transition-colors">
+                      <Plus className="w-2.5 h-2.5" />
+                    </motion.button>
+                  </div>
+                )}
                 <p className="text-sm font-black text-neutral-900">
-                  <Counter value={item.price * item.qty} />
+                  <Counter value={item.price * item.quantity} />
                 </p>
               </div>
             </div>
@@ -233,7 +256,7 @@ export default function CartPage() {
         <div className="max-w-[1100px] mx-auto px-4 sm:px-8 py-4 flex items-baseline justify-between">
           <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-neutral-900">
             Your Bag
-            <span className="ml-2 text-base font-bold text-neutral-300">({cart.length})</span>
+            <span className="ml-2 text-base font-bold text-neutral-300">({items.length})</span>
           </h1>
           <Link href="/shop" className="text-[10px] font-black uppercase tracking-widest text-neutral-400 hover:text-black transition-colors">
             ← Continue Shopping

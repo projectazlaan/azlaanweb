@@ -21,7 +21,7 @@ function toSlug(str: string) {
 }
 export default function Navbar() {
   const { openSidebar } = useSidebar();
-  const { itemsCount } = useCartStore();
+  const { itemsCount, openCart } = useCartStore();
   const pathname = usePathname();
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -41,8 +41,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center px-4 py-2 md:px-6 md:py-3 relative">
         {/* ── Left side (Mobile Menu) ── */}
         <div className="md:hidden flex items-center -ml-2">
-          <Link
-            href="/cart"
+          <button
+            onClick={openCart}
             className="p-2 rounded-full hover:bg-black/[0.04] transition-all relative group"
             title="Shopping Cart"
           >
@@ -52,7 +52,7 @@ export default function Navbar() {
                 {itemsCount}
               </span>
             )}
-          </Link>
+          </button>
         </div>
         {/* ── Brand Logo (Centered on Mobile) ── */}
         <Link 
@@ -122,12 +122,19 @@ export default function Navbar() {
           >
             Contact
           </Link>
+          <Link 
+            href="/gift-cards" 
+            className={`text-[11px] font-bold tracking-[0.3em] uppercase transition-colors flex items-center gap-1.5
+              ${pathname === '/gift-cards' ? 'text-[#0071E3]' : 'text-[#1D1D1F]/60 hover:text-[#1D1D1F]'}`}
+          >
+            🎁 Gift Cards
+          </Link>
         </div>
         {/* ── Right side (Mobile & Desktop: Icons) ── */}
         <div className="flex items-center justify-end gap-2 md:gap-6 ml-auto">
           {/* Cart Icon First */}
-          <Link
-            href="/cart"
+          <button
+            onClick={openCart}
             className="hidden md:flex p-2 rounded-full hover:bg-black/[0.04] transition-all relative group"
             title="Shopping Cart"
           >
@@ -137,7 +144,7 @@ export default function Navbar() {
                 {itemsCount}
               </span>
             )}
-          </Link>
+          </button>
           
           {/* Account Profile Icon Second - Visible on all devices */}
           <Link

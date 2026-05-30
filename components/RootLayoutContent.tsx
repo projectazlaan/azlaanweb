@@ -9,6 +9,7 @@ import MobileBottomNav from "@/components/MobileBottomNav";
 import ChatWidget from "@/components/ChatWidget";
 import { Toaster } from 'react-hot-toast';
 import VisualEditorBridge from "@/components/VisualEditorBridge";
+import CartDrawer from "@/components/CartDrawer";
 import { Suspense } from 'react';
 export default function RootLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -71,13 +72,14 @@ export default function RootLayoutContent({ children }: { children: React.ReactN
         }`}>
           {children}
         </main>
-        {pathname !== '/all-categories' && pathname !== '/chat' && (
+        {pathname !== '/all-categories' && pathname !== '/chat' && pathname !== '/account' && (
           <div className="pb-20 lg:pb-0">
             <Footer />
           </div>
         )}
         <ChatWidget />
         <MobileBottomNav />
+        <CartDrawer />
       </SidebarProvider>
     </>
   );
