@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Product, ViewMode } from '@/types';
 import { useCategoryStore } from '@/store/categoryStore';
 import ProductCard from '@/components/product/ProductCard';
@@ -52,24 +53,42 @@ export default function ProductGrid({
       {/* Grid or List */}
       {viewMode === 'grid' ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-1 gap-y-12">
-          {products.map((product) => (
-            <ProductCard 
-              key={product.id} 
-              product={product} 
-              viewMode="grid" 
-              onQuickView={() => setQuickViewProduct(product)}
-            />
-          ))}
+          {products.map((product, index) => {
+            const isParallaxColumn = index % 2 === 1;
+            return (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: isParallaxColumn ? 30 : 0 }}
+                viewport={{ once: true, margin: "100px" }}
+                transition={{ duration: 0.8, delay: (index % 4) * 0.1, ease: [0.23, 1, 0.32, 1] }}
+                className="h-full"
+              >
+                <ProductCard 
+                  product={product} 
+                  viewMode="grid" 
+                  onQuickView={() => setQuickViewProduct(product)}
+                />
+              </motion.div>
+            );
+          })}
         </div>
       ) : (
         <div className="flex flex-col gap-6 max-w-2xl">
-          {products.map((product) => (
-            <ProductCard 
-              key={product.id} 
-              product={product} 
-              viewMode="list" 
-              onQuickView={() => setQuickViewProduct(product)}
-            />
+          {products.map((product, index) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <ProductCard 
+                product={product} 
+                viewMode="list" 
+                onQuickView={() => setQuickViewProduct(product)}
+              />
+            </motion.div>
           ))}
         </div>
       )}

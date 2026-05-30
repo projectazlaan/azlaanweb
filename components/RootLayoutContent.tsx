@@ -6,6 +6,7 @@ import SidebarDrawer from "@/components/SidebarDrawer";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import ChatWidget from "@/components/ChatWidget";
 import { Toaster } from 'react-hot-toast';
 import VisualEditorBridge from "@/components/VisualEditorBridge";
 import { Suspense } from 'react';
@@ -70,9 +71,12 @@ export default function RootLayoutContent({ children }: { children: React.ReactN
         }`}>
           {children}
         </main>
-        <div className="pb-20 lg:pb-0">
-          <Footer />
-        </div>
+        {pathname !== '/all-categories' && pathname !== '/chat' && (
+          <div className="pb-20 lg:pb-0">
+            <Footer />
+          </div>
+        )}
+        <ChatWidget />
         <MobileBottomNav />
       </SidebarProvider>
     </>

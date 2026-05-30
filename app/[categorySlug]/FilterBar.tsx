@@ -1,4 +1,5 @@
 'use client';
+import { motion } from 'framer-motion';
 import { useCategoryStore } from '@/store/categoryStore';
 import { Category } from '@/types';
 import { useRouter } from 'next/navigation';
@@ -140,12 +141,19 @@ export default function FilterBar({ category, variant = 'full', items, activeIte
                 }
               }}
               className={`
-                group relative px-4 md:px-5 py-1.5 md:py-2 rounded-full transition-all duration-500 ease-in-out shrink-0
-                ${isActive ? 'bg-black shadow-lg shadow-black/20' : 'hover:bg-black/[0.04]'}
+                group relative px-4 md:px-5 py-1.5 md:py-2 rounded-full transition-colors duration-500 ease-in-out shrink-0
+                ${!isActive && 'hover:bg-black/[0.04]'}
               `}
             >
+              {isActive && (
+                <motion.div
+                  layoutId={`activeFilter-${variant}`}
+                  className="absolute inset-0 bg-black rounded-full shadow-lg shadow-black/20 z-0"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
               <h3 className={`
-                font-sans font-black uppercase transition-all duration-500 text-center whitespace-nowrap
+                relative z-10 font-sans font-black uppercase transition-colors duration-500 text-center whitespace-nowrap
                 ${variant === 'full' 
                   ? 'text-[8.5px] md:text-[10px] tracking-[0.15em] md:tracking-[0.3em]' 
                   : 'text-[9.5px] sm:text-[10px] md:text-[10.5px] tracking-[0.15em] md:tracking-[0.25em]'}

@@ -3,6 +3,7 @@ import HomeHeroSection from '@/components/HomeHeroSection';
 import CategoryNav from '@/components/CategoryNav';
 import StudioRenderer from '@/components/StudioRenderer';
 import { getDb } from '@/lib/db';
+import ScrollReveal from '@/components/ScrollReveal';
 
 // Dynamic imports for performance optimization (Sub-3s load)
 const ReelsPanel = dynamic(() => import('@/components/ReelsPanel'));
@@ -40,22 +41,34 @@ export default async function HomePage() {
           <NewCollection />
         </div>
 
-        <div data-customizer-key="PromoBanner">
-          <PromoBanner settings={settings?.promoBanner} />
-        </div>
+        <ScrollReveal direction="none">
+          <div data-customizer-key="PromoBanner">
+            <PromoBanner settings={settings?.promoBanner} />
+          </div>
+        </ScrollReveal>
 
         {/* Watch & Buy Section */}
-        <div id="watch-and-buy" data-customizer-key="WatchAndBuy" className="bg-white">
-          <ReelsPanel />
-        </div>
+        <ScrollReveal>
+          <div id="watch-and-buy" data-customizer-key="WatchAndBuy" className="bg-white">
+            <ReelsPanel />
+          </div>
+        </ScrollReveal>
 
         <div className="space-y-8 md:space-y-12">
-          <div data-customizer-key="FeaturedProducts">
-            <FeaturedProducts initialProducts={products} />
-          </div>
-          <div data-customizer-key="BrandStory"><BrandStory /></div>
-          <div data-customizer-key="Testimonials"><Testimonials /></div>
-          <div data-customizer-key="Newsletter"><Newsletter /></div>
+          <ScrollReveal>
+            <div data-customizer-key="FeaturedProducts">
+              <FeaturedProducts initialProducts={products} />
+            </div>
+          </ScrollReveal>
+          <ScrollReveal>
+            <div data-customizer-key="BrandStory"><BrandStory /></div>
+          </ScrollReveal>
+          <ScrollReveal>
+            <div data-customizer-key="Testimonials"><Testimonials /></div>
+          </ScrollReveal>
+          <ScrollReveal>
+            <div data-customizer-key="Newsletter"><Newsletter /></div>
+          </ScrollReveal>
         </div>
       </div>
     </div>

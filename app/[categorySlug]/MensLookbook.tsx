@@ -1,7 +1,8 @@
 'use client';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
+import { useRef } from 'react';
 
 const LOOKBOOK_ITEMS = [
   {
@@ -21,23 +22,36 @@ const LOOKBOOK_ITEMS = [
 ];
 
 export default function MensLookbook() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [200, -200]);
+
   return (
-    <section className="bg-[#f5f5f7] py-24 md:py-32 overflow-hidden">
+    <section ref={containerRef} className="bg-[#f5f5f7] py-24 md:py-32 overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-6">
-        <div className="mb-20">
+        <motion.div 
+          style={{ y: useTransform(scrollYProgress, [0, 1], [50, -50]) }}
+          className="mb-20"
+        >
           <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-black/40 mb-4">Editorial</h2>
           <h3 className="text-4xl md:text-7xl font-sans font-black tracking-tighter uppercase leading-[0.9]">
             The Azlaan <br />
             <span className="font-serif italic font-light lowercase tracking-normal">Lookbook</span>
           </h3>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24">
           {LOOKBOOK_ITEMS.map((item, index) => (
             <motion.div
               key={item.id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              style={{ y: index === 0 ? y1 : y2 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
               viewport={{ once: true }}
               className={`relative group ${item.align === 'right' ? 'md:mt-32' : ''}`}

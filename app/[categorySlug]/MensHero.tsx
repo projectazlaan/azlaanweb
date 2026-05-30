@@ -1,8 +1,9 @@
 'use client';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, ArrowRight, Star } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Star, ChevronDown } from 'lucide-react';
+import { useRef } from 'react';
 
 interface SubCategory {
   name: string;
@@ -39,10 +40,23 @@ const SUB_CATEGORIES: SubCategory[] = [
 ];
 
 export default function MensHero({ onSubSelect }: { onSubSelect: (sub: string) => void }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const yBackground = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const yModel = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const opacityModel = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   return (
-    <section className="relative h-screen min-h-[700px] w-full bg-[#f8f8f8] overflow-hidden">
+    <section ref={containerRef} className="relative h-screen min-h-[700px] w-full bg-[#f8f8f8] overflow-hidden">
       {/* Background Shapes/Deco */}
-      <div className="absolute top-20 right-0 w-[60%] h-[80%] bg-white rounded-l-[300px] z-0 opacity-50 hidden md:block" />
+      <motion.div 
+        style={{ y: yBackground }}
+        className="absolute top-20 right-0 w-[60%] h-[80%] bg-white rounded-l-[300px] z-0 opacity-50 hidden md:block" 
+      />
       
       {/* Top Bar Text */}
       <div className="absolute top-6 md:top-12 left-8 md:left-24 z-20 flex items-center gap-12">
@@ -61,18 +75,35 @@ export default function MensHero({ onSubSelect }: { onSubSelect: (sub: string) =
       <div className="relative z-20 h-full flex flex-col justify-start md:justify-center pt-24 md:pt-0 px-6 md:px-24">
         <div className="max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.1 } }
+            }}
           >
-            <h1 className="text-[48px] md:text-[140px] font-sans font-black leading-[0.9] md:leading-[0.85] tracking-tighter text-[#1a1a1a]">
-              Fresh & <br />
-              <span className="flex items-center gap-3 md:gap-4">
-                <div className="w-16 md:w-40 h-10 md:h-24 rounded-full overflow-hidden relative mt-1 md:mt-4">
+            <h1 className="text-[48px] md:text-[140px] font-sans font-black leading-[0.9] md:leading-[0.85] tracking-tighter text-[#1a1a1a] flex flex-col items-start">
+              <motion.span 
+                variants={{
+                  hidden: { opacity: 0, y: 50, rotateX: -90 },
+                  visible: { opacity: 1, y: 0, rotateX: 0, transition: { type: "spring", damping: 12, stiffness: 100 } }
+                }}
+                className="origin-bottom block"
+              >
+                Fresh &
+              </motion.span>
+              <motion.span 
+                variants={{
+                  hidden: { opacity: 0, y: 50, rotateX: -90 },
+                  visible: { opacity: 1, y: 0, rotateX: 0, transition: { type: "spring", damping: 12, stiffness: 100 } }
+                }}
+                className="flex items-center gap-3 md:gap-4 origin-bottom"
+              >
+                <div className="w-16 md:w-40 h-10 md:h-24 rounded-full overflow-hidden relative mt-1 md:mt-4 shadow-xl">
                   <Image src="/media-pro/men/Design 6/650061703_122120930277151981_1200600818769491462_n.webp" alt="In-text image" fill className="object-cover" />
                 </div>
                 Stylish
-              </span>
+              </motion.span>
             </h1>
           </motion.div>
 
@@ -97,16 +128,17 @@ export default function MensHero({ onSubSelect }: { onSubSelect: (sub: string) =
 
       {/* Floating Model Image */}
       <motion.div 
+        style={{ y: yModel, opacity: opacityModel }}
         initial={{ opacity: 0, scale: 0.8, x: 100 }}
         animate={{ opacity: 1, scale: 1, x: 0 }}
-        transition={{ delay: 0.2, duration: 1 }}
-        className="absolute bottom-0 right-0 md:right-[5%] w-full md:w-[45%] h-[60%] md:h-[80%] z-10 md:z-0 pointer-events-none"
+        transition={{ delay: 0.4, duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
+        className="absolute bottom-0 right-0 md:right-[5%] w-full md:w-[45%] h-[60%] md:h-[80%] z-10 md:z-0 pointer-events-none origin-bottom"
       >
         <Image 
           src="/media-pro/men/Design 11/650770969_122120920443151981_7419337193691681295_n.webp" 
           alt="Main Model" 
           fill 
-          className="object-contain object-bottom opacity-40 md:opacity-100"
+          className="object-contain object-bottom opacity-40 md:opacity-100 drop-shadow-2xl"
           priority
         />
       </motion.div>
@@ -145,13 +177,37 @@ export default function MensHero({ onSubSelect }: { onSubSelect: (sub: string) =
       <div className="absolute top-6 md:top-12 right-8 md:right-24 z-20 flex flex-col items-end">
         <div className="flex items-center gap-1.5 mb-1 md:mb-2">
           {['🔥', '👍', '🙌', '😍', '💙', '🤞', '✨'].map((emoji, i) => (
-            <span key={i} className="text-[10px] md:text-sm drop-shadow-sm">{emoji}</span>
+            <motion.span 
+              key={i} 
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8 + (i * 0.1), type: "spring" }}
+              className="text-[10px] md:text-sm drop-shadow-sm"
+            >
+              {emoji}
+            </motion.span>
           ))}
         </div>
         <p className="text-[7px] md:text-[9px] font-black uppercase tracking-widest text-gray-400">
           Loved From <span className="text-black border-b border-black">500k Users</span>
         </p>
       </div>
+
+      {/* Floating Scroll Indicator */}
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-6 right-8 md:right-24 z-20 flex flex-col items-center gap-2"
+      >
+        <span className="text-[8px] font-bold uppercase tracking-widest text-gray-400 rotate-90 origin-right translate-x-3">Scroll</span>
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+        >
+          <ChevronDown className="w-4 h-4 text-gray-400 mt-6" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

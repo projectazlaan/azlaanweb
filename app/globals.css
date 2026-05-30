@@ -70,3 +70,12 @@ a, button, input, select, textarea {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+@keyframes bannerTicker {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-33.33%, 0, 0);
+  }
+}

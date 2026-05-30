@@ -127,7 +127,7 @@ export default function CategoryNav({ showAll = true }: { showAll?: boolean }) {
   return (
     <>
       <section className="relative w-full bg-white -mt-px">
-        <div className="flex flex-col md:grid md:grid-cols-2 w-full">
+        <div className="flex flex-col md:grid md:grid-cols-2 w-full gap-[1px] bg-neutral-200">
           {displayCategories.map((cat, i) => (
             <CategoryCard 
               key={cat.name} 
