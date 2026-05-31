@@ -215,18 +215,32 @@ function GiftCardsTab({ gcBalance, setGcBalance }: { gcBalance: number, setGcBal
   const [code, setCode] = useState('');
   const [isRedeeming, setIsRedeeming] = useState(false);
 
-  const handleRedeem = () => {
-    if (code.length < 5) {
+  const handleRedeem = async () => {
+    const trimmed = code.trim();
+    if (trimmed.length < 5) {
       toast.error('Please enter a valid code');
       return;
     }
     setIsRedeeming(true);
-    setTimeout(() => {
-      setGcBalance(gcBalance + 1000); // Simulate adding 1000 Taka
+    try {
+      const res = await fetch('/api/gift-cards/redeem', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: trimmed }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || 'Invalid code');
+        return;
+      }
+      setGcBalance(gcBalance + data.balance);
       setCode('');
+      toast.success(`Successfully redeemed ৳${data.balance.toLocaleString()}!`);
+    } catch {
+      toast.error('Something went wrong. Try again.');
+    } finally {
       setIsRedeeming(false);
-      toast.success('Successfully redeemed ৳1,000!');
-    }, 1500);
+    }
   };
 
   return (
@@ -561,8 +575,19 @@ function AccountDashboardContent() {
   const searchParams = useSearchParams();
   const tabParam = searchParams.get('tab');
   
-  // Shared global state for the dashboard (mock)
-  const [gcBalance, setGcBalance] = useState(5000);
+  // Gift card balance synced from cart store
+  const storeBalance = useCartStore(s => s.giftCardBalance);
+  const [gcBalance, setGcBalance] = useState(storeBalance);
+
+  // Sync from store whenever it changes
+  useEffect(() => {
+    setGcBalance(storeBalance);
+  }, [storeBalance]);
+
+  // Sync local changes back to store
+  useEffect(() => {
+    useCartStore.setState({ giftCardBalance: gcBalance });
+  }, [gcBalance]);
 
   // Initialize active tab from URL or fallback
   const [activeTab, setActiveTab] = useState(tabParam || 'overview');
