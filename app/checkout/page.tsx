@@ -44,6 +44,44 @@ const CITIES = ['Dhaka', 'Chittagong', 'Sylhet', 'Rajshahi', 'Khulna', 'Barisal'
 
 const TYPE_ICONS: Record<string, React.ElementType> = { home: Home, office: Building2, other: MapPin };
 
+function GiftCardRedeemSection() {
+  const { giftCardCodeEntry, giftCardRedeemError, setGiftCardCodeEntry, redeemGiftCard } = useCartStore();
+  const [redeeming, setRedeeming] = useState(false);
+
+  const handleRedeem = async () => {
+    if (!giftCardCodeEntry.trim()) return;
+    setRedeeming(true);
+    await redeemGiftCard(giftCardCodeEntry.trim());
+    setRedeeming(false);
+  };
+
+  return (
+    <div className="mb-6 p-4 rounded-2xl border border-neutral-200 bg-neutral-50">
+      <div className="flex items-center gap-2 mb-3">
+        <Gift className="w-4 h-4 text-neutral-400" />
+        <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Have a gift card?</p>
+      </div>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={giftCardCodeEntry}
+          onChange={(e) => setGiftCardCodeEntry(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleRedeem()}
+          placeholder="Enter code (e.g. A2B4-C6D8-E9F0)"
+          className="flex-1 h-10 px-3 rounded-xl border border-neutral-300 text-[12px] font-mono font-bold text-neutral-900 bg-white placeholder:text-neutral-300 focus:outline-none focus:border-black transition-colors uppercase tracking-wider"
+        />
+        <button onClick={handleRedeem} disabled={redeeming || !giftCardCodeEntry.trim()}
+          className="h-10 px-5 rounded-xl bg-black text-white text-[9px] font-black uppercase tracking-widest disabled:opacity-30 hover:bg-neutral-800 transition-colors shrink-0">
+          {redeeming ? '...' : 'Apply'}
+        </button>
+      </div>
+      {giftCardRedeemError && (
+        <p className="text-[10px] text-red-500 font-bold mt-2">{giftCardRedeemError}</p>
+      )}
+    </div>
+  );
+}
+
 function GiftCardPayToggle() {
   const { giftCardBalance, useGiftCard, toggleUseGiftCard, getGiftCardDiscount } = useCartStore();
   if (giftCardBalance <= 0) return null;
@@ -338,6 +376,8 @@ export default function CheckoutPage() {
   const [pay,  setPay]  = useState('bkash');
 
   const [mounted, setMounted] = useState(false);
+  const [giftCardCodes, setGiftCardCodes] = useState<string[]>([]);
+  const [isPlacing, setIsPlacing] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -347,13 +387,41 @@ export default function CheckoutPage() {
   const total = getFinalTotal();
   const discount = getGiftCardDiscount();
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
+    setIsPlacing(true);
+
+    // Create gift cards via API and collect codes
+    const giftCardItems = items.filter(item => item.isGiftCard);
+    const codes: string[] = [];
+
+    for (const item of giftCardItems) {
+      try {
+        const res = await fetch('/api/gift-cards/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tier_id: item.giftCardTierId,
+            initial_balance: item.giftCardValue,
+            purchaser_email: '',
+            order_id: '',
+          }),
+        });
+        const data = await res.json();
+        if (res.ok && data.code) {
+          codes.push(data.code);
+        }
+      } catch {
+        // silently fail — gift card still purchased locally
+      }
+    }
+
+    setGiftCardCodes(codes);
+
     // Credit purchased gift cards to user's balance
-    const giftCardsValue = items
-      .filter(item => item.isGiftCard)
+    const giftCardsValue = giftCardItems
       .reduce((sum, item) => sum + (item.giftCardValue ?? 0) * item.quantity, 0);
 
-    // Deduct used gift card balance (if discount applied)
+    // Deduct used gift card balance (single-use — full balance consumed)
     const appliedDiscount = useGiftCard ? discount : 0;
 
     const netBalanceChange = giftCardsValue - appliedDiscount;
@@ -367,6 +435,7 @@ export default function CheckoutPage() {
     }
     clearCart();
     setStep(3);
+    setIsPlacing(false);
   };
 
   /* Address state */
@@ -592,6 +661,9 @@ export default function CheckoutPage() {
                   {/* Gift Card Toggle */}
                   <GiftCardPayToggle />
 
+                  {/* Redeem a gift card code */}
+                  <GiftCardRedeemSection />
+
                   {/* Selected address recap */}
                   {(() => {
                     const addr = addresses.find(a => a.id === selectedId);
@@ -639,9 +711,16 @@ export default function CheckoutPage() {
                       <ArrowLeft className="w-3.5 h-3.5" /> Back
                     </motion.button>
                     <motion.button whileTap={{ scale: 0.98 }} onClick={handlePlaceOrder}
-                      className="flex-[2] bg-black text-white py-4 rounded-xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 group">
-                      Place Order · ৳{total.toLocaleString()}
-                      <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                      className="flex-[2] bg-black text-white py-4 rounded-xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 group disabled:opacity-50"
+                      disabled={isPlacing}>
+                      {isPlacing ? (
+                        <span className="flex items-center gap-2">
+                          <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }} className="w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                          Placing...
+                        </span>
+                      ) : (
+                        <>Place Order · ৳{total.toLocaleString()} <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" /></>
+                      )}
                     </motion.button>
                   </div>
                 </motion.div>
@@ -655,6 +734,44 @@ export default function CheckoutPage() {
                     transition={{ type: 'spring', stiffness: 400, damping: 20, delay: 0.1 }}
                     className="w-20 h-20 bg-black rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-black/20">
                     <Check className="w-9 h-9 text-white" strokeWidth={3} />
+                  </motion.div>
+                  <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
+                    <h2 className="text-2xl sm:text-3xl font-black text-neutral-900 mb-2">Order Confirmed!</h2>
+                    <p className="text-neutral-500 font-medium mb-1">Thank you for your purchase</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-300 mb-8">#AZL-2026-001234</p>
+                  </motion.div>
+
+                  {giftCardCodes.length > 0 && (
+                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}
+                      className="bg-neutral-50 border border-neutral-100 rounded-2xl p-5 text-left mb-6 max-w-xs mx-auto">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Gift className="w-4 h-4 text-[#C9A84C]" />
+                        <p className="text-[10px] font-black uppercase tracking-widest text-neutral-500">Your Gift Card Code{giftCardCodes.length > 1 ? 's' : ''}</p>
+                      </div>
+                      {giftCardCodes.map((code, i) => (
+                        <div key={code}
+                          className="bg-white border border-neutral-200 rounded-xl px-4 py-3 mb-2 last:mb-0 flex items-center justify-between">
+                          <span className="text-sm font-mono font-black tracking-[0.15em] text-neutral-900">{code}</span>
+                          <button onClick={() => navigator.clipboard.writeText(code)}
+                            className="text-[9px] font-black uppercase tracking-widest text-[#C9A84C] hover:text-black transition-colors shrink-0 ml-3">
+                            Copy
+                          </button>
+                        </div>
+                      ))}
+                      <p className="text-[10px] text-neutral-400 mt-2 leading-relaxed">
+                        Valid for 30 days &bull; Single-use &bull; Use at store or online
+                      </p>
+                    </motion.div>
+                  )}
+
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+                    className="bg-neutral-50 border border-neutral-100 rounded-2xl p-5 text-left mb-8 max-w-xs mx-auto">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Truck className="w-3.5 h-3.5 text-neutral-400" />
+                      <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Estimated Delivery</p>
+                    </div>
+                    <p className="text-base font-black text-neutral-900">3 – 5 Business Days</p>
+                    <p className="text-[10px] text-neutral-400 mt-0.5">We'll SMS you when it ships</p>
                   </motion.div>
                   <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
                     <h2 className="text-2xl sm:text-3xl font-black text-neutral-900 mb-2">Order Confirmed!</h2>

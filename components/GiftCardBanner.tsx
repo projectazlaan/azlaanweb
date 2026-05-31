@@ -3,108 +3,76 @@
 import { useRef, useState, useCallback } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { GiftCardTier } from '@/data/giftCards';
-import { GIFT_CARD_TIERS } from '@/data/giftCards';
+import { GIFT_CARD_TIERS, CARD_NUM } from '@/data/giftCards';
 
-const CARD = {
-  starter: {
-    bg: 'bg-gradient-to-br from-[#1a1a1a] via-[#222] to-[#2c2c2c]',
-    border: 'border-white/[0.06]',
-    badge: 'bg-white/10 text-white/80',
-    accent: 'text-white/40',
-    chip: 'bg-white/10',
-    glow: 'via-white/[0.04]',
-  },
-  value: {
-    bg: 'bg-gradient-to-br from-[#1D1D1F] via-[#222224] to-[#1D1D1F]',
-    border: 'border-[#C9A84C]/20',
-    badge: 'bg-[#C9A84C]/15 text-[#C9A84C]',
-    accent: 'text-[#C9A84C]/50',
-    chip: 'bg-[#C9A84C]/20',
-    glow: 'via-[#C9A84C]/[0.06]',
-  },
-  premium: {
-    bg: 'bg-gradient-to-br from-[#C9A84C] via-[#B8952E] to-[#96751C]',
-    border: 'border-[#E8C86A]/40',
-    badge: 'bg-[#1D1D1F]/15 text-[#1D1D1F]',
-    accent: 'text-[#1D1D1F]/45',
-    chip: 'bg-[#1D1D1F]/10',
-    glow: 'via-white/[0.12]',
-  },
-  luxury: {
-    bg: 'bg-gradient-to-br from-[#0d0d0d] via-[#161616] to-[#0d0d0d]',
-    border: 'border-[#C9A84C]/15',
-    badge: 'bg-[#C9A84C]/12 text-[#C9A84C]',
-    accent: 'text-[#C9A84C]/40',
-    chip: 'bg-[#C9A84C]/15',
-    glow: 'via-[#C9A84C]/[0.05]',
-  },
-} as const;
-
-/* ── 3D tilt hook ─────────────────────────────── */
+/* ── Tilt hook for 3D card effect ──────────────── */
 function useTilt() {
   const ref = useRef<HTMLDivElement>(null);
-  const xRaw = useMotionValue(0);
-  const yRaw = useMotionValue(0);
+  const x = useMotionValue(0.5);
+  const y = useMotionValue(0.5);
+  const smoothX = useSpring(x, { stiffness: 300, damping: 30 });
+  const smoothY = useSpring(y, { stiffness: 300, damping: 30 });
+  const rotateX = useTransform(smoothY, [0, 1], ['8deg', '-8deg']);
+  const rotateY = useTransform(smoothX, [0, 1], ['-8deg', '8deg']);
 
-  const x = useSpring(xRaw, { stiffness: 220, damping: 26, mass: 0.5 });
-  const y = useSpring(yRaw, { stiffness: 220, damping: 26, mass: 0.5 });
-
-  const rotateX = useTransform(y, [-0.5, 0.5], [10, -10]);
-  const rotateY = useTransform(x, [-0.5, 0.5], [-10, 10]);
-
-  const onMove = useCallback((clientX: number, clientY: number) => {
+  const onMove = (clientX: number, clientY: number) => {
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const nx = (clientX - cx) / rect.width;
-    const ny = (clientY - cy) / rect.height;
-    xRaw.set(Math.max(-0.5, Math.min(0.5, nx)));
-    yRaw.set(Math.max(-0.5, Math.min(0.5, ny)));
-  }, [xRaw, yRaw]);
+    x.set((clientX - rect.left) / rect.width);
+    y.set((clientY - rect.top) / rect.height);
+  };
 
-  const onLeave = useCallback(() => {
-    xRaw.set(0);
-    yRaw.set(0);
-  }, [xRaw, yRaw]);
+  const onLeave = () => { x.set(0.5); y.set(0.5); };
 
   return { ref, rotateX, rotateY, onMove, onLeave };
 }
 
-/* ── Individual tilt card ─────────────────────── */
-function TiltCard({
-  tier,
-  theme,
-  index,
-  isActive,
-  onToggle,
-}: {
+/* ── Card ─────────────────────────────────────── */
+function GiftCard({ tier, scheme, index, isActive, onToggle }: {
   tier: GiftCardTier;
-  theme: (typeof CARD)[keyof typeof CARD];
+  scheme: {
+    bg: string;
+    isLight: boolean;
+    amtColor: string;
+    subtle: string;
+    saveColor: string;
+    payColor: string;
+    accentColor: string;
+    catColor: string;
+    numColor: string;
+  };
   index: number;
   isActive: boolean;
   onToggle: () => void;
 }) {
+  const router = useRouter();
   const tilt = useTilt();
   const stackZ = 10 - index;
-  const yBase = index * 8;
-  const scaleBase = 1 - index * 0.015;
-  const rotBase = (index - 1) * 3;
+  const yBase = index * 14;
+  const scaleBase = 1 - index * 0.02;
+  const rotBase = (index - 1) * 6;
+  const save = tier.getValue - tier.payPrice;
 
   return (
     <motion.div
       ref={tilt.ref}
-      onMouseMove={(e) => tilt.onMove(e.clientX, e.clientY)}
+      onMouseMove={(e) => isActive && tilt.onMove(e.clientX, e.clientY)}
       onMouseLeave={tilt.onLeave}
       onTouchMove={(e) => {
-        const t = e.touches[0];
-        tilt.onMove(t.clientX, t.clientY);
+        if (isActive) {
+          const t = e.touches[0];
+          tilt.onMove(t.clientX, t.clientY);
+        }
       }}
       onTouchEnd={tilt.onLeave}
-      onClick={onToggle}
+      onClick={() => {
+        if (isActive) router.push('/gift-cards');
+        else onToggle();
+      }}
       animate={{
         zIndex: isActive ? 20 : stackZ,
         y: isActive ? 0 : yBase,
@@ -117,59 +85,74 @@ function TiltCard({
         damping: 24,
         mass: 0.7,
       }}
-      className={`absolute inset-x-0 ${theme.bg} rounded-2xl border ${theme.border} shadow-2xl flex flex-col justify-between p-6 md:p-8 select-none cursor-pointer overflow-hidden`}
+      className="absolute inset-x-0 rounded-2xl shadow-2xl select-none cursor-pointer overflow-hidden"
       style={{
         height: 260,
         rotateX: isActive ? tilt.rotateX : 0,
         rotateY: isActive ? tilt.rotateY : 0,
         transformStyle: 'preserve-3d',
+        background: scheme.bg,
       }}
     >
-      {/* Subtle glow overlay */}
-      <div className={`absolute inset-0 bg-gradient-to-br from-transparent ${theme.glow} to-transparent pointer-events-none`} />
+      {/* Surface sheen */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
 
-      {/* Top row */}
-      <div className="relative flex items-start justify-between" style={{ transformStyle: 'preserve-3d' }}>
-        <div className="flex items-center gap-3">
-          {/* EMV chip icon */}
-          <div className={`w-8 h-6 rounded-[4px] ${theme.chip} flex items-center justify-center`}>
-            <div className="w-5 h-3.5 rounded-[2px] border border-white/20 grid grid-cols-3 grid-rows-2 gap-px p-px">
-              <div className="bg-white/15 rounded-[1px]" />
-              <div className="bg-white/10 rounded-[1px]" />
-              <div className="bg-white/15 rounded-[1px]" />
-              <div className="bg-white/10 rounded-[1px]" />
-              <div className="bg-white/15 rounded-[1px]" />
-              <div className="bg-white/10 rounded-[1px]" />
-            </div>
-          </div>
-          <div className="relative w-14 md:w-16 h-4 md:h-5">
+      {/* Content */}
+      <div className="relative flex flex-col h-full px-5 md:px-7 py-4 md:py-6 z-10"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {/* ── Top: logo left + category right ── */}
+        <div className="flex items-start justify-between shrink-0 gap-2">
+          <div className="relative w-[100px] md:w-[140px] h-[18px] md:h-[22px]">
             <Image
               src="/media-pro/azlaan-logo-trimmed.png"
               alt="Azlaan"
               fill
-              className="object-contain object-left brightness-0 invert opacity-70"
-              sizes="64px"
+              className={`object-contain object-left opacity-90 ${scheme.isLight ? '' : 'brightness-0 invert'}`}
+              sizes="140px"
             />
           </div>
+          <span className={`text-[8px] md:text-[10px] font-black uppercase tracking-[0.15em] ${scheme.catColor}`}>
+            {tier.name}
+          </span>
         </div>
-        <span className={`text-[7px] md:text-[8px] font-black uppercase tracking-wider ${theme.badge} px-2.5 py-1 rounded-full`}>
-          {tier.badge}
-        </span>
-      </div>
 
-      {/* Bottom */}
-      <div className="relative" style={{ transformStyle: 'preserve-3d' }}>
-        <p className="text-[10px] md:text-[11px] font-medium uppercase tracking-[0.3em] text-white/30 mb-1">
-          {tier.name}
-        </p>
-        <p className="text-2xl md:text-3xl font-black text-white tracking-tight">
-          ৳{tier.getValue.toLocaleString()}
-        </p>
-        <div className="flex items-center gap-2 mt-1">
-          <p className={`text-[10px] md:text-[11px] font-medium ${theme.accent}`}>
-            Pay ৳{tier.payPrice.toLocaleString()}
+        <div className="flex-1" />
+
+        {/* ── "GIFT CARD" centered ── */}
+        <div className="flex justify-center shrink-0">
+          <p className={`text-[clamp(0.55rem,2.5vw,0.85rem)] font-black uppercase tracking-[0.35em] ${scheme.accentColor} leading-none`}
+            style={{ fontFamily: 'Playfair Display, serif' }}>
+            Gift Card
           </p>
-          <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
+        </div>
+
+        <div className="flex-1" />
+
+        {/* ── Bottom: value + save/pay ── */}
+        <div className="flex flex-col items-start shrink-0">
+          <p className={`font-black tracking-tight leading-none ${scheme.amtColor}`}
+            style={{ fontSize: 'clamp(1.1rem, 5vw, 2rem)' }}>
+            ৳{tier.getValue.toLocaleString()}
+          </p>
+          <div className="flex items-center gap-1.5 mt-0.5">
+            <span className={`text-[8px] md:text-[10px] font-bold tracking-tight ${scheme.amtColor}`}
+              style={{ color: scheme.saveColor }}>
+              +৳{save.toLocaleString()}
+            </span>
+            <span className={`text-[4px] md:text-[5px] ${scheme.subtle}`}>|</span>
+            <span className={`text-[8px] md:text-[10px] font-bold tracking-tight ${scheme.payColor}`}>
+              PAY ৳{tier.payPrice.toLocaleString()}
+            </span>
+          </div>
+        </div>
+
+        {/* ── Card number bottom-right ── */}
+        <div className="absolute bottom-4 md:bottom-5 right-5 md:right-7">
+          <p className={`text-[10px] md:text-[12px] font-mono tracking-[0.25em] ${scheme.numColor}`}
+            style={{ textShadow: '0 0.5px 0 rgba(255,255,255,0.06)' }}>
+            {CARD_NUM[tier.id]}
+          </p>
         </div>
       </div>
     </motion.div>
@@ -180,7 +163,7 @@ function TiltCard({
 export default function GiftCardBanner() {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const tiers = GIFT_CARD_TIERS;
-  const visibleTiers = tiers.slice(0, 3);
+  const visibleTiers = tiers;
   const maxIdx = visibleTiers.length - 1;
 
   const prev = useCallback(() => {
@@ -194,7 +177,7 @@ export default function GiftCardBanner() {
     <section className="relative w-full bg-white py-20 md:py-28 px-4 md:px-8 lg:px-12 border-y border-gray-100">
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-20">
-          {/* ── Left: Copy ── */}
+          {/* ── Left ── */}
           <div className="flex-1 text-center lg:text-left">
             <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 block mb-4">
               Azlaan Gift Card
@@ -210,36 +193,28 @@ export default function GiftCardBanner() {
             </p>
           </div>
 
-          {/* ── Right: Interactive 3D card stack ── */}
+          {/* ── Right ── */}
           <div className="relative w-full max-w-[360px] mx-auto lg:mx-0 shrink-0"
-            style={{ perspective: 1200, height: 280 }}
+            style={{ perspective: 1200, height: 310 }}
           >
-            {/* Glow */}
             <div className="absolute -inset-8 bg-gradient-to-b from-amber-900/5 via-transparent to-transparent blur-[60px] rounded-full pointer-events-none" />
 
-            {/* Left arrow */}
-            <button
-              onClick={prev}
-              aria-label="Previous card"
+            <button onClick={prev} aria-label="Previous"
               className="absolute -left-10 md:-left-12 top-1/2 -translate-y-1/2 z-30 w-8 h-8 flex items-center justify-center rounded-full border border-black/10 bg-white/80 backdrop-blur-sm text-gray-400 hover:text-primary hover:border-black/20 transition-all cursor-pointer"
             >
               <ChevronLeft className="w-3.5 h-3.5" strokeWidth={1.5} />
             </button>
-
-            {/* Right arrow */}
-            <button
-              onClick={next}
-              aria-label="Next card"
+            <button onClick={next} aria-label="Next"
               className="absolute -right-10 md:-right-12 top-1/2 -translate-y-1/2 z-30 w-8 h-8 flex items-center justify-center rounded-full border border-black/10 bg-white/80 backdrop-blur-sm text-gray-400 hover:text-primary hover:border-black/20 transition-all cursor-pointer"
             >
               <ChevronRight className="w-3.5 h-3.5" strokeWidth={1.5} />
             </button>
 
             {visibleTiers.map((tier, i) => (
-              <TiltCard
+              <GiftCard
                 key={tier.id}
                 tier={tier}
-                theme={CARD[tier.id as keyof typeof CARD]}
+                scheme={SCHEMES[tier.id as keyof typeof SCHEMES]}
                 index={i}
                 isActive={activeIdx === i}
                 onToggle={() => setActiveIdx(activeIdx === i ? null : i)}
@@ -251,3 +226,50 @@ export default function GiftCardBanner() {
     </section>
   );
 }
+
+const SCHEMES = {
+  starter: {
+    bg: 'linear-gradient(145deg, #1D1D1F 0%, #28282B 50%, #1A1A1C 100%)',
+    isLight: false,
+    amtColor: 'text-white/80',
+    subtle: 'text-white/15',
+    saveColor: '#4ADE80',
+    payColor: 'text-white/60',
+    accentColor: 'text-white/45',
+    catColor: 'text-white/50',
+    numColor: 'text-white/30',
+  },
+  value: {
+    bg: 'linear-gradient(145deg, #1C1B19 0%, #272520 50%, #1A1916 100%)',
+    isLight: false,
+    amtColor: 'text-white/80',
+    subtle: 'text-white/15',
+    saveColor: '#4ADE80',
+    payColor: 'text-white/60',
+    accentColor: 'text-white/45',
+    catColor: 'text-white/50',
+    numColor: 'text-white/30',
+  },
+  premium: {
+    bg: 'linear-gradient(145deg, #C9A84C 0%, #B8952E 40%, #D4B85C 70%, #C9A84C 100%)',
+    isLight: true,
+    amtColor: 'text-[#1D1D1F]/85',
+    subtle: 'text-[#1D1D1F]/20',
+    saveColor: '#1D4A1E',
+    payColor: 'text-[#1D1D1F]/65',
+    accentColor: 'text-[#1D1D1F]/45',
+    catColor: 'text-[#1D1D1F]/55',
+    numColor: 'text-[#1D1D1F]/30',
+  },
+  luxury: {
+    bg: 'linear-gradient(145deg, #0C0C0E 0%, #161618 50%, #0A0A0C 100%)',
+    isLight: false,
+    amtColor: 'text-white/80',
+    subtle: 'text-white/12',
+    saveColor: '#4ADE80',
+    payColor: 'text-white/55',
+    accentColor: 'text-white/40',
+    catColor: 'text-white/45',
+    numColor: 'text-white/25',
+  },
+} as const;

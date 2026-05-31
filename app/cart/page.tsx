@@ -216,12 +216,8 @@ export default function CartPage() {
         <span className="text-2xl font-black text-neutral-900"><Counter value={total} /></span>
       </div>
 
-      {/* Promo */}
-      <div className="flex items-center gap-2 bg-neutral-50 border border-neutral-150 rounded-xl px-3.5 py-2.5 mb-3">
-        <input type="text" placeholder="Promo / gift code"
-          className="flex-1 bg-transparent text-[11px] font-bold text-neutral-800 placeholder:text-neutral-300 outline-none" />
-        <button className="text-[9px] font-black uppercase tracking-widest text-neutral-400 hover:text-black transition-colors">Apply</button>
-      </div>
+      {/* Promo / Gift Card Redeem */}
+      <GiftCardRedeemInline />
 
       {/* CTA */}
       <Link href="/checkout" className="block">
@@ -319,6 +315,36 @@ export default function CartPage() {
         </Link>
       </motion.div>
 
+    </div>
+  );
+}
+
+/* ── Gift Card Redeem inline ────────────────────── */
+function GiftCardRedeemInline() {
+  const { giftCardCodeEntry, giftCardRedeemError, setGiftCardCodeEntry, redeemGiftCard } = useCartStore();
+  const [redeeming, setRedeeming] = useState(false);
+
+  const handleRedeem = async () => {
+    if (!giftCardCodeEntry.trim()) return;
+    setRedeeming(true);
+    await redeemGiftCard(giftCardCodeEntry.trim());
+    setRedeeming(false);
+  };
+
+  return (
+    <div className="flex items-center gap-2 bg-neutral-50 border border-neutral-150 rounded-xl px-3.5 py-2.5 mb-3">
+      <input type="text" placeholder="Promo / gift code"
+        value={giftCardCodeEntry}
+        onChange={(e) => setGiftCardCodeEntry(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && handleRedeem()}
+        className="flex-1 bg-transparent text-[11px] font-bold text-neutral-800 placeholder:text-neutral-300 outline-none uppercase tracking-wider" />
+      <button onClick={handleRedeem} disabled={redeeming || !giftCardCodeEntry.trim()}
+        className="text-[9px] font-black uppercase tracking-widest text-neutral-400 hover:text-black transition-colors disabled:opacity-30">
+        {redeeming ? '...' : 'Apply'}
+      </button>
+      {giftCardRedeemError && (
+        <span className="text-[9px] text-red-500 font-bold whitespace-nowrap">{giftCardRedeemError}</span>
+      )}
     </div>
   );
 }

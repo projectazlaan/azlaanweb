@@ -19,6 +19,13 @@ export interface GiftCardTier {
   popular?: boolean;
 }
 
+export const CARD_NUM: Record<string, string> = {
+  starter: '····  ····  ····  0190',
+  value:   '····  ····  ····  0180',
+  premium: '····  ····  ····  0400',
+  luxury:  '····  ····  ····  0800',
+};
+
 export const GIFT_CARD_TIERS: GiftCardTier[] = [
   {
     id: 'starter',
@@ -26,7 +33,7 @@ export const GIFT_CARD_TIERS: GiftCardTier[] = [
     payPrice: 900,
     getValue: 1000,
     bonusPct: 10,
-    badge: '10% FREE',
+    badge: 'Save ৳100',
     theme: {
       bg: 'from-[#1a1a1a] to-[#2c2c2c]',
       shimmer: 'from-white/0 via-white/6 to-white/0',
@@ -44,7 +51,7 @@ export const GIFT_CARD_TIERS: GiftCardTier[] = [
     payPrice: 1800,
     getValue: 2000,
     bonusPct: 11,
-    badge: '11% FREE',
+    badge: 'Save ৳200',
     popular: true,
     theme: {
       bg: 'from-[#1D1D1F] via-[#252527] to-[#1D1D1F]',
@@ -63,7 +70,7 @@ export const GIFT_CARD_TIERS: GiftCardTier[] = [
     payPrice: 4000,
     getValue: 5000,
     bonusPct: 25,
-    badge: '25% FREE',
+    badge: 'Save ৳1000',
     theme: {
       bg: 'from-[#C9A84C] via-[#B8952E] to-[#96751C]',
       shimmer: 'from-white/0 via-white/20 to-white/0',
@@ -81,7 +88,7 @@ export const GIFT_CARD_TIERS: GiftCardTier[] = [
     payPrice: 8000,
     getValue: 10000,
     bonusPct: 25,
-    badge: '25% FREE',
+    badge: 'Save ৳2000',
     theme: {
       bg: 'from-[#0d0d0d] via-[#161616] to-[#0d0d0d]',
       shimmer: 'from-[#C9A84C]/0 via-[#C9A84C]/15 to-[#C9A84C]/0',

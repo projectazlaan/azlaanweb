@@ -15,6 +15,7 @@ export interface CartItem {
   isGiftCard?: boolean;
   giftCardValue?: number;   // The credit the card gives (e.g. 5000)
   giftCardTierId?: string;  // e.g. 'premium'
+  giftCardCode?: string;    // The unique code (shown after purchase)
 }
 
 interface CartState {
@@ -23,6 +24,8 @@ interface CartState {
   // Gift Card balance system
   giftCardBalance: number;
   useGiftCard: boolean;
+  giftCardCodeEntry: string;    // user-typed code input
+  giftCardRedeemError: string;  // error message from redeem attempt
   openCart: () => void;
   closeCart: () => void;
   addItem: (product: Product, quantity?: number, size?: string, color?: string) => void;
@@ -36,6 +39,7 @@ interface CartState {
   purchaseGiftCard: (value: number) => void;
   redeemGiftCard: (code: string) => Promise<boolean>;
   toggleUseGiftCard: () => void;
+  setGiftCardCodeEntry: (code: string) => void;
   getGiftCardDiscount: () => number;
   getFinalTotal: () => number;
 }
@@ -48,6 +52,8 @@ export const useCartStore = create<CartState>()(
       isOpen: false,
       giftCardBalance: 0,
       useGiftCard: false,
+      giftCardCodeEntry: '',
+      giftCardRedeemError: '',
 
       openCart: () => set({ isOpen: true }),
       closeCart: () => set({ isOpen: false }),
@@ -141,17 +147,34 @@ export const useCartStore = create<CartState>()(
         giftCardBalance: state.giftCardBalance + value,
       })),
 
-      // Gift Card: Redeem via code (simulated)
+      // Gift Card: Redeem via code (real API)
       redeemGiftCard: async (code: string): Promise<boolean> => {
-        await new Promise(r => setTimeout(r, 1200));
-        if (code.length >= 8) {
-          set(state => ({ giftCardBalance: state.giftCardBalance + 1000 }));
+        try {
+          const res = await fetch('/api/gift-cards/redeem', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code }),
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            set({ giftCardRedeemError: data.error || 'Invalid code' });
+            return false;
+          }
+          set(state => ({
+            giftCardBalance: state.giftCardBalance + data.balance,
+            giftCardCodeEntry: '',
+            giftCardRedeemError: '',
+          }));
           return true;
+        } catch {
+          set({ giftCardRedeemError: 'Something went wrong. Try again.' });
+          return false;
         }
-        return false;
       },
 
       toggleUseGiftCard: () => set((state) => ({ useGiftCard: !state.useGiftCard })),
+
+      setGiftCardCodeEntry: (code: string) => set({ giftCardCodeEntry: code, giftCardRedeemError: '' }),
 
       getGiftCardDiscount: () => {
         const state = get();
@@ -159,12 +182,15 @@ export const useCartStore = create<CartState>()(
         const nonGiftTotal = state.items
           .filter(i => !i.isGiftCard)
           .reduce((t, i) => t + i.price * i.quantity, 0);
+        // Single-use: consume full balance (or remaining total if less)
         return Math.min(state.giftCardBalance, nonGiftTotal);
       },
 
       getFinalTotal: () => {
         const state = get();
-        return Math.max(0, state.getTotalPrice() - state.getGiftCardDiscount());
+        const discount = state.getGiftCardDiscount();
+        // Single-use: after checkout, balance is fully consumed
+        return Math.max(0, state.getTotalPrice() - discount);
       },
     }),
     {

@@ -42,11 +42,7 @@ export default async function HomePage() {
           <NewCollection />
         </div>
 
-        <ScrollReveal direction="none">
-          <div data-customizer-key="PromoBanner">
-            <PromoBanner settings={settings?.promoBanner} />
-          </div>
-        </ScrollReveal>
+        <GiftCardBanner />
 
         {/* Watch & Buy Section */}
         <ScrollReveal>
@@ -67,7 +63,11 @@ export default async function HomePage() {
           <ScrollReveal>
             <div data-customizer-key="Testimonials"><Testimonials /></div>
           </ScrollReveal>
-          <GiftCardBanner />
+          <ScrollReveal direction="none">
+            <div data-customizer-key="PromoBanner">
+              <PromoBanner settings={settings?.promoBanner} />
+            </div>
+          </ScrollReveal>
           <ScrollReveal>
             <div data-customizer-key="Newsletter"><Newsletter /></div>
           </ScrollReveal>

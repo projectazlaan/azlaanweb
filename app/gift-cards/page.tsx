@@ -1,198 +1,250 @@
 'use client';
 
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { Sparkles, Check, ArrowRight, Star, Gift, Zap, Shield } from 'lucide-react';
-import { GIFT_CARD_TIERS, GiftCardTier } from '@/data/giftCards';
-import { useCartStore } from '@/store/cartStore';
+import { motion } from 'framer-motion';
+import { ArrowRight, Check } from 'lucide-react';
+import { GIFT_CARD_TIERS, GiftCardTier, CARD_NUM } from '@/data/giftCards';
+import Image from 'next/image';
 import Link from 'next/link';
 
-function TierCard({ tier }: { tier: GiftCardTier }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x, { stiffness: 200, damping: 25 });
-  const mouseYSpring = useSpring(y, { stiffness: 200, damping: 25 });
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['10deg', '-10deg']);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-10deg', '10deg']);
+const CARD_STYLE: Record<string, { isLight: boolean; amtColor: string; subtle: string; saveColor: string; payColor: string; accentColor: string; catColor: string; numColor: string }> = {
+  starter: { isLight: false, amtColor: 'text-white/80', subtle: 'text-white/15', saveColor: '#4ADE80', payColor: 'text-white/60', accentColor: 'text-white/45', catColor: 'text-white/50', numColor: 'text-white/30' },
+  value: { isLight: false, amtColor: 'text-white/80', subtle: 'text-white/15', saveColor: '#4ADE80', payColor: 'text-white/60', accentColor: 'text-white/45', catColor: 'text-white/50', numColor: 'text-white/30' },
+  premium: { isLight: true, amtColor: 'text-[#1D1D1F]/85', subtle: 'text-[#1D1D1F]/20', saveColor: '#1D4A1E', payColor: 'text-[#1D1D1F]/65', accentColor: 'text-[#1D1D1F]/45', catColor: 'text-[#1D1D1F]/55', numColor: 'text-[#1D1D1F]/30' },
+  luxury: { isLight: false, amtColor: 'text-[#C9A84C]/85', subtle: 'text-white/12', saveColor: '#4ADE80', payColor: 'text-white/55', accentColor: 'text-white/40', catColor: 'text-white/45', numColor: 'text-white/25' },
+};
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-  const handleMouseLeave = () => { x.set(0); y.set(0); };
+function Card({ tier }: { tier: GiftCardTier }) {
+  const s = CARD_STYLE[tier.id];
+  const save = tier.getValue - tier.payPrice;
 
   return (
-    <Link href={`/gift-cards/${tier.id}`} className="relative flex flex-col h-full group block" style={{ perspective: '800px' }}>
-      {tier.popular && (
-        <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-          <div className="bg-[#1D1D1F] text-white text-[9px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
-            <Star className="w-2.5 h-2.5 fill-[#C9A84C] text-[#C9A84C]" /> Most Popular
-          </div>
-        </div>
-      )}
+    <Link href={`/gift-cards/${tier.id}`} className="group block">
+      <div className={`relative w-full aspect-[1.6/1] rounded-2xl bg-gradient-to-br ${tier.theme.bg} border ${tier.theme.border} overflow-hidden shadow-lg`}>
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
 
-      {/* The 3D Card */}
-      <motion.div
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-        className={`relative w-full aspect-[1.6/1] rounded-[1.75rem] bg-gradient-to-br ${tier.theme.bg} p-6 cursor-pointer shadow-xl ${tier.theme.glow} border ${tier.theme.border} overflow-hidden transition-shadow duration-300`}
-      >
-        {/* Subtle top glass sheen */}
-        <div className="absolute top-0 left-0 right-0 h-2/5 bg-gradient-to-b from-white/10 to-transparent pointer-events-none rounded-t-[1.75rem]" />
-        {/* Shimmer on hover */}
-        <div className={`absolute inset-0 bg-gradient-to-tr ${tier.theme.shimmer} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`} />
-
-        <div className="h-full flex flex-col justify-between relative z-10" style={{ transform: 'translateZ(28px)' }}>
-          <div className="flex justify-between items-center">
-            <span className={`text-[9px] font-black uppercase tracking-[0.35em] ${tier.theme.accent}`}>Azlaan • {tier.name}</span>
-            <span className={`${tier.theme.badge} ${tier.theme.badgeText} text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full`}>
-              {tier.badge}
+        <div className="relative flex flex-col h-full p-3 md:p-6">
+          {/* ── Top: logo + category ── */}
+          <div className="flex items-start justify-between shrink-0 gap-2">
+            <div className="relative w-[70px] md:w-[170px] h-[14px] md:h-9">
+              <Image
+                src="/media-pro/azlaan-logo-trimmed.png"
+                alt="Azlaan"
+                fill
+                className={`object-contain object-left opacity-90 ${s.isLight ? '' : 'brightness-0 invert'}`}
+                sizes="170px"
+              />
+            </div>
+            <span className={`text-[7px] md:text-[10px] font-black uppercase tracking-[0.15em] ${s.catColor} whitespace-nowrap`}>
+              {tier.name}
             </span>
           </div>
-          <div>
-            <p className={`text-[9px] font-black uppercase tracking-widest ${tier.theme.accent} mb-1.5`}>Store Credit</p>
-            <p className={`text-[2.4rem] font-black leading-none ${tier.theme.text}`}>৳{tier.getValue.toLocaleString()}</p>
-          </div>
-        </div>
-      </motion.div>
 
-      {/* Below-card info */}
-      <div className="flex-1 flex flex-col mt-5 px-1 space-y-4">
-        <div className="flex items-end justify-between">
-          <div>
-            <p className="text-[10px] text-[#6E6E73] font-bold uppercase tracking-widest mb-0.5">You Pay</p>
-            <p className="text-2xl font-black text-[#1D1D1F] group-hover:text-[#C9A84C] transition-colors duration-200">৳{tier.payPrice.toLocaleString()}</p>
+          <div className="flex-1 min-h-[4px]" />
+
+          {/* ── "GIFT CARD" centered ── */}
+          <div className="flex justify-center shrink-0">
+            <p className={`text-[clamp(0.5rem,2vw,1rem)] font-black uppercase tracking-[0.35em] ${s.accentColor} leading-none`}
+              style={{ fontFamily: 'Playfair Display, serif' }}>
+              Gift Card
+            </p>
           </div>
-          <div className="text-right">
-            <p className="text-[10px] font-black uppercase tracking-widest text-[#C9A84C] bg-[#C9A84C]/10 px-2.5 py-1.5 rounded-full">
-              Save ৳{(tier.getValue - tier.payPrice).toLocaleString()}
+
+          <div className="flex-1 min-h-[4px]" />
+
+          {/* ── Bottom: value + save/pay ── */}
+          <div className="flex flex-col items-start shrink-0">
+            <p className={`font-black leading-none tracking-tighter ${s.amtColor}`}
+              style={{ fontSize: 'clamp(0.9rem,4vw,2.4rem)' }}>
+              ৳{tier.getValue.toLocaleString()}
+            </p>
+            <div className="flex items-center gap-1.5 md:gap-2 mt-0.5 md:mt-1">
+              <span className={`text-[7px] md:text-[10px] font-bold tracking-tight`}
+                style={{ color: s.saveColor }}>
+                +৳{save.toLocaleString()}
+              </span>
+              <span className={`text-[4px] md:text-[5px] ${s.subtle}`}>|</span>
+              <span className={`text-[7px] md:text-[10px] font-bold tracking-tight ${s.payColor}`}>
+                PAY ৳{tier.payPrice.toLocaleString()}
+              </span>
+            </div>
+          </div>
+
+          {/* ── Card number bottom-right ── */}
+          <div className="absolute bottom-2.5 md:bottom-5 right-3 md:right-6">
+            <p className={`text-[8px] md:text-[13px] font-mono tracking-[0.2em] md:tracking-[0.25em] ${s.numColor}`}
+              style={{ textShadow: '0 0.5px 0 rgba(255,255,255,0.06)' }}>
+              {CARD_NUM[tier.id]}
             </p>
           </div>
         </div>
+      </div>
 
-        <ul className="space-y-2 text-[11px] text-[#6E6E73] font-medium">
-          <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-[#1D1D1F] shrink-0" /> যেকোনো অর্ডারে ব্যবহার করুন</li>
-          <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-[#1D1D1F] shrink-0" /> কোনো মেয়াদ নেই</li>
-          <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-[#1D1D1F] shrink-0" /> সাথে সাথে অ্যাকাউন্টে যোগ</li>
+      <div className="mt-2 md:mt-3 space-y-1.5 md:space-y-2">
+        <ul className="space-y-0.5 md:space-y-1">
+          <li className="flex items-center gap-1 md:gap-1.5 text-[9px] md:text-[11px] text-gray-400">
+            <Check className="w-2.5 h-2.5 md:w-3 md:h-3 text-gray-300 shrink-0" /> Instant credit, 30-day validity
+          </li>
+          <li className="flex items-center gap-1 md:gap-1.5 text-[9px] md:text-[11px] text-gray-400">
+            <Check className="w-2.5 h-2.5 md:w-3 md:h-3 text-gray-300 shrink-0" /> Valid 30 days, single-use
+          </li>
         </ul>
 
-        <div
-          className={`w-full h-12 rounded-xl flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest transition-all mt-auto
-            ${tier.popular
-              ? 'bg-[#1D1D1F] text-white group-hover:bg-black border border-[#C9A84C]/30'
-              : 'bg-white text-[#1D1D1F] border border-[#D2D2D7] group-hover:border-[#1D1D1F]'
-            }`}
-        >
-          বিস্তারিত দেখুন <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+        <div className="w-full h-8 md:h-10 rounded-lg flex items-center justify-center gap-1 md:gap-1.5 text-[8px] md:text-[9px] font-black uppercase tracking-widest bg-gray-100 text-gray-500 border border-gray-200 group-hover:bg-gray-200 group-hover:text-gray-700 transition-all">
+          Buy &mdash; ৳{tier.payPrice.toLocaleString()} <ArrowRight className="w-2.5 h-2.5 md:w-3 md:h-3 group-hover:translate-x-0.5 transition-transform" />
         </div>
       </div>
     </Link>
   );
 }
 
+/* ── Page ─────────────────────────────────────── */
 export default function GiftCardsPage() {
-  const { giftCardBalance } = useCartStore();
+  const premiumTier = GIFT_CARD_TIERS.find(t => t.id === 'premium')!;
+  const s = CARD_STYLE.premium;
 
   return (
     <div className="min-h-screen bg-white">
-
-      {/* Hero — site-matching dark header */}
-      <div className="relative bg-[#1D1D1F] text-white overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 left-1/4 w-[700px] h-[700px] bg-[#C9A84C]/10 rounded-full blur-[140px]" />
-          <div className="absolute -bottom-40 right-1/4 w-[600px] h-[600px] bg-[#C9A84C]/8 rounded-full blur-[120px]" />
-        </div>
-        <div className="relative z-10 max-w-[1100px] mx-auto px-4 md:px-8 py-16 md:py-24 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="inline-flex items-center gap-2 bg-white/8 border border-white/10 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest mb-6">
-              <Gift className="w-3.5 h-3.5 text-[#C9A84C]" /> Azlaan স্পেশাল গিফট কার্ড
-            </div>
-            <h1 className="text-4xl md:text-6xl font-black leading-tight mb-5 font-bengali">
-              উপহার দিন নিজেকে<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C9A84C] via-[#E8C86A] to-[#C9A84C]">বা প্রিয়জনকে</span>
-            </h1>
-            <p className="text-[#6E6E73] text-base max-w-md mx-auto mb-8 font-bengali leading-relaxed">
-              Azlaan গিফট কার্ড কিনে পেয়ে যান <strong className="text-white">২৫% পর্যন্ত এক্সট্রা</strong> বোনাস ব্যালেন্স। যেকোনো সময় যেকোনো প্রোডাক্ট কিনতে ব্যবহার করুন।
-            </p>
-
-            {giftCardBalance > 0 && (
-              <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="inline-flex items-center gap-3 bg-[#C9A84C]/10 border border-[#C9A84C]/20 px-6 py-3 rounded-2xl">
-                <Sparkles className="w-4 h-4 text-[#C9A84C]" />
-                <span className="text-white font-black text-sm">আপনার ব্যালেন্স: ৳{giftCardBalance.toLocaleString()}</span>
-                <Link href="/checkout" className="text-[#1D1D1F] text-[10px] font-black uppercase tracking-widest bg-[#C9A84C] px-3 py-1 rounded-full hover:bg-[#B8952E] transition-colors">
-                  এখনই ব্যবহার করুন
-                </Link>
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Trust Strip */}
-      <div className="bg-[#F5F5F7] border-b border-[#D2D2D7]">
-        <div className="max-w-[1100px] mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 md:gap-12 text-[10px] font-black uppercase tracking-widest text-[#6E6E73]">
-          <span className="flex items-center gap-2"><Zap className="w-3.5 h-3.5 text-[#C9A84C]" /> Instant Credit</span>
-          <span className="flex items-center gap-2"><Shield className="w-3.5 h-3.5 text-[#C9A84C]" /> Never Expires</span>
-          <span className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-[#C9A84C]" /> Works on All Orders</span>
-          <span className="flex items-center gap-2"><Gift className="w-3.5 h-3.5 text-[#C9A84C]" /> Perfect as a Gift</span>
-        </div>
-      </div>
-
-      {/* 4 Tier Cards */}
-      <div className="max-w-[1200px] mx-auto px-4 md:px-8 py-16 md:py-24">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-black text-[#1D1D1F] mb-3 font-bengali">আপনার পছন্দমতো টায়ার বেছে নিন</h2>
-          <p className="text-[#6E6E73] text-sm font-bengali">যত বেশি কিনবেন, তত বেশি সাশ্রয়</p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-start">
-          {GIFT_CARD_TIERS.map((tier, i) => (
+      {/* ── Hero ── */}
+      <section className="bg-white overflow-hidden border-b border-gray-100">
+        <div className="max-w-[1200px] mx-auto px-4 md:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-center min-h-[70vh] lg:min-h-[80vh]">
+            {/* Left: Text */}
             <motion.div
-              key={tier.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, type: 'spring', stiffness: 180, damping: 22 }}
-              className={`pt-6 rounded-3xl ${tier.popular ? 'ring-2 ring-[#C9A84C] ring-offset-4' : ''}`}
+              transition={{ duration: 0.5 }}
+              className="flex-1 pt-16 md:pt-20 lg:pt-0 lg:pr-12"
             >
-              <TierCard tier={tier} />
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-300 mb-5">
+                Azlaan Gift Card
+              </p>
+              <h1 className="text-[clamp(2.2rem,7vw,5rem)] font-black leading-[0.9] tracking-[-0.03em] uppercase text-[#1D1D1F]">
+                More Than
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C9A84C] to-[#D4B85C]">a Gift</span>
+              </h1>
+              <div className="w-12 h-px bg-gray-200 mt-6 mb-5" />
+              <p className="text-gray-400 text-sm md:text-base max-w-md leading-relaxed">
+                Every card comes with bonus balance. Pay less, get more &mdash; use it on anything across Azlaan.
+              </p>
             </motion.div>
-          ))}
-        </div>
-      </div>
 
-      {/* How it works */}
-      <div className="bg-[#F5F5F7] border-t border-[#D2D2D7] py-16 md:py-24">
-        <div className="max-w-[1000px] mx-auto px-4 md:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-black text-[#1D1D1F] mb-3 font-bengali">কীভাবে কাজ করে?</h2>
-          <p className="text-[#6E6E73] text-sm mb-12 font-bengali">মাত্র ৩টি সহজ ধাপে আপনার সাশ্রয় শুরু করুন</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { step: '01', title: 'কার্ড পছন্দ করুন', desc: 'আপনার পছন্দের গিফট কার্ডটি ডিসকাউন্ট মূল্যে কিনে নিন।', icon: Gift },
-              { step: '02', title: 'ইন্সট্যান্ট ব্যালেন্স', desc: 'কেনার সাথে সাথেই পুরো কার্ডের ভ্যালু আপনার অ্যাকাউন্টে যোগ হয়ে যাবে।', icon: Zap },
-              { step: '03', title: 'শপিং ও সেভিংস', desc: 'চেকআউটের সময় ক্যাশের বদলে এই ব্যালেন্স ব্যবহার করুন।', icon: Check },
-            ].map((s, i) => (
+            {/* Right: Hero Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 60, rotate: 6 }}
+              animate={{ opacity: 1, x: 0, rotate: 3 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="flex-1 relative py-12 lg:py-20"
+            >
+              <div className="relative w-full max-w-[520px] lg:max-w-[580px] mx-auto lg:ml-auto aspect-[1.6/1] rounded-[2.5rem] bg-gradient-to-br from-[#C9A84C] via-[#B8952E] to-[#D4B85C] p-8 lg:p-10 shadow-2xl shadow-[#C9A84C]/15 rotate-[3deg] lg:rotate-[4deg]">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-b from-white/[0.06] to-transparent pointer-events-none" />
+
+                <div className="relative h-full flex flex-col">
+                  {/* Top: logo + category */}
+                  <div className="flex items-start justify-between shrink-0">
+                    <div className="relative w-[180px] md:w-[220px] h-9 md:h-11">
+                      <Image
+                        src="/media-pro/azlaan-logo-trimmed.png"
+                        alt="Azlaan"
+                        fill
+                        className="object-contain object-left opacity-90"
+                        sizes="220px"
+                      />
+                    </div>
+                    <span className="text-[11px] md:text-sm font-black uppercase tracking-[0.15em] text-[#1D1D1F]/55">
+                      {premiumTier.name}
+                    </span>
+                  </div>
+
+                  <div className="flex-1" />
+
+                  {/* Center: "GIFT CARD" */}
+                  <div className="flex justify-center shrink-0">
+                    <p className="text-[clamp(1rem,4vw,1.6rem)] font-black uppercase tracking-[0.35em] text-[#1D1D1F]/45 leading-none"
+                      style={{ fontFamily: 'Playfair Display, serif' }}>
+                      Gift Card
+                    </p>
+                  </div>
+
+                  <div className="flex-1" />
+
+                  {/* Bottom: value + save/pay */}
+                  <div className="flex flex-col items-start shrink-0">
+                    <p className="text-[#1D1D1F]/85 font-black leading-none tracking-tighter"
+                      style={{ fontSize: 'clamp(1.8rem,7vw,3.6rem)' }}>
+                      ৳{premiumTier.getValue.toLocaleString()}
+                    </p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-[11px] md:text-sm font-bold tracking-tight text-[#1D4A1E]">
+                        +৳{(premiumTier.getValue - premiumTier.payPrice).toLocaleString()}
+                      </span>
+                      <span className="text-[6px] text-[#1D1D1F]/20">|</span>
+                      <span className="text-[11px] md:text-sm font-bold tracking-tight text-[#1D1D1F]/65">
+                        PAY ৳{premiumTier.payPrice.toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Card number bottom-right */}
+                  <div className="absolute bottom-6 md:bottom-8 right-6 md:right-8">
+                    <p className="text-[14px] md:text-[17px] font-mono tracking-[0.25em] text-[#1D1D1F]/30"
+                      style={{ textShadow: '0 0.5px 0 rgba(0,0,0,0.04)' }}>
+                      {CARD_NUM.premium}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Cards ── */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="max-w-[1200px] mx-auto px-4 md:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[8px] font-black uppercase tracking-[0.4em] text-[#C9A84C] mb-3">Choose your card</p>
+            <h2 className="text-xl md:text-2xl font-black text-[#1D1D1F]">Bigger balance, bigger savings</h2>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+            {GIFT_CARD_TIERS.map((tier, i) => (
               <motion.div
-                key={s.step}
+                key={tier.id}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="flex flex-col items-center gap-4"
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
               >
-                <div className="w-14 h-14 rounded-2xl bg-white border border-[#D2D2D7] flex items-center justify-center shadow-sm">
-                  <s.icon className="w-6 h-6 text-[#0071E3]" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-[#6E6E73] mb-1">Step {s.step}</p>
-                  <h3 className="text-base font-black text-[#1D1D1F] mb-2 font-bengali">{s.title}</h3>
-                  <p className="text-sm text-[#6E6E73] leading-relaxed font-bengali">{s.desc}</p>
-                </div>
+                <Card tier={tier} />
               </motion.div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
+      {/* ── How it works ── */}
+      <section className="bg-[#F5F5F7] border-t border-gray-200">
+        <div className="max-w-[1000px] mx-auto px-4 md:px-8 py-16 md:py-20 text-center">
+          <p className="text-[8px] font-black uppercase tracking-[0.4em] text-[#C9A84C] mb-3">How it works</p>
+          <h2 className="text-xl md:text-2xl font-black text-[#1D1D1F]">Three simple steps</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+            {[
+              { step: '01', title: 'Choose a card', desc: 'Pick your preferred gift card tier and pay the discounted price.' },
+              { step: '02', title: 'Get instant credit', desc: 'The full balance is added to your account immediately.' },
+              { step: '03', title: 'Shop & save', desc: 'Use your credit at checkout. What you saved is yours to keep.' },
+            ].map(s => (
+              <div key={s.step} className="flex flex-col items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-white border border-gray-200 flex items-center justify-center">
+                  <span className="text-sm font-black text-[#C9A84C]">{s.step}</span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-black text-[#1D1D1F] mb-1">{s.title}</h3>
+                  <p className="text-[11px] text-gray-400 leading-relaxed max-w-[220px] mx-auto">{s.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
