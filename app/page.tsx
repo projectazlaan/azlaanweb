@@ -35,7 +35,7 @@ export default async function HomePage() {
       </div>
 
       {/* Overlapping Content Container */}
-      <div className="relative z-10 bg-white overflow-x-hidden">
+      <div className="relative z-10 bg-white">
         <CategoryNav showAll={false} />
         
         <div data-customizer-key="NewCollection">
