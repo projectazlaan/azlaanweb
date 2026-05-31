@@ -174,7 +174,7 @@ export default function GiftCardBanner() {
   }, [maxIdx]);
 
   return (
-    <section className="relative w-full bg-white py-20 md:py-28 px-4 md:px-8 lg:px-12 border-y border-gray-100">
+    <section className="relative w-full bg-white py-20 md:py-28 px-4 md:px-8 lg:px-12 border-y border-gray-100 overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-20">
           {/* ── Left ── */}
